@@ -13,7 +13,7 @@
 #include <openssl/sha.h>
 
 
-@implementation NSData_Hashing
+@implementation NSData (Hashing)
 
 #pragma mark -
 #pragma mark Hashing macros
