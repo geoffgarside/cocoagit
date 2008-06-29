@@ -14,6 +14,7 @@
 		9F92127A0E179A2C005AC693 /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212770E179A2C005AC693 /* NSData+Compression.m */; };
 		9F9212950E179B4B005AC693 /* NSData+Hashing.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212940E179B4B005AC693 /* NSData+Hashing.m */; };
 		9F9212B80E179DB6005AC693 /* GITObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212B70E179DB6005AC693 /* GITObject.m */; };
+		9F9213860E17F17C005AC693 /* GITBlob.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9213850E17F17C005AC693 /* GITBlob.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,8 @@
 		9F9212940E179B4B005AC693 /* NSData+Hashing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Hashing.m"; sourceTree = "<group>"; };
 		9F9212B60E179DB6005AC693 /* GITObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITObject.h; sourceTree = "<group>"; };
 		9F9212B70E179DB6005AC693 /* GITObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITObject.m; sourceTree = "<group>"; };
+		9F9213840E17F17C005AC693 /* GITBlob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITBlob.h; sourceTree = "<group>"; };
+		9F9213850E17F17C005AC693 /* GITBlob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITBlob.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +53,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				9F9213840E17F17C005AC693 /* GITBlob.h */,
+				9F9213850E17F17C005AC693 /* GITBlob.m */,
 				9F9212B60E179DB6005AC693 /* GITObject.h */,
 				9F9212B70E179DB6005AC693 /* GITObject.m */,
 			);
@@ -185,6 +190,7 @@
 				9F92127A0E179A2C005AC693 /* NSData+Compression.m in Sources */,
 				9F9212950E179B4B005AC693 /* NSData+Hashing.m in Sources */,
 				9F9212B80E179DB6005AC693 /* GITObject.m in Sources */,
+				9F9213860E17F17C005AC693 /* GITBlob.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
