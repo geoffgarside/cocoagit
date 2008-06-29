@@ -223,6 +223,11 @@
 				GCC_PREFIX_HEADER = CocoaGit_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-lcrypto",
+					"-lssl",
+					"-lz",
+				);
 				PRODUCT_NAME = CocoaGit;
 			};
 			name = Debug;
