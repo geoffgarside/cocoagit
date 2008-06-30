@@ -24,5 +24,6 @@
 
 #pragma mark -
 #pragma mark Instance Methods
+- (NSString*)hashObject;
 
 @end

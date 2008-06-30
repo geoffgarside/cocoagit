@@ -24,8 +24,16 @@
             [theHash substringFromIndex:2]];    //!< Gets the remaining characters of the hash
 }
 
-
 #pragma mark -
 #pragma mark Instance Methods
+- (void)dealloc
+{
+    [hash release];
+    [super dealloc];
+}
+- (NSString*)hashObject
+{
+    
+}
 
 @end
