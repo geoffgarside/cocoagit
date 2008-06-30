@@ -7,6 +7,7 @@
 //
 //  The Git Tree object is slightly complicated in its storage.
 //  While tools such as git-ls-tree will output content such as
+//  
 //      $ git ls-tree a4738075cde81ca0aee0fb3602c506fd49f8c020
 //      100644 blob bed4001738fa8dad666d669867afaf9f2c2b8c6a .gitignore
 //      040000 tree b890976af5489b72ff39cb9640744d965214337b CocoaGit.xcodeproj
@@ -22,21 +23,33 @@
 //      100644 blob 67a5aef076f236e1a8b3bf7b69413f37273a3b9b NSData+Hashing.h
 //      100644 blob d28319b3c4128a0051bba7153cdc359364309953 NSData+Hashing.m
 //      100644 blob 488ed1ead925132b7c83b9a13e622928c3180c29 main.m
+//  
 //  the actual data contained within the .git/objects/a4738075cde81ca0aee0fb3602c506fd49f8c020
 //  file is different. Firstly the type of each entry in the tree is not stored.
 //  Secondly the SHA1 hash of the objects in the tree is packed. As an example
 //  the .gitignore file listed above is listed as
+//      
 //      100644 .gitignore\000\276\324\000\0278\372\215\255fmf\230g\257\257\237,+\214j
+//
 //  within the tree object. This is actually three main fields. Two are 
 //  delimited by the null byte. They are
+// 
 //      File Mode and name: 100644 .gitignore
 //      SHA1 Object hash: \276\324\000\0278\372\215\255fmf\230g\257\257\237,+\214j
+// 
 //  The complicated part of parsing the tree file is properly separating the
 //  entries in the tree. The splitting position can only be worked out by reading
 //  up to the next null-byte then adding 20 for the packed SHA1.
 //  
 //  The next step in this is working out how best to decompress the SHA1 into
 //  hex format for use in linking objects together.
+//  It is worth noting that the packed SHA1 hash can be decoded in Ruby using
+// 
+//      packedHash.unpack('H2'*20).join('')
+// 
+//  so the packing method must be at least fairly standardized. The Ruby
+//  String#unpack method with 'H' extracts hex nibbles from each character
+//  with the most significant first.
 // 
 
 #import <Cocoa/Cocoa.h>
