@@ -16,11 +16,18 @@
 @synthesize data;
 
 #pragma mark -
-#pragma mark Init Methods
-- (id)initWithContentsOfFile:(NSString*)filePath
+#pragma mark Reading existing Blob objects
+- (id)initFromHash:(NSString*)objectHash
 {
-    return [self initWithData:[NSData dataWithContentsOfFile:filePath]];
+    if (self = [super initFromHash:objectHash])
+    {
+        
+    }
+    return self;
 }
+
+#pragma mark -
+#pragma mark Creating new Blob objects
 - (id)initWithData:(NSData*)dataContent
 {
     if (self = [super init])
@@ -28,6 +35,10 @@
         self.data = dataContent;
     }
     return self;
+}
+- (id)initWithContentsOfFile:(NSString*)filePath
+{
+    return [self initWithData:[NSData dataWithContentsOfFile:filePath]];
 }
 
 #pragma mark -
