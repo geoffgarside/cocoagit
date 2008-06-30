@@ -43,10 +43,11 @@ static const char hexchars[] = "0123456789abcdef";
 }
 - (NSString*)unpackSHA1FromString:(NSString*)packedSHA1
 {
+    unsigned int bits;
     NSMutableString *unpackedSHA1 = [NSMutableString stringWithCapacity:40];
     for(int i = 0; i < 20; i++)
     {
-        unsigned int bits = [packedSHA1 characterAtIndex:i];
+        bits = [packedSHA1 characterAtIndex:i];
         [unpackedSHA1 appendFormat:@"%c", hexchars[bits >> 4]];
         [unpackedSHA1 appendFormat:@"%c", hexchars[bits & 0xf]];
     }
@@ -54,10 +55,10 @@ static const char hexchars[] = "0123456789abcdef";
 }
 - (NSString*)unpackSHA1FromData:(NSData*)packedSHA1
 {
+    unsigned int bits;
     NSMutableString *unpackedSHA1 = [NSMutableString stringWithCapacity:40];
     for(int i = 0; i < 20; i++)
     {
-        unsigned int bits;
         [packedSHA1 getBytes:&bits range:NSMakeRange(i, 1)];
         [unpackedSHA1 appendFormat:@"%c", hexchars[bits >> 4]];
         [unpackedSHA1 appendFormat:@"%c", hexchars[bits & 0xf]];
