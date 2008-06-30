@@ -8,6 +8,7 @@
 
 #import "GITObject.h"
 
+const NSString * kGITObjectsDirectoryRoot = @".git/objects";
 
 @implementation GITObject
 
@@ -19,9 +20,10 @@
 #pragma mark Class Methods
 + (NSString*)objectPathFromHash:(NSString*)theHash
 {
-    return [NSString stringWithFormat:@"%@/%@",
-            [theHash substringToIndex:2],       //!< Gets the first two characters of the hash
-            [theHash substringFromIndex:2]];    //!< Gets the remaining characters of the hash
+    return [NSString stringWithFormat:@"%@/%@/%@",
+            kGITObjectsDirectoryRoot,
+            [theHash substringToIndex:2],       //!< Gets the first two characters of the sha1
+            [theHash substringFromIndex:2]];    //!< Gets the remaining characters of the sha1
 }
 
 #pragma mark -

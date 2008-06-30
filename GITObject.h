@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+extern const NSString * kGITObjectsDirectoryRoot;
 
 @interface GITObject : NSObject {
     NSString* hash;
