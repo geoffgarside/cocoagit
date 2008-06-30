@@ -45,11 +45,21 @@
 //  hex format for use in linking objects together.
 //  It is worth noting that the packed SHA1 hash can be decoded in Ruby using
 // 
-//      packedHash.unpack('H2'*20).join('')
+//      packedHash.unpack('H40')
 // 
 //  so the packing method must be at least fairly standardized. The Ruby
 //  String#unpack method with 'H' extracts hex nibbles from each character
 //  with the most significant first.
+//  
+//  SHA1 Packing format:
+//  For a normal human readable SHA1 hash we see it in ASCII format. But as
+//  hex only uses 8 characters the ASCII 1 byte per char is a bit wasteful.
+//  Instead we can store each hex character in 4 bits thereby halving the
+//  space required to store the hash. To do this we use the first 4 bits of
+//  the ASCII char for one HEX digit and the last 4 for the next.
+//  
+//  To expand this format we need to bitshift each char by 4 bits to get the
+//  first HEX value and then mask the char with 0000 get the second HEX value.
 // 
 
 #import <Cocoa/Cocoa.h>
