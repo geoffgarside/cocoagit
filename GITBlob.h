@@ -18,9 +18,13 @@
 @property(retain) NSData * data;
 
 #pragma mark -
-#pragma mark Init Methods
-- (id)initWithContentsOfFile:(NSString*)filePath;
+#pragma mark Reading existing Blob objects
+- (id)initFromHash:(NSString*)objectHash;
+
+#pragma mark -
+#pragma mark Creating new Blob objects
 - (id)initWithData:(NSData*)dataContent;
+- (id)initWithContentsOfFile:(NSString*)filePath;
 
 #pragma mark -
 #pragma mark Instance Methods
