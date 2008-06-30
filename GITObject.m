@@ -28,6 +28,14 @@ const NSString * kGITObjectsDirectoryRoot = @".git/objects";
 
 #pragma mark -
 #pragma mark Instance Methods
+- (id)initFromHash:(NSString*)objectHash
+{
+    if (self = [super init])
+    {
+        self.hash = objectHash;
+    }
+    return self;
+}
 - (void)dealloc
 {
     [hash release];
