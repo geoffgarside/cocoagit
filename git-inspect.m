@@ -23,6 +23,29 @@ int main (int argc, const char * argv[]) {
     NSString *objectType = [metaData substringToIndex:[metaData rangeOfString:@" "].location];
     NSLog(@"Object Type: %@", objectType);
     
+    if ([objectType isEqualToString:@"blob"])
+    {
+        NSLog(@"GITBlob, textual or binary content");
+    }
+    else if ([objectType isEqualToString:@"commit"])
+    {
+        NSLog(@"GITCommit, textual content");
+        NSString *commit = [content substringFromIndex:endOfMetaData + 1];
+        NSLog(@"Commit message:\n%@", commit);
+    }
+    else if ([objectType isEqualToString:@"tag"])
+    {
+        NSLog(@"GITTag, textual content");
+    }
+    else if ([objectType isEqualToString:@"tree"])
+    {
+        NSLog(@"GITTree, textual content (binary packed sha1 references)");
+    }
+    else
+    {
+        NSLog(@"Unknown git object type");
+    }
+    
     [pool drain];
     return 0;
 }
