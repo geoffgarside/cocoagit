@@ -12,4 +12,19 @@ const NSString *kGITObjectTagType = @"tag";
 
 @implementation GITTag
 
+#pragma mark -
+#pragma mark Properties
+@synthesize ref;
+@synthesize type;
+@synthesize name;
+@synthesize tagger;
+@synthesize taggedAt;
+
+#pragma mark -
+#pragma mark Instance Methods
+- (NSString*)objectType
+{
+    return kGITObjectTagType;
+}
+
 @end
