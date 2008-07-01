@@ -11,7 +11,7 @@
 
 extern const NSString *kGITObjectCommitType;
 
-@class GITTree, GITUser
+@class GITTree, GITUser;
 
 @interface GITCommit : GITObject {
     GITCommit * parent;

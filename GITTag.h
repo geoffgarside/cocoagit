@@ -11,7 +11,7 @@
 
 extern const NSString *kGITObjectTagType;
 
-@class GITUser
+@class GITUser;
 
 @interface GITTag : GITObject {
     NSString        * ref;
