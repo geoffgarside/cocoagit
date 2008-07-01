@@ -21,6 +21,7 @@ extern const NSString * kGITObjectsDirectoryRoot;
 #pragma mark -
 #pragma mark Class Methods
 + (NSString*)objectPathFromHash:(NSString*)theHash;
++ (GITObject*)objectFromHash:(NSString*)objectHash;
 
 
 #pragma mark -
