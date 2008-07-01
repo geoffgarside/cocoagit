@@ -30,10 +30,10 @@ int main (int argc, const char * argv[]) {
     else if ([objectType isEqualToString:@"commit"])
     {
         NSString *commit = [content substringFromIndex:endOfMetaData + 1];
-        unsigned endOfCommitInfo = [commit rangeOfString:@"\n\n"].location;
+        NSRange endOfCommitInfo = [commit rangeOfString:@"\n\n"];
         
-        NSString *commitInfo = [commit substringToIndex:endOfCommitInfo];
-        NSString *commitMsg  = [commit substringFromIndex:endOfCommitInfo + 2];
+        NSString *commitInfo = [commit substringToIndex:endOfCommitInfo.location];
+        NSString *commitMsg  = [commit substringFromIndex:endOfCommitInfo.location + endOfCommitInfo.length];
         NSLog(@"Commit info:\n%@", commitInfo);
         NSLog(@"Commit msg:\n%@", commitMsg);
     }
