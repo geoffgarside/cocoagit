@@ -11,12 +11,12 @@
 extern const NSString * kGITObjectsDirectoryRoot;
 
 @interface GITObject : NSObject {
-    NSString* hash;
+    NSString* sha1;
 }
 
 #pragma mark -
 #pragma mark Properties
-@property(retain) NSString* hash;
+@property(retain) NSString* sha1;
 
 #pragma mark -
 #pragma mark Class Methods

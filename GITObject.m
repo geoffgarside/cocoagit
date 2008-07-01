@@ -18,7 +18,7 @@ const NSString * kGITObjectsDirectoryRoot = @".git/objects";
 
 #pragma mark -
 #pragma mark Properties
-@synthesize hash;
+@synthesize sha1;
 
 #pragma mark -
 #pragma mark Class Methods
@@ -46,13 +46,13 @@ const NSString * kGITObjectsDirectoryRoot = @".git/objects";
 {
     if (self = [super init])
     {
-        self.hash = objectHash;
+        self.sha1 = objectHash;
     }
     return self;
 }
 - (void)dealloc
 {
-    [hash release];
+    [sha1 release];
     [super dealloc];
 }
 - (NSString*)hashObject
@@ -61,7 +61,7 @@ const NSString * kGITObjectsDirectoryRoot = @".git/objects";
 }
 - (NSString*)objectPath
 {
-    return [[self class] objectPathFromHash:self.hash];
+    return [[self class] objectPathFromHash:self.sha1];
 }
 
 @end
