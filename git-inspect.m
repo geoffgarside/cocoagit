@@ -33,9 +33,14 @@ int main (int argc, const char * argv[]) {
         NSRange endOfCommitInfo = [commit rangeOfString:@"\n\n"];
         
         NSString *commitInfo = [commit substringToIndex:endOfCommitInfo.location];
+        NSArray *commitInfoLines = [commitInfo componentsSeparatedByString:@"\n"];
+        for (NSString *infoLine in commitInfoLines)
+        {
+            NSLog(@"Commit info: %@", infoLine);
+        }
+        
         NSString *commitMsg  = [commit substringFromIndex:endOfCommitInfo.location + endOfCommitInfo.length];
-        NSLog(@"Commit info:\n%@", commitInfo);
-        NSLog(@"Commit msg:\n%@", commitMsg);
+        NSLog(@"Commit msg: %@", commitMsg);
     }
     else if ([objectType isEqualToString:@"tag"])
     {
