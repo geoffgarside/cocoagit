@@ -20,7 +20,7 @@
 #pragma mark Init Methods
 - (id)initWithName:(NSString*)theName
 {
-    return [self initWithName:theName andEmail:NULL];
+    return [self initWithName:theName andEmail:nil];
 }
 - (id)initWithName:(NSString*)theName andEmail:(NSString*)theEmail
 {
