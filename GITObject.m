@@ -7,6 +7,10 @@
 //
 
 #import "GITObject.h"
+#import "GITCommit.h"
+#import "GITBlob.h"
+#import "GITTree.h"
+#import "GITTag.h"
 
 const NSString * kGITObjectsDirectoryRoot = @".git/objects";
 
