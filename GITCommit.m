@@ -41,5 +41,9 @@ const NSString *kGITObjectCommitType = @"commit";
     return [NSString stringWithFormat:@"%@ %d %@", theUser,
             [theDate timeIntervalSince1970], [theDate descriptionWithCalendarFormat:@"%z"]];
 }
+- (NSString*)objectType
+{
+    return kGITObjectCommitType;
+}
 
 @end

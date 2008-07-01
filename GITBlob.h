@@ -30,6 +30,5 @@ extern const NSString *kGITObjectBlobType;
 
 #pragma mark -
 #pragma mark Instance Methods
-- (BOOL)write;
-- (BOOL)writeWithError:(NSError**)errorPtr;
+- (NSString*)objectType;
 @end

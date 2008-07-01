@@ -71,6 +71,12 @@ extern const NSString *kGITObjectTreeType;
     NSArray *entries;
 }
 
+#pragma mark -
+#pragma mark Properties
 @property(retain) NSArray* entries;
+
+#pragma mark -
+#pragma mark Instance Methods
+- (NSString*)objectType;
 
 @end

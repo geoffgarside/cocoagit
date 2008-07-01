@@ -44,4 +44,6 @@ extern const NSString *kGITObjectCommitType;
 - (void)setCommitter:(GITUser*)user withDate:(NSCalendarDate*)theDate;
 - (NSString*)formattedUser:(GITUser*)theUser withDate:(NSCalendarDate*)theDate;
 
+- (NSString*)objectType;
+
 @end

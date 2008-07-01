@@ -44,6 +44,10 @@ const NSString * kGITObjectBlobType = @"blob";
 
 #pragma mark -
 #pragma mark Instance Methods
+- (NSString*)objectType
+{
+    return kGITObjectBlobType;
+}
 - (NSData*)toData
 {
     NSMutableData * objectData = [NSMutableData data];
