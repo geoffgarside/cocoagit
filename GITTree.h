@@ -65,6 +65,8 @@
 #import <Cocoa/Cocoa.h>
 #import "GITObject.h"
 
+extern const NSString *kGITObjectTreeType;
+
 @interface GITTree : GITObject {
     NSArray *entries;
 }

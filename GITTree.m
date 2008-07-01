@@ -8,6 +8,7 @@
 
 #import "GITTree.h"
 
+const NSString *kGITObjectTreeType = @"tree";
 static const char hexchars[] = "0123456789abcdef";
 
 @interface GITTree (Private)
