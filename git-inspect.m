@@ -29,9 +29,13 @@ int main (int argc, const char * argv[]) {
     }
     else if ([objectType isEqualToString:@"commit"])
     {
-        NSLog(@"GITCommit, textual content");
         NSString *commit = [content substringFromIndex:endOfMetaData + 1];
-        NSLog(@"Commit message:\n%@", commit);
+        unsigned endOfCommitInfo = [commit rangeOfString:@"\n\n"].location;
+        
+        NSString *commitInfo = [commit substringToIndex:endOfCommitInfo];
+        NSString *commitMsg  = [commit substringFromIndex:endOfCommitInfo + 2];
+        NSLog(@"Commit info:\n%@", commitInfo);
+        NSLog(@"Commit msg:\n%@", commitMsg);
     }
     else if ([objectType isEqualToString:@"tag"])
     {
