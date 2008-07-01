@@ -3,6 +3,8 @@
 #import "NSData+Hashing.h"
 #import "GITObject.h"
 
+NSString * open_hash_file(NSString * objectHash);
+
 int main (int argc, const char * argv[]) {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     
@@ -12,12 +14,7 @@ int main (int argc, const char * argv[]) {
     }
     
     NSString *inspectHash = [NSString stringWithCString:argv[1]];
-    NSString *filePath = [GITObject objectPathFromHash:inspectHash];
-    
-    NSData *data = [[NSData dataWithContentsOfFile:filePath] zlibInflate];
-    
-    NSString *content = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-    [content autorelease];
+    NSString *content = open_hash_file(inspectHash);
     
     unsigned int endOfMetaData = [content rangeOfString:@"\0"].location;
     NSString *metaData = [content substringToIndex:endOfMetaData];
@@ -28,4 +25,16 @@ int main (int argc, const char * argv[]) {
     
     [pool drain];
     return 0;
+}
+
+NSString * open_hash_file(NSString * objectHash)
+{
+    NSString * filePath = [GITObject objectPathFromHash:objectHash];
+    NSData * fileData = [[NSData dataWithContentsOfFile:filePath] zlibInflate];
+    
+    NSString * content = [[NSString alloc] initWithData:fileData
+                                               encoding:NSASCIIStringEncoding];
+    [content autorelease];
+    
+    return [content retain];
 }
