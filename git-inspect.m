@@ -12,6 +12,19 @@ int main (int argc, const char * argv[]) {
     }
     
     NSString *inspectHash = [NSString stringWithCString:argv[1]];
+    NSString *filePath = [GITObject objectPathFromHash:inspectHash];
+    
+    NSData *data = [[NSData dataWithContentsOfFile:filePath] zlibInflate];
+    
+    NSString *content = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+    [content autorelease];
+    
+    unsigned int endOfMetaData = [content rangeOfString:@"\0"].location;
+    NSString *metaData = [content substringToIndex:endOfMetaData];
+    
+    NSLog(@"Meta Data: %@", metaData);
+    NSString *objectType = [metaData substringToIndex:[metaData rangeOfString:@" "].location];
+    NSLog(@"Object Type: %@", objectType);
     
     [pool drain];
     return 0;
