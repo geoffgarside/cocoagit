@@ -8,6 +8,7 @@
 
 #import "GITBlob.h"
 
+const NSString * kGITObjectBlobType = @"blob";
 
 @implementation GITBlob
 
@@ -47,7 +48,7 @@
 {
     NSMutableData * objectData = [NSMutableData data];
     
-    NSString *meta = [NSString stringWithFormat:@"blob %d\0", [self.data length]];
+    NSString *meta = [NSString stringWithFormat:@"%@ %d\0", kGITObjectBlobType, [self.data length]];
     [objectData appendData:[meta dataUsingEncoding:NSUTF8StringEncoding]];
     [objectData appendData:self.data];
     

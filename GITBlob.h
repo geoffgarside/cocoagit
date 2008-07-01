@@ -9,6 +9,8 @@
 #import <Cocoa/Cocoa.h>
 #import "GITObject.h"
 
+extern const NSString *kGITObjectBlobType;
+
 @interface GITBlob : GITObject {
     NSData * data;
 }
