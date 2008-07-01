@@ -43,7 +43,11 @@ const NSString * kGITObjectsDirectoryRoot = @".git/objects";
 }
 - (NSString*)hashObject
 {
-    
+    return @"";
+}
+- (NSString*)objectPath
+{
+    return [[self class] objectPathFromHash:self.hash];
 }
 
 @end
