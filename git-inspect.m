@@ -8,7 +8,7 @@ int main (int argc, const char * argv[]) {
     
     if (argc != 2) {
         NSLog(@"Usage: %s sha1hash", argv[0]);
-        exit 0;
+        exit(0);
     }
     
     NSString *inspectHash = [NSString stringWithCString:argv[1]];
