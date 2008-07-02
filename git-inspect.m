@@ -4,6 +4,7 @@
 #import "GITObject.h"
 
 NSString * open_hash_file(NSString * objectHash);
+NSString * unpack_sha1_from_string(NSString *packedSHA1);
 
 int main (int argc, const char * argv[]) {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
@@ -49,6 +50,16 @@ int main (int argc, const char * argv[]) {
     else if ([objectType isEqualToString:@"tree"])
     {
         NSLog(@"GITTree, textual content (binary packed sha1 references)");
+        NSString *tree = [content substringFromIndex:endOfMetaData + 1];
+        
+        //NSMutableArray * entries = [NSMutableArray arrayWithCapacity:2];    //!< Start with a small size as we dont know how many entries there are
+        NSRange entrySplit = [tree rangeOfString:@"\0"];
+        NSString * modeAndName = [tree substringToIndex:entrySplit.location];
+        NSString * packedEntryRef = [tree substringWithRange:NSMakeRange(entrySplit.location + 1, 20)];
+        
+        NSString * entryRef = unpack_sha1_from_string(packedEntryRef);
+        NSLog(@"First entry: modeAndName: %@", modeAndName);
+        NSLog(@"First entry: entryRef: %@", entryRef);
     }
     else
     {
@@ -69,4 +80,18 @@ NSString * open_hash_file(NSString * objectHash)
     [content autorelease];
     
     return [content retain];
+}
+
+NSString * unpack_sha1_from_string(NSString *packedSHA1)
+{
+    static const char hexchars[] = "0123456789abcdef";
+    unsigned int bits;
+    NSMutableString *unpackedSHA1 = [NSMutableString stringWithCapacity:40];
+    for(int i = 0; i < 20; i++)
+    {
+        bits = [packedSHA1 characterAtIndex:i];
+        [unpackedSHA1 appendFormat:@"%c", hexchars[bits >> 4]];
+        [unpackedSHA1 appendFormat:@"%c", hexchars[bits & 0xf]];
+    }
+    return unpackedSHA1;
 }
