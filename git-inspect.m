@@ -53,13 +53,46 @@ int main (int argc, const char * argv[]) {
         NSString *tree = [content substringFromIndex:endOfMetaData + 1];
         
         //NSMutableArray * entries = [NSMutableArray arrayWithCapacity:2];    //!< Start with a small size as we dont know how many entries there are
-        NSRange entrySplit = [tree rangeOfString:@"\0"];
-        NSString * modeAndName = [tree substringToIndex:entrySplit.location];
-        NSString * packedEntryRef = [tree substringWithRange:NSMakeRange(entrySplit.location + 1, 20)];
+        // NSRange entrySplit = [tree rangeOfString:@"\0"];
+        // NSString * modeAndName = [tree substringToIndex:entrySplit.location];
+        // NSString * packedEntryRef = [tree substringWithRange:NSMakeRange(entrySplit.location + 1, 20)];
+        // 
+        // NSString * entryRef = unpack_sha1_from_string(packedEntryRef);
+        // NSLog(@"First entry: modeAndName: %@", modeAndName);
+        // NSLog(@"First entry: entryRef: %@", entryRef);
         
-        NSString * entryRef = unpack_sha1_from_string(packedEntryRef);
-        NSLog(@"First entry: modeAndName: %@", modeAndName);
-        NSLog(@"First entry: entryRef: %@", entryRef);
+        // Algorithm to read tree entries
+        // To read each entry we need the following data
+        // Index at which the entry starts
+        // Index at which the entry sha1 starts
+        // Index at which the entry ends (sha1 start + 20)
+        //
+        // Looping (do,while)
+        // Vars
+        // NSRange sha1Range = NSMakeRange(sha1Start, sha1Start + 20)
+        
+        // The point at which the entries all start is after the first \0
+        // however in this case that value is already determined as endOfMetaData
+        unsigned entryStart = 0;
+        
+        NSLog(@"\tMode\tName\t\tSHA1");
+        
+        do {
+            NSRange searchRange = NSMakeRange(entryStart, [tree length] - entryStart);
+            NSRange entryModeRange = [tree rangeOfString:@" " options:0 range:searchRange];
+            NSRange entrySha1Range = [tree rangeOfString:@"\0" options:0 range:searchRange];
+            
+            NSString * entryMode = [tree substringWithRange:NSMakeRange(entryStart, entryModeRange.location - entryStart)];
+            NSString * entryName = [tree substringWithRange:NSMakeRange(entryModeRange.location + 1, entrySha1Range.location - entryModeRange.location - 1)];
+            
+            entrySha1Range.location += entrySha1Range.length;   //!< Increment past the found char
+            entrySha1Range.length = 20;                         //!< Set length to size of packed sha1
+            NSString * entrySha1 = unpack_sha1_from_string([tree substringWithRange:entrySha1Range]);
+            
+            entryStart = entrySha1Range.location + entrySha1Range.length;
+            
+            NSLog(@"\t%@\t%@\t%@", entryMode, entryName, entrySha1);
+        } while(entryStart < [tree length]);
     }
     else
     {
