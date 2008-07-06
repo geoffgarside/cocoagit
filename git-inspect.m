@@ -56,6 +56,22 @@ int main (int argc, const char * argv[]) {
     else if ([objectType isEqualToString:@"tag"])
     {
         NSLog(@"GITTag, textual content");
+        
+        // Need to get :object, :type, :tag, :tagger fields
+        // then \n\n and tag message
+        
+        NSString * tag = [content substringFromIndex:endOfMetaData + 1];
+        NSRange endOfTagInfo = [tag rangeOfString:@"\n\n"];
+        
+        NSString *tagInfo = [tag substringToIndex:endOfTagInfo.location];
+        NSArray *tagInfoLines = [tagInfo componentsSeparatedByString:@"\n"];
+        for (NSString *tagLine in tagInfoLines)
+        {
+            NSLog(@"Tag Info: %@", tagLine);
+        }
+        
+        NSString *tagMsg = [tag substringFromIndex:endOfTagInfo.location + endOfTagInfo.length];
+        NSLog(@"Tag Msg: %@", tagMsg);
     }
     else if ([objectType isEqualToString:@"tree"])
     {
