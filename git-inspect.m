@@ -27,6 +27,16 @@ int main (int argc, const char * argv[]) {
     if ([objectType isEqualToString:@"blob"])
     {
         NSLog(@"GITBlob, textual or binary content");
+        NSString *blob = [content substringFromIndex:endOfMetaData + 1];
+        
+        // No embedded nulls assume text data.
+        if ([blob rangeOfString:@"\0"].location == NSNotFound)
+            NSLog(@"Blob Text: %@", blob);
+        else
+        {
+            NSData *blobData = [blob dataUsingEncoding:NSASCIIStringEncoding];
+            NSLog(@"Blob Data: %@", blobData);
+        }
     }
     else if ([objectType isEqualToString:@"commit"])
     {
