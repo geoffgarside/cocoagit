@@ -90,8 +90,6 @@ int main (int argc, const char * argv[]) {
         // Vars
         // NSRange sha1Range = NSMakeRange(sha1Start, sha1Start + 20)
         
-        // The point at which the entries all start is after the first \0
-        // however in this case that value is already determined as endOfMetaData
         unsigned entryStart = 0;
         
         NSLog(@"\tMode\tName\t\tSHA1");
