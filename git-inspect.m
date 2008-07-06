@@ -79,13 +79,6 @@ int main (int argc, const char * argv[]) {
         NSString *tree = [content substringFromIndex:endOfMetaData + 1];
         
         //NSMutableArray * entries = [NSMutableArray arrayWithCapacity:2];    //!< Start with a small size as we dont know how many entries there are
-        // NSRange entrySplit = [tree rangeOfString:@"\0"];
-        // NSString * modeAndName = [tree substringToIndex:entrySplit.location];
-        // NSString * packedEntryRef = [tree substringWithRange:NSMakeRange(entrySplit.location + 1, 20)];
-        // 
-        // NSString * entryRef = unpack_sha1_from_string(packedEntryRef);
-        // NSLog(@"First entry: modeAndName: %@", modeAndName);
-        // NSLog(@"First entry: entryRef: %@", entryRef);
         
         // Algorithm to read tree entries
         // To read each entry we need the following data
