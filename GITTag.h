@@ -11,13 +11,13 @@
 
 extern const NSString *kGITObjectTagType;
 
-@class GITUser;
+@class GITActor;
 
 @interface GITTag : GITObject {
     NSString        * ref;
     NSString        * type;
     NSString        * name;
-    GITUser         * tagger;
+    GITActor        * tagger;
     NSCalendarDate  * taggedAt;
 }
 
@@ -26,7 +26,7 @@ extern const NSString *kGITObjectTagType;
 @property(retain) NSString * ref;
 @property(retain) NSString * type;
 @property(retain) NSString * name;
-@property(retain) GITUser  * tagger;
+@property(retain) GITActor  * tagger;
 @property(retain) NSCalendarDate * taggedAt;
 
 #pragma mark -

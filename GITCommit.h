@@ -11,14 +11,14 @@
 
 extern const NSString *kGITObjectCommitType;
 
-@class GITTree, GITUser;
+@class GITTree, GITActor;
 
 @interface GITCommit : GITObject {
     GITCommit * parent;
     GITTree * tree;
     
-    GITUser * author;
-    GITUser * committer;
+    GITActor * author;
+    GITActor * committer;
     
     NSCalendarDate * authoredAt;
     NSCalendarDate * committedAt;
@@ -31,8 +31,8 @@ extern const NSString *kGITObjectCommitType;
 @property(retain) GITCommit * parent;
 @property(retain) GITTree * tree;
 
-@property(retain) GITUser * author;
-@property(retain) GITUser * committer;
+@property(retain) GITActor * author;
+@property(retain) GITActor * committer;
 @property(retain) NSCalendarDate * authoredAt;
 @property(retain) NSCalendarDate * committedAt;
 
@@ -40,9 +40,9 @@ extern const NSString *kGITObjectCommitType;
 
 #pragma mark -
 #pragma mark Instance Methods
-- (void)setAuthor:(GITUser*)user withDate:(NSCalendarDate*)theDate;
-- (void)setCommitter:(GITUser*)user withDate:(NSCalendarDate*)theDate;
-- (NSString*)formattedUser:(GITUser*)theUser withDate:(NSCalendarDate*)theDate;
+- (void)setAuthor:(GITActor*)actor withDate:(NSCalendarDate*)theDate;
+- (void)setCommitter:(GITActor*)actor withDate:(NSCalendarDate*)theDate;
+- (NSString*)formattedUser:(GITActor*)actor withDate:(NSCalendarDate*)theDate;
 
 - (NSString*)objectType;
 

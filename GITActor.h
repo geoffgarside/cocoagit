@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface GITUser : NSObject {
+@interface GITActor : NSObject {
     NSString * name;
     NSString * email;
 }

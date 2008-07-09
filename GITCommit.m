@@ -8,7 +8,7 @@
 
 #import "GITCommit.h"
 #import "GITTree.h"
-#import "GITUser.h"
+#import "GITActor.h"
 
 const NSString *kGITObjectCommitType = @"commit";
 
@@ -26,20 +26,20 @@ const NSString *kGITObjectCommitType = @"commit";
 
 #pragma mark -
 #pragma mark Instance Methods
-- (void)setAuthor:(GITUser*)user withDate:(NSCalendarDate*)theDate
+- (void)setAuthor:(GITActor*)actor withDate:(NSCalendarDate*)theDate
 {
-    self.author = user;
+    self.author = actor;
     self.authoredAt = theDate;
 }
-- (void)setCommitter:(GITUser*)user withDate:(NSCalendarDate*)theDate
+- (void)setCommitter:(GITActor*)actor withDate:(NSCalendarDate*)theDate
 {
-    self.committer = user;
+    self.committer = actor;
     self.committedAt = theDate;
 }
-- (NSString*)formattedUser:(GITUser*)theUser withDate:(NSCalendarDate*)theDate
+- (NSString*)formattedUser:(GITActor*)actor withDate:(NSCalendarDate*)date
 {
-    return [NSString stringWithFormat:@"%@ %d %@", theUser,
-            [theDate timeIntervalSince1970], [theDate descriptionWithCalendarFormat:@"%z"]];
+    return [NSString stringWithFormat:@"%@ %d %@", actor,
+            [date timeIntervalSince1970], [date descriptionWithCalendarFormat:@"%z"]];
 }
 - (NSString*)objectType
 {

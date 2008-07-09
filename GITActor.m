@@ -6,10 +6,10 @@
 //  Copyright 2008 ManicPanda.com. All rights reserved.
 //
 
-#import "GITUser.h"
+#import "GITActor.h"
 
 
-@implementation GITUser
+@implementation GITActor
 
 #pragma mark -
 #pragma mark Properties
