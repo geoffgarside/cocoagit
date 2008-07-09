@@ -11,6 +11,7 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		9F0862070E20F02E00FD6CF6 /* GITTreeEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */; };
 		9F6A88F70E1A5A5B00D28294 /* GITObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212B70E179DB6005AC693 /* GITObject.m */; };
 		9F7EC9040E1A7032001668EB /* GITCommit.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC9030E1A7032001668EB /* GITCommit.m */; };
 		9F7EC9070E1A709D001668EB /* GITTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC9060E1A709D001668EB /* GITTag.m */; };
@@ -38,6 +39,8 @@
 		32CA4F630368D1EE00C91783 /* CocoaGit_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaGit_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* CocoaGit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CocoaGit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F0862050E20F02E00FD6CF6 /* GITTreeEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITTreeEntry.h; sourceTree = "<group>"; };
+		9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITTreeEntry.m; sourceTree = "<group>"; };
 		9F7EC9020E1A7032001668EB /* GITCommit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITCommit.h; sourceTree = "<group>"; };
 		9F7EC9030E1A7032001668EB /* GITCommit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITCommit.m; sourceTree = "<group>"; };
 		9F7EC9050E1A709D001668EB /* GITTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITTag.h; sourceTree = "<group>"; };
@@ -93,6 +96,8 @@
 				9F7EC9060E1A709D001668EB /* GITTag.m */,
 				9F7EC93C0E1A8917001668EB /* GITUser.h */,
 				9F7EC93D0E1A8917001668EB /* GITUser.m */,
+				9F0862050E20F02E00FD6CF6 /* GITTreeEntry.h */,
+				9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -251,6 +256,7 @@
 				9F7EC9040E1A7032001668EB /* GITCommit.m in Sources */,
 				9F7EC9070E1A709D001668EB /* GITTag.m in Sources */,
 				9F7EC93E0E1A8917001668EB /* GITUser.m in Sources */,
+				9F0862070E20F02E00FD6CF6 /* GITTreeEntry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
