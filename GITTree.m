@@ -7,6 +7,7 @@
 //
 
 #import "GITTree.h"
+#import "GITTreeEntry.h"
 
 const NSString *kGITObjectTreeType = @"tree";
 static const char hexchars[] = "0123456789abcdef";
@@ -65,6 +66,23 @@ static const char hexchars[] = "0123456789abcdef";
         [unpackedSHA1 appendFormat:@"%c", hexchars[bits & 0xf]];
     }
     return unpackedSHA1;
+}
+- (NSArray*)parseEntryList
+{
+    NSMutableArray *treeEntries = [NSMutableArray arrayWithCapacity:2];
+    unsigned entryStart = 0;
+    
+    do {
+        NSRange searchRange = NSMakeRange(entryStart, [tree length] - entryStart);
+        NSUInteger entrySha1Start = [tree rangeOfString:@"\0" options:0 range:searchRange].location;
+        
+        NSRange entryRange = NSMakeRange(entryStart, entrySha1Start - entryStart + 21);
+        
+        GITTreeEntry * entry = [[GITTreeEntry alloc] initWithLine:[tree substringWithRange:entryRange]];
+        [treeEntries addObject:entry];
+        
+        entryStart = entryRange.location + entryRange.length;
+    } while(entryStart < [tree length]);
 }
 
 @end
