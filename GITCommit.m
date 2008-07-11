@@ -36,7 +36,7 @@ const NSString *kGITObjectCommitType = @"commit";
     self.committer = actor;
     self.committedAt = theDate;
 }
-- (NSString*)formattedUser:(GITActor*)actor withDate:(NSCalendarDate*)date
+- (NSString*)formattedActor:(GITActor*)actor withDate:(NSCalendarDate*)date
 {
     return [NSString stringWithFormat:@"%@ %d %@", actor,
             [date timeIntervalSince1970], [date descriptionWithCalendarFormat:@"%z"]];

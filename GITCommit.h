@@ -42,7 +42,7 @@ extern const NSString *kGITObjectCommitType;
 #pragma mark Instance Methods
 - (void)setAuthor:(GITActor*)actor withDate:(NSCalendarDate*)theDate;
 - (void)setCommitter:(GITActor*)actor withDate:(NSCalendarDate*)theDate;
-- (NSString*)formattedUser:(GITActor*)actor withDate:(NSCalendarDate*)theDate;
+- (NSString*)formattedActor:(GITActor*)actor withDate:(NSCalendarDate*)theDate;
 
 - (NSString*)objectType;
 
