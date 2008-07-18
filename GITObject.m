@@ -11,6 +11,8 @@
 #import "GITBlob.h"
 #import "GITTree.h"
 #import "GITTag.h"
+#import "NSData+Compression.h"
+#import "NSData+Searching.h"
 
 const NSString * kGITObjectsDirectoryRoot = @".git/objects";
 
@@ -48,6 +50,13 @@ const NSString * kGITObjectsDirectoryRoot = @".git/objects";
 - (NSString*)objectPath
 {
     return [[self class] objectPathFromHash:self.sha1];
+}
+- (NSData*)dataContentOfObject
+{
+    NSData *decompressedData = [[NSData dataWithContentsOfFile:[self objectPath]] zlibInflate];
+    NSRange metaRange = [decompressedData rangeOfNullTerminatedBytesFrom:0];
+
+    return [decompressedData subdataFromIndex:metaRange.length + 1];
 }
 
 @end
