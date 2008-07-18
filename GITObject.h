@@ -12,7 +12,7 @@ extern const NSString * kGITObjectsDirectoryRoot;
 
 @interface GITObject : NSObject {
     NSString* sha1;     //!< Stores the SHA1 of objects committed to the file system
-    NSUInteger size;   //!< Stores the content size of the data portion of the object
+    NSUInteger size;    //!< Stores the content size of the data portion of the object
 }
 
 #pragma mark -
