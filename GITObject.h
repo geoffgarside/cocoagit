@@ -30,10 +30,3 @@ extern const NSString * kGITObjectsDirectoryRoot;
 - (NSString*)objectPath;
 
 @end
-
-@protocol GITObjectType
-
-- (NSString*)objectType;
-
-@end
-
