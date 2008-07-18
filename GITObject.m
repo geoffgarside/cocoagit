@@ -7,10 +7,6 @@
 //
 
 #import "GITObject.h"
-#import "GITCommit.h"
-#import "GITBlob.h"
-#import "GITTree.h"
-#import "GITTag.h"
 #import "NSData+Compression.h"
 #import "NSData+Searching.h"
 
