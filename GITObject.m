@@ -59,10 +59,10 @@ const NSString * kGITObjectsDirectoryRoot = @".git/objects";
 }
 - (NSData*)dataContentOfObject
 {
-    NSData *decompressedData = [[NSData dataWithContentsOfFile:[self objectPath]] zlibInflate];
-    NSRange metaRange = [decompressedData rangeOfNullTerminatedBytesFrom:0];
+    NSData *data = [[NSData dataWithContentsOfFile:[self objectPath]] zlibInflate];
+    NSRange metaRange = [data rangeOfNullTerminatedBytesFrom:0];
 
-    return [decompressedData subdataFromIndex:metaRange.length + 1];
+    return [data subdataFromIndex:metaRange.length + 1];
 }
 - (void)loadMetaData
 {
