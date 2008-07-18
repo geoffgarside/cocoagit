@@ -25,8 +25,7 @@ extern const NSString * kGITObjectsDirectoryRoot;
 
 #pragma mark -
 #pragma mark Instance Methods
-- (id)initFromHash:(NSString*)objectHash;
-- (NSString*)hashObject;
+- (id)initWithHash:(NSString*)objectHash;
 - (NSString*)objectPath;
 
 @end

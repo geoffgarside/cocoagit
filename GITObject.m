@@ -29,20 +29,10 @@ const NSString * kGITObjectsDirectoryRoot = @".git/objects";
             [theHash substringToIndex:2],       //!< Gets the first two characters of the sha1
             [theHash substringFromIndex:2]];    //!< Gets the remaining characters of the sha1
 }
-+ (GITObject*)objectFromHash:(NSString*)objectHash
-{
-    // This method opens up the sha1 file, decompresses it and
-    // reads up to the first " " character. It then dispatches
-    // the content after the "\0" to the correct GITObject child.
-    GITObject *obj = [[GITObject alloc] initFromHash:objectHash];
-    [obj autorelease];
-    
-    return [obj retain];
-}
 
 #pragma mark -
 #pragma mark Instance Methods
-- (id)initFromHash:(NSString*)objectHash
+- (id)initWithHash:(NSString*)objectHash
 {
     if (self = [super init])
     {
@@ -54,10 +44,6 @@ const NSString * kGITObjectsDirectoryRoot = @".git/objects";
 {
     [sha1 release];
     [super dealloc];
-}
-- (NSString*)hashObject
-{
-    return @"";
 }
 - (NSString*)objectPath
 {
