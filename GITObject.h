@@ -11,13 +11,16 @@
 extern const NSString * kGITObjectsDirectoryRoot;
 
 @interface GITObject : NSObject {
-    NSString* sha1;     //!< Stores the SHA1 of objects committed to the file system
-    NSUInteger size;    //!< Stores the content size of the data portion of the object
+    NSString * sha1;     //!< Stores the SHA1 of objects committed to the file system
+    NSString * type;     //!< Stores the parsed type of the object
+    NSUInteger size;     //!< Stores the content size of the data portion of the object
 }
 
 #pragma mark -
-#pragma mark Properties
-@property(retain) NSString* sha1;
+#pragma mark Read-only Properties
+@property(readonly,retain) NSString * sha1;
+@property(readonly,retain) NSString * type;
+@property(readonly,assign) NSUInteger size;
 
 #pragma mark -
 #pragma mark Class Methods

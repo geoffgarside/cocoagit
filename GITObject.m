@@ -12,11 +12,17 @@
 
 const NSString * kGITObjectsDirectoryRoot = @".git/objects";
 
-@implementation GITObject
+// Make the properties readwrite
+@interface GITObject ()
+@property(readwrite,retain) NSString * sha1;
+@property(readwrite,retain) NSString * type;
+@property(readwrite,assign) NSUInteger size;
+@end
 
-#pragma mark -
-#pragma mark Properties
+@implementation GITObject
 @synthesize sha1;
+@synthesize type;
+@synthesize size;
 
 #pragma mark -
 #pragma mark Class Methods
@@ -40,7 +46,7 @@ const NSString * kGITObjectsDirectoryRoot = @".git/objects";
 }
 - (void)dealloc
 {
-    [sha1 release];
+    self.sha1 = nil;
     [super dealloc];
 }
 - (NSString*)objectPath
