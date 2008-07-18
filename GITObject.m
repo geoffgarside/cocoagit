@@ -17,6 +17,9 @@ const NSString * kGITObjectsDirectoryRoot = @".git/objects";
 @property(readwrite,retain) NSString * sha1;
 @property(readwrite,retain) NSString * type;
 @property(readwrite,assign) NSUInteger size;
+
+- (void)loadMetaData;
+
 @end
 
 @implementation GITObject
@@ -41,6 +44,7 @@ const NSString * kGITObjectsDirectoryRoot = @".git/objects";
     if (self = [super init])
     {
         self.sha1 = objectHash;
+        [self loadMetaData];
     }
     return self;
 }
@@ -59,6 +63,18 @@ const NSString * kGITObjectsDirectoryRoot = @".git/objects";
     NSRange metaRange = [decompressedData rangeOfNullTerminatedBytesFrom:0];
 
     return [decompressedData subdataFromIndex:metaRange.length + 1];
+}
+- (void)loadMetaData
+{
+    NSData * decompressedData = [[NSData dataWithContentsOfFile:[self objectPath]] zlibInflate];
+    NSRange metaRange         = [decompressedData rangeOfNullTerminatedBytesFrom:0];
+    NSData * metaData         = [decompressedData subdataWithRange:metaRange];
+    NSString * meta           = [[NSString alloc] initWithData:metaData
+                                                      encoding:NSASCIIStringEncoding];
+    NSUInteger indexOfSpace   = [meta rangeOfString:@" "].location;
+    
+    self.type = [meta substringToIndex:indexOfSpace];
+    self.size = [[meta substringFromIndex:indexOfSpace + 1] integerValue];
 }
 
 @end
