@@ -7,39 +7,36 @@
 //
 
 #import "GITBlob.h"
+#import "NSData+Searching.h"
 
-const NSString * kGITObjectBlobType = @"blob";
+NSString * const kGITObjectBlobType = @"blob";
+
+@interface GITBlob ()
+@property(readwrite,retain) NSData * data;
+@end
 
 @implementation GITBlob
-
-#pragma mark -
-#pragma mark Properties
 @synthesize data;
 
 #pragma mark -
 #pragma mark Reading existing Blob objects
-- (id)initFromHash:(NSString*)objectHash
+- (id)initWithHash:(NSString*)objectHash
 {
-    if (self = [super initFromHash:objectHash])
+    if (self = [super initWithHash:objectHash])
     {
-        
+        if ([self.type isEqualToString:kGITObjectBlobType])
+        {
+            self.data = [self dataContentOfObject];
+        }
+        else
+        {
+            NSException *exception = [NSException exceptionWithName:@"GitObjectTypeMismatchException"
+                                                             reason:@"The parsed type is not 'blob'"
+                                                           userInfo:nil];
+            @throw exception;
+        }
     }
     return self;
-}
-
-#pragma mark -
-#pragma mark Creating new Blob objects
-- (id)initWithData:(NSData*)dataContent
-{
-    if (self = [super init])
-    {
-        self.data = dataContent;
-    }
-    return self;
-}
-- (id)initWithContentsOfFile:(NSString*)filePath
-{
-    return [self initWithData:[NSData dataWithContentsOfFile:filePath]];
 }
 
 #pragma mark -
@@ -48,15 +45,20 @@ const NSString * kGITObjectBlobType = @"blob";
 {
     return kGITObjectBlobType;
 }
-- (NSData*)toData
+- (NSString*)description
 {
-    NSMutableData * objectData = [NSMutableData data];
-    
-    NSString *meta = [NSString stringWithFormat:@"%@ %d\0", kGITObjectBlobType, [self.data length]];
-    [objectData appendData:[meta dataUsingEncoding:NSUTF8StringEncoding]];
-    [objectData appendData:self.data];
-    
-    return *objectData;
+    return [NSString stringWithFormat:@"GITBlob: %@", self.sha1];
+}
+- (BOOL)hasEmbeddedNulls
+{
+    if ([self.data rangeOfNullTerminatedBytesFrom:0].location != NSNotFound)
+        return YES;
+    return NO;
+}
+- (NSString*)stringValue
+{
+    return [[NSString alloc] initWithData:self.data
+                                 encoding:NSASCIIStringEncoding];
 }
 
 @end
