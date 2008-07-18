@@ -2,6 +2,7 @@
 #import "NSData+Compression.h"
 #import "NSData+Hashing.h"
 #import "GITObject.h"
+#import "GITBlob.h"
 
 NSString * unpack_sha1_from_string(NSString *packedSHA1);
 
@@ -23,15 +24,12 @@ int main (int argc, const char * argv[]) {
     if ([gitObject.type isEqualToString:@"blob"])
     {
         NSLog(@"GITBlob, textual or binary content");
+        GITBlob *blob = [[GITBlob alloc] initWithHash:inspectHash];
         
-        // No embedded nulls assume text data.
-        if ([content rangeOfString:@"\0"].location == NSNotFound)
-            NSLog(@"Blob Text: %@", content);
+        if ([blob hasEmbeddedNulls])
+            NSLog(@"Blob data: %@", [blob data]);
         else
-        {
-            NSData *blobData = [content dataUsingEncoding:NSASCIIStringEncoding];
-            NSLog(@"Blob Data: %@", blobData);
-        }
+            NSLog(@"Blob text:\n%@", [blob stringValue]);
     }
     else if ([gitObject.type isEqualToString:@"commit"])
     {
