@@ -3,7 +3,6 @@
 #import "NSData+Hashing.h"
 #import "GITObject.h"
 
-NSString * open_hash_file(NSString * objectHash);
 NSString * unpack_sha1_from_string(NSString *packedSHA1);
 
 int main (int argc, const char * argv[]) {
@@ -15,69 +14,60 @@ int main (int argc, const char * argv[]) {
     }
     
     NSString *inspectHash = [NSString stringWithCString:argv[1]];
-    NSString *content = open_hash_file(inspectHash);
+    GITObject *gitObject  = [[GITObject alloc] initWithHash:inspectHash];
+    NSData *objectData    = [gitObject dataContentOfObject];
     
-    unsigned int endOfMetaData = [content rangeOfString:@"\0"].location;
-    NSString *metaData = [content substringToIndex:endOfMetaData];
+    NSString *content = [[NSString alloc] initWithData:objectData
+                                              encoding:NSASCIIStringEncoding];
     
-    NSLog(@"Meta Data: %@", metaData);
-    NSString *objectType = [metaData substringToIndex:[metaData rangeOfString:@" "].location];
-    NSLog(@"Object Type: %@", objectType);
-    
-    if ([objectType isEqualToString:@"blob"])
+    if ([gitObject.type isEqualToString:@"blob"])
     {
         NSLog(@"GITBlob, textual or binary content");
-        NSString *blob = [content substringFromIndex:endOfMetaData + 1];
         
         // No embedded nulls assume text data.
-        if ([blob rangeOfString:@"\0"].location == NSNotFound)
-            NSLog(@"Blob Text: %@", blob);
+        if ([content rangeOfString:@"\0"].location == NSNotFound)
+            NSLog(@"Blob Text: %@", content);
         else
         {
-            NSData *blobData = [blob dataUsingEncoding:NSASCIIStringEncoding];
+            NSData *blobData = [content dataUsingEncoding:NSASCIIStringEncoding];
             NSLog(@"Blob Data: %@", blobData);
         }
     }
-    else if ([objectType isEqualToString:@"commit"])
+    else if ([gitObject.type isEqualToString:@"commit"])
     {
-        NSString *commit = [content substringFromIndex:endOfMetaData + 1];
-        NSRange endOfCommitInfo = [commit rangeOfString:@"\n\n"];
+        NSRange endOfCommitInfo = [content rangeOfString:@"\n\n"];
         
-        NSString *commitInfo = [commit substringToIndex:endOfCommitInfo.location];
+        NSString *commitInfo = [content substringToIndex:endOfCommitInfo.location];
         NSArray *commitInfoLines = [commitInfo componentsSeparatedByString:@"\n"];
         for (NSString *infoLine in commitInfoLines)
         {
             NSLog(@"Commit info: %@", infoLine);
         }
         
-        NSString *commitMsg  = [commit substringFromIndex:endOfCommitInfo.location + endOfCommitInfo.length];
+        NSString *commitMsg  = [content substringFromIndex:endOfCommitInfo.location + endOfCommitInfo.length];
         NSLog(@"Commit msg: %@", commitMsg);
     }
-    else if ([objectType isEqualToString:@"tag"])
+    else if ([gitObject.type isEqualToString:@"tag"])
     {
         NSLog(@"GITTag, textual content");
         
         // Need to get :object, :type, :tag, :tagger fields
         // then \n\n and tag message
+        NSRange endOfTagInfo = [content rangeOfString:@"\n\n"];
         
-        NSString * tag = [content substringFromIndex:endOfMetaData + 1];
-        NSRange endOfTagInfo = [tag rangeOfString:@"\n\n"];
-        
-        NSString *tagInfo = [tag substringToIndex:endOfTagInfo.location];
+        NSString *tagInfo = [content substringToIndex:endOfTagInfo.location];
         NSArray *tagInfoLines = [tagInfo componentsSeparatedByString:@"\n"];
         for (NSString *tagLine in tagInfoLines)
         {
             NSLog(@"Tag Info: %@", tagLine);
         }
         
-        NSString *tagMsg = [tag substringFromIndex:endOfTagInfo.location + endOfTagInfo.length];
+        NSString *tagMsg = [content substringFromIndex:endOfTagInfo.location + endOfTagInfo.length];
         NSLog(@"Tag Msg: %@", tagMsg);
     }
-    else if ([objectType isEqualToString:@"tree"])
+    else if ([gitObject.type isEqualToString:@"tree"])
     {
         NSLog(@"GITTree, textual content (binary packed sha1 references)");
-        NSString *tree = [content substringFromIndex:endOfMetaData + 1];
-        
         //NSMutableArray * entries = [NSMutableArray arrayWithCapacity:2];    //!< Start with a small size as we dont know how many entries there are
         
         // Algorithm to read tree entries
@@ -95,21 +85,21 @@ int main (int argc, const char * argv[]) {
         NSLog(@"\tMode\tName\t\tSHA1");
         
         do {
-            NSRange searchRange = NSMakeRange(entryStart, [tree length] - entryStart);
-            NSRange entryModeRange = [tree rangeOfString:@" " options:0 range:searchRange];
-            NSRange entrySha1Range = [tree rangeOfString:@"\0" options:0 range:searchRange];
+            NSRange searchRange = NSMakeRange(entryStart, [content length] - entryStart);
+            NSRange entryModeRange = [content rangeOfString:@" " options:0 range:searchRange];
+            NSRange entrySha1Range = [content rangeOfString:@"\0" options:0 range:searchRange];
             
-            NSString * entryMode = [tree substringWithRange:NSMakeRange(entryStart, entryModeRange.location - entryStart)];
-            NSString * entryName = [tree substringWithRange:NSMakeRange(entryModeRange.location + 1, entrySha1Range.location - entryModeRange.location - 1)];
+            NSString * entryMode = [content substringWithRange:NSMakeRange(entryStart, entryModeRange.location - entryStart)];
+            NSString * entryName = [content substringWithRange:NSMakeRange(entryModeRange.location + 1, entrySha1Range.location - entryModeRange.location - 1)];
             
             entrySha1Range.location += entrySha1Range.length;   //!< Increment past the found char
             entrySha1Range.length = 20;                         //!< Set length to size of packed sha1
-            NSString * entrySha1 = unpack_sha1_from_string([tree substringWithRange:entrySha1Range]);
+            NSString * entrySha1 = unpack_sha1_from_string([content substringWithRange:entrySha1Range]);
             
             entryStart = entrySha1Range.location + entrySha1Range.length;
             
             NSLog(@"\t%@\t%@\t%@", entryMode, entryName, entrySha1);
-        } while(entryStart < [tree length]);
+        } while(entryStart < [content length]);
     }
     else
     {
@@ -118,18 +108,6 @@ int main (int argc, const char * argv[]) {
     
     [pool drain];
     return 0;
-}
-
-NSString * open_hash_file(NSString * objectHash)
-{
-    NSString * filePath = [GITObject objectPathFromHash:objectHash];
-    NSData * fileData = [[NSData dataWithContentsOfFile:filePath] zlibInflate];
-    
-    NSString * content = [[NSString alloc] initWithData:fileData
-                                               encoding:NSASCIIStringEncoding];
-    [content autorelease];
-    
-    return [content retain];
 }
 
 NSString * unpack_sha1_from_string(NSString *packedSHA1)
