@@ -11,7 +11,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-
 @interface NSData (Compression)
 
 #pragma mark -

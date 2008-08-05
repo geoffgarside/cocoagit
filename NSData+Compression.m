@@ -80,7 +80,8 @@
     
 	if (deflateInit(&strm, Z_DEFAULT_COMPRESSION) != Z_OK) return nil;
     
-	NSMutableData *compressed = [NSMutableData dataWithLength:16384];  // 16K chuncks for expansion
+    // 16K chuncks for expansion
+	NSMutableData *compressed = [NSMutableData dataWithLength:16384];
     
 	do {
         
@@ -163,9 +164,11 @@
 	//   Z_BEST_COMPRESSION
 	//   Z_DEFAULT_COMPRESSION
 	
-	if (deflateInit2(&strm, Z_DEFAULT_COMPRESSION, Z_DEFLATED, (15+16), 8, Z_DEFAULT_STRATEGY) != Z_OK) return nil;
+	if (deflateInit2(&strm, Z_DEFAULT_COMPRESSION, Z_DEFLATED,
+	    (15+16), 8, Z_DEFAULT_STRATEGY) != Z_OK) return nil;
 	
-	NSMutableData *compressed = [NSMutableData dataWithLength:16384];  // 16K chunks for expansion
+	// 16K chunks for expansion
+	NSMutableData *compressed = [NSMutableData dataWithLength:16384];
 	
 	do {
 		
