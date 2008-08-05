@@ -12,7 +12,6 @@
 #import "NSData+Hashing.h"
 #include <openssl/sha.h>
 
-
 @implementation NSData (Hashing)
 
 #pragma mark -
