@@ -31,6 +31,12 @@
     }
     return self;
 }
+- (void)dealloc
+{
+    self.name = nil;
+    self.email = nil;
+    [super dealloc];
+}
 - (NSString*)description
 {
     if (self.email)
