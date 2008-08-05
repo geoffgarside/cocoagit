@@ -2,25 +2,34 @@
 //  GITTreeEntry.h
 //  CocoaGit
 //
-//  Created by Geoffrey Garside on 06/07/2008.
+//  Created by Geoffrey Garside on 05/08/2008.
 //  Copyright 2008 ManicPanda.com. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
 
-@class GITObject;
+extern const NSUInteger kGITPackedSha1Length;
+extern const NSUInteger kGITUnpackedSha1Length;
 
-@interface GITTreeEntry : NSObject {
+@class GITRepo;
+@protocol GITObject;
+@interface GITTreeEntry : NSObject
+{
+    GITRepo  * repo;
     NSString * name;
-    NSString * sha1;
     NSUInteger mode;
     
-    GITObject *object;
+    NSString * sha1;
+    id <GITObject> object;
 }
 
-@property(retain) NSString * name;
-@property(retain) NSString * sha1;
-@property(assign) NSUInteger mode;
-@property(readonly) GITObject * object;
+@property(readonly,copy) NSString * name;
+@property(readonly,assign) NSUInteger mode;
+@property(readonly,copy) NSString * sha1;
+@property(readonly,copy) id <GITObject> object;
+
+- (id)initWithTreeLine:(NSString*)treeLine;
+- (id)initWithMode:(NSUInteger)mode name:(NSString*)name andHash:(NSString*)hash;
+- (id)initWithModeString:(NSString*)mode name:(NSString*)name andHash:(NSString*)hash;
 
 @end

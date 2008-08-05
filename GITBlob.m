@@ -2,57 +2,59 @@
 //  GITBlob.m
 //  CocoaGit
 //
-//  Created by Geoffrey Garside on 29/06/2008.
+//  Created by Geoffrey Garside on 05/08/2008.
 //  Copyright 2008 ManicPanda.com. All rights reserved.
 //
 
 #import "GITBlob.h"
-#import "NSData+Searching.h"
-
-NSString * const kGITObjectBlobType = @"blob";
+#import "GITRepo.h"
+#import "GITObject.h"
 
 @interface GITBlob ()
-@property(readwrite,retain) NSData * data;
+@property(readwrite,retain) GITRepo * repo;
+@property(readwrite,copy) NSString * sha1;
+@property(readwrite,assign) NSUInteger size;
+@property(readwrite,copy) NSData * data;
 @end
 
 @implementation GITBlob
+@synthesize repo;
+@synthesize sha1;
+@synthesize size;
 @synthesize data;
 
-#pragma mark -
-#pragma mark Reading existing Blob objects
-- (id)initWithHash:(NSString*)objectHash
+- (id)initWithHash:(NSString*)hash
+           andData:(NSData*)data
+          fromRepo:(GITRepo*)repo
 {
-    if (self = [super initType:kGITObjectBlobType withHash:objectHash])
+    if (self = [super init])
     {
-        // self.data will be set by our -loadContentFromData: method
+        self.repo = repo;
+        self.sha1 = hash;
+        self.size = [data length];
+        self.data = data;
     }
     return self;
 }
-
-#pragma mark -
-#pragma mark Instance Methods
-- (NSString*)objectType
+- (void)dealloc
 {
-    return kGITObjectBlobType;
+    self.repo = nil;
+    self.sha1 = nil;
+    self.size = nil;
+    self.data = nil;
+    [super dealloc];
 }
-- (NSString*)description
-{
-    return [NSString stringWithFormat:@"GITBlob: %@", self.sha1];
-}
-- (BOOL)hasEmbeddedNulls
+- (BOOL)canBeRepresentedAsString
 {
     if ([self.data rangeOfNullTerminatedBytesFrom:0].location != NSNotFound)
         return YES;
     return NO;
 }
-- (NSString*)stringValue
+- (NSString*)stringValue    //!< Implicitly retained by the sender
 {
-    return [[NSString alloc] initWithData:self.data
-                                 encoding:NSASCIIStringEncoding];
-}
-- (void)loadContentFromData:(NSData*)contentData
-{
-    self.data = contentData;
+    NSString * v = [[NSString alloc] initWithData:self.data
+                                         encoding:NSASCIIStringEncoding];
+    return [[v autorelease] retain];
 }
 
 @end

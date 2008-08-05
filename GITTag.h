@@ -2,39 +2,39 @@
 //  GITTag.h
 //  CocoaGit
 //
-//  Created by Geoffrey Garside on 01/07/2008.
+//  Created by Geoffrey Garside on 05/08/2008.
 //  Copyright 2008 ManicPanda.com. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
-#import "GITObject.h"
 
-extern const NSString *kGITObjectTagType;
-
-@class GITActor;
-
-@interface GITTag : GITObject {
-    NSString        * ref;
-    NSString        * type;
-    NSString        * name;
-    GITActor        * tagger;
-    NSDate          * taggedAt;
-    NSTimeZone      * taggedTz;
-    NSString        * message;
+@class GITRepo, GITCommit, GITActor;
+@protocol GITObject;
+@interface GITTag : NSObject <GITObject>
+{
+    GITRepo  * repo;
+    NSString * name;
+    NSString * sha1;
+    NSUInteger size;
+    
+    // At such time as Tags can reference objects
+    // other than commits we'll change this.
+    GITCommit * commit;
+    GITActor  * tagger;
+    
+    NSDate * taggedAt;
+    NSTimeZone * taggedTz;
+    
+    NSString * message;
 }
 
-#pragma mark -
-#pragma mark Properties
-@property(retain) NSString * ref;
-@property(retain) NSString * type;
-@property(retain) NSString * name;
-@property(retain) GITActor * tagger;
-@property(retain) NSDate   * taggedAt;
-@property(retain) NSTimeZone * taggedTz;
-@property(retain) NSString * message;
-
-#pragma mark -
-#pragma mark Instance Methods
-- (NSString*)objectType;
+@property(readonly,copy) NSString * name;
+@property(readonly,copy) NSString * sha1;
+@property(readonly,assign) NSUInteger size;
+@property(readonly,copy) GITCommit * commit;
+@property(readonly,copy) GITActor * tagger;
+@property(readonly,copy) NSDate * taggedAt;
+@property(readonly,copy) NSTimeZone * taggedTz;
+@property(readonly,copy) NSString * message;
 
 @end

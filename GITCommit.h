@@ -2,48 +2,43 @@
 //  GITCommit.h
 //  CocoaGit
 //
-//  Created by Geoffrey Garside on 01/07/2008.
+//  Created by Geoffrey Garside on 05/08/2008.
 //  Copyright 2008 ManicPanda.com. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
-#import "GITObject.h"
 
-extern const NSString *kGITObjectCommitType;
-
-@class GITTree, GITActor;
-
-@interface GITCommit : GITObject {
+@class GITRepo, GITTree, GITActor;
+@protocol GITObject;
+@interface GITCommit : NSObject <GITObject>
+{
+    GITRepo  * repo;
+    NSString * sha1;
+    NSUInteger size;
+    GITTree  * tree;
+    
     GITCommit * parent;
-    GITTree * tree;
+    GITActor  * author;
+    GITActor  * committer;
     
-    GITActor * author;
-    GITActor * committer;
+    NSDate * authoredAt;
+    NSDate * committedAt;
     
-    NSCalendarDate * authoredAt;
-    NSCalendarDate * committedAt;
+    NSTimeZone * authoredTz;
+    NSTimeZone * committedTz;
     
     NSString * message;
 }
 
-#pragma mark -
-#pragma mark Properties
-@property(retain) GITCommit * parent;
-@property(retain) GITTree * tree;
-
-@property(retain) GITActor * author;
-@property(retain) GITActor * committer;
-@property(retain) NSCalendarDate * authoredAt;
-@property(retain) NSCalendarDate * committedAt;
-
-@property(retain) NSString * message;
-
-#pragma mark -
-#pragma mark Instance Methods
-- (void)setAuthor:(GITActor*)actor withDate:(NSCalendarDate*)theDate;
-- (void)setCommitter:(GITActor*)actor withDate:(NSCalendarDate*)theDate;
-- (NSString*)formattedActor:(GITActor*)actor withDate:(NSCalendarDate*)theDate;
-
-- (NSString*)objectType;
+@property(readonly,copy) NSString * sha1;
+@property(readonly,assign) NSUInteger size;
+@property(readonly,copy) GITTree * tree;
+@property(readonly,copy) GITCommit * parent;
+@property(readonly,copy) GITActor * author;
+@property(readonly,copy) GITActor * committer;
+@property(readonly,copy) NSDate * authoredAt;
+@property(readonly,copy) NSDate * committedAt;
+@property(readonly,copy) NSTimeZone * authoredTz;
+@property(readonly,copy) NSTimeZone * committedTz;
 
 @end

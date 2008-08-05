@@ -2,88 +2,78 @@
 //  GITTree.m
 //  CocoaGit
 //
-//  Created by Geoffrey Garside on 29/06/2008.
+//  Created by Geoffrey Garside on 05/08/2008.
 //  Copyright 2008 ManicPanda.com. All rights reserved.
 //
 
 #import "GITTree.h"
+#import "GITRepo.h"
+#import "GITObject.h"
 #import "GITTreeEntry.h"
 
-const NSString *kGITObjectTreeType = @"tree";
-static const char hexchars[] = "0123456789abcdef";
+@interface GITTree ()
+@property(readwrite,retain) GITRepo * repo;
+@property(readwrite,copy) NSString * sha1;
+@property(readwrite,assign) NSUInteger size;
+@property(readwrite,copy) NSArray * entries;
 
-@interface GITTree (Private)
-
-- (NSData*)packSHA1:(NSString*)unpackedSHA1;
-- (NSString*)unpackSHA1FromString:(NSString*)packedSHA1;
-- (NSString*)unpackSHA1FromData:(NSData*)packedSHA1;
+- (void)extractEntriesFromData:(NSData*)data;
 
 @end
-
 
 @implementation GITTree
+@synthesize repo;
+@synthesize sha1;
+@synthesize size;
+@synthesize entries;
 
-@end
+- (id)initWithHash:(NSString*)hash
+           andData:(NSData*)data
+          fromRepo:(GITRepo*)repo
+{
+    if (self = [super init])
+    {
+        self.repo = repo;
+        self.sha1 = hash;
+        self.size = [data length];
+        
+        [self extractEntriesFromData:data];
+    }
+    return self;
+}
+- (void)dealloc
+{
+    self.repo = nil;
+    self.sha1 = nil;
+    self.size = nil;
+    self.entries = nil;
+    [super dealloc];
+}
+- (void)extractEntriesFromData:(NSData*)data
+{
+    NSString  * dataStr = [[NSString alloc] initWithData:data 
+                                                encoding:NSASCIIStringEncoding];
 
-@implementation GITTree (Private)
-
-- (NSData*)packSHA1:(NSString*)unpackedSHA1
-{
-    unsigned int highBits, lowBits, bits;
-    NSMutableData *packedSHA1 = [NSMutableData dataWithCapacity:20];
-    for (int i = 0; i < [unpackedSHA1 length]; i++)
-    {
-        if (i % 2 == 0) {
-            highBits = (strchr(hexchars, [unpackedSHA1 characterAtIndex:i]) - hexchars) << 4;
-        } else {
-            lowBits = strchr(hexchars, [unpackedSHA1 characterAtIndex:i]) - hexchars;
-            bits = (highBits | lowBits);
-            [packedSHA1 appendBytes:&bits length:1];
-        }
-    }
-    return packedSHA1;
-}
-- (NSString*)unpackSHA1FromString:(NSString*)packedSHA1
-{
-    unsigned int bits;
-    NSMutableString *unpackedSHA1 = [NSMutableString stringWithCapacity:40];
-    for(int i = 0; i < 20; i++)
-    {
-        bits = [packedSHA1 characterAtIndex:i];
-        [unpackedSHA1 appendFormat:@"%c", hexchars[bits >> 4]];
-        [unpackedSHA1 appendFormat:@"%c", hexchars[bits & 0xf]];
-    }
-    return unpackedSHA1;
-}
-- (NSString*)unpackSHA1FromData:(NSData*)packedSHA1
-{
-    unsigned int bits;
-    NSMutableString *unpackedSHA1 = [NSMutableString stringWithCapacity:40];
-    for(int i = 0; i < 20; i++)
-    {
-        [packedSHA1 getBytes:&bits range:NSMakeRange(i, 1)];
-        [unpackedSHA1 appendFormat:@"%c", hexchars[bits >> 4]];
-        [unpackedSHA1 appendFormat:@"%c", hexchars[bits & 0xf]];
-    }
-    return unpackedSHA1;
-}
-- (NSArray*)parseEntryList
-{
     NSMutableArray *treeEntries = [NSMutableArray arrayWithCapacity:2];
     unsigned entryStart = 0;
-    
+
     do {
-        NSRange searchRange = NSMakeRange(entryStart, [tree length] - entryStart);
-        NSUInteger entrySha1Start = [tree rangeOfString:@"\0" options:0 range:searchRange].location;
+        NSRange searchRange = NSMakeRange(entryStart, [dataStr length] - entryStart);
+        NSUInteger entrySha1Start = [dataStr rangeOfString:@"\0" 
+                                                   options:0
+                                                     range:searchRange].location;
+
+        NSRange entryRange = NSMakeRange(entryStart, 
+            entrySha1Start - entryStart + kGITPackedSha1Length + 1);
         
-        NSRange entryRange = NSMakeRange(entryStart, entrySha1Start - entryStart + 21);
-        
-        GITTreeEntry * entry = [[GITTreeEntry alloc] initWithLine:[tree substringWithRange:entryRange]];
+        NSString * treeLine = [dataStr substringWithRange:entryRange];
+        GITTreeEntry * entry = [[GITTreeEntry alloc] initWithTreeLine:treeLine];
         [treeEntries addObject:entry];
-        
+
         entryStart = entryRange.location + entryRange.length;
-    } while(entryStart < [tree length]);
+    } while(entryStart < [dataStr length]);
+    
+    self.entries = treeEntries;
 }
 
 @end
-

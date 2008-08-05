@@ -2,96 +2,119 @@
 //  GITTag.m
 //  CocoaGit
 //
-//  Created by Geoffrey Garside on 01/07/2008.
+//  Created by Geoffrey Garside on 05/08/2008.
 //  Copyright 2008 ManicPanda.com. All rights reserved.
 //
 
 #import "GITTag.h"
+#import "GITRepo.h"
+#import "GITActor.h"
+#import "GITCommit.h"
+#import "GITObject.h"
 #import "NSTimeZone+Offset.h"
 
-const NSString *kGITObjectTagType = @"tag";
+@interface GITTag ()
+@property(readwrite,retain) GITRepo * repo;
+@property(readwrite,copy) NSString * name;
+@property(readwrite,copy) NSString * sha1;
+@property(readwrite,assign) NSUInteger size;
+@property(readwrite,copy) GITCommit * commit;
+@property(readwrite,copy) GITActor * tagger;
+@property(readwrite,copy) NSDate * taggedAt;
+@property(readwrite,copy) NSTimeZone * taggedTz;
+@property(readwrite,copy) NSString * message;
+
+- (void)extractFieldsFromData:(NSData*)data;
+
+@end
 
 @implementation GITTag
-
-#pragma mark -
-#pragma mark Properties
-@synthesize ref;
-@synthesize type;
+@synthesize repo;
 @synthesize name;
+@synthesize sha1;
+@synthesize size;
+@synthesize commit;
 @synthesize tagger;
 @synthesize taggedAt;
 @synthesize taggedTz;
 @synthesize message;
 
-- (id)initWithHash:(NSString*)objectHash
+- (id)initWithHash:(NSString*)hash
+           andData:(NSData*)data
+          fromRepo:(GITRepo*)repo
 {
-    if (self = [super initType:kGITObjectBlobType withHash:objectHash])
+    if (self = [super init])
     {
-        // self.data will be set by our -loadContentFromData: method
+        self.repo = repo;
+        self.sha1 = hash;
+        self.size = [data length];
+        
+        [self extractFieldsFromData:data];
     }
     return self;
 }
-- (void)loadContentFromData:(NSData*)contentData
+- (void)dealloc
 {
-    NSString  * dataStr = [[NSString alloc] initWithData:contentData 
+    self.repo = nil;
+    self.name = nil;
+    self.sha1 = nil;
+    self.size = nil;
+    self.commit = nil;
+    self.tagger = nil;
+    self.taggedAt = nil;
+    self.taggedTz = nil;
+    self.message = nil;
+    
+    [super dealloc];
+}
+- (void)extractFieldsFromData:(NSData*)data
+{
+    NSString  * dataStr = [[NSString alloc] initWithData:data 
                                                 encoding:NSASCIIStringEncoding];
     NSScanner * scanner = [NSScanner scannerWithString:dataStr];
     
     static NSString * NewLine = @"\n";
-    NSString    * taggedCommit,
-                * taggedType,      //!< Should be @"commit"
-                * tagName,
-                * taggerName,
-                * taggerEmail,
-                * taggerTimezone,
-                * msg;
-    NSTimeInterval taggerTimestamp;
+    NSString * taggedCommit,
+             * taggedType,      //!< Should be @"commit"
+             * tagName,
+             * taggerName,
+             * taggerEmail,
+             * taggerTimezone,
+             * msg;
+     NSTimeInterval taggerTimestamp;
     
-    while ([scanner isAtEnd] == NO)
+    if ([scanner scanString:@"object" intoString:NULL] &&
+        [scanner scanUpToString:NewLine intoString:&taggedCommit] &&
+        [scanner scanString:@"type" intoString:NULL] &&
+        [scanner scanUpToString:NewLine intoString:&taggedType] &&
+        [taggedType isEqualToString:kGITCommitType])
     {
-        [scanner scanString:@"object" intoString:NULL];
-        [scanner scanUpToString:NewLine intoString:&taggedCommit];
-        
-        [scanner scanString:@"type" intoString:NULL];
-        [scanner scanUpToString:NewLine intoString:&taggedType];
-        
-        [scanner scanString:@"tag" intoString:NULL];
-        [scanner scanUpToString:NewLine intoString:&tagName];
-        
-        [scanner scanString:@"tagger" intoString:NULL];
-        [scanner scanUpToString:@"<" intoString:&taggerName];
-        [scanner scanUpToString:@">" intoString:&taggerEmail];
-        [scanner scanDouble:&taggerTimestamp];
-        [scanner scanUpToString:NewLine intoString:&taggerTimezone];
-        
-        self.message = [dataStr substringFromIndex:[scanner scanLocation]];
-        [scanner setScanLocation:[dataStr length]]; // Take us to the end
+        self.commit = [self.repo commitWithHash:taggedCommit];
     }
     
-    self.name = tagName;
-    self.type = taggedType;
-    self.ref  = taggedCommit;
+    if ([scanner scanString:@"tag" intoString:NULL] &&
+        [scanner scanUpToString:NewLine intoString:&tagName])
+    {
+        self.name = tagName;
+    }
     
-    self.tagger = [[GITActor alloc] initWithName:taggerName andEmail:taggerEmail];
-    self.taggedAt = [NSDate dateWithTimeIntervalSince1970:taggerTimestamp];
-    self.taggedTz = [NSTimeZone timeZoneWithStringOffset:taggerTimezone];
+    if ([scanner scanString:@"tagger" intoString:NULL] &&
+        [scanner scanUpToString:@"<" intoString:&taggerName] &&
+        [scanner scanUpToString:@">" intoString:&taggerEmail] &&
+        [scanner scanDouble:&taggerTimestamp] &&
+        [scanner scanUpToString:NewLine intoString:&taggerTimezone])
+    {
+        self.tagger = [[GITActor alloc] initWithName:taggerName andEmail:taggerEmail];
+        self.taggedAt = [NSDate dateWithTimeIntervalSince1970:taggerTimestamp];
+        self.taggedTz = [NSTimeZone timeZoneWithStringOffset:taggerTimezone];
+    }
+        
+    self.message = [dataStr substringFromIndex:[scanner scanLocation]];
 }
-
-- (id)initWithHash:(NSString*)hash
+- (NSString*)description
 {
-    // Open File
-    // Expand File
-    // Convert to String
-    // Get Data from String
-    // Parse Data
-}
-
-
-#pragma mark -
-#pragma mark Instance Methods
-- (NSString*)objectType
-{
-    return kGITObjectTagType;
+    return [NSString stringWithFormat:@"Tag: %@ <%@>",
+                                        self.name, self.sha1];
 }
 
 @end
