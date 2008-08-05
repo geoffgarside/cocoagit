@@ -3,6 +3,7 @@
 #import "NSData+Hashing.h"
 #import "GITObject.h"
 #import "GITBlob.h"
+#import "NSTimeZone+Offset.h"
 
 NSString * unpack_sha1_from_string(NSString *packedSHA1);
 
