@@ -12,6 +12,7 @@
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		9F0862070E20F02E00FD6CF6 /* GITTreeEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */; };
+		9F464D410E3DC3EC00867506 /* NSTimeZone+Offset.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F464D400E3DC3EC00867506 /* NSTimeZone+Offset.m */; };
 		9F6A88F70E1A5A5B00D28294 /* GITObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212B70E179DB6005AC693 /* GITObject.m */; };
 		9F7EC9040E1A7032001668EB /* GITCommit.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC9030E1A7032001668EB /* GITCommit.m */; };
 		9F7EC9070E1A709D001668EB /* GITTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC9060E1A709D001668EB /* GITTag.m */; };
@@ -43,6 +44,8 @@
 		8D1107320486CEB800E47090 /* CocoaGit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CocoaGit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F0862050E20F02E00FD6CF6 /* GITTreeEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITTreeEntry.h; sourceTree = "<group>"; };
 		9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITTreeEntry.m; sourceTree = "<group>"; };
+		9F464D3F0E3DC3EC00867506 /* NSTimeZone+Offset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimeZone+Offset.h"; sourceTree = "<group>"; };
+		9F464D400E3DC3EC00867506 /* NSTimeZone+Offset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimeZone+Offset.m"; sourceTree = "<group>"; };
 		9F7EC9020E1A7032001668EB /* GITCommit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITCommit.h; sourceTree = "<group>"; };
 		9F7EC9030E1A7032001668EB /* GITCommit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITCommit.m; sourceTree = "<group>"; };
 		9F7EC9050E1A709D001668EB /* GITTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITTag.h; sourceTree = "<group>"; };
@@ -157,6 +160,8 @@
 				9F8CFFA30E2FFCF200D0E65A /* NSData+Searching.h */,
 				9F8CFFA40E2FFCF200D0E65A /* NSData+Searching.m */,
 				9FA4E0810E19A62500724E6B /* git-inspect.m */,
+				9F464D3F0E3DC3EC00867506 /* NSTimeZone+Offset.h */,
+				9F464D400E3DC3EC00867506 /* NSTimeZone+Offset.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -276,6 +281,7 @@
 				9F6A88F70E1A5A5B00D28294 /* GITObject.m in Sources */,
 				9F8CFFA50E2FFCF200D0E65A /* NSData+Searching.m in Sources */,
 				9F8C00770E311CA300D0E65A /* GITBlob.m in Sources */,
+				9F464D410E3DC3EC00867506 /* NSTimeZone+Offset.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
