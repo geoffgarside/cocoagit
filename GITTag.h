@@ -18,7 +18,9 @@ extern const NSString *kGITObjectTagType;
     NSString        * type;
     NSString        * name;
     GITActor        * tagger;
-    NSCalendarDate  * taggedAt;
+    NSDate          * taggedAt;
+    NSTimeZone      * taggedTz;
+    NSString        * message;
 }
 
 #pragma mark -
@@ -26,8 +28,10 @@ extern const NSString *kGITObjectTagType;
 @property(retain) NSString * ref;
 @property(retain) NSString * type;
 @property(retain) NSString * name;
-@property(retain) GITActor  * tagger;
-@property(retain) NSCalendarDate * taggedAt;
+@property(retain) GITActor * tagger;
+@property(retain) NSDate   * taggedAt;
+@property(retain) NSTimeZone * taggedTz;
+@property(retain) NSString * message;
 
 #pragma mark -
 #pragma mark Instance Methods
