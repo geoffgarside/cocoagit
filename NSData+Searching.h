@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-
 @interface NSData (Searching)
 
 - (NSRange)rangeOfNullTerminatedBytesFrom:(NSInteger)start;
