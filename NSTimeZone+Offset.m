@@ -8,7 +8,6 @@
 
 #import "NSTimeZone+Offset.h"
 
-
 @implementation NSTimeZone (Offset)
 
 + (id)timeZoneWithStringOffset:(NSString*)offset

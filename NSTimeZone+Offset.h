@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-
 @interface NSTimeZone (Offset)
 
 + (id)timeZoneWithStringOffset:(NSString*)offset;
