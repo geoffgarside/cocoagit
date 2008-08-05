@@ -8,19 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 
-
 @interface GITActor : NSObject {
     NSString * name;
     NSString * email;
 }
 
-#pragma mark -
-#pragma mark Properties
-@property(retain) NSString * name;
-@property(retain) NSString * email;
+@property(readonly,copy) NSString * name;
+@property(readonly,copy) NSString * email;
 
-#pragma mark -
-#pragma mark Init Methods
 - (id)initWithName:(NSString*)theName;
 - (id)initWithName:(NSString*)theName andEmail:(NSString*)theEmail;
 

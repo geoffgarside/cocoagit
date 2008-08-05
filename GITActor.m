@@ -8,16 +8,16 @@
 
 #import "GITActor.h"
 
+@interface GITActor ()
+@property(readwrite,copy) NSString * name;
+@property(readwrite,copy) NSString * email;
+@end
 
 @implementation GITActor
 
-#pragma mark -
-#pragma mark Properties
 @synthesize name;
 @synthesize email;
 
-#pragma mark -
-#pragma mark Init Methods
 - (id)initWithName:(NSString*)theName
 {
     return [self initWithName:theName andEmail:nil];
@@ -31,7 +31,6 @@
     }
     return self;
 }
-
 - (NSString*)description
 {
     if (self.email)
