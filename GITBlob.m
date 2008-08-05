@@ -22,19 +22,9 @@ NSString * const kGITObjectBlobType = @"blob";
 #pragma mark Reading existing Blob objects
 - (id)initWithHash:(NSString*)objectHash
 {
-    if (self = [super initWithHash:objectHash])
+    if (self = [super initType:kGITObjectBlobType withHash:objectHash])
     {
-        if ([self.type isEqualToString:kGITObjectBlobType])
-        {
-            self.data = [self dataContentOfObject];
-        }
-        else
-        {
-            NSException *exception = [NSException exceptionWithName:@"GitObjectTypeMismatchException"
-                                                             reason:@"The parsed type is not 'blob'"
-                                                           userInfo:nil];
-            @throw exception;
-        }
+        // self.data will be set by our -loadContentFromData: method
     }
     return self;
 }
@@ -59,6 +49,10 @@ NSString * const kGITObjectBlobType = @"blob";
 {
     return [[NSString alloc] initWithData:self.data
                                  encoding:NSASCIIStringEncoding];
+}
+- (void)loadContentFromData:(NSData*)contentData
+{
+    self.data = contentData;
 }
 
 @end
