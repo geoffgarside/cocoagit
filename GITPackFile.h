@@ -14,6 +14,8 @@
     NSString * idxPath;
     NSString * packPath;
     
+    NSArray  * idxOffsets;
+
     NSUInteger idxVersion;
     NSUInteger packVersion;
     
