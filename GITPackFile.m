@@ -106,11 +106,12 @@ const NSUInteger kGITPackIndexEntrySize   = 24;     // bytes
 
     // The Fanout table
     // The fanout table consists of 256 entries. These
-    // entries correspond to first byte of an object
+    // entries correspond to the first byte of an object
     // sha1. The value at each entry is the number of
     // object sha1's in the corresponding PACK file
     // in which the first byte is less than or equal
-    // to the entry index.
+    // to the entry index. This also applies to the
+    // list of SHA1 entries in the IDX file as well.
     // The value of each entry should be greater than
     // or equal to the previous value, if it is not 
     // then the index file is corrupt.
