@@ -156,11 +156,14 @@ const NSUInteger kGITPackIndexEntrySize   = 24;     // bytes
     // endOffset: Take the count of objects starting with bytes <= :firstByte
     NSUInteger startOffset = [self.idxOffsets objectAtIndex:firstByte - 1];
     NSUInteger endOffset   = [self.idxOffsets objectAtIndex:firstByte];
+    NSUInteger entryCount  = endOffset - startOffset;
 
     NSRange searchRange = NSMakeRange(startOffset * kGITPackIndexEntrySize + kGITPackIndexFanOutEnd,
                                       (endOffset - startOffset) * kGITPackIndexEntrySize);
-    // This is probably wrong
-    if (range.length < 1)
+    // If the count of objects in the previous fan is the same as in this
+    // fan, then we don't have any entries in the PACK starting with this
+    // fan byte index.
+    if (entryCount == 0)
     {
         NSString * reason = [NSString stringWithFormat:@"SHA1 %@ is not known in this PACK %@",
                              sha1, [self.idxPath lastPathComponent]];
@@ -170,7 +173,16 @@ const NSUInteger kGITPackIndexEntrySize   = 24;     // bytes
         @throw ex;
     }
 
-    // Now we need to loop through the
+    // Now we need to loop through the sha's in the search range
+    // Each entry is 24 bytes in size
+    unichar addr[4],    // Where the object is in the PACK file (from beginning)
+            name[20];   // The SHA1 object name
+    
+    NSUInteger i;
+    for (i = 0; i < entryCount; i++)
+    {
+        
+    }
 }
 
 @end
