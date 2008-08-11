@@ -151,38 +151,50 @@ const NSUInteger kGITPackIndexEntrySize   = 24;     // bytes
 - (NSUInteger)offsetForSha1:(NSString*)sha1
 {
     unichar firstByte = [sha1 characterAtIndex:0];
-
-    // startOffset: Take the count of objects starting with bytes < :firstByte
-    // endOffset: Take the count of objects starting with bytes <= :firstByte
-    NSUInteger startOffset = [self.idxOffsets objectAtIndex:firstByte - 1];
-    NSUInteger endOffset   = [self.idxOffsets objectAtIndex:firstByte];
-    NSUInteger entryCount  = endOffset - startOffset;
-
-    NSRange searchRange = NSMakeRange(startOffset * kGITPackIndexEntrySize + kGITPackIndexFanOutEnd,
-                                      (endOffset - startOffset) * kGITPackIndexEntrySize);
-    // If the count of objects in the previous fan is the same as in this
-    // fan, then we don't have any entries in the PACK starting with this
-    // fan byte index.
-    if (entryCount == 0)
-    {
-        NSString * reason = [NSString stringWithFormat:@"SHA1 %@ is not known in this PACK %@",
-                             sha1, [self.idxPath lastPathComponent]];
-        NSException * ex = [NSException exceptionWithName:@"GITPackFileUnknownSHA1"
-                                                   reason:reason
-                                                 userInfo:nil];
-        @throw ex;
-    }
-
-    // Now we need to loop through the sha's in the search range
-    // Each entry is 24 bytes in size
-    unichar addr[4],    // Where the object is in the PACK file (from beginning)
-            name[20];   // The SHA1 object name
+    NSUInteger thisFanout, prevFanout = 0;
     
-    NSUInteger i;
-    for (i = 0; i < entryCount; i++)
+    // prevFanout = number of objects with firstByte less than that of sha1
+    // thisFanout = number of objects with firstByte less than or equal to that of sha1
+    // fanoutDiff = number of objects with firstByte equal to that of sha1
+    thisFanout = [[self.idxOffsets objectAtIndex:firstByte] unsignedIntegerValue];
+    if (firstByte != 0x0)
+        prevFanout = [[self.idxOffsets objectAtIndex:firstByte - 1] unsignedIntegerValue];
+
+    // There are entries to examine
+    if (thisFanout > prevFanout)
     {
+        NSUInteger i;
+        unichar buf[20];
+
+        NSUInteger startLocation = kGITPackIndexFanOutEnd +
+            (kGITPackIndexEntrySize * prevFanout);
+        NSUInteger endLocation   = kGITPackIndexFanOutEnd +
+            (kGITPackIndexEntrySize * thisFanout);
         
+        for (i = startLocation; i < endLocation; i += kGITPackIndexEntrySize)
+        {
+            memset(buf, 0x0, 20);
+            [data getBytes:buf range:NSMakeRange(i, 4)];
+            NSUInteger offset = [self integerFromBytes:buf length:4];
+
+            memset(buf, 0x0, 20);
+            [data getBytes:buf range:NSMakeRange(i + 4, 20)];
+            NSString * name = [NSString stringWithCharacters:buf length:20];
+
+            if ([name isEqualToString:sha1])
+                return offset;
+        }
     }
+
+    // If its found the SHA1 then it will have returned by now.
+    // Otherwise the SHA1 is not in this PACK file, so we should
+    // raise an error.
+    NSString * reason = [NSString stringWithFormat:@"SHA1 %@ is not known in this PACK %@",
+                         sha1, [self.idxPath lastPathComponent]];
+    NSException * ex  = [NSException exceptionWithName:@"GITPackFileUnknownSHA1"
+                                                reason:reason
+                                              userInfo:nil];
+    @throw ex;
 }
 
 @end
