@@ -7,6 +7,7 @@
 //
 
 #import "GITPackFile.h"
+#import "GITUtilityBelt.h"
 
 //            Name of Range                 Start   Length
 const NSRange kGITPackFileSignatureRange = {     0,      4 };
@@ -76,7 +77,7 @@ const NSUInteger kGITPackIndexEntrySize   = 24;     // bytes
     if ([[NSString stringWithCharacters:buf length:4] isEqualToString:@"PACK"])
     {   // Its a valid PACK file, continue
         [pack getBytes:buf range:kGITPackFileVersionRange];
-        self.version = [self integerFromBytes:buf length:4];
+        self.version = integerFromBytes(buf, 4);
         
         if (self.version == 2)
             [self readVersion2:pack];
@@ -87,7 +88,7 @@ const NSUInteger kGITPackIndexEntrySize   = 24;     // bytes
     unichar buf[4];
     [pack getBytes:buf range:kGITPackFileNumberRange];
     
-    self.numberOfObjects = [self integerFromBytes:buf length:4];
+    self.numberOfObjects = integerFromBytes(buf, 4);
     
     
 }
@@ -121,7 +122,7 @@ const NSUInteger kGITPackIndexEntrySize   = 24;     // bytes
     for (i = 0; i < kGITPackIndexFanOutCount; i++)
     {
         [idx getBytes:buf range:NSMakeRange(i * kGITPackIndexFanOutSize, kGITPackIndexFanOutSize)];
-        thisCount = [self integerFromBytes:buf length:kGITPackIndexFanOutSize];
+        thisCount = integerFromBytes(buf, kGITPackIndexFanOutSize);
 
         // Assuming an NSUInteger is less expensive than calling
         // [[idxOffsets objectAtIndex:i - 1] unsignedIntegerValue]
@@ -141,12 +142,9 @@ const NSUInteger kGITPackIndexEntrySize   = 24;     // bytes
     self.numberOfObjects = thisCount;   // The value of the last offset
     self.idxOffsets = offsets;
 }
-- (NSUInteger)integerFromBytes:(unichar*)bytes length:(NSUInteger)length
+- (NSData*)dataForSha1:(NSString*)sha1
 {
-    NSUInteger i, value = 0;
-    for (i = 0; i <= length; i++)
-        value = (value << 4) | bytes[i];
-    return value;
+    NSUInteger offset = [self offsetForSha1:sha1];
 }
 - (NSUInteger)offsetForSha1:(NSString*)sha1
 {
@@ -175,7 +173,7 @@ const NSUInteger kGITPackIndexEntrySize   = 24;     // bytes
         {
             memset(buf, 0x0, 20);
             [data getBytes:buf range:NSMakeRange(i, 4)];
-            NSUInteger offset = [self integerFromBytes:buf length:4];
+            NSUInteger offset = integerFromBytes(buf, 4);
 
             memset(buf, 0x0, 20);
             [data getBytes:buf range:NSMakeRange(i + 4, 20)];
