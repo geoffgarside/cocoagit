@@ -177,7 +177,8 @@ const NSUInteger kGITPackIndexEntrySize   = 24;     // bytes
 
             memset(buf, 0x0, 20);
             [data getBytes:buf range:NSMakeRange(i + 4, 20)];
-            NSString * name = [NSString stringWithCharacters:buf length:20];
+            NSString * packedSha1 = [NSString stringWithCharacters:buf length:20];
+            NSString * name = unpackSHA1FromString(packedSha1);
 
             if ([name isEqualToString:sha1])
                 return offset;
