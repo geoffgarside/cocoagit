@@ -19,6 +19,11 @@ const NSUInteger kGITPackIndexFanOutCount = 256;
 const NSUInteger kGITPackIndexFanOutEnd   = kGITPackIndexFanOutSize * kGITPackIndexFanOutCount;
 const NSUInteger kGITPackIndexEntrySize   = 24;     // bytes
 
+const NSUInteger kGITPackFileTypeCommit   = 1;
+const NSUInteger kGITPackFileTypeTree     = 2;
+const NSUInteger kGITPackFileTypeBlob     = 3;
+const NSUInteger kGITPackFileTypeTag      = 4;
+
 @interface GITPackFile ()
 @property(readwrite,retain) GITRepo * repo;
 @property(readwrite,copy)   NSString * idxPath;
