@@ -120,7 +120,6 @@ const NSUInteger kGITPackIndexEntrySize   = 24;     // bytes
     NSMutableArray * offsets = [NSMutableArray arrayWithCapacity:256];
 
     lastCount = thisCount = 0;
-    [offsets addObject:[NSNumber numberWithUnsignedInteger:0]];  // Fill in \0 char count
 
     // The Fanout table
     // The fanout table consists of 256 entries. These
