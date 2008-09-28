@@ -45,6 +45,8 @@ const NSUInteger kGITPackIndexEntrySize   = 24;     // bytes
     {
         self.idxPath = path;
         self.packPath = path;
+
+        [self openIdxAndPackFiles];
     }
 }
 - (void)setPackPath:(NSString*)thePath
@@ -65,22 +67,41 @@ const NSUInteger kGITPackIndexEntrySize   = 24;     // bytes
             stringByAppendingPathExtension:@"idx"];
     }
 }
-- (void)readPack
+- (void)openIdxAndPackFiles
 {
     NSError * err;
-    NSData * pack = [NSData dataWithContentsOfFile:self.packPath
+    self.packData = [NSData dataWithContentsOfFile:self.packPath
                                            options:NSUncachedRead
                                              error:&err];
+    if (!self.packData)
+    {
+        NSString * reason = [NSString stringWithFormat:@"Pack File %@ failed to open", self.packPath];
+        NSException * ex  = [NSException exceptionWithName:@"GITPackFileOpeningFailed"
+                                                    reason:reason
+                                                  userInfo:[err userInfo]];
+        @throw ex;
+    }
     
+    self.idxData  = [NSData dataWithContentsOfFile:self.idxPath
+                                           options:NSUncachedRead
+                                             error:&err];
+    if (!self.idxData)
+    {
+        NSString * reason = [NSString stringWithFormat:@"Pack Idx File %@ failed to open", self.idxPath];
+        NSException * ex  = [NSException exceptionWithName:@"GITPackFileIdxOpeningFailed"
+                                                    reason:reason
+                                                  userInfo:[err userInfo]];
+        @throw ex;
+    }
+}
+- (void)readPack
+{
     unichar buf[4];
-    [pack getBytes:buf range:kGITPackFileSignatureRange];
+    [self.packData getBytes:buf range:kGITPackFileSignatureRange];
     if ([[NSString stringWithCharacters:buf length:4] isEqualToString:@"PACK"])
     {   // Its a valid PACK file, continue
-        [pack getBytes:buf range:kGITPackFileVersionRange];
+        [self.packData getBytes:buf range:kGITPackFileVersionRange];
         self.version = integerFromBytes(buf, 4);
-        
-        if (self.version == 2)
-            [self readVersion2:pack];
     }
 }
 - (void)readPackVersion2:(NSData*)pack
@@ -94,10 +115,6 @@ const NSUInteger kGITPackIndexEntrySize   = 24;     // bytes
 }
 - (void)readIdx
 {
-    NSError * err;
-    NSData * idx = [NSData dataWithContentsOfFile:self.idxPath
-                                          options:NSUncachedRead
-                                            error:&err];
     unichar buf[4];
     NSUInteger i, lastCount, thisCount;
     NSMutableArray * offsets = [NSMutableArray arrayWithCapacity:256];
@@ -121,7 +138,7 @@ const NSUInteger kGITPackIndexEntrySize   = 24;     // bytes
     // uncompressed SHA1 hash value.
     for (i = 0; i < kGITPackIndexFanOutCount; i++)
     {
-        [idx getBytes:buf range:NSMakeRange(i * kGITPackIndexFanOutSize, kGITPackIndexFanOutSize)];
+        [self.idxData getBytes:buf range:NSMakeRange(i * kGITPackIndexFanOutSize, kGITPackIndexFanOutSize)];
         thisCount = integerFromBytes(buf, kGITPackIndexFanOutSize);
 
         // Assuming an NSUInteger is less expensive than calling
@@ -172,11 +189,11 @@ const NSUInteger kGITPackIndexEntrySize   = 24;     // bytes
         for (i = startLocation; i < endLocation; i += kGITPackIndexEntrySize)
         {
             memset(buf, 0x0, 20);
-            [data getBytes:buf range:NSMakeRange(i, 4)];
+            [self.idxData getBytes:buf range:NSMakeRange(i, 4)];
             NSUInteger offset = integerFromBytes(buf, 4);
 
             memset(buf, 0x0, 20);
-            [data getBytes:buf range:NSMakeRange(i + 4, 20)];
+            [self.idxData getBytes:buf range:NSMakeRange(i + 4, 20)];
             NSString * packedSha1 = [NSString stringWithCharacters:buf length:20];
             NSString * name = unpackSHA1FromString(packedSha1);
 
