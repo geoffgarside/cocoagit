@@ -22,6 +22,7 @@
 @property(readwrite,copy) NSString * desc;
 
 - (id)initWithRoot:(NSString*)repoRoot;
+- (id)initWithRoot:(NSString*)repoRoot bare:(BOOL)isBare;
 
 - (NSArray*)branches;
 - (NSArray*)commits;

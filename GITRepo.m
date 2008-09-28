@@ -23,9 +23,16 @@
 
 - (id)initWithRoot:(NSString*)repoRoot
 {
+    return [self initWithRoot:repoRoot bare:NO];
+}
+- (id)initWithRoot:(NSString*)repoRoot bare:(BOOL)isBare
+{
     if (self = [super init])
     {
-        self.root = [repoRoot stringByAppendingPathComponent:@".git"];
+        if (isBare)
+            self.root = repoRoot; //[repoRoot stringByAppendingPathExtension:@".git"];
+        else
+            self.root = [repoRoot stringByAppendingPathComponent:@".git"];
         
         NSString * descFile = [self.root stringByAppendingPathComponent:@"description"];
         self.desc = [NSString stringWithContentOfFile:descFile];
