@@ -6,6 +6,7 @@
 //  Copyright 2008 ManicPanda.com. All rights reserved.
 //
 
+@protocol GITObject;
 @interface GITRepo ()
 
 - (NSString*)objectPathFromHash:(NSString*)hash;
