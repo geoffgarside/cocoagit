@@ -109,14 +109,40 @@ const NSUInteger kGITPackFileTypeTag      = 4;
         self.version = integerFromBytes(buf, 4);
     }
 }
-- (void)readPackVersion2:(NSData*)pack
+- (NSData*)objectAtOffset:(NSUInteger)offset
 {
-    unichar buf[4];
-    [pack getBytes:buf range:kGITPackFileNumberRange];
-    
-    self.numberOfObjects = integerFromBytes(buf, 4);
-    
-    
+    switch (self.version)
+    {
+        case 2:
+            return [self objectAtOffsetVersion2:offset];
+        case 3:
+            return [self objectAtOffsetVersion3:offset];
+        default:
+            NSString * reason = [NSString stringWithFormat:@"PACK v%d format not supported", self.version];
+            NSException * ex  = [NSException exceptionWithName:@"GITUnknownPackVersion"
+                                                        reason:reason
+                                                      userInfo:nil];
+            @throw ex;
+    }
+}
+- (NSData*)objectAtOffsetVersion2:(NSUInteger)offset
+{
+    unichar buf;    // a single byte buffer
+    NSUInteger size, type, shift = 4;
+
+    // NOTE: ++ should increment offset after the range has been created
+    [self.packData getBytes:buf range:NSMakeRange(offset++, 1)];
+
+    size = buf & 0xf;
+    type = (buf >> 4) & 0x7;
+
+    while (buf & 0x80 != 0)
+    {
+        // NOTE: ++ should increment offset after the range has been created
+        [self.packData getBytes:buf range:NSMakeRange(offset++, 1)];
+        size |= ((buf & 0x7f) << shift);
+        shift += 7;
+    }
 }
 - (void)readIdx
 {
