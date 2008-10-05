@@ -8,7 +8,8 @@
 
 #import "GITBlob.h"
 #import "GITRepo.h"
-#import "GITObject.h"
+
+#import "NSData+Searching.h"
 
 @interface GITBlob ()
 @property(readwrite,retain) GITRepo * repo;
