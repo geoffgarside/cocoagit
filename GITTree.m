@@ -28,14 +28,14 @@
 @synthesize entries;
 
 - (id)initWithHash:(NSString*)hash
-           andData:(NSData*)data
-          fromRepo:(GITRepo*)repo
+           andData:(NSData*)treeData
+          fromRepo:(GITRepo*)parentRepo
 {
     if (self = [super init])
     {
-        self.repo = repo;
+        self.repo = parentRepo;
         self.sha1 = hash;
-        self.size = [data length];
+        self.size = [treeData length];
         
         [self extractEntriesFromData:data];
     }
