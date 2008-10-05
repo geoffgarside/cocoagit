@@ -94,7 +94,7 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
     for (i = 0; i < [stringMode length]; i++)
     {
         unichar c = [stringMode characterAtIndex:i];
-        modeMask = (modeMask << 3) | (c - '0')
+        modeMask = (modeMask << 3) | (c - '0');
     }
     
     return modeMask;
