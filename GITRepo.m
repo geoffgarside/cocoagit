@@ -71,7 +71,7 @@
     NSUInteger indexOfSpace = [metaStr rangeOfString:@" "].location;
     
     *theType = [metaStr substringToIndex:indexOfSpace];
-    *theSize = [metaStr substringFromIndex:indexOfSpace + 1];
+    *theSize = (NSUInteger)[[metaStr substringFromIndex:indexOfSpace + 1] integerValue];
 }
 
 @end
