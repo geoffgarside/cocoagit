@@ -65,10 +65,10 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
     }
     return self;
 }
-- (id)initWithModeString:(NSString*)mode name:(NSString*)name andHash:(NSString*)hash
+- (id)initWithModeString:(NSString*)modeString name:(NSString*)theName andHash:(NSString*)hash
 {
-    NSUInteger theMode = [self extractModeFromString:mode];
-    return [self initWithMode:mode name:name andHash:hash];
+    NSUInteger theMode = [self extractModeFromString:modeString];
+    return [self initWithMode:theMode name:theName andHash:hash];
 }
 - (void)dealloc
 {
