@@ -9,6 +9,11 @@
 #import "GITRepo.h"
 #import "GITRepo+Protected.h"
 
+#import "NSData+Hashing.h"
+#import "NSData+Searching.h"
+#import "NSData+Compression.h"
+
+#import "GITObject.h"
 #import "GITBranch.h"
 #import "GITTag.h"
 
