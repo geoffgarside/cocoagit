@@ -6,6 +6,7 @@
 //  Copyright 2008 ManicPanda.com. All rights reserved.
 //
 
+@class GITRepo;
 @protocol GITObject
 
 - (id)initWithHash:(NSString*)hash
