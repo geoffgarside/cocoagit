@@ -20,10 +20,10 @@
 
 #pragma mark -
 #pragma mark Object instanciation methods
-- (id <GITObject>)objectWithHash:(NSString*)hash;
-- (GITCommit*)commitWithHash:(NSString*)hash;
-- (GITTag*)tagWithHash:(NSString*)hash;
-- (GITTree*)treeWithHash:(NSString*)hash;
-- (GITBlob*)blobWithHash:(NSString*)hash;
+//- (id <GITObject>)objectWithHash:(NSString*)hash;
+//- (GITCommit*)commitWithHash:(NSString*)hash;
+//- (GITTag*)tagWithHash:(NSString*)hash;
+//- (GITTree*)treeWithHash:(NSString*)hash;
+//- (GITBlob*)blobWithHash:(NSString*)hash;
 
 @end

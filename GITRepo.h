@@ -24,6 +24,7 @@
 - (id)initWithRoot:(NSString*)repoRoot;
 - (id)initWithRoot:(NSString*)repoRoot bare:(BOOL)isBare;
 
+/*
 - (NSArray*)branches;
 - (NSArray*)commits;
 - (NSArray*)tags;
@@ -33,5 +34,5 @@
 - (GITBranch*)branchWithName:(NSString*)name;
 
 - (GITTag*)tagWithName:(NSString*)name;
-
+*/
 @end
