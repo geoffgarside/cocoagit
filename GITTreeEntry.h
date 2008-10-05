@@ -23,6 +23,7 @@ extern const NSUInteger kGITUnpackedSha1Length;
     id <GITObject> object;
 }
 
+@property(readonly,copy) GITRepo * repo;
 @property(readonly,copy) NSString * name;
 @property(readonly,assign) NSUInteger mode;
 @property(readonly,copy) NSString * sha1;

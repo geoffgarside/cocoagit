@@ -18,6 +18,7 @@ const NSUInteger GITTreeEntryDirMask    =  0040000;
 const NSUInteger GITTreeEntryModMask    =  0160000;
 
 @interface GITTreeEntry ()
+@property(readwrite,copy) GITRepo * repo;
 @property(readwrite,copy) NSString * name;
 @property(readwrite,assign) NSUInteger mode;
 @property(readwrite,copy) NSString * sha1;
@@ -29,6 +30,7 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
 
 @implementation GITTreeEntry
 
+@synthesize repo;
 @synthesize name;
 @synthesize mode;
 @synthesize sha1;
