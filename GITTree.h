@@ -7,9 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "GITObject.h"
 
 @class GITRepo;
-@protocol GITObject;
 @interface GITTree : NSObject <GITObject>
 {
     GITRepo  * repo;
