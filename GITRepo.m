@@ -40,7 +40,7 @@
             self.root = [repoRoot stringByAppendingPathComponent:@".git"];
         
         NSString * descFile = [self.root stringByAppendingPathComponent:@"description"];
-        self.desc = [NSString stringWithContentOfFile:descFile];
+        self.desc = [NSString stringWithContentsOfFile:descFile];
     }
     return self;
 }
