@@ -40,6 +40,8 @@
 		9FCF28090E99031A00665A41 /* NSData+Searching.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F8CFFA40E2FFCF200D0E65A /* NSData+Searching.m */; };
 		9FCF280A0E99031B00665A41 /* NSTimeZone+Offset.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F464D400E3DC3EC00867506 /* NSTimeZone+Offset.m */; };
 		9FCF28A90E9913FC00665A41 /* GITBlob.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9213850E17F17C005AC693 /* GITBlob.m */; };
+		9FCF28D80E991EB800665A41 /* GITActorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCF28D70E991EB800665A41 /* GITActorTests.m */; };
+		9FCF28DA0E993A8500665A41 /* GITActor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC93D0E1A8917001668EB /* GITActor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +94,8 @@
 		9FCF27BC0E98FC0F00665A41 /* GITBlobTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITBlobTests.m; sourceTree = "<group>"; };
 		9FCF27BE0E98FEF600665A41 /* GITRepoTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITRepoTests.h; sourceTree = "<group>"; };
 		9FCF27BF0E98FEF600665A41 /* GITRepoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITRepoTests.m; sourceTree = "<group>"; };
+		9FCF28D60E991EB800665A41 /* GITActorTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITActorTests.h; sourceTree = "<group>"; };
+		9FCF28D70E991EB800665A41 /* GITActorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITActorTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,6 +250,8 @@
 				9FCF27BC0E98FC0F00665A41 /* GITBlobTests.m */,
 				9FCF27BE0E98FEF600665A41 /* GITRepoTests.h */,
 				9FCF27BF0E98FEF600665A41 /* GITRepoTests.m */,
+				9FCF28D60E991EB800665A41 /* GITActorTests.h */,
+				9FCF28D70E991EB800665A41 /* GITActorTests.m */,
 			);
 			name = "Unit Tests";
 			sourceTree = "<group>";
@@ -406,6 +412,8 @@
 				9FCF28090E99031A00665A41 /* NSData+Searching.m in Sources */,
 				9FCF280A0E99031B00665A41 /* NSTimeZone+Offset.m in Sources */,
 				9FCF28A90E9913FC00665A41 /* GITBlob.m in Sources */,
+				9FCF28D80E991EB800665A41 /* GITActorTests.m in Sources */,
+				9FCF28DA0E993A8500665A41 /* GITActor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
