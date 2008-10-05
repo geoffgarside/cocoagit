@@ -74,7 +74,7 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
 {
     self.repo = nil;
     self.name = nil;
-    self.mode = nil;
+    self.mode = 0;
     self.sha1 = nil;
     
     if (object)     //!< can't check with self.object as that would load it

@@ -62,7 +62,7 @@
 {
     self.repo = nil;
     self.sha1 = nil;
-    self.size = nil;
+    self.size = 0;
     self.tree = nil;
     self.parent = nil;
     self.author = nil;
