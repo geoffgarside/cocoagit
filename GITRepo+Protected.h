@@ -6,6 +6,8 @@
 //  Copyright 2008 ManicPanda.com. All rights reserved.
 //
 
+#import "GITRepo.h"
+
 @protocol GITObject;
 @interface GITRepo ()
 
