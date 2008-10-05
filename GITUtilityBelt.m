@@ -11,6 +11,8 @@
 const NSUInteger kGITPackedSha1Length   = 20;
 const NSUInteger kGITUnpackedSha1Length = 40;
 
+static const char hexchars[] = "0123456789abcdef";
+
 NSData *
 packSHA1(NSString * unpackedSHA1)
 {
