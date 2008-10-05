@@ -75,5 +75,10 @@
     
     self.entries = treeEntries;
 }
+- (NSData*)rawData
+{
+    NSString * treeString = [NSString stringWithFormat:@"tree %lu"];
+    return [treeString dataUsingEncoding:NSASCIIStringEncoding];
+}
 
 @end
