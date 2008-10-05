@@ -10,7 +10,6 @@
 #import "GITRepo.h"
 #import "GITTree.h"
 #import "GITActor.h"
-#import "GITObject.h"
 #import "NSTimeZone+Offset.h"
 
 @interface GITCommit ()
