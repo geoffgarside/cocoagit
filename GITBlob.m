@@ -41,7 +41,7 @@
 {
     self.repo = nil;
     self.sha1 = nil;
-    self.size = nil;
+    self.size = 0;
     self.data = nil;
     [super dealloc];
 }
