@@ -57,5 +57,11 @@
                                          encoding:NSASCIIStringEncoding];
     return [[v autorelease] retain];
 }
+- (NSData*)rawData
+{
+    NSString * rawString = [NSString stringWithFormat:@"blob %lu\0%@",
+                            (unsigned long)self.size, self.data];
+    return [rawString dataUsingEncoding:NSASCIIStringEncoding];
+}
 
 @end
