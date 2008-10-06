@@ -37,7 +37,7 @@
         self.sha1 = hash;
         self.size = [treeData length];
         
-        [self extractEntriesFromData:data];
+        [self extractEntriesFromData:treeData];
     }
     return self;
 }

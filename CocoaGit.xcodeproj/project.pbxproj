@@ -13,6 +13,8 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		9F01049B0E9997C700A47227 /* GITUtilityBeltTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F01049A0E9997C700A47227 /* GITUtilityBeltTests.m */; };
 		9F0862070E20F02E00FD6CF6 /* GITTreeEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */; };
+		9F22A0B40E9968BF006C3656 /* GITTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9213BE0E1822A1005AC693 /* GITTree.m */; };
+		9F22A0B70E9968CA006C3656 /* GITTreeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F22A0B60E9968CA006C3656 /* GITTreeTests.m */; };
 		9F22A0F30E99744F006C3656 /* GITTreeEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */; };
 		9F22A1010E997938006C3656 /* GITUtilityBelt.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F63998D0E51952F0034F279 /* GITUtilityBelt.m */; };
 		9F22A1060E99855B006C3656 /* GITTreeEntryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F22A1050E99855B006C3656 /* GITTreeEntryTests.m */; };
@@ -63,6 +65,8 @@
 		9F01049A0E9997C700A47227 /* GITUtilityBeltTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITUtilityBeltTests.m; sourceTree = "<group>"; };
 		9F0862050E20F02E00FD6CF6 /* GITTreeEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITTreeEntry.h; sourceTree = "<group>"; };
 		9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITTreeEntry.m; sourceTree = "<group>"; };
+		9F22A0B50E9968CA006C3656 /* GITTreeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITTreeTests.h; sourceTree = "<group>"; };
+		9F22A0B60E9968CA006C3656 /* GITTreeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITTreeTests.m; sourceTree = "<group>"; };
 		9F22A1040E99855B006C3656 /* GITTreeEntryTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITTreeEntryTests.h; sourceTree = "<group>"; };
 		9F22A1050E99855B006C3656 /* GITTreeEntryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITTreeEntryTests.m; sourceTree = "<group>"; };
 		9F33C9E90E48C5650004CD44 /* GITBranch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITBranch.h; sourceTree = "<group>"; };
@@ -260,6 +264,8 @@
 				9FCF27BF0E98FEF600665A41 /* GITRepoTests.m */,
 				9FCF28D60E991EB800665A41 /* GITActorTests.h */,
 				9FCF28D70E991EB800665A41 /* GITActorTests.m */,
+				9F22A0B50E9968CA006C3656 /* GITTreeTests.h */,
+				9F22A0B60E9968CA006C3656 /* GITTreeTests.m */,
 				9F22A1040E99855B006C3656 /* GITTreeEntryTests.h */,
 				9F22A1050E99855B006C3656 /* GITTreeEntryTests.m */,
 				9F0104990E9997C700A47227 /* GITUtilityBeltTests.h */,
@@ -426,6 +432,8 @@
 				9FCF28A90E9913FC00665A41 /* GITBlob.m in Sources */,
 				9FCF28D80E991EB800665A41 /* GITActorTests.m in Sources */,
 				9FCF28DA0E993A8500665A41 /* GITActor.m in Sources */,
+				9F22A0B40E9968BF006C3656 /* GITTree.m in Sources */,
+				9F22A0B70E9968CA006C3656 /* GITTreeTests.m in Sources */,
 				9F22A0F30E99744F006C3656 /* GITTreeEntry.m in Sources */,
 				9F22A1010E997938006C3656 /* GITUtilityBelt.m in Sources */,
 				9F22A1060E99855B006C3656 /* GITTreeEntryTests.m in Sources */,
