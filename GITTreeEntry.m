@@ -54,6 +54,7 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
         }
     }
     
+    NSLog(@"entryMode(%@) entryName(%@)", entryMode, entryName);
     return [self initWithModeString:entryMode 
                                name:entryName 
                             andHash:unpackSHA1FromString(entrySha1)];
@@ -70,7 +71,7 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
 }
 - (id)initWithModeString:(NSString*)modeString name:(NSString*)theName andHash:(NSString*)hash
 {
-    NSUInteger theMode = [self extractModeFromString:modeString];
+    NSUInteger theMode = [modeString integerValue];
     return [self initWithMode:theMode name:theName andHash:hash];
 }
 - (void)dealloc
