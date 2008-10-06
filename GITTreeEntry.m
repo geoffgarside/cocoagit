@@ -92,6 +92,9 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
         self.object = [self.repo objectWithHash:self.sha1];
     return object;
 }
+/*!
+ Presently unsure of the purpose of this method.
+*/
 - (NSUInteger)extractModeFromString:(NSString*)stringMode
 {
     NSUInteger i, modeMask = 0;
