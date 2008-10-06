@@ -41,6 +41,6 @@
 - (void)testShouldUnpackSHA1FromString
 {
     NSString * sha1 = unpackSHA1FromString(packedSHA1String);
-    STAssertEqualObjects(sha1, unpackedSHA1, @"Packed SHA1 String '%@'", [[NSString alloc] initWithData:packedSHA1Data encoding:NSASCIIStringEncoding]);
+    STAssertEqualObjects(sha1, unpackedSHA1, nil);
 }
 @end
