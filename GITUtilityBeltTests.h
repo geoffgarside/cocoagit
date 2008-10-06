@@ -19,6 +19,8 @@
 @property(readwrite,copy) NSData   * packedSHA1Data;
 @property(readwrite,copy) NSString * packedSHA1String;
 
+- (void)testPackedSHA1String;
+- (void)testShouldPackSHA1FromString;
 - (void)testShouldUnpackSHA1FromString;
 
 @end
