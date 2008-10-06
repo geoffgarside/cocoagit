@@ -50,7 +50,7 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
             [scanner scanUpToString:@"\0" intoString:&entryName])
         {
             entrySha1 = [[scanner string] substringFromIndex:[scanner scanLocation] + 1];
-            [scanner setScanLocation:[scanner scanLocation] + kGITPackedSha1Length];
+            [scanner setScanLocation:[scanner scanLocation] + 1 + kGITPackedSha1Length];
         }
     }
     
