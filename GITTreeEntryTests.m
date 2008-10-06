@@ -37,7 +37,6 @@
 
 - (void)testShouldParseEntryLine
 {
-    // TODO: Work out why 100644 comes out as 'j' when parsed by the NSScanner
     GITTreeEntry * entry = [[GITTreeEntry alloc] initWithTreeLine:entryLine];
     STAssertNotNil(entry, @"TreeEntry should not be nil");
     STAssertEquals(entry.mode, entryMode, @"Mode should be parsed properly");
