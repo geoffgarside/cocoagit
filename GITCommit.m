@@ -83,8 +83,8 @@
              * authorTimezone,
              * committerName,
              * committerEmail,
-             * committerTimezone,
-             * msg;
+             * committerTimezone;
+
     NSTimeInterval authorTimestamp,
                    committerTimestamp;
      
