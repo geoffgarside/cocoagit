@@ -147,17 +147,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				9F9213840E17F17C005AC693 /* GITBlob.h */,
-				9F9213850E17F17C005AC693 /* GITBlob.m */,
-				9F9212B60E179DB6005AC693 /* GITObject.h */,
-				9F9213BD0E1822A1005AC693 /* GITTree.h */,
-				9F9213BE0E1822A1005AC693 /* GITTree.m */,
-				9F7EC9020E1A7032001668EB /* GITCommit.h */,
-				9F7EC9030E1A7032001668EB /* GITCommit.m */,
-				9F7EC9050E1A709D001668EB /* GITTag.h */,
-				9F7EC9060E1A709D001668EB /* GITTag.m */,
-				9F7EC93C0E1A8917001668EB /* GITActor.h */,
-				9F7EC93D0E1A8917001668EB /* GITActor.m */,
+				9FE329530E9B937F001E37D5 /* Utility Types */,
+				9FE329520E9B9357001E37D5 /* Core Types */,
 				9F33C9E90E48C5650004CD44 /* GITBranch.h */,
 				9F33C9EA0E48C5650004CD44 /* GITBranch.m */,
 				9F33C9EB0E48C5650004CD44 /* GITPackFile.h */,
@@ -165,10 +156,6 @@
 				9F33C9ED0E48C5650004CD44 /* GITRepo+Protected.h */,
 				9F33C9EE0E48C5650004CD44 /* GITRepo.h */,
 				9F33C9EF0E48C5650004CD44 /* GITRepo.m */,
-				9F0862050E20F02E00FD6CF6 /* GITTreeEntry.h */,
-				9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */,
-				9FE328C40E9B623E001E37D5 /* GITDateTime.h */,
-				9FE328C50E9B623E001E37D5 /* GITDateTime.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -282,6 +269,35 @@
 				9FE328CA0E9B6F2B001E37D5 /* GITDateTimeTests.m */,
 			);
 			name = "Unit Tests";
+			sourceTree = "<group>";
+		};
+		9FE329520E9B9357001E37D5 /* Core Types */ = {
+			isa = PBXGroup;
+			children = (
+				9F9213840E17F17C005AC693 /* GITBlob.h */,
+				9F9213850E17F17C005AC693 /* GITBlob.m */,
+				9F9212B60E179DB6005AC693 /* GITObject.h */,
+				9F9213BD0E1822A1005AC693 /* GITTree.h */,
+				9F9213BE0E1822A1005AC693 /* GITTree.m */,
+				9F7EC9020E1A7032001668EB /* GITCommit.h */,
+				9F7EC9030E1A7032001668EB /* GITCommit.m */,
+				9F7EC9050E1A709D001668EB /* GITTag.h */,
+				9F7EC9060E1A709D001668EB /* GITTag.m */,
+				9F0862050E20F02E00FD6CF6 /* GITTreeEntry.h */,
+				9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */,
+			);
+			name = "Core Types";
+			sourceTree = "<group>";
+		};
+		9FE329530E9B937F001E37D5 /* Utility Types */ = {
+			isa = PBXGroup;
+			children = (
+				9F7EC93C0E1A8917001668EB /* GITActor.h */,
+				9F7EC93D0E1A8917001668EB /* GITActor.m */,
+				9FE328C40E9B623E001E37D5 /* GITDateTime.h */,
+				9FE328C50E9B623E001E37D5 /* GITDateTime.m */,
+			);
+			name = "Utility Types";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
