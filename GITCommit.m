@@ -128,5 +128,9 @@
 {
     return [NSString stringWithFormat:@"Commit <%@>", self.sha1];
 }
+- (NSData*)rawData
+{
+    return [NSData data];
+}
 
 @end
