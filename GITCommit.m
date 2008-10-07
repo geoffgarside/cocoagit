@@ -22,6 +22,7 @@
 @property(readwrite,copy) GITActor * committer;
 @property(readwrite,copy) GITDateTime * authored;
 @property(readwrite,copy) GITDateTime * committed;
+@property(readwrite,copy) NSString * message;
 
 - (void)extractFieldsFromData:(NSData*)data;
 
@@ -38,6 +39,7 @@
 @synthesize committer;
 @synthesize authored;
 @synthesize committed;
+@synthesize message;
 
 - (id)initWithHash:(NSString*)hash
            andData:(NSData*)data

@@ -35,5 +35,6 @@
 @property(readonly,copy) GITActor * committer;
 @property(readonly,copy) GITDateTime * authored;
 @property(readonly,copy) GITDateTime * committed;
+@property(readonly,copy) NSString * message;
 
 @end
