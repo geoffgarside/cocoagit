@@ -71,6 +71,8 @@
 		9FE329660E9B9793001E37D5 /* GITCommitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCF290F0E993E5900665A41 /* GITCommitTests.m */; };
 		9FE32A3A0E9CFA53001E37D5 /* GITTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC9060E1A709D001668EB /* GITTag.m */; };
 		9FE32A4D0E9CFBB1001E37D5 /* GITCommit.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC9030E1A7032001668EB /* GITCommit.m */; };
+		9FE329AD0E9BA2EF001E37D5 /* GITFileStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE329AC0E9BA2EF001E37D5 /* GITFileStore.m */; };
+		9FE329B00E9BA2F8001E37D5 /* GITPackStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE329AF0E9BA2F8001E37D5 /* GITPackStore.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -139,6 +141,10 @@
 		9FE328C50E9B623E001E37D5 /* GITDateTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITDateTime.m; sourceTree = "<group>"; };
 		9FE328C90E9B6F2B001E37D5 /* GITDateTimeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITDateTimeTests.h; sourceTree = "<group>"; };
 		9FE328CA0E9B6F2B001E37D5 /* GITDateTimeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITDateTimeTests.m; sourceTree = "<group>"; };
+		9FE329AB0E9BA2EF001E37D5 /* GITFileStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITFileStore.h; sourceTree = "<group>"; };
+		9FE329AC0E9BA2EF001E37D5 /* GITFileStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITFileStore.m; sourceTree = "<group>"; };
+		9FE329AE0E9BA2F8001E37D5 /* GITPackStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITPackStore.h; sourceTree = "<group>"; };
+		9FE329AF0E9BA2F8001E37D5 /* GITPackStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITPackStore.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +178,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				9FE329A90E9BA2C0001E37D5 /* Store Types */,
 				9FE329530E9B937F001E37D5 /* Utility Types */,
 				9FE329520E9B9357001E37D5 /* Core Types */,
 				9F33C9E90E48C5650004CD44 /* GITBranch.h */,
@@ -343,6 +350,17 @@
 				9FE328CA0E9B6F2B001E37D5 /* GITDateTimeTests.m */,
 			);
 			name = "Utility Tests";
+			sourceTree = "<group>";
+		};
+		9FE329A90E9BA2C0001E37D5 /* Store Types */ = {
+			isa = PBXGroup;
+			children = (
+				9FE329AB0E9BA2EF001E37D5 /* GITFileStore.h */,
+				9FE329AC0E9BA2EF001E37D5 /* GITFileStore.m */,
+				9FE329AE0E9BA2F8001E37D5 /* GITPackStore.h */,
+				9FE329AF0E9BA2F8001E37D5 /* GITPackStore.m */,
+			);
+			name = "Store Types";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -532,6 +550,8 @@
 				9FE32A3A0E9CFA53001E37D5 /* GITTag.m in Sources */,
 				9FE32A4D0E9CFBB1001E37D5 /* GITCommit.m in Sources */,
 				9FE329660E9B9793001E37D5 /* GITCommitTests.m in Sources */,
+				9FE329AD0E9BA2EF001E37D5 /* GITFileStore.m in Sources */,
+				9FE329B00E9BA2F8001E37D5 /* GITPackStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
