@@ -10,8 +10,7 @@
 #import "GITRepo.h"
 #import "GITActor.h"
 #import "GITCommit.h"
-#import "GITObject.h"
-#import "NSTimeZone+Offset.h"
+#import "GITDateTime.h"
 
 @interface GITTag ()
 @property(readwrite,retain) GITRepo * repo;
@@ -20,8 +19,7 @@
 @property(readwrite,assign) NSUInteger size;
 @property(readwrite,copy) GITCommit * commit;
 @property(readwrite,copy) GITActor * tagger;
-@property(readwrite,copy) NSDate * taggedAt;
-@property(readwrite,copy) NSTimeZone * taggedTz;
+@property(readwrite,copy) GITDateTime * tagged;
 @property(readwrite,copy) NSString * message;
 
 - (void)extractFieldsFromData:(NSData*)data;
@@ -35,8 +33,7 @@
 @synthesize size;
 @synthesize commit;
 @synthesize tagger;
-@synthesize taggedAt;
-@synthesize taggedTz;
+@synthesize tagged;
 @synthesize message;
 
 - (id)initWithHash:(NSString*)hash
@@ -61,8 +58,7 @@
     self.size = nil;
     self.commit = nil;
     self.tagger = nil;
-    self.taggedAt = nil;
-    self.taggedTz = nil;
+    self.tagged = nil;
     self.message = nil;
     
     [super dealloc];
@@ -105,8 +101,8 @@
         [scanner scanUpToString:NewLine intoString:&taggerTimezone])
     {
         self.tagger = [[GITActor alloc] initWithName:taggerName andEmail:taggerEmail];
-        self.taggedAt = [NSDate dateWithTimeIntervalSince1970:taggerTimestamp];
-        self.taggedTz = [NSTimeZone timeZoneWithStringOffset:taggerTimezone];
+        self.tagged = [[GITDateTime alloc] initWithTimestamp:taggerTimestamp
+                                              timeZoneOffset:taggerTimezone];
     }
         
     self.message = [dataStr substringFromIndex:[scanner scanLocation]];

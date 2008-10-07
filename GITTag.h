@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "GITObject.h"
 
-@class GITRepo, GITCommit, GITActor;
+@class GITRepo, GITCommit, GITActor, GITDateTime;
 @interface GITTag : NSObject <GITObject>
 {
     GITRepo  * repo;
@@ -21,9 +21,8 @@
     // other than commits we'll change this.
     GITCommit * commit;
     GITActor  * tagger;
-    
-    NSDate * taggedAt;
-    NSTimeZone * taggedTz;
+
+    GITDateTime * tagged;
     
     NSString * message;
 }
@@ -33,8 +32,7 @@
 @property(readonly,assign) NSUInteger size;
 @property(readonly,copy) GITCommit * commit;
 @property(readonly,copy) GITActor * tagger;
-@property(readonly,copy) NSDate * taggedAt;
-@property(readonly,copy) NSTimeZone * taggedTz;
+@property(readonly,copy) GITDateTime * tagged;
 @property(readonly,copy) NSString * message;
 
 @end
