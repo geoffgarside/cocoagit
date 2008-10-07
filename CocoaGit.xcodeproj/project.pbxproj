@@ -253,20 +253,10 @@
 		9FCF27950E98F67D00665A41 /* Unit Tests */ = {
 			isa = PBXGroup;
 			children = (
-				9FCF27BB0E98FC0F00665A41 /* GITBlobTests.h */,
-				9FCF27BC0E98FC0F00665A41 /* GITBlobTests.m */,
-				9FCF27BE0E98FEF600665A41 /* GITRepoTests.h */,
-				9FCF27BF0E98FEF600665A41 /* GITRepoTests.m */,
-				9FCF28D60E991EB800665A41 /* GITActorTests.h */,
-				9FCF28D70E991EB800665A41 /* GITActorTests.m */,
-				9F22A0B50E9968CA006C3656 /* GITTreeTests.h */,
-				9F22A0B60E9968CA006C3656 /* GITTreeTests.m */,
-				9F22A1040E99855B006C3656 /* GITTreeEntryTests.h */,
-				9F22A1050E99855B006C3656 /* GITTreeEntryTests.m */,
+				9FE329680E9B97A8001E37D5 /* Core Tests */,
+				9FE329690E9B97BF001E37D5 /* Utility Tests */,
 				9F0104990E9997C700A47227 /* GITUtilityBeltTests.h */,
 				9F01049A0E9997C700A47227 /* GITUtilityBeltTests.m */,
-				9FE328C90E9B6F2B001E37D5 /* GITDateTimeTests.h */,
-				9FE328CA0E9B6F2B001E37D5 /* GITDateTimeTests.m */,
 			);
 			name = "Unit Tests";
 			sourceTree = "<group>";
@@ -298,6 +288,32 @@
 				9FE328C50E9B623E001E37D5 /* GITDateTime.m */,
 			);
 			name = "Utility Types";
+			sourceTree = "<group>";
+		};
+		9FE329680E9B97A8001E37D5 /* Core Tests */ = {
+			isa = PBXGroup;
+			children = (
+				9FCF27BB0E98FC0F00665A41 /* GITBlobTests.h */,
+				9FCF27BC0E98FC0F00665A41 /* GITBlobTests.m */,
+				9FCF27BE0E98FEF600665A41 /* GITRepoTests.h */,
+				9FCF27BF0E98FEF600665A41 /* GITRepoTests.m */,
+				9F22A0B50E9968CA006C3656 /* GITTreeTests.h */,
+				9F22A0B60E9968CA006C3656 /* GITTreeTests.m */,
+				9F22A1040E99855B006C3656 /* GITTreeEntryTests.h */,
+				9F22A1050E99855B006C3656 /* GITTreeEntryTests.m */,
+			);
+			name = "Core Tests";
+			sourceTree = "<group>";
+		};
+		9FE329690E9B97BF001E37D5 /* Utility Tests */ = {
+			isa = PBXGroup;
+			children = (
+				9FCF28D60E991EB800665A41 /* GITActorTests.h */,
+				9FCF28D70E991EB800665A41 /* GITActorTests.m */,
+				9FE328C90E9B6F2B001E37D5 /* GITDateTimeTests.h */,
+				9FE328CA0E9B6F2B001E37D5 /* GITDateTimeTests.m */,
+			);
+			name = "Utility Tests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
