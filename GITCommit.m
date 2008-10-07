@@ -43,11 +43,11 @@
 
 - (id)initWithHash:(NSString*)hash
            andData:(NSData*)data
-          fromRepo:(GITRepo*)repo
+          fromRepo:(GITRepo*)parentRepo
 {
     if (self = [super init])
     {
-        self.repo = repo;
+        self.repo = parentRepo;
         self.sha1 = hash;
         self.size = [data length];
         
