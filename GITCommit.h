@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "GITObject.h"
 
-@class GITRepo, GITTree, GITActor;
+@class GITRepo, GITTree, GITActor, GITDateTime;
 @interface GITCommit : NSObject <GITObject>
 {
     GITRepo  * repo;
@@ -21,11 +21,8 @@
     GITActor  * author;
     GITActor  * committer;
     
-    NSDate * authoredAt;
-    NSDate * committedAt;
-    
-    NSTimeZone * authoredTz;
-    NSTimeZone * committedTz;
+    GITDateTime * authored;
+    GITDateTime * committed;
     
     NSString * message;
 }
@@ -36,9 +33,7 @@
 @property(readonly,copy) GITCommit * parent;
 @property(readonly,copy) GITActor * author;
 @property(readonly,copy) GITActor * committer;
-@property(readonly,copy) NSDate * authoredAt;
-@property(readonly,copy) NSDate * committedAt;
-@property(readonly,copy) NSTimeZone * authoredTz;
-@property(readonly,copy) NSTimeZone * committedTz;
+@property(readonly,copy) GITDateTime * authored;
+@property(readonly,copy) GITDateTime * committed;
 
 @end

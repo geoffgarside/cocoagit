@@ -10,7 +10,7 @@
 #import "GITRepo.h"
 #import "GITTree.h"
 #import "GITActor.h"
-#import "NSTimeZone+Offset.h"
+#import "GITDateTime.h"
 
 @interface GITCommit ()
 @property(readwrite,copy) GITRepo * repo;
@@ -20,10 +20,8 @@
 @property(readwrite,copy) GITCommit * parent;
 @property(readwrite,copy) GITActor * author;
 @property(readwrite,copy) GITActor * committer;
-@property(readwrite,copy) NSDate * authoredAt;
-@property(readwrite,copy) NSDate * committedAt;
-@property(readwrite,copy) NSTimeZone * authoredTz;
-@property(readwrite,copy) NSTimeZone * committedTz;
+@property(readwrite,copy) GITDateTime * authored;
+@property(readwrite,copy) GITDateTime * committed;
 
 - (void)extractFieldsFromData:(NSData*)data;
 
@@ -38,10 +36,8 @@
 @synthesize parent;
 @synthesize author;
 @synthesize committer;
-@synthesize authoredAt;
-@synthesize committedAt;
-@synthesize authoredTz;
-@synthesize committedTz;
+@synthesize authored;
+@synthesize committed;
 
 - (id)initWithHash:(NSString*)hash
            andData:(NSData*)data
@@ -66,10 +62,8 @@
     self.parent = nil;
     self.author = nil;
     self.committer = nil;
-    self.authoredAt = nil;
-    self.committedAt = nil;
-    self.authoredTz = nil;
-    self.committedTz = nil;
+    self.authored = nil;
+    self.committed = nil;
     
     [super dealloc];
 }
@@ -111,8 +105,8 @@
         [scanner scanUpToString:NewLine intoString:&authorTimezone])
     {
         self.author = [[GITActor alloc] initWithName:authorName andEmail:authorEmail];
-        self.authoredAt = [NSDate dateWithTimeIntervalSince1970:authorTimestamp];
-        self.authoredTz = [NSTimeZone timeZoneWithStringOffset:authorTimezone];
+        self.authored = [[GITDateTime alloc] initWithTimestamp:authorTimestamp
+                                                timeZoneOffset:authorTimezone];
     }
     
     if ([scanner scanString:@"committer" intoString:NULL] &&
@@ -122,8 +116,8 @@
         [scanner scanUpToString:NewLine intoString:&committerTimezone])
     {
         self.committer = [[GITActor alloc] initWithName:committerName andEmail:committerEmail];
-        self.committedAt = [NSDate dateWithTimeIntervalSince1970:committerTimestamp];
-        self.committedTz = [NSTimeZone timeZoneWithStringOffset:committerTimezone];
+        self.committed = [[GITDateTime alloc] initWithTimestamp:committerTimestamp
+                                                 timeZoneOffset:committerTimezone];
     }
         
     self.message = [[scanner string] substringFromIndex:[scanner scanLocation]];
