@@ -11,5 +11,5 @@
 @interface NSTimeZone (Offset)
 
 + (id)timeZoneWithStringOffset:(NSString*)offset;
-
+- (NSString*)offsetString;
 @end
