@@ -53,7 +53,8 @@
 }
 - (BOOL)canBeRepresentedAsString
 {
-    if ([self.data rangeOfNullTerminatedBytesFrom:0].location != NSNotFound)
+    // If we can't find a null byte then it can be represented as string
+    if ([self.data rangeOfNullTerminatedBytesFrom:0].location == NSNotFound)
         return YES;
     return NO;
 }
