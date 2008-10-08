@@ -47,9 +47,9 @@
 }
 - (id)copyWithZone:(NSZone*)zone
 {
-    return [[GITBlob alloc] initWithHash:self.sha1
-                                 andData:self.data
-                                fromRepo:self.repo];
+    return [[GITBlob allocWithZone:zone] initWithHash:self.sha1
+                                              andData:self.data
+                                             fromRepo:self.repo];
 }
 - (BOOL)canBeRepresentedAsString
 {

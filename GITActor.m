@@ -39,7 +39,7 @@
 }
 - (id)copyWithZone:(NSZone*)zone
 {
-    return [[GITActor alloc] initWithName:self.name andEmail:self.email];
+    return [[GITActor allocWithZone:zone] initWithName:self.name andEmail:self.email];
 }
 - (NSString*)description
 {

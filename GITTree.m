@@ -51,7 +51,7 @@
 }
 - (id)copyWithZone:(NSZone*)zone
 {
-    GITTree * tree  = [[GITTree alloc] init];
+    GITTree * tree  = [[GITTree allocWithZone:zone] init];
     tree.repo       = self.repo;
     tree.sha1       = self.sha1;
     tree.size       = self.size;

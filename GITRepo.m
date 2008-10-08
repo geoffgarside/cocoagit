@@ -46,7 +46,7 @@
 }
 - (id)copyWithZone:(NSZone*)zone
 {
-    return [[GITRepo alloc] initWithRoot:self.root];
+    return [[GITRepo allocWithZone:zone] initWithRoot:self.root];
 }
 - (NSString*)objectPathFromHash:(NSString*)hash
 {

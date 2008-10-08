@@ -65,7 +65,7 @@
 }
 - (id)copyWithZone:(NSZone*)zone
 {
-    GITTag * tag    = [[GITTag alloc] init];
+    GITTag * tag    = [[GITTag allocWithZone:zone] init];
     tag.repo        = self.repo;
     tag.sha1        = self.sha1;
     tag.name        = self.name;

@@ -41,7 +41,7 @@
 }
 - (id)copyWithZone:(NSZone*)zone
 {
-    return [[GITDateTime alloc] initWithDate:self.date timeZone:self.timezone];
+    return [[GITDateTime allocWithZone:zone] initWithDate:self.date timeZone:self.timezone];
 }
 - (NSString*)description
 {

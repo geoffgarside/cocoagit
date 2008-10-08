@@ -71,7 +71,7 @@
 }
 - (id)copyWithZone:(NSZone*)zone
 {
-    GITCommit * commit  = [[GITCommit alloc] init];
+    GITCommit * commit  = [[GITCommit allocWithZone:zone] init];
     commit.repo         = self.repo;
     commit.sha1         = self.sha1;
     commit.size         = self.size;
