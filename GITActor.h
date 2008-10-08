@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface GITActor : NSObject {
+@interface GITActor : NSObject <NSCopying> {
     NSString * name;
     NSString * email;
 }
