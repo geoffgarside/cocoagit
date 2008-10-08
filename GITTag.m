@@ -89,8 +89,7 @@
              * tagName,
              * taggerName,
              * taggerEmail,
-             * taggerTimezone,
-             * msg;
+             * taggerTimezone;
      NSTimeInterval taggerTimestamp;
     
     if ([scanner scanString:@"object" intoString:NULL] &&
