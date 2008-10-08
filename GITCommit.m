@@ -69,6 +69,21 @@
     
     [super dealloc];
 }
+- (id)copyWithZone:(NSZone*)zone
+{
+    GITCommit * commit  = [[GITCommit alloc] init];
+    commit.repo         = self.repo;
+    commit.sha1         = self.sha1;
+    commit.size         = self.size;
+    commit.tree         = self.tree;
+    commit.parent       = self.parent;
+    commit.author       = self.author;
+    commit.committer    = self.committer;
+    commit.authored     = self.authored;
+    commit.committed    = self.committed;
+    
+    return commit;
+}
 - (void)extractFieldsFromData:(NSData*)data
 {
     NSString  * dataStr = [[NSString alloc] initWithData:data 
