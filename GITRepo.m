@@ -87,7 +87,7 @@
     *theType = [metaStr substringToIndex:indexOfSpace];
     *theSize = (NSUInteger)[[metaStr substringFromIndex:indexOfSpace + 1] integerValue];
 }
-- (id <GITObject>)objectWithHash:(NSString*)hash
+- (id)objectWithHash:(NSString*)hash
 {
     NSString * objectType;
     NSUInteger objectSize;
