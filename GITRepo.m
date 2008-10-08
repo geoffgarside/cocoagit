@@ -19,6 +19,7 @@
 
 @interface GITRepo ()
 @property(readwrite,copy) NSString * root;
+@property(readwrite,copy) NSString * desc;
 @end
 
 @implementation GITRepo

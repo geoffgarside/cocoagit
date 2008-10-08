@@ -19,7 +19,7 @@
 }
 
 @property(readonly,copy) NSString * root;
-@property(readwrite,copy) NSString * desc;
+@property(readonly,copy) NSString * desc;
 
 - (id)initWithRoot:(NSString*)repoRoot;
 - (id)initWithRoot:(NSString*)repoRoot bare:(BOOL)isBare;
