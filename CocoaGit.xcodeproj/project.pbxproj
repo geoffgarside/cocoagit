@@ -18,8 +18,6 @@
 		9F22A0F30E99744F006C3656 /* GITTreeEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */; };
 		9F22A1010E997938006C3656 /* GITUtilityBelt.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F63998D0E51952F0034F279 /* GITUtilityBelt.m */; };
 		9F22A1060E99855B006C3656 /* GITTreeEntryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F22A1050E99855B006C3656 /* GITTreeEntryTests.m */; };
-		9F33C9F00E48C5650004CD44 /* GITBranch.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EA0E48C5650004CD44 /* GITBranch.m */; };
-		9F33C9F10E48C5650004CD44 /* GITPackFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EC0E48C5650004CD44 /* GITPackFile.m */; };
 		9F33C9F20E48C5650004CD44 /* GITRepo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EF0E48C5650004CD44 /* GITRepo.m */; };
 		9F464D410E3DC3EC00867506 /* NSTimeZone+Offset.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F464D400E3DC3EC00867506 /* NSTimeZone+Offset.m */; };
 		9F63998E0E51952F0034F279 /* GITUtilityBelt.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F63998D0E51952F0034F279 /* GITUtilityBelt.m */; };
@@ -32,6 +30,12 @@
 		9F9212950E179B4B005AC693 /* NSData+Hashing.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212940E179B4B005AC693 /* NSData+Hashing.m */; };
 		9F9213860E17F17C005AC693 /* GITBlob.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9213850E17F17C005AC693 /* GITBlob.m */; };
 		9F9213BF0E1822A1005AC693 /* GITTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9213BE0E1822A1005AC693 /* GITTree.m */; };
+		9F96B0F10E9D555D00AD0A80 /* GITActor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC93D0E1A8917001668EB /* GITActor.m */; };
+		9F96B0F20E9D555E00AD0A80 /* GITDateTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE328C50E9B623E001E37D5 /* GITDateTime.m */; };
+		9F96B0F30E9D556700AD0A80 /* GITCommit.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC9030E1A7032001668EB /* GITCommit.m */; };
+		9F96B0F40E9D556900AD0A80 /* GITTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC9060E1A709D001668EB /* GITTag.m */; };
+		9F96B0F50E9D556A00AD0A80 /* GITTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9213BE0E1822A1005AC693 /* GITTree.m */; };
+		9F96B0F60E9D556B00AD0A80 /* GITTreeEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */; };
 		9FA4E0820E19A62500724E6B /* git-inspect.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4E0810E19A62500724E6B /* git-inspect.m */; };
 		9FA4E0840E19A6D400724E6B /* git-inspect.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4E0810E19A62500724E6B /* git-inspect.m */; };
 		9FA4E0860E19A6DD00724E6B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97325FDCFA39411CA2CEA /* Foundation.framework */; };
@@ -460,10 +464,14 @@
 				9F8CFFA50E2FFCF200D0E65A /* NSData+Searching.m in Sources */,
 				9F8C00770E311CA300D0E65A /* GITBlob.m in Sources */,
 				9F464D410E3DC3EC00867506 /* NSTimeZone+Offset.m in Sources */,
-				9F33C9F00E48C5650004CD44 /* GITBranch.m in Sources */,
-				9F33C9F10E48C5650004CD44 /* GITPackFile.m in Sources */,
 				9F33C9F20E48C5650004CD44 /* GITRepo.m in Sources */,
 				9F63998E0E51952F0034F279 /* GITUtilityBelt.m in Sources */,
+				9F96B0F10E9D555D00AD0A80 /* GITActor.m in Sources */,
+				9F96B0F20E9D555E00AD0A80 /* GITDateTime.m in Sources */,
+				9F96B0F30E9D556700AD0A80 /* GITCommit.m in Sources */,
+				9F96B0F40E9D556900AD0A80 /* GITTag.m in Sources */,
+				9F96B0F50E9D556A00AD0A80 /* GITTree.m in Sources */,
+				9F96B0F60E9D556B00AD0A80 /* GITTreeEntry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
