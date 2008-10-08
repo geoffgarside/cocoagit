@@ -55,7 +55,7 @@
     self.repo = nil;
     self.name = nil;
     self.sha1 = nil;
-    self.size = nil;
+    self.size = 0;
     self.commit = nil;
     self.tagger = nil;
     self.tagged = nil;
