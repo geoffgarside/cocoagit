@@ -39,10 +39,15 @@
 {
     if (self = [super init])
     {
-        if (isBare)
-            self.root = repoRoot; //[repoRoot stringByAppendingPathExtension:@".git"];
+        if ([repoRoot hasSuffix:@".git"])
+            self.root = repoRoot;
         else
-            self.root = [repoRoot stringByAppendingPathComponent:@".git"];
+        {
+            if (isBare)
+                self.root = repoRoot; //[repoRoot stringByAppendingPathExtension:@".git"];
+            else
+                self.root = [repoRoot stringByAppendingPathComponent:@".git"];
+        }
         
         NSString * descFile = [self.root stringByAppendingPathComponent:@"description"];
         self.desc = [NSString stringWithContentsOfFile:descFile];
