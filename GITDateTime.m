@@ -39,6 +39,10 @@
     self.timezone = nil;
     [super dealloc];
 }
+- (id)copyWithZone:(NSZone*)zone
+{
+    return [[GITDateTime alloc] initWithDate:self.date timeZone:self.timezone];
+}
 - (NSString*)description
 {
     return [NSString stringWithFormat:@"%.0f %@",
