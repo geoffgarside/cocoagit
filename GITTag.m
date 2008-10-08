@@ -125,5 +125,9 @@
     return [NSString stringWithFormat:@"Tag: %@ <%@>",
                                         self.name, self.sha1];
 }
+- (NSData*)rawData
+{
+    return [NSData data];
+}
 
 @end
