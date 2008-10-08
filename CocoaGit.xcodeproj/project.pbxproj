@@ -50,6 +50,8 @@
 		9FCF28DA0E993A8500665A41 /* GITActor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC93D0E1A8917001668EB /* GITActor.m */; };
 		9FE328C60E9B623E001E37D5 /* GITDateTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE328C50E9B623E001E37D5 /* GITDateTime.m */; };
 		9FE328CB0E9B6F2B001E37D5 /* GITDateTimeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE328CA0E9B6F2B001E37D5 /* GITDateTimeTests.m */; };
+		9FE32A3A0E9CFA53001E37D5 /* GITTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC9060E1A709D001668EB /* GITTag.m */; };
+		9FE32A4D0E9CFBB1001E37D5 /* GITCommit.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC9030E1A7032001668EB /* GITCommit.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -482,6 +484,8 @@
 				9F01049B0E9997C700A47227 /* GITUtilityBeltTests.m in Sources */,
 				9FE328C60E9B623E001E37D5 /* GITDateTime.m in Sources */,
 				9FE328CB0E9B6F2B001E37D5 /* GITDateTimeTests.m in Sources */,
+				9FE32A3A0E9CFA53001E37D5 /* GITTag.m in Sources */,
+				9FE32A4D0E9CFBB1001E37D5 /* GITCommit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
