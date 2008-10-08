@@ -44,6 +44,10 @@
     }
     return self;
 }
+- (id)copyWithZone:(NSZone*)zone
+{
+    return [[GITRepo alloc] initWithRoot:self.root];
+}
 - (NSString*)objectPathFromHash:(NSString*)hash
 {
     NSString * dir = [self.root stringByAppendingPathComponent:@"objects"];

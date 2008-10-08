@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface GITDateTime : NSObject {
+@interface GITDateTime : NSObject <NSCopying> {
     NSDate * date;
     NSTimeZone * timezone;
 }

@@ -7,7 +7,7 @@
 //
 
 @class GITRepo;
-@protocol GITObject
+@protocol GITObject <NSCopying>
 
 - (id)initWithHash:(NSString*)hash
            andData:(NSData*)data

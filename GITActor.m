@@ -37,6 +37,10 @@
     self.email = nil;
     [super dealloc];
 }
+- (id)copyWithZone:(NSZone*)zone
+{
+    return [[GITActor alloc] initWithName:self.name andEmail:self.email];
+}
 - (NSString*)description
 {
     if (self.email)

@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 @class GITBranch, GITTag;
-@interface GITRepo : NSObject
+@interface GITRepo : NSObject <NSCopying>
 {
     NSString * root;
     NSString * desc;    // Interesting issue here
