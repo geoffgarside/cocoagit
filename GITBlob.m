@@ -45,6 +45,12 @@
     self.data = nil;
     [super dealloc];
 }
+- (id)copyWithZone:(NSZone*)zone
+{
+    return [[GITBlob alloc] initWithHash:self.sha1
+                                 andData:self.data
+                                fromRepo:self.repo];
+}
 - (BOOL)canBeRepresentedAsString
 {
     if ([self.data rangeOfNullTerminatedBytesFrom:0].location != NSNotFound)
