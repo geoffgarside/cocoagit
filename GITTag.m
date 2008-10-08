@@ -63,6 +63,20 @@
     
     [super dealloc];
 }
+- (id)copyWithZone:(NSZone*)zone
+{
+    GITTag * tag    = [[GITTag alloc] init];
+    tag.repo        = self.repo;
+    tag.sha1        = self.sha1;
+    tag.name        = self.name;
+    tag.size        = self.size;
+    tag.commit      = self.commit;
+    tag.tagger      = self.tagger;
+    tag.tagged      = self.tagged;
+    tag.message     = self.message;
+    
+    return tag;
+}
 - (void)extractFieldsFromData:(NSData*)data
 {
     NSString  * dataStr = [[NSString alloc] initWithData:data 
