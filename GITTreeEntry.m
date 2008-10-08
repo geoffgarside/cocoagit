@@ -7,7 +7,6 @@
 //
 
 #import "GITTreeEntry.h"
-#import "GITRepo.h"
 #import "GITRepo+Protected.h"
 #import "GITObject.h"
 #import "GITUtilityBelt.h"
