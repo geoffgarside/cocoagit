@@ -12,11 +12,11 @@
 
 - (NSRange)rangeOfNullTerminatedBytesFrom:(NSInteger)start
 {
-	const Byte *pdata = [self bytes];
+	const char *pdata = [self bytes];
 	NSUInteger len = [self length];
 	if (start < len)
 	{
-		const Byte *end = memchr (pdata + start, 0x00, len - start);
+		const char *end = memchr (pdata + start, 0x00, len - start);
 		if (end != NULL) return NSMakeRange (start, end - (pdata + start));
 	}
 	return NSMakeRange (NSNotFound, 0);
