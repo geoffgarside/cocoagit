@@ -96,7 +96,7 @@
         [scanner scanUpToString:NewLine intoString:&taggedCommit] &&
         [scanner scanString:@"type" intoString:NULL] &&
         [scanner scanUpToString:NewLine intoString:&taggedType] &&
-        [taggedType isEqualToString:kGITCommitType])
+        [taggedType isEqualToString:@"commit"])
     {
         self.commit = [self.repo commitWithHash:taggedCommit];
     }
