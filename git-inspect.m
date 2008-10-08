@@ -4,6 +4,7 @@
 #import "GITTree.h"
 #import "GITCommit.h"
 #import "GITTag.h"
+#import "GITTreeEntry.h"
 
 void p(NSString * str);
 
@@ -47,7 +48,12 @@ int main (int argc, const char * argv[]) {
     {
         GITTree * tree = (GITTree*)object;
         p([NSString stringWithFormat:@"Tree (%lu)", tree.size]);
-        p(@"\tMode\tName\t\tSHA1");
+        p(@"Mode\tSHA1\t\t\t\t\t\tName");
+        for (GITTreeEntry * entry in tree.entries)
+        {
+            p([NSString stringWithFormat:@"%lu\t%@\t%@",
+               entry.mode, entry.sha1, entry.name]);
+        }
     }
     else
     {
