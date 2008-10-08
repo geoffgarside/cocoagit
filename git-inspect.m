@@ -38,6 +38,11 @@ int main (int argc, const char * argv[]) {
     {
         GITCommit * commit = (GITCommit*)object;
         p([NSString stringWithFormat:@"Commit (%lu)", commit.size]);
+        p([NSString stringWithFormat:@"Tree\t\t%@", commit.tree.sha1]);
+        p([NSString stringWithFormat:@"Parent\t\t%@", commit.parent.sha1]);
+        p([NSString stringWithFormat:@"Author\t\t%@\t%@", commit.author, commit.authored]);
+        p([NSString stringWithFormat:@"Committer\t%@\t%@", commit.committer, commit.committed]);
+        p([NSString stringWithFormat:@"Message\n%@", commit.message]);
     }
     else if ([object isKindOfClass:[GITTag class]])
     {
