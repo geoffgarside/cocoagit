@@ -52,8 +52,7 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
             [scanner setScanLocation:[scanner scanLocation] + 1 + kGITPackedSha1Length];
         }
     }
-    
-    NSLog(@"entryMode(%@) entryName(%@)", entryMode, entryName);
+
     return [self initWithModeString:entryMode 
                                name:entryName 
                             andHash:unpackSHA1FromString(entrySha1)];
