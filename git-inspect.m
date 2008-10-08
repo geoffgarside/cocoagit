@@ -1,53 +1,65 @@
 #import <Foundation/Foundation.h>
-#import "GITRepo.h"
+#import "GITRepo+Protected.h"
 #import "GITBlob.h"
 #import "GITTree.h"
 #import "GITCommit.h"
 #import "GITTag.h"
 
+void p(NSString * str);
+
 int main (int argc, const char * argv[]) {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     
     if (argc != 2) {
-        NSLog(@"Usage: %s sha1hash", argv[0]);
+        p([NSString stringWithFormat:@"Usage: %s sha1hash", argv[0]]);
         exit(0);
     }
     
     GITRepo * repo = [[GITRepo alloc] initWithRoot:@"."];
     
     NSString *inspectHash = [NSString stringWithCString:argv[1]];
-    id<GITObject> object  = [repo objectWithHash:inspectHash];
+    id object  = [[repo objectWithHash:inspectHash] autorelease];
     
     if ([object isKindOfClass:[GITBlob class]])
     {
-        NSLog(@"Blob (%lu)", object.size);
-        if ([object canBeRepresentedAsString])
+        GITBlob * blob = (GITBlob*)object;
+        p([NSString stringWithFormat:@"Blob (%lu)", blob.size]);
+        if ([blob canBeRepresentedAsString])
         {
-            NSLog(@"%@", [object stringValue]);
+            p([blob stringValue]);
         }
         else
         {
-            NSLog(@"%@", [object data]);
+            p([[blob data] description]);
         }
     }
     else if ([object isKindOfClass:[GITCommit class]])
     {
-        NSLog(@"Commit (%lu)", object.size);
+        GITCommit * commit = (GITCommit*)object;
+        p([NSString stringWithFormat:@"Commit (%lu)", commit.size]);
     }
     else if ([object isKindOfClass:[GITTag class]])
     {
-        NSLog(@"Tag (%lu)", object.size);
+        GITTag * tag = (GITTag*)object;
+        p([NSString stringWithFormat:@"Tag (%lu)", tag.size]);
     }
     else if ([object isKindOfClass:[GITTree class]])
     {
-        NSLog(@"Tree (%lu)", object.size);
-        NSLog(@"\tMode\tName\t\tSHA1");
+        GITTree * tree = (GITTree*)object;
+        p([NSString stringWithFormat:@"Tree (%lu)", tree.size]);
+        p(@"\tMode\tName\t\tSHA1");
     }
     else
     {
-        NSLog(@"Unknown git object type");
+        p(@"Unknown git object type");
     }
     
     [pool drain];
     return 0;
+}
+
+void p(NSString * str)
+{
+    printf([str UTF8String]);
+    printf("\n");
 }
