@@ -13,8 +13,12 @@
 #import "NSData+Searching.h"
 #import "NSData+Compression.h"
 
-#import "GITObject.h"
 #import "GITBranch.h"
+
+#import "GITObject.h"
+#import "GITCommit.h"
+#import "GITBlob.h"
+#import "GITTree.h"
 #import "GITTag.h"
 
 @interface GITRepo ()
@@ -78,5 +82,86 @@
     *theType = [metaStr substringToIndex:indexOfSpace];
     *theSize = (NSUInteger)[[metaStr substringFromIndex:indexOfSpace + 1] integerValue];
 }
+- (id <GITObject>)objectWithHash:(NSString*)hash
+{
+    NSString * objectType;
+    NSUInteger objectSize;
+    NSData * objectData;
 
+    [self extractFromData:[self dataWithContentsOfHash:hash]
+                     type:&objectType
+                     size:&objectSize
+                  andData:&objectData];
+
+    if ([objectType isEqualToString:@"blob"])
+        return [[GITBlob alloc] initWithHash:hash andData:objectData fromRepo:self];
+    else if ([objectType isEqualToString:@"tree"])
+        return [[GITTree alloc] initWithHash:hash andData:objectData fromRepo:self];
+    else if ([objectType isEqualToString:@"commit"])
+        return [[GITCommit alloc] initWithHash:hash andData:objectData fromRepo:self];
+    else if ([objectType isEqualToString:@"tag"])
+        return [[GITTag alloc] initWithHash:hash andData:objectData fromRepo:self];
+    else
+        return nil;
+}
+- (GITBlob*)blobWithHash:(NSString*)hash
+{
+    NSString * objectType;
+    NSUInteger objectSize;
+    NSData * objectData;
+
+    [self extractFromData:[self dataWithContentsOfHash:hash]
+                     type:&objectType
+                     size:&objectSize
+                  andData:&objectData];
+    if ([objectType isEqualToString:@"blob"])
+        return [[GITBlob alloc] initWithHash:hash andData:objectData fromRepo:self];
+    else
+        return nil;
+}
+- (GITTree*)treeWithHash:(NSString*)hash
+{
+    NSString * objectType;
+    NSUInteger objectSize;
+    NSData * objectData;
+
+    [self extractFromData:[self dataWithContentsOfHash:hash]
+                     type:&objectType
+                     size:&objectSize
+                  andData:&objectData];
+    if ([objectType isEqualToString:@"tree"])
+        return [[GITTree alloc] initWithHash:hash andData:objectData fromRepo:self];
+    else
+        return nil;
+}
+- (GITCommit*)commitWithHash:(NSString*)hash
+{
+    NSString * objectType;
+    NSUInteger objectSize;
+    NSData * objectData;
+
+    [self extractFromData:[self dataWithContentsOfHash:hash]
+                     type:&objectType
+                     size:&objectSize
+                  andData:&objectData];
+    if ([objectType isEqualToString:@"commit"])
+        return [[GITCommit alloc] initWithHash:hash andData:objectData fromRepo:self];
+    else
+        return nil;
+}
+- (GITTag*)tagWithHash:(NSString*)hash
+{
+    NSString * objectType;
+    NSUInteger objectSize;
+    NSData * objectData;
+
+    [self extractFromData:[self dataWithContentsOfHash:hash]
+                     type:&objectType
+                     size:&objectSize
+                  andData:&objectData];
+    if ([objectType isEqualToString:@"tag"])
+        return [[GITTag alloc] initWithHash:hash andData:objectData fromRepo:self];
+    else
+        return nil;
+}
 @end
