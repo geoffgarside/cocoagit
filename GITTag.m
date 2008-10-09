@@ -109,7 +109,9 @@
     
     if ([scanner scanString:@"tagger" intoString:NULL] &&
         [scanner scanUpToString:@"<" intoString:&taggerName] &&
+        [scanner scanString:@"<" intoString:NULL] &&
         [scanner scanUpToString:@">" intoString:&taggerEmail] &&
+        [scanner scanString:@">" intoString:NULL] &&
         [scanner scanDouble:&taggerTimestamp] &&
         [scanner scanUpToString:NewLine intoString:&taggerTimezone])
     {
