@@ -8,17 +8,26 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-@class GITRepo;
+@class GITRepo, GITCommit;
 @interface GITCommitTests : SenTestCase {
-    GITRepo * repo;
-    NSString * commitSHA1;
+    GITRepo   * repo;
+    GITCommit * commit;
+    NSString  * commitSHA1;
     NSUInteger rawCommitSize;
 }
 
-@property(readwrite,retain) GITRepo * repo;
-@property(readwrite,copy)  NSString * commitSHA1;
+@property(readwrite,retain) GITRepo   * repo;
+@property(readwrite,retain) GITCommit * commit;
+@property(readwrite,copy)   NSString  * commitSHA1;
 @property(readwrite,assign) NSUInteger rawCommitSize;
 
-- (void)testInitWithHashDataAndRepo;
+- (void)testIsNotNil;
+- (void)testSha1MatchesInitialSha1;
+- (void)testSizeMatchesRawSize;
+- (void)testAuthorIsNotNil;
+
+#pragma mark -
+#pragma mark Helpers
+- (NSData*)rawCommitData;
 
 @end
