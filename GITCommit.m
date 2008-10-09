@@ -118,6 +118,7 @@
     if ([scanner scanString:@"author" intoString:NULL] &&
         [scanner scanUpToString:@"<" intoString:&authorName] &&
         [scanner scanUpToString:@">" intoString:&authorEmail] &&
+        [scanner scanString:@">" intoString:NULL] &&
         [scanner scanDouble:&authorTimestamp] &&
         [scanner scanUpToString:NewLine intoString:&authorTimezone])
     {
@@ -129,6 +130,7 @@
     if ([scanner scanString:@"committer" intoString:NULL] &&
         [scanner scanUpToString:@"<" intoString:&committerName] &&
         [scanner scanUpToString:@">" intoString:&committerEmail] &&
+        [scanner scanString:@">" intoString:NULL] &&
         [scanner scanDouble:&committerTimestamp] &&
         [scanner scanUpToString:NewLine intoString:&committerTimezone])
     {
