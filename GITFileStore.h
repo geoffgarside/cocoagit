@@ -7,13 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "GITObjectStore.h"
 
 /*!
  Used for accessing git objects which are stored
  loose in the .git/objects directory by their 
  hash name.
 */
-@interface GITFileStore : NSObject {
+@interface GITFileStore : GITObjectStore {
 
 }
 
