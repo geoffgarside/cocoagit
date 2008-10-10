@@ -22,7 +22,7 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
 @property(readwrite,copy) NSString * name;
 @property(readwrite,assign) NSUInteger mode;
 @property(readwrite,copy) NSString * sha1;
-@property(readwrite,copy) id <GITObject> object;
+@property(readwrite,copy) id object;
 
 - (NSUInteger)extractModeFromString:(NSString*)stringMode;
 
