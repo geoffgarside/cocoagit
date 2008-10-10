@@ -12,7 +12,6 @@ extern const NSUInteger kGITPackedSha1Length;
 extern const NSUInteger kGITUnpackedSha1Length;
 
 @class GITRepo;
-@protocol GITObject;
 @interface GITTreeEntry : NSObject
 {
     GITRepo  * repo;
@@ -20,14 +19,14 @@ extern const NSUInteger kGITUnpackedSha1Length;
     NSUInteger mode;
     
     NSString * sha1;
-    id <GITObject> object;
+    id object;
 }
 
 @property(readonly,copy) GITRepo * repo;
 @property(readonly,copy) NSString * name;
 @property(readonly,assign) NSUInteger mode;
 @property(readonly,copy) NSString * sha1;
-@property(readonly,copy) id <GITObject> object;
+@property(readonly,copy) id object;
 
 - (id)initWithTreeLine:(NSString*)treeLine repo:(GITRepo*)theRepo;
 - (id)initWithMode:(NSUInteger)mode name:(NSString*)name hash:(NSString*)hash repo:(GITRepo*)theRepo;

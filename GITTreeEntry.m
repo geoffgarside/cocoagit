@@ -92,7 +92,7 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
     
     [super dealloc];
 }
-- (id <GITObject>)object    //!< Lazily loads the target object
+- (id)object    //!< Lazily loads the target object
 {
     if (!object && self.sha1)
         self.object = [self.repo objectWithHash:self.sha1];
