@@ -48,6 +48,10 @@ int main (int argc, const char * argv[]) {
     {
         GITTag * tag = (GITTag*)object;
         p([NSString stringWithFormat:@"Tag (%lu)", tag.size]);
+        p([NSString stringWithFormat:@"Commit\t\t%@", tag.commit.sha1]);
+        p([NSString stringWithFormat:@"Name\t\t%@", tag.name]);
+        p([NSString stringWithFormat:@"Tagger\t\t%@\t%@", tag.tagger, tag.tagged]);
+        p([NSString stringWithFormat:@"Message\n%@", tag.message]);
     }
     else if ([object isKindOfClass:[GITTree class]])
     {
