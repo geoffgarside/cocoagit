@@ -29,8 +29,8 @@ extern const NSUInteger kGITUnpackedSha1Length;
 @property(readonly,copy) NSString * sha1;
 @property(readonly,copy) id <GITObject> object;
 
-- (id)initWithTreeLine:(NSString*)treeLine;
-- (id)initWithMode:(NSUInteger)mode name:(NSString*)name andHash:(NSString*)hash;
-- (id)initWithModeString:(NSString*)mode name:(NSString*)name andHash:(NSString*)hash;
+- (id)initWithTreeLine:(NSString*)treeLine repo:(GITRepo*)theRepo;
+- (id)initWithMode:(NSUInteger)mode name:(NSString*)name hash:(NSString*)hash repo:(GITRepo*)theRepo;
+- (id)initWithModeString:(NSString*)mode name:(NSString*)name hash:(NSString*)hash repo:(GITRepo*)theRepo;
 
 @end

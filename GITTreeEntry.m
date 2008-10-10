@@ -36,7 +36,7 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
 @synthesize sha1;
 @synthesize object;
 
-- (id)initWithTreeLine:(NSString*)treeLine
+- (id)initWithTreeLine:(NSString*)treeLine repo:(GITRepo*)theRepo
 {
     NSScanner * scanner = [NSScanner scannerWithString:treeLine];
     NSString  * entryMode,
@@ -55,22 +55,30 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
 
     return [self initWithModeString:entryMode 
                                name:entryName 
-                            andHash:unpackSHA1FromString(entrySha1)];
+                               hash:unpackSHA1FromString(entrySha1)
+                               repo:theRepo];
 }
-- (id)initWithMode:(NSUInteger)theMode name:(NSString*)theName andHash:(NSString*)theHash
+- (id)initWithMode:(NSUInteger)theMode 
+              name:(NSString*)theName 
+              hash:(NSString*)theHash 
+              repo:(GITRepo*)theRepo
 {
     if (self = [super init])
     {
+        self.repo = theRepo;
         self.mode = theMode;
         self.name = theName;
         self.sha1 = theHash;
     }
     return self;
 }
-- (id)initWithModeString:(NSString*)modeString name:(NSString*)theName andHash:(NSString*)hash
+- (id)initWithModeString:(NSString*)modeString 
+                    name:(NSString*)theName 
+                    hash:(NSString*)hash 
+                    repo:(GITRepo*)theRepo
 {
     NSUInteger theMode = [modeString integerValue];
-    return [self initWithMode:theMode name:theName andHash:hash];
+    return [self initWithMode:theMode name:theName hash:hash repo:theRepo];
 }
 - (void)dealloc
 {
@@ -86,8 +94,8 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
 }
 - (id <GITObject>)object    //!< Lazily loads the target object
 {
-    //if (!object && sha1)
-    //    self.object = [self.repo objectWithHash:self.sha1];
+    if (!object && self.sha1)
+        self.object = [self.repo objectWithHash:self.sha1];
     return object;
 }
 /*!

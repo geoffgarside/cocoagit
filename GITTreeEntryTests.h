@@ -8,14 +8,16 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-
+@class GITRepo;
 @interface GITTreeEntryTests : SenTestCase {
+    GITRepo * repo;
     NSUInteger entryMode;
     NSString * entryName;
     NSString * entrySHA1;
     NSString * entryLine;
 }
 
+@property(readwrite,retain) GITRepo * repo;
 @property(readwrite,assign) NSUInteger entryMode;
 @property(readwrite,copy) NSString * entryName;
 @property(readwrite,copy) NSString * entrySHA1;

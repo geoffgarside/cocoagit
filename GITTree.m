@@ -77,7 +77,7 @@
             entrySha1Start - entryStart + kGITPackedSha1Length + 1);
         
         NSString * treeLine = [dataStr substringWithRange:entryRange];
-        GITTreeEntry * entry = [[GITTreeEntry alloc] initWithTreeLine:treeLine];
+        GITTreeEntry * entry = [[GITTreeEntry alloc] initWithTreeLine:treeLine repo:self.repo];
         [treeEntries addObject:entry];
 
         entryStart = entryRange.location + entryRange.length;
