@@ -21,10 +21,15 @@
 #import "GITTree.h"
 #import "GITTag.h"
 
+/*! \cond
+ Make properties readwrite so we can use
+ them within the class.
+*/
 @interface GITRepo ()
 @property(readwrite,copy) NSString * root;
 @property(readwrite,copy) NSString * desc;
 @end
+/*! \endcond */
 
 @implementation GITRepo
 

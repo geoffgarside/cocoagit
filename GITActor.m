@@ -8,10 +8,15 @@
 
 #import "GITActor.h"
 
+/*! \cond
+ Make properties readwrite so we can use
+ them within the class.
+*/
 @interface GITActor ()
 @property(readwrite,copy) NSString * name;
 @property(readwrite,copy) NSString * email;
 @end
+/*! \endcond */
 
 @implementation GITActor
 

@@ -24,6 +24,10 @@ const NSUInteger kGITPackFileTypeTree     = 2;
 const NSUInteger kGITPackFileTypeBlob     = 3;
 const NSUInteger kGITPackFileTypeTag      = 4;
 
+/*! \cond
+ Make properties readwrite so we can use
+ them within the class.
+*/
 @interface GITPackFile ()
 @property(readwrite,retain) GITRepo * repo;
 @property(readwrite,copy)   NSString * idxPath;
@@ -33,6 +37,7 @@ const NSUInteger kGITPackFileTypeTag      = 4;
 @property(readwrite,assign) NSUInteger packVersion;
 @property(readwrite,assign) NSUInteger numberOfObjects;
 @end
+/*! \endcond */
 
 @implementation GITPackFile
 

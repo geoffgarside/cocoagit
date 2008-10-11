@@ -12,6 +12,10 @@
 #import "GITActor.h"
 #import "GITDateTime.h"
 
+/*! \cond
+ Make properties readwrite so we can use
+ them within the class.
+*/
 @interface GITCommit ()
 @property(readwrite,copy) GITRepo * repo;
 @property(readwrite,copy) NSString * sha1;
@@ -27,6 +31,7 @@
 - (void)extractFieldsFromData:(NSData*)data;
 
 @end
+/*! \endcond */
 
 @implementation GITCommit
 

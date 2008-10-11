@@ -12,6 +12,10 @@
 #import "GITCommit.h"
 #import "GITDateTime.h"
 
+/*! \cond
+ Make properties readwrite so we can use
+ them within the class.
+*/
 @interface GITTag ()
 @property(readwrite,retain) GITRepo * repo;
 @property(readwrite,copy) NSString * name;
@@ -25,6 +29,7 @@
 - (void)extractFieldsFromData:(NSData*)data;
 
 @end
+/*! \endcond */
 
 @implementation GITTag
 @synthesize repo;

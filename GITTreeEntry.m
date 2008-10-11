@@ -17,6 +17,10 @@ const NSUInteger GITTreeEntryFileMask   =  0100000;
 const NSUInteger GITTreeEntryDirMask    =  0040000;
 const NSUInteger GITTreeEntryModMask    =  0160000;
 
+/*! \cond
+ Make properties readwrite so we can use
+ them within the class.
+*/
 @interface GITTreeEntry ()
 @property(readwrite,copy) GITRepo * repo;
 @property(readwrite,copy) NSString * name;
@@ -27,6 +31,7 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
 - (NSUInteger)extractModeFromString:(NSString*)stringMode;
 
 @end
+/*! \endcond */
 
 @implementation GITTreeEntry
 

@@ -9,11 +9,15 @@
 #import "GITDateTime.h"
 #import "NSTimeZone+Offset.h"
 
-
+/*! \cond
+ Make properties readwrite so we can use
+ them within the class.
+*/
 @interface GITDateTime ()
 @property(readwrite,copy) NSDate * date;
 @property(readwrite,copy) NSTimeZone * timezone;
 @end
+/*! \endcond */
 
 @implementation GITDateTime
 @synthesize date;

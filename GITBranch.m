@@ -10,10 +10,15 @@
 #import "GITRepo.h"
 #import "GITCommit.h"
 
+/*! \cond
+ Make properties readwrite so we can use
+ them within the class.
+*/
 @interface GITBranch ()
 @property(readwrite,retain) GITRepo * repo;
 @property(readwrite,copy) NSString * name;
 @end
+/*! \endcond */
 
 @implementation GITBranch
 @synthesize repo;

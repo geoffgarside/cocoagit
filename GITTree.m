@@ -11,6 +11,10 @@
 #import "GITObject.h"
 #import "GITTreeEntry.h"
 
+/*! \cond
+ Make properties readwrite so we can use
+ them within the class.
+*/
 @interface GITTree ()
 @property(readwrite,retain) GITRepo * repo;
 @property(readwrite,copy) NSString * sha1;
@@ -20,6 +24,7 @@
 - (void)extractEntriesFromData:(NSData*)data;
 
 @end
+/*! \endcond */
 
 @implementation GITTree
 @synthesize repo;

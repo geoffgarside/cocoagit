@@ -11,12 +11,17 @@
 
 #import "NSData+Searching.h"
 
+/*! \cond
+ Make properties readwrite so we can use
+ them within the class.
+*/
 @interface GITBlob ()
 @property(readwrite,retain) GITRepo * repo;
 @property(readwrite,copy) NSString * sha1;
 @property(readwrite,assign) NSUInteger size;
 @property(readwrite,copy) NSData * data;
 @end
+/*! \endcond */
 
 @implementation GITBlob
 @synthesize repo;
