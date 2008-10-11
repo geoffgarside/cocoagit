@@ -1,5 +1,14 @@
 /*! \mainpage
+ \section intro_sec Introduction
+ CocoaGit is an implementation of the <a href="http://git-scm.com">git</a>, <em>stupid content tracker</em>,
+ version control system using <a href="http://apple.com">Apples</a>
+ <a href="http://developer.apple.com/cocoa/">Cocoa</a> and
+ <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/ObjectiveC/">Objective-C</a>.
+ The project was begun as as a two part experiment to learn both <a href="http://developer.apple.com/cocoa/">Cocoa</a>
+ and the way in which <a href="http://git-scm.com">git</a> works.
+
  \authors Geoff Garside
+
  \section source_sec Source Code
  The source code is available on <a href="http://github.com/">Github</a> at 
  <a href="http://github.com/geoffgarside/cocoagit">geoffgarside/cocoagit</a>.
