@@ -104,6 +104,7 @@
 		9F63998C0E51952F0034F279 /* GITUtilityBelt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITUtilityBelt.h; sourceTree = "<group>"; };
 		9F63998D0E51952F0034F279 /* GITUtilityBelt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITUtilityBelt.m; sourceTree = "<group>"; };
 		9F66F7C70EA1105500E7FAA9 /* doxygen.config */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = doxygen.config; sourceTree = "<group>"; };
+		9F66F8160EA146C000E7FAA9 /* CocoaGit.dox */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CocoaGit.dox; sourceTree = "<group>"; };
 		9F7EC9020E1A7032001668EB /* GITCommit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITCommit.h; sourceTree = "<group>"; };
 		9F7EC9030E1A7032001668EB /* GITCommit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITCommit.m; sourceTree = "<group>"; };
 		9F7EC9050E1A709D001668EB /* GITTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITTag.h; sourceTree = "<group>"; };
@@ -243,6 +244,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9F66F8160EA146C000E7FAA9 /* CocoaGit.dox */,
 				9F66F7C70EA1105500E7FAA9 /* doxygen.config */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,

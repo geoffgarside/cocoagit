@@ -1,0 +1,13 @@
+/*! \mainpage
+ \authors Geoff Garside
+ \section source_sec Source Code
+ The source code is available on <a href="http://github.com/">Github</a> at 
+ <a href="http://github.com/geoffgarside/cocoagit">geoffgarside/cocoagit</a>.
+ 
+ To download the source code
+ \verbatim
+ git clone git://github.com/geoffgarside/cocoagit.git\endverbatim
+ 
+ \section licence_sec Licence - MIT
+ \verbinclude LICENCE
+*/
