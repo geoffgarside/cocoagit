@@ -43,6 +43,16 @@
  */
 - (id)initWithRoot:(NSString*)repoRoot bare:(BOOL)isBare;
 
+/*! Returns a new instance that's a copy of the receiver.
+ * \internal
+ * This will create a new instance of the GITObjectStore for the receiver.
+ * \param zone The zone identifies an area of memory from which to allocate
+ * for the new instance. If <tt>zone</tt> is <tt>NULL</tt>, the new instance
+ * is allocated from the default zone, which is returned from the function
+ * <tt>NSDefaultMallocZone</tt>.
+ */
+- (id)copyWithZone:(NSZone*)zone;
+
 /*
 - (NSArray*)branches;
 - (NSArray*)commits;
