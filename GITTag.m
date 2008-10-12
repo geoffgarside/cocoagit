@@ -17,10 +17,7 @@
  them within the class.
 */
 @interface GITTag ()
-@property(readwrite,retain) GITRepo * repo;
 @property(readwrite,copy) NSString * name;
-@property(readwrite,copy) NSString * sha1;
-@property(readwrite,assign) NSUInteger size;
 @property(readwrite,copy) GITCommit * commit;
 @property(readwrite,copy) GITActor * tagger;
 @property(readwrite,copy) GITDateTime * tagged;
@@ -32,35 +29,24 @@
 /*! \endcond */
 
 @implementation GITTag
-@synthesize repo;
 @synthesize name;
-@synthesize sha1;
-@synthesize size;
 @synthesize commit;
 @synthesize tagger;
 @synthesize tagged;
 @synthesize message;
 
-- (id)initWithHash:(NSString*)hash
-           andData:(NSData*)data
-          fromRepo:(GITRepo*)parentRepo
+- (id)initWithSha1:(NSString*)sha1 data:(NSData*)raw repo:(GITRepo*)theRepo
 {
-    if (self = [super init])
+    if (self = [super initType:@"tag" sha1:sha1
+                          size:[raw length] repo:theRepo])
     {
-        self.repo = parentRepo;
-        self.sha1 = hash;
-        self.size = [data length];
-        
-        [self extractFieldsFromData:data];
+        [self extractEntriesFromData:raw];
     }
     return self;
 }
 - (void)dealloc
 {
-    self.repo = nil;
     self.name = nil;
-    self.sha1 = nil;
-    self.size = 0;
     self.commit = nil;
     self.tagger = nil;
     self.tagged = nil;
@@ -70,11 +56,8 @@
 }
 - (id)copyWithZone:(NSZone*)zone
 {
-    GITTag * tag    = [[GITTag allocWithZone:zone] init];
-    tag.repo        = self.repo;
-    tag.sha1        = self.sha1;
+    GITTag * tag    = (GITTag*)[super copyWithZone:zone];
     tag.name        = self.name;
-    tag.size        = self.size;
     tag.commit      = self.commit;
     tag.tagger      = self.tagger;
     tag.tagged      = self.tagged;
@@ -132,9 +115,11 @@
     return [NSString stringWithFormat:@"Tag: %@ <%@>",
                                         self.name, self.sha1];
 }
-- (NSData*)rawData
+- (NSData*)rawContent
 {
-    return [NSData data];
+    return [[NSString stringWithFormat:@"object %@\ntype %@\ntag %@\ntagger %@ %@\n%@",
+             self.commit.sha1, self.commit.type, self.name, self.tagger, self.tagged,
+             self.message] dataUsingEncoding:NSASCIIStringEncoding];
 }
 
 @end

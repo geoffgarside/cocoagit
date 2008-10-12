@@ -10,12 +10,9 @@
 #import "GITObject.h"
 
 @class GITRepo, GITCommit, GITActor, GITDateTime;
-@interface GITTag : NSObject <GITObject>
+@interface GITTag : GITObject
 {
-    GITRepo  * repo;
     NSString * name;
-    NSString * sha1;
-    NSUInteger size;
     
     // At such time as Tags can reference objects
     // other than commits we'll change this.
@@ -28,8 +25,6 @@
 }
 
 @property(readonly,copy) NSString * name;
-@property(readonly,copy) NSString * sha1;
-@property(readonly,assign) NSUInteger size;
 @property(readonly,copy) GITCommit * commit;
 @property(readonly,copy) GITActor * tagger;
 @property(readonly,copy) GITDateTime * tagged;
