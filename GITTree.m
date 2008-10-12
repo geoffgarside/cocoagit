@@ -8,7 +8,6 @@
 
 #import "GITTree.h"
 #import "GITRepo+Protected.h"
-#import "GITObject.h"
 #import "GITTreeEntry.h"
 
 /*! \cond
@@ -16,9 +15,6 @@
  them within the class.
 */
 @interface GITTree ()
-@property(readwrite,retain) GITRepo * repo;
-@property(readwrite,copy) NSString * sha1;
-@property(readwrite,assign) NSUInteger size;
 @property(readwrite,copy) NSArray * entries;
 
 - (void)extractEntriesFromData:(NSData*)data;
@@ -27,39 +23,25 @@
 /*! \endcond */
 
 @implementation GITTree
-@synthesize repo;
-@synthesize sha1;
-@synthesize size;
 @synthesize entries;
 
-- (id)initWithHash:(NSString*)hash
-           andData:(NSData*)treeData
-          fromRepo:(GITRepo*)parentRepo
+- (id)initWithSha1:(NSString*)sha1 data:(NSData*)raw repo:(GITRepo*)theRepo
 {
-    if (self = [super init])
+    if (self = [super initType:@"tree" sha1:sha1
+                          size:[raw length] repo:theRepo])
     {
-        self.repo = parentRepo;
-        self.sha1 = hash;
-        self.size = [treeData length];
-        
-        [self extractEntriesFromData:treeData];
+        [self extractEntriesFromData:raw];
     }
     return self;
 }
 - (void)dealloc
 {
-    self.repo = nil;
-    self.sha1 = nil;
-    self.size = 0;
     self.entries = nil;
     [super dealloc];
 }
 - (id)copyWithZone:(NSZone*)zone
 {
-    GITTree * tree  = [[GITTree allocWithZone:zone] init];
-    tree.repo       = self.repo;
-    tree.sha1       = self.sha1;
-    tree.size       = self.size;
+    GITTree * tree  = (GITTree*)[super copyWithZone:zone];
     tree.entries    = self.entries;
     
     return tree;
@@ -90,10 +72,14 @@
     
     self.entries = treeEntries;
 }
-- (NSData*)rawData
+- (NSData*)rawContent
 {
-    NSString * treeString = [NSString stringWithFormat:@"tree %lu"];
-    return [treeString dataUsingEncoding:NSASCIIStringEncoding];
+    NSMutableData * content = [NSMutableData dataWithCapacity:self.size];
+    for (GITTreeEntry * entry in self.entries)
+    {
+        [content appendData:[entry raw]];
+    }
+    return [content copy];
 }
 
 @end

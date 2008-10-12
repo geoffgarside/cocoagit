@@ -59,4 +59,5 @@ extern const NSUInteger kGITUnpackedSha1Length;
  */
 - (id)initWithModeString:(NSString*)mode name:(NSString*)name hash:(NSString*)hash repo:(GITRepo*)repo;
 
+- (NSData*)raw;
 @end

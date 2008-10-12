@@ -117,4 +117,11 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
     
     return modeMask;
 }
+- (NSData*)raw
+{
+    NSString * meta = [NSString stringWithFormat:@"%lu %@\0",
+                       (unsigned long)self.mode, self.name];
+    NSMutableData * data = [NSMutableData dataWithData:[meta dataUsingEncoding:NSASCIIStringEncoding]];
+    return [data appendData:packSHA1(self.sha1)];
+}
 @end
