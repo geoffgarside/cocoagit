@@ -10,5 +10,15 @@
 
 
 @implementation GITObjectStore
-
+- (id)initWithRoot:(NSString*)root
+{
+    [self doesNotRecognizeSelector:_cmd];
+    [self release];
+    return nil;
+}
+- (NSData*)dataWithContentsOfObject:(NSString*)sha1
+{
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
+}
 @end

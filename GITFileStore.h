@@ -9,13 +9,20 @@
 #import <Cocoa/Cocoa.h>
 #import "GITObjectStore.h"
 
-/*!
- Used for accessing git objects which are stored
- loose in the .git/objects directory by their 
- hash name.
-*/
-@interface GITFileStore : GITObjectStore {
-
+/*! Loose file object storage.
+ * Accesses objects stored as compressed files in <tt>.git/objects</tt>
+ * directory.
+ */
+@interface GITFileStore : GITObjectStore
+{
+    NSString * objectsDir;  //!< Path to the <tt>.git/objects</tt> directory
 }
 
+@property(readonly,copy) NSString * objectsDir;
+
+/*! Returns the path to the object in the objects directory.
+ * \param sha1 The object reference to generate the path for.
+ * \return Path to the object identified by <tt>sha1</tt>
+ */
+- (NSString*)stringWithPathToObject:(NSString*)sha1;
 @end

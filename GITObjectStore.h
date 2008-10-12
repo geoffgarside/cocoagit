@@ -8,15 +8,26 @@
 
 #import <Cocoa/Cocoa.h>
 
-
-@interface GITObjectStore : NSObject {
-
+/*! Generic object storage class.
+ * Desendants of GITObjectStore implement different ways of
+ * accessing the objects of a repository. 
+ */
+@interface GITObjectStore : NSObject
+{
 }
 
-- (NSData*)dataForObject:(NSString*)sha1;
+/*! Creates and returns a new store object from the provided .git root
+ * \param root Path to the .git root directory
+ * \return A new store object.
+ */
+- (id)initWithRoot:(NSString*)root;
 
-#pragma mark -
-#pragma mark Delegate Methods
-- (void)store:(GITObjectStore*)store didFindObject:(NSString*)sha1 withData:(NSData*)data;
-
+/*! Returns the contents of an object for the given <tt>sha1</tt>.
+ * The data returned should be in a form which is usable to initialise an
+ * object. If the data is stored compressed or encrypted it should be
+ * decompressed or decrypted before returning.
+ * \param sha1 The object reference to return the data for
+ * \return Contents of an object
+ */
+- (NSData*)dataWithContentsOfObject:(NSString*)sha1;
 @end

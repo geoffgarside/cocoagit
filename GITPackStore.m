@@ -8,7 +8,25 @@
 
 #import "GITPackStore.h"
 
+/*! \cond */
+@interface GITPackStore ()
+@property(readwrite,copy) NSString * packsDir;
+@end
+/*! \endcond */
 
 @implementation GITPackStore
+@synthesize packsDir;
 
+- (id)initWithRoot:(NSString*)root
+{
+    if(self = [super init])
+    {
+        self.packsDir = [root stringByAppendingPathComponent:@"objects/pack"];
+    }
+    return self;
+}
+- (NSData*)dataWithContentsOfObject:(NSString*)sha1
+{
+    
+}
 @end

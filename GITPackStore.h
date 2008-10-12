@@ -9,12 +9,15 @@
 #import <Cocoa/Cocoa.h>
 #import "GITObjectStore.h"
 
-/*!
- Used for accessing git objects which are stored
- inside PACK files in .git/objects/pack.
+/*! Packed objects storage.
+ * Accesses objects stored as in PACK files in
+ * <tt>.git/objects/pack</tt> directory.
  */
-@interface GITPackStore : GITObjectStore {
-
+@interface GITPackStore : GITObjectStore
+{
+    NSString * packsDir;    //!< Path to <tt>.git/objects/pack</tt> directory.
 }
+
+@property(readonly,copy) NSString * packsDir;
 
 @end
