@@ -9,6 +9,8 @@
 #import "GITRepo.h"
 #import "GITRepo+Protected.h"
 
+#import "GITFileStore.h"
+
 #import "NSData+Hashing.h"
 #import "NSData+Searching.h"
 #import "NSData+Compression.h"
@@ -28,13 +30,14 @@
 @interface GITRepo ()
 @property(readwrite,copy) NSString * root;
 @property(readwrite,copy) NSString * desc;
+@property(readwrite,retain) GITObjectStore * store;
 @end
 /*! \endcond */
 
 @implementation GITRepo
-
 @synthesize root;
 @synthesize desc;
+@synthesize store;
 
 - (id)initWithRoot:(NSString*)repoRoot
 {
@@ -56,6 +59,8 @@
         
         NSString * descFile = [self.root stringByAppendingPathComponent:@"description"];
         self.desc = [NSString stringWithContentsOfFile:descFile];
+
+        self.store = [[GITFileStore alloc] initWithRoot:self.root];
     }
     return self;
 }
@@ -65,16 +70,15 @@
 }
 - (NSString*)objectPathFromHash:(NSString*)hash
 {
-    NSString * dir = [self.root stringByAppendingPathComponent:@"objects"];
-    NSString * ref = [NSString stringWithFormat:@"%@/%@",
-        [hash substringToIndex:2], [hash substringFromIndex:2]];
-    
-    return [dir stringByAppendingPathComponent:ref];
+    return [self.store objectPathFromHash:hash];
 }
 - (NSData*)dataWithContentsOfHash:(NSString*)hash
 {
-    NSString * objectPath = [self objectPathFromHash:hash];
-    return [[NSData dataWithContentsOfFile:objectPath] zlibInflate];
+    return [self dataWithContentsOfObject:hash];
+}
+- (NSData*)dataWithContentsOfObject:(NSString*)sha1
+{
+    return [self.store dataWithContentsOfObject:hash];
 }
 - (void)extractFromData:(NSData*)data
                    type:(NSString**)theType

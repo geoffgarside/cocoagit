@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class GITBranch, GITTag;
+@class GITBranch, GITTag, GITObjectStore;
 /*! A repository of git objects.
  * This class serves to encapsulate the access to the
  * objects of a repository.
@@ -25,6 +25,7 @@
     NSString * desc;    //!< Description of the repository
                         // Interesting issue here the function used for
                         // an object to print itself is -description
+    GITObjectStore * store;     //!< The store which will be used to find objects
 }
 
 @property(readonly,copy) NSString * root;
@@ -64,4 +65,12 @@
 
 - (GITTag*)tagWithName:(NSString*)name;
 */
+
+#pragma mark -
+#pragma mark Internal Methods
+/*! Returns the raw data for an object
+ * \param sha1 Name of the object.
+ * \return Data containing the content of the object
+ */
+- (NSData*)dataWithContentsOfObject:(NSString*)sha1;
 @end
