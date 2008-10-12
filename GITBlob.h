@@ -10,6 +10,8 @@
 #import "GITObject.h"
 
 @class GITRepo;
+/*! Git object type representing a file.
+ */
 @interface GITBlob : NSObject <GITObject>
 {
     GITRepo  * repo;    //!< Repository which this blob is a part of
@@ -22,14 +24,17 @@
 @property(readonly,assign) NSUInteger size;
 @property(readonly,copy) NSData * data;
 
-/*!
- Indicates if the blobs contents are likely to be textual.
-*/
+/*! Returns flag indicating probability that data is textual.
+ * It is important to note that this indicates only the probability
+ * that the receiver's data is textual. The indication is based on
+ * the presence, or lack, of a NULL byte in the receivers data.
+ * \return Flag indicating probability that data is textual.
+ */
 - (BOOL)canBeRepresentedAsString;
 
-/*!
- Converts the binary data into a string.
-*/
+/*! Returns string contents of data.
+ * \return String contents of data.
+ */
 - (NSString*)stringValue;
 
 @end
