@@ -10,11 +10,8 @@
 #import "GITObject.h"
 
 @class GITRepo, GITTree, GITActor, GITDateTime;
-@interface GITCommit : NSObject <GITObject>
+@interface GITCommit : GITObject
 {
-    GITRepo  * repo;
-    NSString * sha1;
-    NSUInteger size;
     GITTree  * tree;
     
     GITCommit * parent;
@@ -27,8 +24,6 @@
     NSString * message;
 }
 
-@property(readonly,copy) NSString * sha1;
-@property(readonly,assign) NSUInteger size;
 @property(readonly,copy) GITTree * tree;
 @property(readonly,copy) GITCommit * parent;
 @property(readonly,copy) GITActor * author;

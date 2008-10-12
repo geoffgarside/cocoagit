@@ -17,9 +17,6 @@
  them within the class.
 */
 @interface GITCommit ()
-@property(readwrite,copy) GITRepo * repo;
-@property(readwrite,copy) NSString * sha1;
-@property(readwrite,assign) NSUInteger size;
 @property(readwrite,copy) GITTree * tree;
 @property(readwrite,copy) GITCommit * parent;
 @property(readwrite,copy) GITActor * author;
@@ -34,10 +31,6 @@
 /*! \endcond */
 
 @implementation GITCommit
-
-@synthesize repo;
-@synthesize sha1;
-@synthesize size;
 @synthesize tree;
 @synthesize parent;
 @synthesize author;
@@ -46,25 +39,17 @@
 @synthesize committed;
 @synthesize message;
 
-- (id)initWithHash:(NSString*)hash
-           andData:(NSData*)data
-          fromRepo:(GITRepo*)parentRepo
+- (id)initWithSha1:(NSString*)sha1 data:(NSData*)raw repo:(GITRepo*)theRepo
 {
-    if (self = [super init])
+    if (self = [super initType:@"commit" sha1:sha1
+                          size:[raw length] repo:theRepo])
     {
-        self.repo = parentRepo;
-        self.sha1 = hash;
-        self.size = [data length];
-        
-        [self extractFieldsFromData:data];
+        [self extractEntriesFromData:raw];
     }
     return self;
 }
 - (void)dealloc
 {
-    self.repo = nil;
-    self.sha1 = nil;
-    self.size = 0;
     self.tree = nil;
     self.parent = nil;
     self.author = nil;
@@ -76,10 +61,7 @@
 }
 - (id)copyWithZone:(NSZone*)zone
 {
-    GITCommit * commit  = [[GITCommit allocWithZone:zone] init];
-    commit.repo         = self.repo;
-    commit.sha1         = self.sha1;
-    commit.size         = self.size;
+    GITCommit * commit  = (GITCommit*)[super copyWithZone:zone];
     commit.tree         = self.tree;
     commit.parent       = self.parent;
     commit.author       = self.author;
@@ -152,9 +134,11 @@
 {
     return [NSString stringWithFormat:@"Commit <%@>", self.sha1];
 }
-- (NSData*)rawData
+- (NSData*)rawContent
 {
-    return [NSData data];
+    return [[NSString stringWithFormat:@"tree %@\nparent %@\nauthor %@ %@\ncommitter %@ %@\n%@",
+             self.tree.sha1, self.parent.sha1, self.author, self.authored,
+             self.committer, self.committed, self.message] dataUsingEncoding:NSASCIIStringEncoding];
 }
 
 @end
