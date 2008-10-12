@@ -16,45 +16,32 @@
  them within the class.
 */
 @interface GITBlob ()
-@property(readwrite,retain) GITRepo * repo;
-@property(readwrite,copy) NSString * sha1;
-@property(readwrite,assign) NSUInteger size;
 @property(readwrite,copy) NSData * data;
 @end
 /*! \endcond */
 
 @implementation GITBlob
-@synthesize repo;
-@synthesize sha1;
-@synthesize size;
 @synthesize data;
 
-- (id)initWithHash:(NSString*)hash
-           andData:(NSData*)blobData
-          fromRepo:(GITRepo*)parentRepo
+- (id)initWithSha1:(NSString*)sha1 data:(NSData*)raw repo:(GITRepo*)theRepo
 {
-    if (self = [super init])
+    if (self = [super initType:@"blob" sha1:sha1
+                          size:[raw length] repo:theRepo])
     {
-        self.repo = parentRepo;
-        self.sha1 = hash;
-        self.size = [blobData length];
-        self.data = blobData;
+        self.data = raw;
     }
     return self;
 }
 - (void)dealloc
 {
-    self.repo = nil;
-    self.sha1 = nil;
-    self.size = 0;
     self.data = nil;
     [super dealloc];
 }
 - (id)copyWithZone:(NSZone*)zone
 {
-    return [[GITBlob allocWithZone:zone] initWithHash:self.sha1
-                                              andData:self.data
-                                             fromRepo:self.repo];
+    GITBlob * blob = (GITBlob*)[super copyWithZone:zone];
+    blob.data = self.data;
+    return blob;
 }
 - (BOOL)canBeRepresentedAsString
 {
@@ -69,11 +56,9 @@
                                          encoding:NSASCIIStringEncoding];
     return [[v autorelease] retain];
 }
-- (NSData*)rawData
+- (NSData*)rawContent
 {
-    NSString * rawString = [NSString stringWithFormat:@"blob %lu\0%@",
-                            (unsigned long)self.size, self.data];
-    return [rawString dataUsingEncoding:NSASCIIStringEncoding];
+    return self.data;
 }
 
 @end
