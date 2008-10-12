@@ -140,6 +140,7 @@
 		9FCF28D70E991EB800665A41 /* GITActorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITActorTests.m; sourceTree = "<group>"; };
 		9FCF290E0E993E5900665A41 /* GITCommitTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITCommitTests.h; sourceTree = "<group>"; };
 		9FCF290F0E993E5900665A41 /* GITCommitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITCommitTests.m; sourceTree = "<group>"; };
+		9FD240740EA216D5000F7B60 /* GITObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITObject.m; sourceTree = "<group>"; };
 		9FE328C40E9B623E001E37D5 /* GITDateTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITDateTime.h; sourceTree = "<group>"; };
 		9FE328C50E9B623E001E37D5 /* GITDateTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITDateTime.m; sourceTree = "<group>"; };
 		9FE328C90E9B6F2B001E37D5 /* GITDateTimeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITDateTimeTests.h; sourceTree = "<group>"; };
@@ -304,6 +305,7 @@
 				9F9213840E17F17C005AC693 /* GITBlob.h */,
 				9F9213850E17F17C005AC693 /* GITBlob.m */,
 				9F9212B60E179DB6005AC693 /* GITObject.h */,
+				9FD240740EA216D5000F7B60 /* GITObject.m */,
 				9F9213BD0E1822A1005AC693 /* GITTree.h */,
 				9F9213BE0E1822A1005AC693 /* GITTree.m */,
 				9F7EC9020E1A7032001668EB /* GITCommit.h */,
