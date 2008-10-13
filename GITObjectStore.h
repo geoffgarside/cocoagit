@@ -17,6 +17,7 @@
 }
 
 /*! Creates and returns a new store object from the provided .git root
+ * \attention This method must be overridden
  * \param root Path to the .git root directory
  * \return A new store object.
  */
@@ -26,6 +27,7 @@
  * The data returned should be in a form which is usable to initialise an
  * object. If the data is stored compressed or encrypted it should be
  * decompressed or decrypted before returning.
+ * \attention This method must be overridden
  * \param sha1 The object reference to return the data for
  * \return Contents of an object
  */
