@@ -12,6 +12,14 @@ extern const NSUInteger kGITPackedSha1Length;
 extern const NSUInteger kGITUnpackedSha1Length;
 
 @class GITRepo;
+/*! An entry in tree listing.
+ * \todo Consider changing from having a GITRepo instance
+ * as part of the class to having an instance of the tree
+ * which the entry is a part of. We can then defer to the
+ * trees repo for object loading. We then need to be very
+ * careful about creating memory dependencies which are
+ * difficult to manage and may result in memory leakage.
+ */
 @interface GITTreeEntry : NSObject
 {
     GITRepo  * repo;    //!< Repository the entry belongs to. Used for accessing the object
