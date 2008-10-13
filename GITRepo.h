@@ -73,4 +73,34 @@
  * \return Data containing the content of the object
  */
 - (NSData*)dataWithContentsOfObject:(NSString*)sha1;
+
+/*! Returns an object identified by the given sha1.
+ * \param sha1 The identifier of the object to load
+ * \return A object with the given sha1 or nil if it cannot be found.
+ */
+- (GITObject*)objectWithSha1:(NSString*)sha1;
+
+/*! Returns a commit object identified by the given sha1.
+ * \param sha1 The identifier of the commit to load
+ * \return A commit object with the given sha1 or nil if it cannot be found.
+ */
+- (GITCommit*)commitWithSha1:(NSString*)sha1;
+
+/*! Returns a blob object identified by the given sha1.
+ * \param sha1 The identifier of the blob to load
+ * \return A blob object with the given sha1 or nil if it cannot be found.
+ */
+- (GITBlob*)blobWithSha1:(NSString*)sha1;
+
+/*! Returns a tree object identified by the given sha1.
+ * \param sha1 The identifier of the tree to load
+ * \return A tree object with the given sha1 or nil if it cannot be found.
+ */
+- (GITTree*)treeWithSha1:(NSString*)sha1;
+
+/*! Returns a tag object identified by the given sha1.
+ * \param sha1 The identifier of the tag to load
+ * \return A tag object with the given sha1 or nil if it cannot be found.
+ */
+- (GITTag*)tagWithSha1:(NSString*)sha1;
 @end

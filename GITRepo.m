@@ -7,13 +7,7 @@
 //
 
 #import "GITRepo.h"
-#import "GITRepo+Protected.h"
-
 #import "GITFileStore.h"
-
-#import "NSData+Hashing.h"
-#import "NSData+Searching.h"
-#import "NSData+Compression.h"
 
 #import "GITBranch.h"
 
@@ -68,113 +62,69 @@
 {
     return [[GITRepo allocWithZone:zone] initWithRoot:self.root];
 }
-- (NSString*)objectPathFromHash:(NSString*)hash
-{
-    return [self.store objectPathFromHash:hash];
-}
-- (NSData*)dataWithContentsOfHash:(NSString*)hash
-{
-    return [self dataWithContentsOfObject:hash];
-}
+
+#pragma mark -
+#pragma mark Internal Methods
 - (NSData*)dataWithContentsOfObject:(NSString*)sha1
 {
     return [self.store dataWithContentsOfObject:hash];
 }
-- (void)extractFromData:(NSData*)data
-                   type:(NSString**)theType
-                   size:(NSUInteger*)theSize
-                andData:(NSData**)theData
+- (GITObject*)objectWithSha1:(NSString*)sha1
 {
-    NSRange range = [data rangeOfNullTerminatedBytesFrom:0];
-    NSData * meta = [data subdataWithRange:range];
-    *theData = [data subdataFromIndex:range.length + 1];
-    
-    NSString * metaStr = [[NSString alloc] initWithData:meta
-                                               encoding:NSASCIIStringEncoding];
-    NSUInteger indexOfSpace = [metaStr rangeOfString:@" "].location;
-    
-    *theType = [metaStr substringToIndex:indexOfSpace];
-    *theSize = (NSUInteger)[[metaStr substringFromIndex:indexOfSpace + 1] integerValue];
+    NSString * type; NSUInteger size; NSData * data;
+
+    [self.store extractFromObject:sha1 type:&type size:&size data:&data];
+    if ([data length] == size)
+    {
+        if ([type isEqualToString:@"blob"])
+            return [[GITBlob alloc] initWithSha1:sha1 data:data repo:self];
+        else if ([type isEqualToString:@"tree"])
+            return [[GITTree alloc] initWithSha1:sha1 data:data repo:self];
+        else if ([type isEqualToString:@"commit"])
+            return [[GITCommit alloc] initWithSha1:sha1 data:data repo:self];
+        else if ([type isEqualToString:@"tag"])
+            return [[GITTag alloc] initWithSha1:sha1 data:data repo:self];
+    }
+
+    return nil;
 }
-- (id)objectWithHash:(NSString*)hash
+- (GITCommit*)commitWithSha1:(NSString*)sha1
 {
-    NSString * objectType;
-    NSUInteger objectSize;
-    NSData * objectData;
+    NSString * type; NSUInteger size; NSData * data;
 
-    [self extractFromData:[self dataWithContentsOfHash:hash]
-                     type:&objectType
-                     size:&objectSize
-                  andData:&objectData];
-
-    if ([objectType isEqualToString:@"blob"])
-        return [[GITBlob alloc] initWithHash:hash andData:objectData fromRepo:self];
-    else if ([objectType isEqualToString:@"tree"])
-        return [[GITTree alloc] initWithHash:hash andData:objectData fromRepo:self];
-    else if ([objectType isEqualToString:@"commit"])
-        return [[GITCommit alloc] initWithHash:hash andData:objectData fromRepo:self];
-    else if ([objectType isEqualToString:@"tag"])
-        return [[GITTag alloc] initWithHash:hash andData:objectData fromRepo:self];
+    [self.store extractFromObject:sha1 type:&type size:&size data:&data];
+    if ([type isEqualToString:@"commit"] && [data length] == size)
+        return [[GITCommit alloc] initWithSha1:sha1 data:data repo:self];
     else
         return nil;
 }
-- (GITBlob*)blobWithHash:(NSString*)hash
+- (GITBlob*)blobWithSha1:(NSString*)sha1
 {
-    NSString * objectType;
-    NSUInteger objectSize;
-    NSData * objectData;
+    NSString * type; NSUInteger size; NSData * data;
 
-    [self extractFromData:[self dataWithContentsOfHash:hash]
-                     type:&objectType
-                     size:&objectSize
-                  andData:&objectData];
-    if ([objectType isEqualToString:@"blob"])
-        return [[GITBlob alloc] initWithHash:hash andData:objectData fromRepo:self];
+    [self.store extractFromObject:sha1 type:&type size:&size data:&data];
+    if ([type isEqualToString:@"blob"] && [data length] == size)
+        return [[GITBlob alloc] initWithSha1:sha1 data:data repo:self];
     else
         return nil;
 }
-- (GITTree*)treeWithHash:(NSString*)hash
+- (GITTree*)treeWithSha1:(NSString*)sha1
 {
-    NSString * objectType;
-    NSUInteger objectSize;
-    NSData * objectData;
+    NSString * type; NSUInteger size; NSData * data;
 
-    [self extractFromData:[self dataWithContentsOfHash:hash]
-                     type:&objectType
-                     size:&objectSize
-                  andData:&objectData];
-    if ([objectType isEqualToString:@"tree"])
-        return [[GITTree alloc] initWithHash:hash andData:objectData fromRepo:self];
+    [self.store extractFromObject:sha1 type:&type size:&size data:&data];
+    if ([type isEqualToString:@"tree"] && [data length] == size)
+        return [[GITTree alloc] initWithSha1:sha1 data:data repo:self];
     else
         return nil;
 }
-- (GITCommit*)commitWithHash:(NSString*)hash
+- (GITTag*)tagWithSha1:(NSString*)sha1
 {
-    NSString * objectType;
-    NSUInteger objectSize;
-    NSData * objectData;
+    NSString * type; NSUInteger size; NSData * data;
 
-    [self extractFromData:[self dataWithContentsOfHash:hash]
-                     type:&objectType
-                     size:&objectSize
-                  andData:&objectData];
-    if ([objectType isEqualToString:@"commit"])
-        return [[GITCommit alloc] initWithHash:hash andData:objectData fromRepo:self];
-    else
-        return nil;
-}
-- (GITTag*)tagWithHash:(NSString*)hash
-{
-    NSString * objectType;
-    NSUInteger objectSize;
-    NSData * objectData;
-
-    [self extractFromData:[self dataWithContentsOfHash:hash]
-                     type:&objectType
-                     size:&objectSize
-                  andData:&objectData];
-    if ([objectType isEqualToString:@"tag"])
-        return [[GITTag alloc] initWithHash:hash andData:objectData fromRepo:self];
+    [self.store extractFromObject:sha1 type:&type size:&size data:&data];
+    if ([type isEqualToString:@"tree"] && [data length] == size)
+        return [[GITTag alloc] initWithSha1:sha1 data:data repo:self];
     else
         return nil;
 }
