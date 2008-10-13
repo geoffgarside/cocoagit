@@ -99,7 +99,6 @@
 		9F33C9EA0E48C5650004CD44 /* GITBranch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITBranch.m; sourceTree = "<group>"; };
 		9F33C9EB0E48C5650004CD44 /* GITPackFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITPackFile.h; sourceTree = "<group>"; };
 		9F33C9EC0E48C5650004CD44 /* GITPackFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITPackFile.m; sourceTree = "<group>"; };
-		9F33C9ED0E48C5650004CD44 /* GITRepo+Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GITRepo+Protected.h"; sourceTree = "<group>"; };
 		9F33C9EE0E48C5650004CD44 /* GITRepo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITRepo.h; sourceTree = "<group>"; };
 		9F33C9EF0E48C5650004CD44 /* GITRepo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITRepo.m; sourceTree = "<group>"; };
 		9F464D3F0E3DC3EC00867506 /* NSTimeZone+Offset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimeZone+Offset.h"; sourceTree = "<group>"; };
@@ -189,7 +188,6 @@
 				9F33C9EA0E48C5650004CD44 /* GITBranch.m */,
 				9F33C9EB0E48C5650004CD44 /* GITPackFile.h */,
 				9F33C9EC0E48C5650004CD44 /* GITPackFile.m */,
-				9F33C9ED0E48C5650004CD44 /* GITRepo+Protected.h */,
 				9F33C9EE0E48C5650004CD44 /* GITRepo.h */,
 				9F33C9EF0E48C5650004CD44 /* GITRepo.m */,
 			);
