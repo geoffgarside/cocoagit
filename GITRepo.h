@@ -12,6 +12,12 @@
 /*! A repository of git objects.
  * This class serves to encapsulate the access to the
  * objects of a repository.
+ * \todo Consider the lifetime of this object. Is it going
+ * to be better to retain the repo in the objects instead
+ * of copying it. Should we enforce this by changing
+ * -copyWithZone: to just return the retained instance of
+ * GITRepo or should we leave it capable of being copied
+ * but change our usage of it to retains?
  */
 @interface GITRepo : NSObject <NSCopying>
 {
