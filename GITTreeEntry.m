@@ -7,8 +7,9 @@
 //
 
 #import "GITTreeEntry.h"
-#import "GITRepo.h"
 #import "GITObject.h"
+#import "GITTree.h"
+#import "GITRepo.h"
 #import "GITUtilityBelt.h"
 
 const NSUInteger GITTreeEntryTypeMask   = 00170000;
@@ -34,19 +35,16 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
 /*! \endcond */
 
 @implementation GITTreeEntry
-
-@synthesize repo;
 @synthesize name;
 @synthesize mode;
 @synthesize sha1;
+@synthesize parent;
 @synthesize object;
 
-- (id)initWithTreeLine:(NSString*)treeLine repo:(GITRepo*)theRepo
+- (id)initWithTreeLine:(NSString*)line parent:(GITTree*)parentTree
 {
-    NSScanner * scanner = [NSScanner scannerWithString:treeLine];
-    NSString  * entryMode,
-              * entryName,
-              * entrySha1;
+    NSScanner * scanner = [NSScanner scannerWithString:line];
+    NSString  * entryMode, * entryName, * entrySha1;
     
     while ([scanner isAtEnd] == NO)
     {
@@ -58,39 +56,34 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
         }
     }
 
-    return [self initWithModeString:entryMode 
-                               name:entryName 
-                               hash:unpackSHA1FromString(entrySha1)
-                               repo:theRepo];
+    return [self initWithModeString:entryMode name:entryName
+                               sha1:unpackSHA1FromString(entrySha1)
+                             parent:parentTree];
 }
-- (id)initWithMode:(NSUInteger)theMode 
-              name:(NSString*)theName 
-              hash:(NSString*)theHash 
-              repo:(GITRepo*)theRepo
+- (id)initWithMode:(NSUInteger)theMode name:(NSString*)theName
+              sha1:(NSString*)theHash parent:(GITTree*)parentTree
 {
     if (self = [super init])
     {
-        self.repo = theRepo;
         self.mode = theMode;
         self.name = theName;
         self.sha1 = theHash;
+        self.parent = parentTree;
     }
     return self;
 }
-- (id)initWithModeString:(NSString*)modeString 
-                    name:(NSString*)theName 
-                    hash:(NSString*)hash 
-                    repo:(GITRepo*)theRepo
+- (id)initWithModeString:(NSString*)str name:(NSString*)theName
+                    sha1:(NSString*)hash parent:(GITTree*)parentTree
 {
-    NSUInteger theMode = [modeString integerValue];
-    return [self initWithMode:theMode name:theName hash:hash repo:theRepo];
+    NSUInteger theMode = [str integerValue];
+    return [self initWithMode:theMode name:theName sha1:hash parent:parentTree];
 }
 - (void)dealloc
 {
-    self.repo = nil;
     self.name = nil;
     self.mode = 0;
     self.sha1 = nil;
+    self.parent = nil;
     
     if (object)     //!< can't check with self.object as that would load it
         self.object = nil;
@@ -100,22 +93,8 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
 - (id)object    //!< Lazily loads the target object
 {
     if (!object && self.sha1)
-        self.object = [self.repo objectWithHash:self.sha1];
+        self.object = [self.parent.repo objectWithSha1:self.sha1];
     return object;
-}
-/*!
- Presently unsure of the purpose of this method.
-*/
-- (NSUInteger)extractModeFromString:(NSString*)stringMode
-{
-    NSUInteger i, modeMask = 0;
-    for (i = 0; i < [stringMode length]; i++)
-    {
-        unichar c = [stringMode characterAtIndex:i];
-        modeMask = (modeMask << 3) | (c - '0');
-    }
-    
-    return modeMask;
 }
 - (NSData*)raw
 {
