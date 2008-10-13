@@ -75,7 +75,7 @@
     NSString * head = [NSString stringWithFormat:@"%@ %lu\0",
                        self.type, (unsigned long)self.size];
     NSMutableData * raw = [NSMutableData dataWithData:[head dataUsingEncoding:NSASCIIStringEncoding]];
-    [raw appendData:[[self class] rawContent]];
+    [raw appendData:[self rawContent]];
 
     return raw;
 }
