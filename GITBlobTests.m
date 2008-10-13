@@ -8,7 +8,7 @@
 
 #import "GITBlobTests.h"
 #import "GITRepo.h"
-#import "GITRepo+Protected.h"
+#import "GITRepo.h"
 
 #import "GITBlob.h"
 

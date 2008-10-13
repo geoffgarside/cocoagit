@@ -9,7 +9,7 @@
 #import "GITCommitTests.h"
 #import "GITCommit.h"
 #import "GITRepo.h"
-#import "GITRepo+Protected.h"
+#import "GITRepo.h"
 #import "NSData+Compression.h"
 
 @implementation GITCommitTests

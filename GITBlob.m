@@ -7,7 +7,7 @@
 //
 
 #import "GITBlob.h"
-#import "GITRepo+Protected.h"
+#import "GITRepo.h"
 
 #import "NSData+Searching.h"
 

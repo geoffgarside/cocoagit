@@ -9,7 +9,7 @@
 #import "GITTreeTests.h"
 #import "GITTree.h"
 #import "GITRepo.h"
-#import "GITRepo+Protected.h"
+#import "GITRepo.h"
 #import "NSData+Compression.h"
 
 @implementation GITTreeTests

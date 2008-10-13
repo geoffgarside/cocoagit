@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "GITRepo+Protected.h"
+#import "GITRepo.h"
 #import "GITBlob.h"
 #import "GITTree.h"
 #import "GITCommit.h"

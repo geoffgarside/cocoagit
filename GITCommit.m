@@ -7,7 +7,7 @@
 //
 
 #import "GITCommit.h"
-#import "GITRepo+Protected.h"
+#import "GITRepo.h"
 #import "GITTree.h"
 #import "GITActor.h"
 #import "GITDateTime.h"
