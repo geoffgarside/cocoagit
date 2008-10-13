@@ -32,4 +32,14 @@
  * \return Contents of an object
  */
 - (NSData*)dataWithContentsOfObject:(NSString*)sha1;
+
+/*! Extracts the basic information from a git object file.
+ * \param sha1 The object reference to extract the data from
+ * \param[out] type The type of the object as a string
+ * \param[out] size The size of <tt>data</tt> in bytes
+ * \param[out] data The data content of the object
+ * \return Indication that the extraction was successful.
+ */
+- (BOOL)extractFromObject:(NSString*)sha1 type:(NSString**)type
+                     size:(NSUInteger*)size data:(NSData**)data;
 @end
