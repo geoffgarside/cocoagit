@@ -41,10 +41,8 @@
     [self release];
     return nil;
 }
-- (id)initType:(NSString*)newType
-          sha1:(NSString*)newSha1
-          size:(NSUInteger)newSize
-          repo:(GITRepo*)theRepo
+- (id)initType:(NSString*)newType sha1:(NSString*)newSha1
+          size:(NSUInteger)newSize repo:(GITRepo*)theRepo
 {
     if (self = [super init])
     {
