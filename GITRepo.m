@@ -101,40 +101,32 @@
 }
 - (GITCommit*)commitWithSha1:(NSString*)sha1
 {
-    NSString * type; NSUInteger size; NSData * data;
-
-    [self.store extractFromObject:sha1 type:&type size:&size data:&data];
-    if ([type isEqualToString:@"commit"] && [data length] == size)
+    NSData * data = [self dataWithContentsOfObject:sha1 type:@"commit"];
+    if (data)
         return [[GITCommit alloc] initWithSha1:sha1 data:data repo:self];
     else
         return nil;
 }
 - (GITBlob*)blobWithSha1:(NSString*)sha1
 {
-    NSString * type; NSUInteger size; NSData * data;
-
-    [self.store extractFromObject:sha1 type:&type size:&size data:&data];
-    if ([type isEqualToString:@"blob"] && [data length] == size)
+    NSData * data = [self dataWithContentsOfObject:sha1 type:@"blob"];
+    if (data)
         return [[GITBlob alloc] initWithSha1:sha1 data:data repo:self];
     else
         return nil;
 }
 - (GITTree*)treeWithSha1:(NSString*)sha1
 {
-    NSString * type; NSUInteger size; NSData * data;
-
-    [self.store extractFromObject:sha1 type:&type size:&size data:&data];
-    if ([type isEqualToString:@"tree"] && [data length] == size)
+    NSData * data = [self dataWithContentsOfObject:sha1 type:@"tree"];
+    if (data)
         return [[GITTree alloc] initWithSha1:sha1 data:data repo:self];
     else
         return nil;
 }
 - (GITTag*)tagWithSha1:(NSString*)sha1
 {
-    NSString * type; NSUInteger size; NSData * data;
-
-    [self.store extractFromObject:sha1 type:&type size:&size data:&data];
-    if ([type isEqualToString:@"tree"] && [data length] == size)
+    NSData * data = [self dataWithContentsOfObject:sha1 type:@"tag"];
+    if (data)
         return [[GITTag alloc] initWithSha1:sha1 data:data repo:self];
     else
         return nil;
