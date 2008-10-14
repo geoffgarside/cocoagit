@@ -80,7 +80,7 @@
 /*! Returns the content data for an object.
  * The <tt>expectedType</tt> is used to check the type identifier in the file
  * is of a certain value. If the object referred to by <tt>sha1</tt> is not of
- * the correct type then <tt>nil</nil> is returned.
+ * the correct type then <tt>nil</tt> is returned.
  * \param sha1 Name of the objects
  * \param expectedType String used to check the object is of a specific type
  * \return Data containing the content of the object or nil if not of expected type
