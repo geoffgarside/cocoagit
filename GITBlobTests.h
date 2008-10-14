@@ -8,15 +8,18 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-@class GITRepo;
+@class GITRepo, GITBlob;
 @interface GITBlobTests : SenTestCase {
     GITRepo * repo;
+    GITBlob * blob;
     NSString * blobSHA1;
 }
 
 @property(readwrite,retain) GITRepo * repo;
+@property(readwrite,retain) GITBlob * blob;
 @property(readwrite,copy)  NSString * blobSHA1;
 
-- (void)testInitWithHashDataAndRepo;
+- (void)testShouldNotBeNil;
+- (void)testSha1HashesAreEqual;
 
 @end
