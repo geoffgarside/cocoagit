@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "GITObject.h"
 
-@class GITRepo, GITTree, GITActor, GITDateTime;
+@class GITTree, GITActor, GITDateTime;
 @interface GITCommit : GITObject
 {
     GITTree  * tree;

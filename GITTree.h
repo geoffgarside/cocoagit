@@ -9,7 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import "GITObject.h"
 
-@class GITRepo;
 /*! Git object type representing a directory.
  */
 @interface GITTree : GITObject

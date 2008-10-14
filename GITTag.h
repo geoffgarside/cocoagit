@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "GITObject.h"
 
-@class GITRepo, GITCommit, GITActor, GITDateTime;
+@class GITCommit, GITActor, GITDateTime;
 @interface GITTag : GITObject
 {
     NSString * name;
