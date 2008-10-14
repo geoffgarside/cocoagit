@@ -19,6 +19,7 @@
     NSUInteger size;    //!< Size of the content of the object
 }
 
+@property(readonly,retain) GITRepo  * repo;
 @property(readonly,copy)   NSString * sha1;
 @property(readonly,copy)   NSString * type;
 @property(readonly,assign) NSUInteger size;

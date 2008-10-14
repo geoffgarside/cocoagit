@@ -92,7 +92,7 @@ NSString * const kGITObjectTagName = @"tag";
         [scanner scanUpToString:NewLine intoString:&taggedType] &&
         [taggedType isEqualToString:@"commit"])
     {
-        self.commit = [self.repo commitWithHash:taggedCommit];
+        self.commit = [self.repo commitWithSha1:taggedCommit];
     }
     
     if ([scanner scanString:@"tag" intoString:NULL] &&

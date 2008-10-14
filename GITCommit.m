@@ -99,13 +99,13 @@ NSString * const kGITObjectCommitName = @"commit";
     if ([scanner scanString:@"tree" intoString:NULL] &&
         [scanner scanUpToString:NewLine intoString:&commitTree])
     {
-        self.tree = [self.repo treeWithHash:commitTree];
+        self.tree = [self.repo treeWithSha1:commitTree];
     }
     
     if ([scanner scanString:@"parent" intoString:NULL] &&
         [scanner scanUpToString:NewLine intoString:&commitParent])
     {
-        self.parent = [self.repo commitWithHash:commitParent];
+        self.parent = [self.repo commitWithSha1:commitParent];
     }
     
     if ([scanner scanString:@"author" intoString:NULL] &&
