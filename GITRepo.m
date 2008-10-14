@@ -67,7 +67,9 @@
 #pragma mark Internal Methods
 - (NSData*)dataWithContentsOfObject:(NSString*)sha1
 {
-    return [self.store dataWithContentsOfObject:hash];
+    NSData * data = [self.store dataWithContentsOfObject:sha1];
+    NSRange range = [data rangeOfNullTerminatedBytesFrom:0];
+    return [data subdataFromIndex:range.length + 1];
 }
 - (GITObject*)objectWithSha1:(NSString*)sha1
 {
