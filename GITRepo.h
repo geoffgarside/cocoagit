@@ -68,11 +68,23 @@
 
 #pragma mark -
 #pragma mark Internal Methods
-/*! Returns the raw data for an object
+/*! Returns the raw content data for an object.
+ * \attention This method does not do anything to verify the
+ * size or type of the object being returned.
  * \param sha1 Name of the object.
  * \return Data containing the content of the object
  */
 - (NSData*)dataWithContentsOfObject:(NSString*)sha1;
+
+/*! Returns the content data for an object.
+ * The <tt>expectedType</tt> is used to check the type identifier in the file
+ * is of a certain value. If the object referred to by <tt>sha1</tt> is not of
+ * the correct type then <tt>nil</nil> is returned.
+ * \param sha1 Name of the objects
+ * \param expectedType String used to check the object is of a specific type
+ * \return Data containing the content of the object or nil if not of expected type
+ */
+- (NSData*)dataWithContentsOfObject:(NSString*)sha1 type:(NSString*)expectedType;
 
 /*! Returns an object identified by the given sha1.
  * \param sha1 The identifier of the object to load
