@@ -10,6 +10,8 @@
 #import "GITRepo.h"
 #import "GITTreeEntry.h"
 
+NSString * const kGITObjectTreeName = @"tree";
+
 /*! \cond
  Make properties readwrite so we can use
  them within the class.
@@ -25,9 +27,13 @@
 @implementation GITTree
 @synthesize entries;
 
++ (NSString*)typeName
+{
+    return kGITObjectTreeName;
+}
 - (id)initWithSha1:(NSString*)sha1 data:(NSData*)raw repo:(GITRepo*)theRepo
 {
-    if (self = [super initType:@"tree" sha1:sha1
+    if (self = [super initType:kGITObjectTreeName sha1:sha1
                           size:[raw length] repo:theRepo])
     {
         [self extractEntriesFromData:raw];

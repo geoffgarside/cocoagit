@@ -11,6 +11,8 @@
 
 #import "NSData+Searching.h"
 
+NSString * const kGITObjectBlobName = @"blob";
+
 /*! \cond
  Make properties readwrite so we can use
  them within the class.
@@ -23,9 +25,13 @@
 @implementation GITBlob
 @synthesize data;
 
++ (NSString*)typeName
+{
+    return kGITObjectBlobName;
+}
 - (id)initWithSha1:(NSString*)sha1 data:(NSData*)raw repo:(GITRepo*)theRepo
 {
-    if (self = [super initType:@"blob" sha1:sha1
+    if (self = [super initType:kGITObjectBlobName sha1:sha1
                           size:[raw length] repo:theRepo])
     {
         self.data = raw;

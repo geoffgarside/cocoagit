@@ -9,6 +9,8 @@
 #import <Cocoa/Cocoa.h>
 #import "GITObject.h"
 
+extern NSString * const kGITObjectTreeName;
+
 /*! Git object type representing a directory.
  */
 @interface GITTree : GITObject

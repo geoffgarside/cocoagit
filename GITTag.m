@@ -12,6 +12,8 @@
 #import "GITCommit.h"
 #import "GITDateTime.h"
 
+NSString * const kGITObjectTagName = @"tag";
+
 /*! \cond
  Make properties readwrite so we can use
  them within the class.
@@ -35,9 +37,13 @@
 @synthesize tagged;
 @synthesize message;
 
++ (NSString*)typeName
+{
+    return kGITObjectTagName;
+}
 - (id)initWithSha1:(NSString*)sha1 data:(NSData*)raw repo:(GITRepo*)theRepo
 {
-    if (self = [super initType:@"tag" sha1:sha1
+    if (self = [super initType:kGITObjectTagName sha1:sha1
                           size:[raw length] repo:theRepo])
     {
         [self extractEntriesFromData:raw];

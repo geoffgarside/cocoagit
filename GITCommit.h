@@ -9,6 +9,8 @@
 #import <Cocoa/Cocoa.h>
 #import "GITObject.h"
 
+extern NSString * const kGITObjectCommitName;
+
 @class GITTree, GITActor, GITDateTime;
 @interface GITCommit : GITObject
 {

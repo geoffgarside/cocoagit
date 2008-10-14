@@ -12,6 +12,8 @@
 #import "GITActor.h"
 #import "GITDateTime.h"
 
+NSString * const kGITObjectCommitName = @"commit";
+
 /*! \cond
  Make properties readwrite so we can use
  them within the class.
@@ -39,9 +41,13 @@
 @synthesize committed;
 @synthesize message;
 
++ (NSString*)typeName
+{
+    return kGITObjectCommitName;
+}
 - (id)initWithSha1:(NSString*)sha1 data:(NSData*)raw repo:(GITRepo*)theRepo
 {
-    if (self = [super initType:@"commit" sha1:sha1
+    if (self = [super initType:kGITObjectCommitName sha1:sha1
                           size:[raw length] repo:theRepo])
     {
         [self extractEntriesFromData:raw];

@@ -9,6 +9,8 @@
 #import <Cocoa/Cocoa.h>
 #import "GITObject.h"
 
+extern NSString * const kGITObjectBlobName;
+
 /*! Git object type representing a file.
  */
 @interface GITBlob : GITObject
