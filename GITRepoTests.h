@@ -10,18 +10,13 @@
 
 @class GITRepo;
 @interface GITRepoTests : SenTestCase {
-    GITRepo * testRepo;
-    
-    // Test data
-    NSString * blobSHA1;
-    NSString * blobPath;
+    GITRepo * repo;
 }
 
-@property(readwrite,retain) GITRepo * testRepo;
-@property(readwrite,copy)  NSString * blobSHA1;
-@property(readwrite,copy)  NSString * blobPath;
+@property(readwrite,retain) GITRepo * repo;
 
-- (void)testRepoCanDetermineObjectPathFromHash;
-- (void)testRepoCanGetDataContentsFromHash;
-- (void)testRepoCanExtractTypeSizeAndData;
+- (void)testIsNotNil;
+- (void)testRootHasDotGitSuffix;
+- (void)testShouldLoadDataForHash;
+
 @end
