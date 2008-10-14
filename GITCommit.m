@@ -45,12 +45,12 @@ NSString * const kGITObjectCommitName = @"commit";
 {
     return kGITObjectCommitName;
 }
-- (id)initWithSha1:(NSString*)sha1 data:(NSData*)raw repo:(GITRepo*)theRepo
+- (id)initWithSha1:(NSString*)newSha1 data:(NSData*)raw repo:(GITRepo*)theRepo
 {
-    if (self = [super initType:kGITObjectCommitName sha1:sha1
+    if (self = [super initType:kGITObjectCommitName sha1:newSha1
                           size:[raw length] repo:theRepo])
     {
-        [self extractEntriesFromData:raw];
+        [self extractFieldsFromData:raw];
     }
     return self;
 }

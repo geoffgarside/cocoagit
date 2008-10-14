@@ -35,11 +35,11 @@
     [self release];
     return nil;
 }
-- (id)initWithSha1:(NSString*)sha1 repo:(GITRepo*)theRepo
+- (id)initWithSha1:(NSString*)newSha1 repo:(GITRepo*)theRepo
 {
-    NSData * data = [theRepo dataWithContentsOfObject:sha1 type:[[self class] typeName]];
+    NSData * data = [theRepo dataWithContentsOfObject:newSha1 type:[[self class] typeName]];
     if (data)
-        return [self initWithSha1:sha1 data:data repo:theRepo];
+        return [self initWithSha1:newSha1 data:data repo:theRepo];
     return nil;
 }
 - (id)initWithSha1:(NSString*)sha1 data:(NSData*)raw repo:(GITRepo*)theRepo
@@ -54,7 +54,7 @@
     if (self = [super init])
     {
         self.repo = theRepo;
-        self.sha1 = theSha1;
+        self.sha1 = newSha1;
         self.type = newType;
         self.size = newSize;
     }
@@ -71,7 +71,7 @@
 }
 - (id)copyWithZone:(NSZone*)zone
 {
-    GITObject * obj = [[[self class] allocWithZone:zone] initType:self.type sha:self.sha1
+    GITObject * obj = [[[self class] allocWithZone:zone] initType:self.type sha1:self.sha1
                                                              size:self.size repo:self.repo];
     return obj;
 }

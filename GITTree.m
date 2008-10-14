@@ -31,9 +31,9 @@ NSString * const kGITObjectTreeName = @"tree";
 {
     return kGITObjectTreeName;
 }
-- (id)initWithSha1:(NSString*)sha1 data:(NSData*)raw repo:(GITRepo*)theRepo
+- (id)initWithSha1:(NSString*)newSha1 data:(NSData*)raw repo:(GITRepo*)theRepo
 {
-    if (self = [super initType:kGITObjectTreeName sha1:sha1
+    if (self = [super initType:kGITObjectTreeName sha1:newSha1
                           size:[raw length] repo:theRepo])
     {
         [self extractEntriesFromData:raw];
