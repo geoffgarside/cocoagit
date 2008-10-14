@@ -8,9 +8,6 @@
 
 #import "GITRepo.h"
 #import "GITFileStore.h"
-
-#import "GITBranch.h"
-
 #import "GITObject.h"
 #import "GITCommit.h"
 #import "GITBlob.h"
