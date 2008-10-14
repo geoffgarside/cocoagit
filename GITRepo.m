@@ -14,6 +14,8 @@
 #import "GITTree.h"
 #import "GITTag.h"
 
+#import "NSData+Searching.h"
+
 /*! \cond
  Make properties readwrite so we can use
  them within the class.
