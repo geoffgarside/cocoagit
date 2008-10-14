@@ -25,7 +25,7 @@ extern const NSUInteger kGITUnpackedSha1Length;
     NSString * name;    //!< Name of the entry, either a file or directory name
     NSUInteger mode;    //!< File mode of the entry
     NSString * sha1;    //!< SHA1 of the object referenced
-    GITTree  * parent;
+    GITTree  * parent;  //!< The tree object this entry belongs to.
     GITObject * object; //!< The object which is referenced. This is lazy loaded.
 }
 
