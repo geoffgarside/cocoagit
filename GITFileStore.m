@@ -29,7 +29,7 @@
 - (NSString*)stringWithPathToObject:(NSString*)sha1
 {
     NSString * ref = [NSString stringWithFormat:@"%@/%@",
-                      [hash substringToIndex:2], [hash substringFromIndex:2]];
+                      [sha1 substringToIndex:2], [sha1 substringFromIndex:2]];
     
     return [self.objectsDir stringByAppendingPathComponent:ref];
 }
