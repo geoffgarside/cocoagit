@@ -30,6 +30,9 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
 @property(readwrite,copy) GITObject * object;
 @end
 
+// This might be a really bad idea
+@interface GITTree (TreeEntry)
+@property(readonly,retain) GITRepo * repo;
 @end
 /*! \endcond */
 
