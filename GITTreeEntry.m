@@ -23,13 +23,12 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
  them within the class.
 */
 @interface GITTreeEntry ()
-@property(readwrite,copy) GITRepo * repo;
 @property(readwrite,copy) NSString * name;
 @property(readwrite,assign) NSUInteger mode;
 @property(readwrite,copy) NSString * sha1;
-@property(readwrite,copy) id object;
-
-- (NSUInteger)extractModeFromString:(NSString*)stringMode;
+@property(readwrite,copy) GITTree * parent;
+@property(readwrite,copy) GITObject * object;
+@end
 
 @end
 /*! \endcond */
@@ -90,7 +89,7 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
     
     [super dealloc];
 }
-- (id)object    //!< Lazily loads the target object
+- (GITObject*)object    //!< Lazily loads the target object
 {
     if (!object && self.sha1)
         self.object = [self.parent.repo objectWithSha1:self.sha1];
