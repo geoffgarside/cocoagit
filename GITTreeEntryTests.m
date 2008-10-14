@@ -12,6 +12,7 @@
 
 @implementation GITTreeEntryTests
 @synthesize repo;
+@synthesize tree;
 @synthesize entryMode;
 @synthesize entryName;
 @synthesize entrySHA1;
@@ -21,6 +22,7 @@
 {
     [super setUp];
     self.repo = [[GITRepo alloc] initWithRoot:@"."];
+    self.tree = [repo treeWithSha1:@"d813a4972d16d95c6b9dcfa41dfc4ea2150e6dcc"];
     
     self.entryMode = 100644;
     self.entryName = @".gitignore";
@@ -42,7 +44,7 @@
 
 - (void)testShouldParseEntryLine
 {
-    GITTreeEntry * entry = [[GITTreeEntry alloc] initWithTreeLine:entryLine repo:repo];
+    GITTreeEntry * entry = [[GITTreeEntry alloc] initWithTreeLine:entryLine parent:tree];
     STAssertNotNil(entry, @"TreeEntry should not be nil");
     STAssertEquals(entry.mode, entryMode, @"Mode should be parsed properly");
     STAssertEqualObjects(entry.name, entryName, @"Name should be parsed properly");
@@ -50,10 +52,8 @@
 }
 - (void)testShouldInitWithModeNameAndHash
 {
-    GITTreeEntry * entry = [[GITTreeEntry alloc] initWithMode:entryMode
-                                                         name:entryName
-                                                         hash:entrySHA1
-                                                         repo:repo];
+    GITTreeEntry * entry = [[GITTreeEntry alloc] initWithMode:entryMode name:entryName
+                                                         sha1:entrySHA1 parent:tree];
     STAssertNotNil(entry, @"TreeEntry should not be nil");
     STAssertEquals(entry.mode, entryMode, @"Mode should be parsed properly");
     STAssertEqualObjects(entry.name, entryName, @"Name should be parsed properly");
@@ -62,10 +62,8 @@
 - (void)testShouldInitWithModeStringNameAndHash
 {
     NSString * entryModeStr = [NSString stringWithFormat:@"%ld", entryMode];
-    GITTreeEntry * entry = [[GITTreeEntry alloc] initWithModeString:entryModeStr
-                                                               name:entryName
-                                                               hash:entrySHA1
-                                                               repo:repo];
+    GITTreeEntry * entry = [[GITTreeEntry alloc] initWithModeString:entryModeStr name:entryName
+                                                               sha1:entrySHA1 parent:tree];
     STAssertNotNil(entry, @"TreeEntry should not be nil");
     STAssertEquals(entry.mode, entryMode, @"Mode (%@) should be parsed properly", entryModeStr);
     STAssertEqualObjects(entry.name, entryName, @"Name should be parsed properly");

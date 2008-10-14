@@ -8,9 +8,10 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-@class GITRepo;
+@class GITRepo, GITTree;
 @interface GITTreeEntryTests : SenTestCase {
     GITRepo * repo;
+    GITTree * tree;
     NSUInteger entryMode;
     NSString * entryName;
     NSString * entrySHA1;
@@ -18,6 +19,7 @@
 }
 
 @property(readwrite,retain) GITRepo * repo;
+@property(readwrite,retain) GITTree * tree;
 @property(readwrite,assign) NSUInteger entryMode;
 @property(readwrite,copy) NSString * entryName;
 @property(readwrite,copy) NSString * entrySHA1;
