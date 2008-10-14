@@ -71,6 +71,15 @@
     NSRange range = [data rangeOfNullTerminatedBytesFrom:0];
     return [data subdataFromIndex:range.length + 1];
 }
+- (NSData*)dataWithContentsOfObject:(NSString*)sha1 type:(NSString*)expectedType
+{
+    NSString * type; NSUInteger size; NSData * data;
+
+    [self.store extractFromObject:sha1 type:&type size:&size data:&data];
+    if ([expectedType isEqualToString:type] && [data length] == size)
+        return data;
+    return nil;
+}
 - (GITObject*)objectWithSha1:(NSString*)sha1
 {
     NSString * type; NSUInteger size; NSData * data;
