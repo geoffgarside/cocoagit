@@ -19,7 +19,7 @@ int main (int argc, const char * argv[]) {
     GITRepo * repo = [[GITRepo alloc] initWithRoot:@"."];
     
     NSString *inspectHash = [NSString stringWithCString:argv[1]];
-    id object  = [[repo objectWithHash:inspectHash] autorelease];
+    id object  = [[repo objectWithSha1:inspectHash] autorelease];
     
     if ([object isKindOfClass:[GITBlob class]])
     {
