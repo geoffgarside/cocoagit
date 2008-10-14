@@ -70,7 +70,7 @@ NSString * const kGITObjectTreeName = @"tree";
             entrySha1Start - entryStart + kGITPackedSha1Length + 1);
         
         NSString * treeLine = [dataStr substringWithRange:entryRange];
-        GITTreeEntry * entry = [[GITTreeEntry alloc] initWithTreeLine:treeLine repo:self.repo];
+        GITTreeEntry * entry = [[GITTreeEntry alloc] initWithTreeLine:treeLine parent:self];
         [treeEntries addObject:entry];
 
         entryStart = entryRange.location + entryRange.length;
