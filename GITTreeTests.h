@@ -8,19 +8,21 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-@class GITRepo;
+@class GITRepo, GITTree;
 @interface GITTreeTests : SenTestCase {
     GITRepo * repo;
+    GITTree * tree;
     NSString * treeSHA1;
     NSUInteger rawObjectSize;
 }
 
 @property(readwrite,retain) GITRepo * repo;
+@property(readwrite,retain) GITTree * tree;
 @property(readwrite,copy)  NSString * treeSHA1;
 @property(readwrite,assign) NSUInteger rawObjectSize;
 
-- (NSData*)rawTreeData;
-- (void)testInitWithHashDataAndRepo;
+- (void)testShouldNotBeNil;
+- (void)testShouldHaveCorrectSHA;
 - (void)testTreeEntryLoading;
 
 @end

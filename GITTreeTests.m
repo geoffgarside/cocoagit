@@ -14,6 +14,7 @@
 
 @implementation GITTreeTests
 @synthesize repo;
+@synthesize tree;
 @synthesize treeSHA1;
 @synthesize rawObjectSize;
 
@@ -22,41 +23,25 @@
     [super setUp];
     self.repo = [[GITRepo alloc] initWithRoot:@"."];
     self.treeSHA1 = @"d813a4972d16d95c6b9dcfa41dfc4ea2150e6dcc";
+    self.tree = [repo treeWithSha1:treeSHA1];
 }
 - (void)tearDown
 {
     self.repo = nil;
     self.treeSHA1 = nil;
+    self.tree = nil;
     [super tearDown];
 }
-- (NSData*)rawTreeData
+- (void)testShouldNotBeNil
 {
-    NSString * objectType;
-    NSUInteger objectSize;
-    NSData * objectData;
-    
-    NSData * rawTree = [[NSData dataWithContentsOfFile:[repo objectPathFromHash:treeSHA1]] zlibInflate];
-    
-    [repo extractFromData:rawTree
-                     type:&objectType 
-                     size:&objectSize
-                  andData:&objectData];
-    
-    self.rawObjectSize = objectSize;
-    return objectData;
+    STAssertNotNil(tree, nil);
 }
-
-- (void)testInitWithHashDataAndRepo
+- (void)testShouldHaveCorrectSHA
 {
-    GITTree * tree = [[GITTree alloc] initWithHash:treeSHA1 andData:[self rawTreeData] fromRepo:repo];
-    STAssertNotNil(tree, @"Tree should not be nil");
-    STAssertEquals(tree.size, self.rawObjectSize, @"Size should be parsed properly");
-    STAssertEqualObjects(tree.sha1, treeSHA1, @"SHA1 hashes should be equal");
+    STAssertEqualObjects(tree.sha1, treeSHA1, nil);
 }
-
 - (void)testTreeEntryLoading
 {
-    GITTree * tree = [[GITTree alloc] initWithHash:treeSHA1 andData:[self rawTreeData] fromRepo:repo];
     STAssertNotNil(tree.entries, @"Should not be nil");
     STAssertEquals([tree.entries count], (NSUInteger)16, @"Should have 16 entries");
 }
