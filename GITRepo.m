@@ -86,13 +86,13 @@
     [self.store extractFromObject:sha1 type:&type size:&size data:&data];
     if ([data length] == size)
     {
-        if ([type isEqualToString:@"blob"])
+        if ([type isEqualToString:kGITObjectBlobName])
             return [[GITBlob alloc] initWithSha1:sha1 data:data repo:self];
-        else if ([type isEqualToString:@"tree"])
+        else if ([type isEqualToString:kGITObjectTreeName])
             return [[GITTree alloc] initWithSha1:sha1 data:data repo:self];
-        else if ([type isEqualToString:@"commit"])
+        else if ([type isEqualToString:kGITObjectCommitName])
             return [[GITCommit alloc] initWithSha1:sha1 data:data repo:self];
-        else if ([type isEqualToString:@"tag"])
+        else if ([type isEqualToString:kGITObjectTagName])
             return [[GITTag alloc] initWithSha1:sha1 data:data repo:self];
     }
 
