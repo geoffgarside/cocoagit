@@ -24,6 +24,11 @@
 @synthesize type;
 @synthesize size;
 
++ (NSString*)typeName
+{
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
+}
 - (id)init
 {
     [self doesNotRecognizeSelector:_cmd];
@@ -32,8 +37,10 @@
 }
 - (id)initWithSha1:(NSString*)sha1 repo:(GITRepo*)theRepo
 {
-    NSData * data = [theRepo dataWithContentsOfObject:sha1];
-    return [[self class] initWithSha1:sha1 data:data repo:theRepo];
+    NSData * data = [theRepo dataWithContentsOfObject:sha1 type:[[self class] typeName]];
+    if (data)
+        return [self initWithSha1:sha1 data:data repo:theRepo];
+    return nil;
 }
 - (id)initWithSha1:(NSString*)sha1 data:(NSData*)raw repo:(GITRepo*)theRepo
 {

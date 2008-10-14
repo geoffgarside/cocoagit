@@ -23,6 +23,10 @@
 @property(readonly,copy)   NSString * type;
 @property(readonly,assign) NSUInteger size;
 
+/*! Returns the string name of the type.
+ */
++ (NSString*)typeName;
+
 /*! Raises a doesNotRecognizeSelector error to enforce the use of
  * the correct initialiser.
  */
