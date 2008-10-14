@@ -8,7 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class GITBranch, GITTag, GITObjectStore;
+@class GITObjectStore;
+@class GITObject, GITCommit, GITBlob, GITTree, GITTag;
 /*! A repository of git objects.
  * This class serves to encapsulate the access to the
  * objects of a repository.
