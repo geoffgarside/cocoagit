@@ -36,8 +36,8 @@ extern const NSUInteger kGITUnpackedSha1Length;
 @property(readonly,copy) GITObject * object;
 
 /*! Creates and returns a new entry by extracting the information tree line.
- * \param treeLine The raw line as extracted from a tree object file
- * \param repo The repository the object belongs to
+ * \param line The raw line as extracted from a tree object file
+ * \param parent The parent tree this entry belongs to
  * \return A new entry
  */
 - (id)initWithTreeLine:(NSString*)line parent:(GITTree*)parent;
@@ -46,7 +46,7 @@ extern const NSUInteger kGITUnpackedSha1Length;
  * \param mode The file mode of the file or directory described
  * \param name The file name of the filr or directory described
  * \param hash The SHA1 of the object referenced
- * \param repo The repository the object referenced belongs to
+ * \param parent The parent tree this entry belongs to
  */
 - (id)initWithMode:(NSUInteger)mode name:(NSString*)name
               sha1:(NSString*)hash parent:(GITTree*)parent;
@@ -55,7 +55,7 @@ extern const NSUInteger kGITUnpackedSha1Length;
  * \param mode The file mode as a string of the file or directory described
  * \param name The file name of the filr or directory described
  * \param hash The SHA1 of the object referenced
- * \param repo The repository the object referenced belongs to
+ * \param parent The parent tree this entry belongs to
  */
 - (id)initWithModeString:(NSString*)mode name:(NSString*)name
                     sha1:(NSString*)hash parent:(GITTree*)parent;
