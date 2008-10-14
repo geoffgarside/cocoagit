@@ -25,8 +25,4 @@
     }
     return self;
 }
-- (NSData*)dataWithContentsOfObject:(NSString*)sha1
-{
-    
-}
 @end
