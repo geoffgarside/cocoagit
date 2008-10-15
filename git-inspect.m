@@ -10,16 +10,17 @@ void p(NSString * str);
 
 int main (int argc, const char * argv[]) {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    NSProcessInfo * info = [NSProcessInfo processInfo];
+    NSArray * args = [info arguments];
     
-    if (argc != 2) {
-        p([NSString stringWithFormat:@"Usage: %s sha1hash", argv[0]]);
+    if ([args count] != 2) {
+        p([NSString stringWithFormat:@"Usage: %@ sha1hash", [info processName]]);
         exit(0);
     }
     
-    GITRepo * repo = [[GITRepo alloc] initWithRoot:@"."];
-    
-    NSString *inspectHash = [NSString stringWithCString:argv[1]];
-    id object  = [[repo objectWithSha1:inspectHash] autorelease];
+    NSString *inspectHash = [args objectAtIndex:1];
+    NSLog(@"inspectHash: %@", inspectHash);
+    GITObject * object  = [[repo objectWithSha1:inspectHash] autorelease];
     
     if ([object isKindOfClass:[GITBlob class]])
     {
