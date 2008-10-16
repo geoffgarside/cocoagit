@@ -40,6 +40,7 @@
 		9F2152E10EA4FA7B004C6188 /* GITObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD240740EA216D5000F7B60 /* GITObject.m */; };
 		9F2152E20EA4FA80004C6188 /* GITObjectStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F96B1BB0E9E334E00AD0A80 /* GITObjectStore.m */; };
 		9F2152E30EA4FA83004C6188 /* GITFileStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE329AC0E9BA2EF001E37D5 /* GITFileStore.m */; };
+		9F2153030EA68E3D004C6188 /* git-pack-inspect.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F2153020EA68E3D004C6188 /* git-pack-inspect.m */; };
 		9F22A0F30E99744F006C3656 /* GITTreeEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */; };
 		9F22A1010E997938006C3656 /* GITUtilityBelt.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F63998D0E51952F0034F279 /* GITUtilityBelt.m */; };
 		9F22A1060E99855B006C3656 /* GITTreeEntryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F22A1050E99855B006C3656 /* GITTreeEntryTests.m */; };
@@ -98,6 +99,8 @@
 		9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITTreeEntry.m; sourceTree = "<group>"; };
 		9F2150FA0EA3D4F8004C6188 /* GITFileStoreTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITFileStoreTests.h; sourceTree = "<group>"; };
 		9F2150FB0EA3D4F8004C6188 /* GITFileStoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITFileStoreTests.m; sourceTree = "<group>"; };
+		9F2152FD0EA68DA7004C6188 /* git-pack-inspect */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "git-pack-inspect"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F2153020EA68E3D004C6188 /* git-pack-inspect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "git-pack-inspect.m"; sourceTree = "<group>"; };
 		9F22A0B50E9968CA006C3656 /* GITTreeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITTreeTests.h; sourceTree = "<group>"; };
 		9F22A0B60E9968CA006C3656 /* GITTreeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITTreeTests.m; sourceTree = "<group>"; };
 		9F22A1040E99855B006C3656 /* GITTreeEntryTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITTreeEntryTests.h; sourceTree = "<group>"; };
@@ -166,6 +169,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9F2152FB0EA68DA7004C6188 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9FA4E06D0E19A57600724E6B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -226,6 +236,7 @@
 				8D1107320486CEB800E47090 /* CocoaGit.app */,
 				9FA4E06F0E19A57600724E6B /* git-inspect */,
 				9FCF27B10E98F7CE00665A41 /* Unit Tests.octest */,
+				9F2152FD0EA68DA7004C6188 /* git-pack-inspect */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -251,6 +262,7 @@
 				32CA4F630368D1EE00C91783 /* CocoaGit_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 				9FA4E0810E19A62500724E6B /* git-inspect.m */,
+				9F2153020EA68E3D004C6188 /* git-pack-inspect.m */,
 				9F63998C0E51952F0034F279 /* GITUtilityBelt.h */,
 				9F63998D0E51952F0034F279 /* GITUtilityBelt.m */,
 			);
@@ -406,6 +418,22 @@
 			productReference = 8D1107320486CEB800E47090 /* CocoaGit.app */;
 			productType = "com.apple.product-type.application";
 		};
+		9F2152FC0EA68DA7004C6188 /* git-pack-inspect */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9F2153010EA68DC5004C6188 /* Build configuration list for PBXNativeTarget "git-pack-inspect" */;
+			buildPhases = (
+				9F2152FA0EA68DA7004C6188 /* Sources */,
+				9F2152FB0EA68DA7004C6188 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "git-pack-inspect";
+			productName = "git-pack-inspect";
+			productReference = 9F2152FD0EA68DA7004C6188 /* git-pack-inspect */;
+			productType = "com.apple.product-type.tool";
+		};
 		9FA4E06E0E19A57600724E6B /* git-inspect */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9FA4E0730E19A59500724E6B /* Build configuration list for PBXNativeTarget "git-inspect" */;
@@ -456,6 +484,7 @@
 				9FA4E06E0E19A57600724E6B /* git-inspect */,
 				9FCF27B00E98F7CE00665A41 /* Unit Tests */,
 				9F66F7E70EA112C400E7FAA9 /* Docs */,
+				9F2152FC0EA68DA7004C6188 /* git-pack-inspect */,
 			);
 		};
 /* End PBXProject section */
@@ -523,6 +552,14 @@
 				9F7EC9070E1A709D001668EB /* GITTag.m in Sources */,
 				9F7EC93E0E1A8917001668EB /* GITActor.m in Sources */,
 				9F0862070E20F02E00FD6CF6 /* GITTreeEntry.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F2152FA0EA68DA7004C6188 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F2153030EA68E3D004C6188 /* git-pack-inspect.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,6 +642,55 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		9F2152FF0EA68DA7004C6188 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				OTHER_LDFLAGS = (
+					"-lcrypto",
+					"-lssl",
+					"-lz",
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "git-pack-inspect";
+			};
+			name = Debug;
+		};
+		9F2153000EA68DA7004C6188 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "git-pack-inspect";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		9F66F7E80EA112C400E7FAA9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -800,6 +886,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		9F2153010EA68DC5004C6188 /* Build configuration list for PBXNativeTarget "git-pack-inspect" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9F2152FF0EA68DA7004C6188 /* Debug */,
+				9F2153000EA68DA7004C6188 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		9F66F7EA0EA112E200E7FAA9 /* Build configuration list for PBXAggregateTarget "Docs" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
