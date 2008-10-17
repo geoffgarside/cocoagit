@@ -29,7 +29,8 @@ const NSUInteger kGITPackFileTypeTag      = 4;
  them within the class.
 */
 @interface GITPackFile ()
-@property(readwrite,retain) GITRepo * repo;
+@property(readwrite,copy)   NSData * idxData;
+@property(readwrite,copy)   NSData * packData;
 @property(readwrite,copy)   NSString * idxPath;
 @property(readwrite,copy)   NSString * packPath;
 @property(readwrite,copy)   NSArray  * idxOffsets;
@@ -40,9 +41,9 @@ const NSUInteger kGITPackFileTypeTag      = 4;
 /*! \endcond */
 
 @implementation GITPackFile
-
-@synthesize repo;
+@synthesize idxData;
 @synthesize idxPath;
+@synthesize packData;
 @synthesize packPath;
 @synthesize idxOffsets;
 @synthesize idxVersion;

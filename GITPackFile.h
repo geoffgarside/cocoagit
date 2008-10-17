@@ -10,7 +10,9 @@
 
 @interface GITPackFile : NSObject
 {
-    GITRepo * repo;
+    NSData * idxData;
+    NSData * packData;
+
     NSString * idxPath;
     NSString * packPath;
     
