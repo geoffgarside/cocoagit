@@ -118,6 +118,8 @@ const NSUInteger kGITPackFileTypeTag      = 4;
 }
 - (NSData*)objectAtOffset:(NSUInteger)offset
 {
+    NSString * reason;
+    NSException *  ex;
     switch (self.packVersion)
     {
         case 1:
@@ -126,14 +128,11 @@ const NSUInteger kGITPackFileTypeTag      = 4;
         case 2:
             return [self objectAtOffsetVersion2:offset];
             break;
+        default:
+            reason = [NSString stringWithFormat:@"PACK v%ld format not supported", self.packVersion];
+            ex     = [NSException exceptionWithName:@"GITUnknownPackVersion" reason:reason userInfo:nil];
+            @throw ex;
     }
-
-    // Neither of those returned so it must be an error
-    NSString * reason = [NSString stringWithFormat:@"PACK v%ld format not supported", self.packVersion];
-    NSException * ex  = [NSException exceptionWithName:@"GITUnknownPackVersion"
-                                                reason:reason
-                                              userInfo:nil];
-    @throw ex;
     return nil;     // FAIL
 }
 - (NSData*)objectAtOffsetVersion1:(NSUInteger)offset
