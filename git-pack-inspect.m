@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "GITPackFile.h"
 
 void p(NSString * str);
 
@@ -12,11 +13,10 @@ int main (int argc, const char * argv[]) {
         exit(0);
     }
     
-    NSString * packPath = [args objectAtIndex:1];
-    NSString * idxPath = [[packPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"idx"];
+    GITPackFile * pack = [[GITPackFile alloc] initWithPath:[args objectAtIndex:1]];
     
-    NSLog(@"packPath: %@", packPath);
-    NSLog(@"idxPath: %@", idxPath);
+    NSLog(@"packPath: %@", pack.packPath);
+    NSLog(@"idxPath: %@", pack.idxPath);
     
     [pool drain];
     return 0;

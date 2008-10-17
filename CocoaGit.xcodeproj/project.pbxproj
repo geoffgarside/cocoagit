@@ -41,6 +41,8 @@
 		9F2152E20EA4FA80004C6188 /* GITObjectStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F96B1BB0E9E334E00AD0A80 /* GITObjectStore.m */; };
 		9F2152E30EA4FA83004C6188 /* GITFileStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE329AC0E9BA2EF001E37D5 /* GITFileStore.m */; };
 		9F2153030EA68E3D004C6188 /* git-pack-inspect.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F2153020EA68E3D004C6188 /* git-pack-inspect.m */; };
+		9F2153170EA89BC0004C6188 /* GITPackFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EC0E48C5650004CD44 /* GITPackFile.m */; };
+		9F2153180EA89BC3004C6188 /* GITUtilityBelt.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F63998D0E51952F0034F279 /* GITUtilityBelt.m */; };
 		9F22A0F30E99744F006C3656 /* GITTreeEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */; };
 		9F22A1010E997938006C3656 /* GITUtilityBelt.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F63998D0E51952F0034F279 /* GITUtilityBelt.m */; };
 		9F22A1060E99855B006C3656 /* GITTreeEntryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F22A1050E99855B006C3656 /* GITTreeEntryTests.m */; };
@@ -560,6 +562,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F2153030EA68E3D004C6188 /* git-pack-inspect.m in Sources */,
+				9F2153170EA89BC0004C6188 /* GITPackFile.m in Sources */,
+				9F2153180EA89BC3004C6188 /* GITUtilityBelt.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
