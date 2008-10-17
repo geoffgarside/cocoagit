@@ -14,10 +14,10 @@ const NSRange kGITPackFileSignatureRange = {     0,      4 };
 const NSRange kGITPackFileVersionRange   = {     4,      4 };
 const NSRange kGITPackFileNumberRange    = {     8,      4 };
 
-const NSUInteger kGITPackIndexFanOutSize  = 4;      // bytes
+const NSUInteger kGITPackIndexFanOutSize  = 4;          //!< bytes
 const NSUInteger kGITPackIndexFanOutCount = 256;
-const NSUInteger kGITPackIndexFanOutEnd   = kGITPackIndexFanOutSize * kGITPackIndexFanOutCount;
-const NSUInteger kGITPackIndexEntrySize   = 24;     // bytes
+const NSUInteger kGITPackIndexFanOutEnd   = 4 * 256;    //!< Update when either of the two above change
+const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
 
 const NSUInteger kGITPackFileTypeCommit   = 1;
 const NSUInteger kGITPackFileTypeTree     = 2;
@@ -59,6 +59,7 @@ const NSUInteger kGITPackFileTypeTag      = 4;
 
         [self openIdxAndPackFiles];
     }
+    return self;
 }
 - (void)setPackPath:(NSString*)thePath
 {
@@ -112,24 +113,32 @@ const NSUInteger kGITPackFileTypeTag      = 4;
     if ([[NSString stringWithCharacters:buf length:4] isEqualToString:@"PACK"])
     {   // Its a valid PACK file, continue
         [self.packData getBytes:buf range:kGITPackFileVersionRange];
-        self.version = integerFromBytes(buf, 4);
+        self.packVersion = integerFromBytes(buf, 4);
     }
 }
 - (NSData*)objectAtOffset:(NSUInteger)offset
 {
-    switch (self.version)
+    switch (self.packVersion)
     {
+        case 1:
+            return [self objectAtOffsetVersion1:offset];
+            break;
         case 2:
             return [self objectAtOffsetVersion2:offset];
-        case 3:
-            return [self objectAtOffsetVersion3:offset];
-        default:
-            NSString * reason = [NSString stringWithFormat:@"PACK v%d format not supported", self.version];
-            NSException * ex  = [NSException exceptionWithName:@"GITUnknownPackVersion"
-                                                        reason:reason
-                                                      userInfo:nil];
-            @throw ex;
+            break;
     }
+
+    // Neither of those returned so it must be an error
+    NSString * reason = [NSString stringWithFormat:@"PACK v%ld format not supported", self.packVersion];
+    NSException * ex  = [NSException exceptionWithName:@"GITUnknownPackVersion"
+                                                reason:reason
+                                              userInfo:nil];
+    @throw ex;
+    return nil;     // FAIL
+}
+- (NSData*)objectAtOffsetVersion1:(NSUInteger)offset
+{
+    return nil;
 }
 - (NSData*)objectAtOffsetVersion2:(NSUInteger)offset
 {
@@ -137,7 +146,7 @@ const NSUInteger kGITPackFileTypeTag      = 4;
     NSUInteger size, type, shift = 4;
 
     // NOTE: ++ should increment offset after the range has been created
-    [self.packData getBytes:buf range:NSMakeRange(offset++, 1)];
+    [self.packData getBytes:&buf range:NSMakeRange(offset++, 1)];
 
     size = buf & 0xf;
     type = (buf >> 4) & 0x7;
@@ -145,10 +154,12 @@ const NSUInteger kGITPackFileTypeTag      = 4;
     while (buf & 0x80 != 0)
     {
         // NOTE: ++ should increment offset after the range has been created
-        [self.packData getBytes:buf range:NSMakeRange(offset++, 1)];
+        [self.packData getBytes:&buf range:NSMakeRange(offset++, 1)];
         size |= ((buf & 0x7f) << shift);
         shift += 7;
     }
+
+    return nil; // Method not finished yet
 }
 - (void)readIdx
 {
@@ -198,6 +209,8 @@ const NSUInteger kGITPackFileTypeTag      = 4;
 - (NSData*)dataForSha1:(NSString*)sha1
 {
     NSUInteger offset = [self offsetForSha1:sha1];
+
+    return nil; // Method not finished yet
 }
 - (NSUInteger)offsetForSha1:(NSString*)sha1
 {
