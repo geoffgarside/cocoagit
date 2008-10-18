@@ -6,7 +6,7 @@
 //  Copyright 2008 ManicPanda.com. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 #import "GITObject.h"
 
 extern NSString * const kGITObjectTagName;
