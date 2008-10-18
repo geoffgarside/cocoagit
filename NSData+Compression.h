@@ -9,7 +9,7 @@
 //  http://www.cocoadev.com/index.pl?NSDataCategory
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/NSData.h>
 
 /*! Adds compression and decompression messages to NSData.
  * Methods extracted from source given at
