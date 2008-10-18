@@ -9,7 +9,7 @@
 //  http://www.cocoadev.com/index.pl?NSDataCategory
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/NSData.h>
 
 @interface NSData (Hashing)
 

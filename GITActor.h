@@ -6,7 +6,7 @@
 //  Copyright 2008 ManicPanda.com. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 /*! A git user.
  * The actor class encapsulates the name and email pair for a user

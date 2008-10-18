@@ -6,7 +6,7 @@
 //  Copyright 2008 ManicPanda.com. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 NSData   * packSHA1(NSString * unpackedSHA1);
 NSString * unpackSHA1FromString(NSString * packedSHA1);
