@@ -18,6 +18,8 @@ int main (int argc, const char * argv[]) {
         exit(0);
     }
     
+    GITRepo * repo = [[GITRepo alloc] initWithRoot:@"."];
+
     NSString *inspectHash = [args objectAtIndex:1];
     NSLog(@"inspectHash: %@", inspectHash);
     GITObject * object  = [[repo objectWithSha1:inspectHash] autorelease];
