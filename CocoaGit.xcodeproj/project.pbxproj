@@ -44,6 +44,38 @@
 		9F33C9F20E48C5650004CD44 /* GITRepo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EF0E48C5650004CD44 /* GITRepo.m */; };
 		9F464D410E3DC3EC00867506 /* NSTimeZone+Offset.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F464D400E3DC3EC00867506 /* NSTimeZone+Offset.m */; };
 		9F63998E0E51952F0034F279 /* GITUtilityBelt.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F63998D0E51952F0034F279 /* GITUtilityBelt.m */; };
+		9F754ECF0EAD21F600788FFF /* GITActor.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F7EC93C0E1A8917001668EB /* GITActor.h */; };
+		9F754ED00EAD21F700788FFF /* GITActor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC93D0E1A8917001668EB /* GITActor.m */; };
+		9F754ED20EAD220000788FFF /* NSData+Compression.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F9212760E179A2C005AC693 /* NSData+Compression.h */; };
+		9F754ED30EAD220000788FFF /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212770E179A2C005AC693 /* NSData+Compression.m */; };
+		9F754ED40EAD220100788FFF /* NSData+Hashing.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F9212930E179B4B005AC693 /* NSData+Hashing.h */; };
+		9F754ED50EAD220200788FFF /* NSData+Hashing.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212940E179B4B005AC693 /* NSData+Hashing.m */; };
+		9F754ED60EAD220200788FFF /* NSData+Searching.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F8CFFA30E2FFCF200D0E65A /* NSData+Searching.h */; };
+		9F754ED70EAD220300788FFF /* NSData+Searching.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F8CFFA40E2FFCF200D0E65A /* NSData+Searching.m */; };
+		9F754ED80EAD220400788FFF /* NSTimeZone+Offset.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F464D3F0E3DC3EC00867506 /* NSTimeZone+Offset.h */; };
+		9F754ED90EAD220500788FFF /* NSTimeZone+Offset.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F464D400E3DC3EC00867506 /* NSTimeZone+Offset.m */; };
+		9F754EDA0EAD220D00788FFF /* GITUtilityBelt.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F63998D0E51952F0034F279 /* GITUtilityBelt.m */; };
+		9F754EDB0EAD220E00788FFF /* GITUtilityBelt.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F63998C0E51952F0034F279 /* GITUtilityBelt.h */; };
+		9F754EF10EAD224900788FFF /* GITBlob.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F9213840E17F17C005AC693 /* GITBlob.h */; };
+		9F754EF20EAD224A00788FFF /* GITBlob.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9213850E17F17C005AC693 /* GITBlob.m */; };
+		9F754EF50EAD224C00788FFF /* GITCommit.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F7EC9020E1A7032001668EB /* GITCommit.h */; };
+		9F754EF60EAD224C00788FFF /* GITCommit.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC9030E1A7032001668EB /* GITCommit.m */; };
+		9F754EF70EAD224D00788FFF /* GITDateTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 9FE328C40E9B623E001E37D5 /* GITDateTime.h */; };
+		9F754EF80EAD224E00788FFF /* GITDateTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE328C50E9B623E001E37D5 /* GITDateTime.m */; };
+		9F754EF90EAD225B00788FFF /* GITFileStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 9FE329AB0E9BA2EF001E37D5 /* GITFileStore.h */; };
+		9F754EFA0EAD225C00788FFF /* GITFileStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE329AC0E9BA2EF001E37D5 /* GITFileStore.m */; };
+		9F754EFB0EAD225D00788FFF /* GITObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F9212B60E179DB6005AC693 /* GITObject.h */; };
+		9F754EFC0EAD225E00788FFF /* GITObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD240740EA216D5000F7B60 /* GITObject.m */; };
+		9F754EFD0EAD225F00788FFF /* GITObjectStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F96B1BA0E9E334E00AD0A80 /* GITObjectStore.h */; };
+		9F754EFE0EAD225F00788FFF /* GITObjectStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F96B1BB0E9E334E00AD0A80 /* GITObjectStore.m */; };
+		9F754EFF0EAD226400788FFF /* GITRepo.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F33C9EE0E48C5650004CD44 /* GITRepo.h */; };
+		9F754F000EAD226700788FFF /* GITRepo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EF0E48C5650004CD44 /* GITRepo.m */; };
+		9F754F010EAD226700788FFF /* GITTag.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F7EC9050E1A709D001668EB /* GITTag.h */; };
+		9F754F020EAD226A00788FFF /* GITTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC9060E1A709D001668EB /* GITTag.m */; };
+		9F754F030EAD226E00788FFF /* GITTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F9213BD0E1822A1005AC693 /* GITTree.h */; };
+		9F754F040EAD226E00788FFF /* GITTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9213BE0E1822A1005AC693 /* GITTree.m */; };
+		9F754F050EAD227000788FFF /* GITTreeEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F0862050E20F02E00FD6CF6 /* GITTreeEntry.h */; };
+		9F754F070EAD227300788FFF /* GITTreeEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */; };
 		9F8C00770E311CA300D0E65A /* GITBlob.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9213850E17F17C005AC693 /* GITBlob.m */; };
 		9F8CFFA50E2FFCF200D0E65A /* NSData+Searching.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F8CFFA40E2FFCF200D0E65A /* NSData+Searching.m */; };
 		9F96B0F10E9D555D00AD0A80 /* GITActor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC93D0E1A8917001668EB /* GITActor.m */; };
@@ -382,6 +414,22 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F754ECF0EAD21F600788FFF /* GITActor.h in Headers */,
+				9F754ED20EAD220000788FFF /* NSData+Compression.h in Headers */,
+				9F754ED40EAD220100788FFF /* NSData+Hashing.h in Headers */,
+				9F754ED60EAD220200788FFF /* NSData+Searching.h in Headers */,
+				9F754ED80EAD220400788FFF /* NSTimeZone+Offset.h in Headers */,
+				9F754EDB0EAD220E00788FFF /* GITUtilityBelt.h in Headers */,
+				9F754EF10EAD224900788FFF /* GITBlob.h in Headers */,
+				9F754EF50EAD224C00788FFF /* GITCommit.h in Headers */,
+				9F754EF70EAD224D00788FFF /* GITDateTime.h in Headers */,
+				9F754EF90EAD225B00788FFF /* GITFileStore.h in Headers */,
+				9F754EFB0EAD225D00788FFF /* GITObject.h in Headers */,
+				9F754EFD0EAD225F00788FFF /* GITObjectStore.h in Headers */,
+				9F754EFF0EAD226400788FFF /* GITRepo.h in Headers */,
+				9F754F010EAD226700788FFF /* GITTag.h in Headers */,
+				9F754F030EAD226E00788FFF /* GITTree.h in Headers */,
+				9F754F050EAD227000788FFF /* GITTreeEntry.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -538,6 +586,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F754ED00EAD21F700788FFF /* GITActor.m in Sources */,
+				9F754ED30EAD220000788FFF /* NSData+Compression.m in Sources */,
+				9F754ED50EAD220200788FFF /* NSData+Hashing.m in Sources */,
+				9F754ED70EAD220300788FFF /* NSData+Searching.m in Sources */,
+				9F754ED90EAD220500788FFF /* NSTimeZone+Offset.m in Sources */,
+				9F754EDA0EAD220D00788FFF /* GITUtilityBelt.m in Sources */,
+				9F754EF20EAD224A00788FFF /* GITBlob.m in Sources */,
+				9F754EF60EAD224C00788FFF /* GITCommit.m in Sources */,
+				9F754EF80EAD224E00788FFF /* GITDateTime.m in Sources */,
+				9F754EFA0EAD225C00788FFF /* GITFileStore.m in Sources */,
+				9F754EFC0EAD225E00788FFF /* GITObject.m in Sources */,
+				9F754EFE0EAD225F00788FFF /* GITObjectStore.m in Sources */,
+				9F754F000EAD226700788FFF /* GITRepo.m in Sources */,
+				9F754F020EAD226A00788FFF /* GITTag.m in Sources */,
+				9F754F040EAD226E00788FFF /* GITTree.m in Sources */,
+				9F754F070EAD227300788FFF /* GITTreeEntry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
