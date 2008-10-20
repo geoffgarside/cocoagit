@@ -231,7 +231,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				9FCF27B20E98F7CE00665A41 /* Unit Tests-Info.plist */,
 			);
 			name = CocoaGit;
 			sourceTree = "<group>";
@@ -251,10 +250,11 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				9F754E910EAD0C8B00788FFF /* InfoPlist.strings */,
 				9F66F8160EA146C000E7FAA9 /* CocoaGit.dox */,
 				9F66F7C70EA1105500E7FAA9 /* doxygen.config */,
+				9F754E910EAD0C8B00788FFF /* InfoPlist.strings */,
 				9F3694180EACF05500E6777B /* Info.plist */,
+				9FCF27B20E98F7CE00665A41 /* Unit Tests-Info.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
