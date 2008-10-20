@@ -74,18 +74,18 @@
 /* Begin PBXFileReference section */
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* Git_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Git_Prefix.pch; sourceTree = "<group>"; };
-		9F0104990E9997C700A47227 /* GITUtilityBeltTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITUtilityBeltTests.h; sourceTree = "<group>"; };
-		9F01049A0E9997C700A47227 /* GITUtilityBeltTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITUtilityBeltTests.m; sourceTree = "<group>"; };
+		9F0104990E9997C700A47227 /* GITUtilityBeltTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITUtilityBeltTests.h; path = UnitTests/Source/GITUtilityBeltTests.h; sourceTree = "<group>"; };
+		9F01049A0E9997C700A47227 /* GITUtilityBeltTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITUtilityBeltTests.m; path = UnitTests/Source/GITUtilityBeltTests.m; sourceTree = "<group>"; };
 		9F0862050E20F02E00FD6CF6 /* GITTreeEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITTreeEntry.h; sourceTree = "<group>"; };
 		9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITTreeEntry.m; sourceTree = "<group>"; };
-		9F2150FA0EA3D4F8004C6188 /* GITFileStoreTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITFileStoreTests.h; sourceTree = "<group>"; };
-		9F2150FB0EA3D4F8004C6188 /* GITFileStoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITFileStoreTests.m; sourceTree = "<group>"; };
+		9F2150FA0EA3D4F8004C6188 /* GITFileStoreTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITFileStoreTests.h; path = UnitTests/Source/GITFileStoreTests.h; sourceTree = "<group>"; };
+		9F2150FB0EA3D4F8004C6188 /* GITFileStoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITFileStoreTests.m; path = UnitTests/Source/GITFileStoreTests.m; sourceTree = "<group>"; };
 		9F2152FD0EA68DA7004C6188 /* git-pack-inspect */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "git-pack-inspect"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F2153020EA68E3D004C6188 /* git-pack-inspect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "git-pack-inspect.m"; sourceTree = "<group>"; };
-		9F22A0B50E9968CA006C3656 /* GITTreeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITTreeTests.h; sourceTree = "<group>"; };
-		9F22A0B60E9968CA006C3656 /* GITTreeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITTreeTests.m; sourceTree = "<group>"; };
-		9F22A1040E99855B006C3656 /* GITTreeEntryTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITTreeEntryTests.h; sourceTree = "<group>"; };
-		9F22A1050E99855B006C3656 /* GITTreeEntryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITTreeEntryTests.m; sourceTree = "<group>"; };
+		9F22A0B50E9968CA006C3656 /* GITTreeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITTreeTests.h; path = UnitTests/Source/GITTreeTests.h; sourceTree = "<group>"; };
+		9F22A0B60E9968CA006C3656 /* GITTreeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITTreeTests.m; path = UnitTests/Source/GITTreeTests.m; sourceTree = "<group>"; };
+		9F22A1040E99855B006C3656 /* GITTreeEntryTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITTreeEntryTests.h; path = UnitTests/Source/GITTreeEntryTests.h; sourceTree = "<group>"; };
+		9F22A1050E99855B006C3656 /* GITTreeEntryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITTreeEntryTests.m; path = UnitTests/Source/GITTreeEntryTests.m; sourceTree = "<group>"; };
 		9F33C9E90E48C5650004CD44 /* GITBranch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITBranch.h; sourceTree = "<group>"; };
 		9F33C9EA0E48C5650004CD44 /* GITBranch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITBranch.m; sourceTree = "<group>"; };
 		9F33C9EB0E48C5650004CD44 /* GITPackFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITPackFile.h; sourceTree = "<group>"; };
@@ -123,21 +123,21 @@
 		9FA4E06F0E19A57600724E6B /* git-inspect */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "git-inspect"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FA4E0810E19A62500724E6B /* git-inspect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "git-inspect.m"; sourceTree = "<group>"; };
 		9FCF27B10E98F7CE00665A41 /* Unit Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Unit Tests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9FCF27B20E98F7CE00665A41 /* Unit Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Unit Tests-Info.plist"; sourceTree = "<group>"; };
+		9FCF27B20E98F7CE00665A41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = UnitTests/Resources/Info.plist; sourceTree = "<group>"; };
 		9FCF27B60E98F86C00665A41 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		9FCF27BB0E98FC0F00665A41 /* GITBlobTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITBlobTests.h; sourceTree = "<group>"; };
-		9FCF27BC0E98FC0F00665A41 /* GITBlobTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITBlobTests.m; sourceTree = "<group>"; };
-		9FCF27BE0E98FEF600665A41 /* GITRepoTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITRepoTests.h; sourceTree = "<group>"; };
-		9FCF27BF0E98FEF600665A41 /* GITRepoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITRepoTests.m; sourceTree = "<group>"; };
-		9FCF28D60E991EB800665A41 /* GITActorTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITActorTests.h; sourceTree = "<group>"; };
-		9FCF28D70E991EB800665A41 /* GITActorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITActorTests.m; sourceTree = "<group>"; };
-		9FCF290E0E993E5900665A41 /* GITCommitTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITCommitTests.h; sourceTree = "<group>"; };
-		9FCF290F0E993E5900665A41 /* GITCommitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITCommitTests.m; sourceTree = "<group>"; };
+		9FCF27BB0E98FC0F00665A41 /* GITBlobTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITBlobTests.h; path = UnitTests/Source/GITBlobTests.h; sourceTree = "<group>"; };
+		9FCF27BC0E98FC0F00665A41 /* GITBlobTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITBlobTests.m; path = UnitTests/Source/GITBlobTests.m; sourceTree = "<group>"; };
+		9FCF27BE0E98FEF600665A41 /* GITRepoTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITRepoTests.h; path = UnitTests/Source/GITRepoTests.h; sourceTree = "<group>"; };
+		9FCF27BF0E98FEF600665A41 /* GITRepoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITRepoTests.m; path = UnitTests/Source/GITRepoTests.m; sourceTree = "<group>"; };
+		9FCF28D60E991EB800665A41 /* GITActorTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITActorTests.h; path = UnitTests/Source/GITActorTests.h; sourceTree = "<group>"; };
+		9FCF28D70E991EB800665A41 /* GITActorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITActorTests.m; path = UnitTests/Source/GITActorTests.m; sourceTree = "<group>"; };
+		9FCF290E0E993E5900665A41 /* GITCommitTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITCommitTests.h; path = UnitTests/Source/GITCommitTests.h; sourceTree = "<group>"; };
+		9FCF290F0E993E5900665A41 /* GITCommitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITCommitTests.m; path = UnitTests/Source/GITCommitTests.m; sourceTree = "<group>"; };
 		9FD240740EA216D5000F7B60 /* GITObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITObject.m; sourceTree = "<group>"; };
 		9FE328C40E9B623E001E37D5 /* GITDateTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITDateTime.h; sourceTree = "<group>"; };
 		9FE328C50E9B623E001E37D5 /* GITDateTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITDateTime.m; sourceTree = "<group>"; };
-		9FE328C90E9B6F2B001E37D5 /* GITDateTimeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITDateTimeTests.h; sourceTree = "<group>"; };
-		9FE328CA0E9B6F2B001E37D5 /* GITDateTimeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITDateTimeTests.m; sourceTree = "<group>"; };
+		9FE328C90E9B6F2B001E37D5 /* GITDateTimeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITDateTimeTests.h; path = UnitTests/Source/GITDateTimeTests.h; sourceTree = "<group>"; };
+		9FE328CA0E9B6F2B001E37D5 /* GITDateTimeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITDateTimeTests.m; path = UnitTests/Source/GITDateTimeTests.m; sourceTree = "<group>"; };
 		9FE329AB0E9BA2EF001E37D5 /* GITFileStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITFileStore.h; sourceTree = "<group>"; };
 		9FE329AC0E9BA2EF001E37D5 /* GITFileStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITFileStore.m; sourceTree = "<group>"; };
 		9FE329AE0E9BA2F8001E37D5 /* GITPackStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITPackStore.h; sourceTree = "<group>"; };
@@ -254,7 +254,7 @@
 				9F66F7C70EA1105500E7FAA9 /* doxygen.config */,
 				9F754E910EAD0C8B00788FFF /* InfoPlist.strings */,
 				9F3694180EACF05500E6777B /* Info.plist */,
-				9FCF27B20E98F7CE00665A41 /* Unit Tests-Info.plist */,
+				9FCF27B20E98F7CE00665A41 /* Info.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -799,7 +799,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				INFOPLIST_FILE = "Unit Tests-Info.plist";
+				INFOPLIST_FILE = UnitTests/Resources/Info.plist;
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
 					"-lcrypto",
@@ -828,7 +828,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				INFOPLIST_FILE = "Unit Tests-Info.plist";
+				INFOPLIST_FILE = UnitTests/Resources/Info.plist;
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
 					"-framework",
