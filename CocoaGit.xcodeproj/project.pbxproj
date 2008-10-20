@@ -181,9 +181,9 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				9FE329A90E9BA2C0001E37D5 /* Store Types */,
-				9FE329530E9B937F001E37D5 /* Utility Types */,
-				9FE329520E9B9357001E37D5 /* Core Types */,
+				9FE329A90E9BA2C0001E37D5 /* Stores */,
+				9FE329530E9B937F001E37D5 /* Utility */,
+				9FE329520E9B9357001E37D5 /* Core */,
 				9F33C9E90E48C5650004CD44 /* GITBranch.h */,
 				9F33C9EA0E48C5650004CD44 /* GITBranch.m */,
 				9F33C9EB0E48C5650004CD44 /* GITPackFile.h */,
@@ -224,7 +224,7 @@
 		29B97314FDCFA39411CA2CEA /* CocoaGit */ = {
 			isa = PBXGroup;
 			children = (
-				9FCF27950E98F67D00665A41 /* Unit Tests */,
+				9FCF27950E98F67D00665A41 /* Tests */,
 				9F33C9E60E48C4840004CD44 /* Categories */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -268,13 +268,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		9F2150F90EA3D4DE004C6188 /* Store Tests */ = {
+		9F2150F90EA3D4DE004C6188 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
 				9F2150FA0EA3D4F8004C6188 /* GITFileStoreTests.h */,
 				9F2150FB0EA3D4F8004C6188 /* GITFileStoreTests.m */,
 			);
-			name = "Store Tests";
+			name = Stores;
 			sourceTree = "<group>";
 		};
 		9F33C9E60E48C4840004CD44 /* Categories */ = {
@@ -292,19 +292,19 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
-		9FCF27950E98F67D00665A41 /* Unit Tests */ = {
+		9FCF27950E98F67D00665A41 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				9F2150F90EA3D4DE004C6188 /* Store Tests */,
-				9FE329680E9B97A8001E37D5 /* Core Tests */,
-				9FE329690E9B97BF001E37D5 /* Utility Tests */,
+				9F2150F90EA3D4DE004C6188 /* Stores */,
+				9FE329680E9B97A8001E37D5 /* Core */,
+				9FE329690E9B97BF001E37D5 /* Utility */,
 				9F0104990E9997C700A47227 /* GITUtilityBeltTests.h */,
 				9F01049A0E9997C700A47227 /* GITUtilityBeltTests.m */,
 			);
-			name = "Unit Tests";
+			name = Tests;
 			sourceTree = "<group>";
 		};
-		9FE329520E9B9357001E37D5 /* Core Types */ = {
+		9FE329520E9B9357001E37D5 /* Core */ = {
 			isa = PBXGroup;
 			children = (
 				9F9213840E17F17C005AC693 /* GITBlob.h */,
@@ -320,10 +320,10 @@
 				9F0862050E20F02E00FD6CF6 /* GITTreeEntry.h */,
 				9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */,
 			);
-			name = "Core Types";
+			name = Core;
 			sourceTree = "<group>";
 		};
-		9FE329530E9B937F001E37D5 /* Utility Types */ = {
+		9FE329530E9B937F001E37D5 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
 				9F7EC93C0E1A8917001668EB /* GITActor.h */,
@@ -331,10 +331,10 @@
 				9FE328C40E9B623E001E37D5 /* GITDateTime.h */,
 				9FE328C50E9B623E001E37D5 /* GITDateTime.m */,
 			);
-			name = "Utility Types";
+			name = Utility;
 			sourceTree = "<group>";
 		};
-		9FE329680E9B97A8001E37D5 /* Core Tests */ = {
+		9FE329680E9B97A8001E37D5 /* Core */ = {
 			isa = PBXGroup;
 			children = (
 				9FCF27BB0E98FC0F00665A41 /* GITBlobTests.h */,
@@ -348,10 +348,10 @@
 				9F22A1040E99855B006C3656 /* GITTreeEntryTests.h */,
 				9F22A1050E99855B006C3656 /* GITTreeEntryTests.m */,
 			);
-			name = "Core Tests";
+			name = Core;
 			sourceTree = "<group>";
 		};
-		9FE329690E9B97BF001E37D5 /* Utility Tests */ = {
+		9FE329690E9B97BF001E37D5 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
 				9FCF28D60E991EB800665A41 /* GITActorTests.h */,
@@ -359,10 +359,10 @@
 				9FE328C90E9B6F2B001E37D5 /* GITDateTimeTests.h */,
 				9FE328CA0E9B6F2B001E37D5 /* GITDateTimeTests.m */,
 			);
-			name = "Utility Tests";
+			name = Utility;
 			sourceTree = "<group>";
 		};
-		9FE329A90E9BA2C0001E37D5 /* Store Types */ = {
+		9FE329A90E9BA2C0001E37D5 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
 				9FE329AB0E9BA2EF001E37D5 /* GITFileStore.h */,
@@ -372,7 +372,7 @@
 				9F96B1BA0E9E334E00AD0A80 /* GITObjectStore.h */,
 				9F96B1BB0E9E334E00AD0A80 /* GITObjectStore.m */,
 			);
-			name = "Store Types";
+			name = Stores;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
