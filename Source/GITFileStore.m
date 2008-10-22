@@ -35,8 +35,15 @@
 }
 - (NSData*)dataWithContentsOfObject:(NSString*)sha1
 {
+    NSFileManager * fm = [NSFileManager defaultManager];
     NSString * path = [self stringWithPathToObject:sha1];
-    NSData * zlibData = [NSData dataWithContentsOfFile:path];
-    return [zlibData zlibInflate];
+
+    if ([fm isReadableFileAtPath:path])
+    {
+        NSData * zlibData = [NSData dataWithContentsOfFile:path];
+        return [zlibData zlibInflate];
+    }
+
+    return nil;
 }
 @end

@@ -74,26 +74,28 @@
 {
     NSString * type; NSUInteger size; NSData * data;
 
-    [self.store extractFromObject:sha1 type:&type size:&size data:&data];
-    if ([expectedType isEqualToString:type] && [data length] == size)
-        return data;
+    if ([self.store extractFromObject:sha1 type:&type size:&size data:&data])
+        if ([expectedType isEqualToString:type] && [data length] == size)
+            return data;
     return nil;
 }
 - (GITObject*)objectWithSha1:(NSString*)sha1
 {
     NSString * type; NSUInteger size; NSData * data;
 
-    [self.store extractFromObject:sha1 type:&type size:&size data:&data];
-    if ([data length] == size)
+    if ([self.store extractFromObject:sha1 type:&type size:&size data:&data])
     {
-        if ([type isEqualToString:kGITObjectBlobName])
-            return [[GITBlob alloc] initWithSha1:sha1 data:data repo:self];
-        else if ([type isEqualToString:kGITObjectTreeName])
-            return [[GITTree alloc] initWithSha1:sha1 data:data repo:self];
-        else if ([type isEqualToString:kGITObjectCommitName])
-            return [[GITCommit alloc] initWithSha1:sha1 data:data repo:self];
-        else if ([type isEqualToString:kGITObjectTagName])
-            return [[GITTag alloc] initWithSha1:sha1 data:data repo:self];
+        if ([data length] == size)
+        {
+            if ([type isEqualToString:kGITObjectBlobName])
+                return [[GITBlob alloc] initWithSha1:sha1 data:data repo:self];
+            else if ([type isEqualToString:kGITObjectTreeName])
+                return [[GITTree alloc] initWithSha1:sha1 data:data repo:self];
+            else if ([type isEqualToString:kGITObjectCommitName])
+                return [[GITCommit alloc] initWithSha1:sha1 data:data repo:self];
+            else if ([type isEqualToString:kGITObjectTagName])
+                return [[GITTag alloc] initWithSha1:sha1 data:data repo:self];
+        }
     }
 
     return nil;

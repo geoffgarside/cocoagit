@@ -29,7 +29,7 @@
  * decompressed or decrypted before returning.
  * \attention This method must be overridden
  * \param sha1 The object reference to return the data for
- * \return Contents of an object
+ * \return Contents of an object, nil if the object cannot be found
  */
 - (NSData*)dataWithContentsOfObject:(NSString*)sha1;
 

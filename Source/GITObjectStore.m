@@ -25,19 +25,23 @@
                      size:(NSUInteger*)size data:(NSData**)data
 {
     NSData * raw  = [self dataWithContentsOfObject:sha1];
-    NSRange range = [raw rangeOfNullTerminatedBytesFrom:0];
-    NSData * meta = [raw subdataWithRange:range];
-    *data = [raw subdataFromIndex:range.length + 1];
+    if (raw)
+    {
+        NSRange range = [raw rangeOfNullTerminatedBytesFrom:0];
+        NSData * meta = [raw subdataWithRange:range];
+        *data = [raw subdataFromIndex:range.length + 1];
 
-    NSString * metaStr = [[NSString alloc] initWithData:meta
-                                               encoding:NSASCIIStringEncoding];
-    NSUInteger indexOfSpace = [metaStr rangeOfString:@" "].location;
+        NSString * metaStr = [[NSString alloc] initWithData:meta
+                                                   encoding:NSASCIIStringEncoding];
+        NSUInteger indexOfSpace = [metaStr rangeOfString:@" "].location;
 
-    *type = [metaStr substringToIndex:indexOfSpace];
-    *size = (NSUInteger)[[metaStr substringFromIndex:indexOfSpace + 1] integerValue];
+        *type = [metaStr substringToIndex:indexOfSpace];
+        *size = (NSUInteger)[[metaStr substringFromIndex:indexOfSpace + 1] integerValue];
 
-    if (data && type && size)
-        return YES;
+        if (data && type && size)
+            return YES;
+    }
+
     return NO;
 }
 @end
