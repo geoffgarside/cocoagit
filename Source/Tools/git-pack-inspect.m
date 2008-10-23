@@ -18,6 +18,8 @@ int main (int argc, const char * argv[]) {
     NSLog(@"packPath: %@", pack.packPath);
     NSLog(@"idxPath: %@", pack.idxPath);
     
+    NSLog(@"Pack Version: %lu", [pack readVersionFromPack]);
+    
     [pool drain];
     return 0;
 }

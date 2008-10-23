@@ -106,6 +106,25 @@ const NSUInteger kGITPackFileTypeTag      = 4;
         @throw ex;
     }
 }
+- (NSUInteger)readVersionFromPack
+{
+    unichar buf[4];
+    NSString * sig;
+    [self.packData getBytes:buf range:kGITPackFileSignatureRange];
+
+    sig = [[NSString alloc] initWithBytes:buf
+                                   length:kGITPackFileSignatureRange.length
+                                 encoding:NSASCIIStringEncoding];
+    if ([sig isEqualToString:@"PACK"])
+    {   // Its a valid PACK file, continue
+        memset(buf, 0x0, 4);
+        [self.packData getBytes:buf range:kGITPackFileVersionRange];
+
+        // buf = \000\000\000\002, we need this to be NSUInteger(2)
+    }
+
+    return 0;
+}
 - (void)readPack
 {
     unichar buf[4];
