@@ -43,7 +43,7 @@
 - (void)testTreeEntryLoading
 {
     STAssertNotNil(tree.entries, @"Should not be nil");
-    STAssertEquals([tree.entries count], (NSUInteger)1, @"Should have 16 entries");
+    STAssertEquals([tree.entries count], (NSUInteger)1, @"Should have 1 entry");
 }
 
 @end

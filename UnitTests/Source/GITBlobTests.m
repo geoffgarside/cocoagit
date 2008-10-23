@@ -19,7 +19,6 @@
 {
     [super setUp];
     self.repo = [[GITRepo alloc] initWithRoot:TEST_REPO_PATH];
-	NSLog(@"repo = %@, root = %@", self.repo, self.repo.root);
     self.blobSHA1 = @"87f974580d485f3cfd5fd9cc62491341067f0c59";
     self.blob = [repo blobWithSha1:blobSHA1];
 }
