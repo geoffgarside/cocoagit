@@ -18,8 +18,8 @@
 - (void)setUp
 {
     [super setUp];
-    self.repo = [[GITRepo alloc] initWithRoot:@"."];
-    self.commitSHA1 = @"bc1f8741941e3a8136f40cb9b99a492171686214";
+    self.repo = [[GITRepo alloc] initWithRoot:TEST_REPO_PATH];
+    self.commitSHA1 = @"f7e7e7d240ccdae143b064aa7467eb2fa91aa8a5";
     self.commit = [repo commitWithSha1:commitSHA1];
 }
 - (void)tearDown

@@ -21,8 +21,8 @@
 - (void)setUp
 {
     [super setUp];
-    self.repo = [[GITRepo alloc] initWithRoot:@"."];
-    self.treeSHA1 = @"d813a4972d16d95c6b9dcfa41dfc4ea2150e6dcc";
+    self.repo = [[GITRepo alloc] initWithRoot:TEST_REPO_PATH];
+    self.treeSHA1 = @"a9ecfd8989d7c427c5564cf918b264261866ce01";
     self.tree = [repo treeWithSha1:treeSHA1];
 }
 - (void)tearDown
@@ -43,7 +43,7 @@
 - (void)testTreeEntryLoading
 {
     STAssertNotNil(tree.entries, @"Should not be nil");
-    STAssertEquals([tree.entries count], (NSUInteger)16, @"Should have 16 entries");
+    STAssertEquals([tree.entries count], (NSUInteger)1, @"Should have 16 entries");
 }
 
 @end

@@ -15,7 +15,7 @@
 - (void)setUp
 {
     [super setUp];
-    self.repo = [[GITRepo alloc] initWithRoot:@"."];
+    self.repo = [[GITRepo alloc] initWithRoot:TEST_REPO_PATH];
 }
 - (void)tearDown
 {
@@ -32,8 +32,8 @@
 }
 - (void)testShouldLoadDataForHash
 {
-    NSString * sha = @"421b03c7c48b987452a05f02b1bdf73fff93f3b9";
-    NSString * str = @"//\n//  GITBlob.h\n//  CocoaGit\n//\n//  Created by Geoffrey Garside on 29/06/2008.\n//  Copyright 2008 ManicPanda.com. All rights reserved.\n//\n\n#import <Cocoa/Cocoa.h>\n#import \"GITObject.h\"\n\n@interface GITBlob : GITObject {\n    \n}\n\n@end\n";
+	NSString * sha = @"87f974580d485f3cfd5fd9cc62491341067f0c59";
+	NSString * str = @"hello world!\n\ngoodbye world.\n";
     NSData * data  = [NSData dataWithData:[str dataUsingEncoding:NSASCIIStringEncoding]];
     
     NSData * raw = [repo dataWithContentsOfObject:sha type:@"blob"];

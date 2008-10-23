@@ -15,7 +15,7 @@
 - (void)setUp
 {
     [super setUp];
-    self.store = [[GITFileStore alloc] initWithRoot:@"./.git"];
+    self.store = [[GITFileStore alloc] initWithRoot:TEST_REPO_PATH@"/.git"];
 }
 - (void)tearDown
 {
@@ -24,20 +24,21 @@
 }
 - (void)testStoreRootIsCorrect
 {
-    STAssertEqualObjects(store.objectsDir, @"./.git/objects", nil);
+    STAssertEqualObjects(store.objectsDir, TEST_REPO_PATH@"/.git/objects", nil);
 }
 - (void)testExpandHashIntoFilePath
 {
-    NSString * path = [store stringWithPathToObject:@"421b03c7c48b987452a05f02b1bdf73fff93f3b9"];
-    STAssertEqualObjects(path, @"./.git/objects/42/1b03c7c48b987452a05f02b1bdf73fff93f3b9", nil);
+    NSString * path = [store stringWithPathToObject:@"87f974580d485f3cfd5fd9cc62491341067f0c59"];
+    STAssertEqualObjects(path, TEST_REPO_PATH@"/.git/objects/87/f974580d485f3cfd5fd9cc62491341067f0c59", nil);
 }
 - (void)testDataWithContentsOfObject
 {
-    NSString * sha = @"421b03c7c48b987452a05f02b1bdf73fff93f3b9";
-    NSString * str = @"blob 233\0//\n//  GITBlob.h\n//  CocoaGit\n//\n//  Created by Geoffrey Garside on 29/06/2008.\n//  Copyright 2008 ManicPanda.com. All rights reserved.\n//\n\n#import <Cocoa/Cocoa.h>\n#import \"GITObject.h\"\n\n@interface GITBlob : GITObject {\n    \n}\n\n@end\n";
-    NSData * data  = [NSData dataWithData:[str dataUsingEncoding:NSASCIIStringEncoding]];
+    NSString * sha = @"87f974580d485f3cfd5fd9cc62491341067f0c59";
+	NSString * str = @"blob 29\x00hello world!\n\ngoodbye world.\n";
+
+	NSData * data  = [NSData dataWithData:[str dataUsingEncoding:NSASCIIStringEncoding]];
     
     NSData * raw   = [store dataWithContentsOfObject:sha];
-    STAssertEqualObjects(raw, data, nil);
+	STAssertEqualObjects(raw, data, nil);
 }
 @end

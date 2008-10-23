@@ -106,6 +106,7 @@
 /* Begin PBXFileReference section */
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* Git_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Git_Prefix.pch; sourceTree = "<group>"; };
+		57C17FF50EB01E1C00B7AE7E /* GITTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITTestHelper.h; path = UnitTests/Source/GITTestHelper.h; sourceTree = "<group>"; };
 		9F0104990E9997C700A47227 /* GITUtilityBeltTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITUtilityBeltTests.h; path = UnitTests/Source/GITUtilityBeltTests.h; sourceTree = "<group>"; };
 		9F01049A0E9997C700A47227 /* GITUtilityBeltTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITUtilityBeltTests.m; path = UnitTests/Source/GITUtilityBeltTests.m; sourceTree = "<group>"; };
 		9F0862050E20F02E00FD6CF6 /* GITTreeEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITTreeEntry.h; path = Source/GITTreeEntry.h; sourceTree = "<group>"; };
@@ -327,6 +328,7 @@
 		9FCF27950E98F67D00665A41 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				57C17FF50EB01E1C00B7AE7E /* GITTestHelper.h */,
 				9F2150F90EA3D4DE004C6188 /* Stores */,
 				9FE329680E9B97A8001E37D5 /* Core */,
 				9FE329690E9B97BF001E37D5 /* Utility */,
