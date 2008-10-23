@@ -34,6 +34,7 @@
 - (void)setPackPath:(NSString*)path;
 - (void)setIdxPath:(NSString*)path;
 - (void)openIdxAndPackFiles;
+- (NSUInteger)readVersionFromPack;
 - (void)readPack;
 - (NSData*)objectAtOffset:(NSUInteger)offset;
 - (NSData*)objectAtOffsetVersion1:(NSUInteger)offset;
