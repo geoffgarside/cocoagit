@@ -43,4 +43,10 @@
     NSString * sha1 = unpackSHA1FromString(packedSHA1String);
     STAssertEqualObjects(sha1, unpackedSHA1, nil);
 }
+- (void)testShouldConvertBinaryToInteger
+{   // Contents similar to PACK File version
+    unichar bytes[4] = { 0x0, 0x0, 0x0, 0x2 };
+    NSUInteger val = integerFromBytes(bytes, 4);
+    STAssertEquals(val, (NSUInteger)2, nil);
+}
 @end
