@@ -569,7 +569,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+			shellScript = "# Run the unit tests in this test bundle.\nTEST_REPO_PATH=\"UnitTests/Resources/test_repo\"\nDOT_GIT_DIR=\"dot_git_dir\"\n\nTEST_REPO_GIT_DIR=\"${TEST_REPO_PATH}/${DOT_GIT_DIR}\"\n\nmv \"${TEST_REPO_GIT_DIR}\" \"${TEST_REPO_PATH}/.git\"\n\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n\nmv \"${TEST_REPO_PATH}/.git\" \"${TEST_REPO_GIT_DIR}\" \n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -870,6 +870,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				GIT_DIR = dot_git_dir;
 				INFOPLIST_FILE = UnitTests/Resources/Info.plist;
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (

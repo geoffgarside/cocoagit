@@ -1,0 +1,6 @@
+0000000000000000000000000000000000000000 2bb318d2c722b344f6fae8ec274d0c7df9020544 Brian Chapados <chapados@sciencegeeks.org> 1224730175 -0700	commit (initial): Added hello world message
+2bb318d2c722b344f6fae8ec274d0c7df9020544 f7e7e7d240ccdae143b064aa7467eb2fa91aa8a5 Brian Chapados <chapados@sciencegeeks.org> 1224730970 -0700	commit: removed bang, added goodbye message.
+f7e7e7d240ccdae143b064aa7467eb2fa91aa8a5 f7e7e7d240ccdae143b064aa7467eb2fa91aa8a5 Brian Chapados <chapados@sciencegeeks.org> 1224735230 -0700	checkout: moving from master to ruby
+f7e7e7d240ccdae143b064aa7467eb2fa91aa8a5 5543323c6b02f4fb30940f780c4431d32829e76b Brian Chapados <chapados@sciencegeeks.org> 1224735294 -0700	commit: convert hello.txt into a ruby script
+5543323c6b02f4fb30940f780c4431d32829e76b 3ca188481c60fe3f0a1a60f500a26710a5961593 Brian Chapados <chapados@sciencegeeks.org> 1224735329 -0700	commit: renamed to hello.rb
+3ca188481c60fe3f0a1a60f500a26710a5961593 d8094720229e2975cc639b028f56602baa6f8715 Brian Chapados <chapados@sciencegeeks.org> 1224735915 -0700	commit: added docs directory for fake HTML docs
