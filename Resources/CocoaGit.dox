@@ -7,7 +7,7 @@
  The project was begun as as a two part experiment to learn both <a href="http://developer.apple.com/cocoa/">Cocoa</a>
  and the way in which <a href="http://git-scm.com">git</a> works.
 
- \authors Geoff Garside
+ \author Geoff Garside
 
  \section source_sec Source Code
  The source code is available on <a href="http://github.com/">Github</a> at 
