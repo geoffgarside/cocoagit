@@ -108,7 +108,7 @@ const NSUInteger kGITPackFileTypeTag      = 4;
 }
 - (NSUInteger)readVersionFromPack
 {
-    unichar buf[4];
+    char buf[4];
     NSString * sig;
     [self.packData getBytes:buf range:kGITPackFileSignatureRange];
 
@@ -119,8 +119,7 @@ const NSUInteger kGITPackFileTypeTag      = 4;
     {   // Its a valid PACK file, continue
         memset(buf, 0x0, 4);
         [self.packData getBytes:buf range:kGITPackFileVersionRange];
-
-        // buf = \000\000\000\002, we need this to be NSUInteger(2)
+        return integerFromBytes(buf, kGITPackFileVersionRange.length);
     }
 
     return 0;
@@ -181,7 +180,7 @@ const NSUInteger kGITPackFileTypeTag      = 4;
 }
 - (void)readIdx
 {
-    unichar buf[4];
+    char buf[4];
     NSUInteger i, lastCount, thisCount;
     NSMutableArray * offsets = [NSMutableArray arrayWithCapacity:256];
 
@@ -246,7 +245,7 @@ const NSUInteger kGITPackFileTypeTag      = 4;
     if (thisFanout > prevFanout)
     {
         NSUInteger i;
-        unichar buf[20];
+        char buf[20];
 
         NSUInteger startLocation = kGITPackIndexFanOutEnd +
             (kGITPackIndexEntrySize * prevFanout);
@@ -261,7 +260,9 @@ const NSUInteger kGITPackFileTypeTag      = 4;
 
             memset(buf, 0x0, 20);
             [self.idxData getBytes:buf range:NSMakeRange(i + 4, 20)];
-            NSString * packedSha1 = [NSString stringWithCharacters:buf length:20];
+            NSString * packedSha1 = [[NSString alloc] initWithBytes:buf
+                                                             length:20
+                                                           encoding:NSASCIIStringEncoding];
             NSString * name = unpackSHA1FromString(packedSha1);
 
             if ([name isEqualToString:sha1])
