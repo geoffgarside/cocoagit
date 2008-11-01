@@ -60,7 +60,7 @@ unpackSHA1FromData(NSData * packedSHA1)
 }
 
 NSUInteger
-integerFromBytes(unichar * bytes, NSUInteger length)
+integerFromBytes(char * bytes, NSUInteger length)
 {
     NSUInteger i, value = 0;
     for (i = 0; i < length; i++)
