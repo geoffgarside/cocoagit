@@ -42,6 +42,10 @@
 		9F22A1010E997938006C3656 /* GITUtilityBelt.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F63998D0E51952F0034F279 /* GITUtilityBelt.m */; };
 		9F22A1060E99855B006C3656 /* GITTreeEntryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F22A1050E99855B006C3656 /* GITTreeEntryTests.m */; };
 		9F33C9F20E48C5650004CD44 /* GITRepo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EF0E48C5650004CD44 /* GITRepo.m */; };
+		9F35B9110EBFE1EF00FC0770 /* GITPackIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F35B9100EBFE1EF00FC0770 /* GITPackIndex.m */; };
+		9F35B9140EBFE24000FC0770 /* GITPlaceholderPackIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F35B9130EBFE24000FC0770 /* GITPlaceholderPackIndex.m */; };
+		9F35B9170EBFE44B00FC0770 /* GITPackIndexVersion1.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F35B9160EBFE44B00FC0770 /* GITPackIndexVersion1.m */; };
+		9F35B91A0EBFE45B00FC0770 /* GITPackIndexVersion2.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F35B9190EBFE45B00FC0770 /* GITPackIndexVersion2.m */; };
 		9F464D410E3DC3EC00867506 /* NSTimeZone+Offset.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F464D400E3DC3EC00867506 /* NSTimeZone+Offset.m */; };
 		9F63998E0E51952F0034F279 /* GITUtilityBelt.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F63998D0E51952F0034F279 /* GITUtilityBelt.m */; };
 		9F754ECF0EAD21F600788FFF /* GITActor.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F7EC93C0E1A8917001668EB /* GITActor.h */; };
@@ -125,6 +129,14 @@
 		9F33C9EC0E48C5650004CD44 /* GITPackFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITPackFile.m; path = Source/GITPackFile.m; sourceTree = "<group>"; };
 		9F33C9EE0E48C5650004CD44 /* GITRepo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITRepo.h; path = Source/GITRepo.h; sourceTree = "<group>"; };
 		9F33C9EF0E48C5650004CD44 /* GITRepo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITRepo.m; path = Source/GITRepo.m; sourceTree = "<group>"; };
+		9F35B90F0EBFE1EF00FC0770 /* GITPackIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITPackIndex.h; path = Source/GITPackIndex.h; sourceTree = "<group>"; };
+		9F35B9100EBFE1EF00FC0770 /* GITPackIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITPackIndex.m; path = Source/GITPackIndex.m; sourceTree = "<group>"; };
+		9F35B9120EBFE24000FC0770 /* GITPlaceholderPackIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITPlaceholderPackIndex.h; path = Source/GITPlaceholderPackIndex.h; sourceTree = "<group>"; };
+		9F35B9130EBFE24000FC0770 /* GITPlaceholderPackIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITPlaceholderPackIndex.m; path = Source/GITPlaceholderPackIndex.m; sourceTree = "<group>"; };
+		9F35B9150EBFE44B00FC0770 /* GITPackIndexVersion1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITPackIndexVersion1.h; path = Source/GITPackIndexVersion1.h; sourceTree = "<group>"; };
+		9F35B9160EBFE44B00FC0770 /* GITPackIndexVersion1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITPackIndexVersion1.m; path = Source/GITPackIndexVersion1.m; sourceTree = "<group>"; };
+		9F35B9180EBFE45B00FC0770 /* GITPackIndexVersion2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITPackIndexVersion2.h; path = Source/GITPackIndexVersion2.h; sourceTree = "<group>"; };
+		9F35B9190EBFE45B00FC0770 /* GITPackIndexVersion2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITPackIndexVersion2.m; path = Source/GITPackIndexVersion2.m; sourceTree = "<group>"; };
 		9F3694170EACF05500E6777B /* Git.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Git.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F3694180EACF05500E6777B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		9F464D3F0E3DC3EC00867506 /* NSTimeZone+Offset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSTimeZone+Offset.h"; path = "Source/Categories/NSTimeZone+Offset.h"; sourceTree = "<group>"; };
@@ -217,6 +229,7 @@
 				9FE329A90E9BA2C0001E37D5 /* Stores */,
 				9FE329530E9B937F001E37D5 /* Utility */,
 				9FE329520E9B9357001E37D5 /* Core */,
+				9F35B90D0EBFE1D400FC0770 /* Packs */,
 				9F33C9E90E48C5650004CD44 /* GITBranch.h */,
 				9F33C9EA0E48C5650004CD44 /* GITBranch.m */,
 				9F33C9EB0E48C5650004CD44 /* GITPackFile.h */,
@@ -323,6 +336,21 @@
 				9F464D400E3DC3EC00867506 /* NSTimeZone+Offset.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		9F35B90D0EBFE1D400FC0770 /* Packs */ = {
+			isa = PBXGroup;
+			children = (
+				9F35B90F0EBFE1EF00FC0770 /* GITPackIndex.h */,
+				9F35B9100EBFE1EF00FC0770 /* GITPackIndex.m */,
+				9F35B9120EBFE24000FC0770 /* GITPlaceholderPackIndex.h */,
+				9F35B9130EBFE24000FC0770 /* GITPlaceholderPackIndex.m */,
+				9F35B9150EBFE44B00FC0770 /* GITPackIndexVersion1.h */,
+				9F35B9160EBFE44B00FC0770 /* GITPackIndexVersion1.m */,
+				9F35B9180EBFE45B00FC0770 /* GITPackIndexVersion2.h */,
+				9F35B9190EBFE45B00FC0770 /* GITPackIndexVersion2.m */,
+			);
+			name = Packs;
 			sourceTree = "<group>";
 		};
 		9FCF27950E98F67D00665A41 /* Tests */ = {
@@ -581,6 +609,10 @@
 				9F2153030EA68E3D004C6188 /* git-pack-inspect.m in Sources */,
 				9F2153170EA89BC0004C6188 /* GITPackFile.m in Sources */,
 				9F2153180EA89BC3004C6188 /* GITUtilityBelt.m in Sources */,
+				9F35B9110EBFE1EF00FC0770 /* GITPackIndex.m in Sources */,
+				9F35B9140EBFE24000FC0770 /* GITPlaceholderPackIndex.m in Sources */,
+				9F35B9170EBFE44B00FC0770 /* GITPackIndexVersion1.m in Sources */,
+				9F35B91A0EBFE45B00FC0770 /* GITPackIndexVersion2.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
