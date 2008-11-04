@@ -7,9 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "GITPlaceholderPackIndex.h"
-#import "GITPackIndexVersion1.h"
-#import "GITPackIndexVersion2.h"
 
 /*! GITPackIndex is a class cluster.
  */
@@ -24,3 +21,7 @@
 - (NSUInteger)version;
 
 @end
+
+#import "GITPlaceholderPackIndex.h"
+#import "GITPackIndexVersion1.h"
+#import "GITPackIndexVersion2.h"
