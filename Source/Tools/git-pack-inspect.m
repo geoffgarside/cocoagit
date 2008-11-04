@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "GITPackFile.h"
+#import "GITPackIndex.h"
 
 void p(NSString * str);
 
@@ -14,11 +15,14 @@ int main (int argc, const char * argv[]) {
     }
     
     GITPackFile * pack = [[GITPackFile alloc] initWithPath:[args objectAtIndex:1]];
+    GITPackIndex * idx = [[GITPackIndex alloc] initWithPath:[pack idxPath]];
     
     NSLog(@"packPath: %@", pack.packPath);
     NSLog(@"idxPath: %@", pack.idxPath);
     
+    // Obtain the PACK version
     NSLog(@"Pack Version: %lu", [pack readVersionFromPack]);
+    NSLog(@"Index Version: %lu", [idx version]);
     
     [pool drain];
     return 0;
