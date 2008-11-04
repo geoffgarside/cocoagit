@@ -28,6 +28,13 @@
     self.data = nil;
     [super dealloc];
 }
+- (id)copyWithZone:(NSZone *)zone
+{
+    if (NSShouldRetainWithZone(self, zone))
+        return [self retain];
+    else
+        return [super copyWithZone:zone];
+}
 - (NSUInteger)version
 {
     return 2;
