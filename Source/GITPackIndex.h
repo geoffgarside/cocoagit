@@ -18,7 +18,9 @@
 }
 
 - (id)initWithPath:(NSString*)path;
+- (id)copyWithZone:(NSZone*)zone;
 
 #pragma mark -
 - (NSUInteger)version;
+
 @end
