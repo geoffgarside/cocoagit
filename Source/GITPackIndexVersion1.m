@@ -9,10 +9,10 @@
 #import "GITPackIndexVersion1.h"
 #import "GITUtilityBelt.h"
 
-const NSUInteger kGITPackIndexFanOutSize  = 4;          //!< bytes
-const NSUInteger kGITPackIndexFanOutCount = 256;
-const NSUInteger kGITPackIndexFanOutEnd   = 4 * 256;    //!< Update when either of the two above change
-const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
+static const NSUInteger kGITPackIndexFanOutSize  = 4;          //!< bytes
+static const NSUInteger kGITPackIndexFanOutCount = 256;
+static const NSUInteger kGITPackIndexFanOutEnd   = 4 * 256;    //!< Update when either of the two above change
+static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
 
 @implementation GITPackIndexVersion1
 @synthesize path;
