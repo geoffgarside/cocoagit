@@ -58,7 +58,7 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
 {
     char buf[4];
     NSUInteger i, lastCount, thisCount;
-    NSMutableArray * offsets = [NSMutableArray arrayWithCapacity:256];
+    NSMutableArray * _offsets = [NSMutableArray arrayWithCapacity:256];
 
     lastCount = thisCount = 0;
 
@@ -91,9 +91,9 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
             @throw ex;
         }
 
-        [offsets addObject:[NSNumber numberWithUnsignedInteger:thisCount]];
+        [_offsets addObject:[NSNumber numberWithUnsignedInteger:thisCount]];
         lastCount = thisCount;
     }
-    return offsets;
+    return _offsets;
 }
 @end
