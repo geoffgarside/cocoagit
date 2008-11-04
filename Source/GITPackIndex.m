@@ -29,4 +29,8 @@
 {
     return 0;
 }
+- (NSUInteger)numberOfObjects
+{
+    return [[[self offsets] lastObject] unsignedIntegerValue];
+}
 @end

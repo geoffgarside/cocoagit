@@ -19,6 +19,7 @@
 
 #pragma mark -
 - (NSUInteger)version;
+- (NSUInteger)numberOfObjects;
 
 @end
 
