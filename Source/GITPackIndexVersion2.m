@@ -16,6 +16,9 @@ const NSUInteger kGITPackIndexFanOutEnd   = 4 * 256;    //!< Update when either 
 const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
 
 @implementation GITPackIndexVersion2
+@synthesize path;
+@synthesize data;
+
 - (id)initWithPath:(NSString*)thePath
 {
     if (self = [super init])
