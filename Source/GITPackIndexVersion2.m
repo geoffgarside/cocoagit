@@ -48,6 +48,12 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
 {
     return 2;
 }
+- (NSArray*)offsets
+{
+    if (!offsets)
+        offsets = [[self loadOffsets] retain];
+    return offsets;
+}
 - (NSArray*)loadOffsets
 {
     char buf[4];

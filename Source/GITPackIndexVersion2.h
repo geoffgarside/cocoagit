@@ -13,6 +13,7 @@
 {
     NSString * path;
     NSData   * data;
+    NSArray  * offsets;
 }
 
 @property(readwrite,copy) NSString * path;
