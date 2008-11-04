@@ -9,7 +9,7 @@
 #import "GITPlaceholderPackIndex.h"
 #import "GITUtilityBelt.h"
 
-static char * const kGITPackIndexMagicNumber = "\377tOc";
+static const char const kGITPackIndexMagicNumber[] = { '\377', 't', 'O', 'c' };
 
 @implementation GITPlaceholderPackIndex
 - (id)initWithPath:(NSString*)thePath
