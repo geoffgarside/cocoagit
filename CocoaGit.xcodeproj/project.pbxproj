@@ -345,22 +345,38 @@
 		9F35B90D0EBFE1D400FC0770 /* Packs */ = {
 			isa = PBXGroup;
 			children = (
-				9F33C9EB0E48C5650004CD44 /* GITPackFile.h */,
-				9F33C9EC0E48C5650004CD44 /* GITPackFile.m */,
+				9FCCD06A0EC129B700ED3215 /* GITPackFile */,
+				9FCCD0680EC129A600ED3215 /* GITPackIndex */,
+			);
+			name = Packs;
+			sourceTree = "<group>";
+		};
+		9FCCD0680EC129A600ED3215 /* GITPackIndex */ = {
+			isa = PBXGroup;
+			children = (
 				9F35B90F0EBFE1EF00FC0770 /* GITPackIndex.h */,
 				9F35B9100EBFE1EF00FC0770 /* GITPackIndex.m */,
-				9FCCCF780EC0E6DD00ED3215 /* GITPlaceholderPackFile.h */,
-				9FCCCF790EC0E6DD00ED3215 /* GITPlaceholderPackFile.m */,
 				9F35B9120EBFE24000FC0770 /* GITPlaceholderPackIndex.h */,
 				9F35B9130EBFE24000FC0770 /* GITPlaceholderPackIndex.m */,
 				9F35B9150EBFE44B00FC0770 /* GITPackIndexVersion1.h */,
 				9F35B9160EBFE44B00FC0770 /* GITPackIndexVersion1.m */,
 				9F35B9180EBFE45B00FC0770 /* GITPackIndexVersion2.h */,
 				9F35B9190EBFE45B00FC0770 /* GITPackIndexVersion2.m */,
+			);
+			name = GITPackIndex;
+			sourceTree = "<group>";
+		};
+		9FCCD06A0EC129B700ED3215 /* GITPackFile */ = {
+			isa = PBXGroup;
+			children = (
+				9F33C9EB0E48C5650004CD44 /* GITPackFile.h */,
+				9F33C9EC0E48C5650004CD44 /* GITPackFile.m */,
+				9FCCCF780EC0E6DD00ED3215 /* GITPlaceholderPackFile.h */,
+				9FCCCF790EC0E6DD00ED3215 /* GITPlaceholderPackFile.m */,
 				9FCCCF7B0EC0E79700ED3215 /* GITPackFileVersion2.h */,
 				9FCCCF7C0EC0E79700ED3215 /* GITPackFileVersion2.m */,
 			);
-			name = Packs;
+			name = GITPackFile;
 			sourceTree = "<group>";
 		};
 		9FCF27950E98F67D00665A41 /* Tests */ = {
