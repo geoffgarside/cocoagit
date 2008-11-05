@@ -45,8 +45,14 @@
 }
 - (void)testShouldConvertBinaryToInteger
 {   // Contents similar to PACK File version
-    char bytes[4] = { 0x0, 0x0, 0x0, 0x2 };
+    unsigned char bytes[4] = { 0x0, 0x0, 0x0, 0x2 };
     NSUInteger val = integerFromBytes(bytes, 4);
     STAssertEquals(val, (NSUInteger)2, nil);
+}
+- (void)testShouldConvertBinaryToInteger2
+{
+    unsigned char bytes[] = { 0x0, 0x0, 0x0, 0xFE };
+    NSUInteger val = integerFromBytes(bytes, 4);
+    STAssertEquals(val, (NSUInteger)254, nil);
 }
 @end

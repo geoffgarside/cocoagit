@@ -7,6 +7,7 @@
 //
 
 #import "GITUtilityBelt.h"
+#import <arpa/inet.h>
 
 const NSUInteger kGITPackedSha1Length   = 20;
 const NSUInteger kGITUnpackedSha1Length = 40;
@@ -60,7 +61,7 @@ unpackSHA1FromData(NSData * packedSHA1)
 }
 
 NSUInteger
-integerFromBytes(char * bytes, NSUInteger length)
+integerFromBytes(unsigned char * bytes, NSUInteger length)
 {
     NSUInteger i, value = 0;
     for (i = 0; i < length; i++)
