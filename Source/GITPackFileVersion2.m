@@ -9,8 +9,19 @@
 #import "GITPackFileVersion2.h"
 #import "GITPackIndex.h"
 
+/*! \cond */
+@interface GITPackFileVersion2 ()
+@property(readwrite,copy) NSString * path;
+@property(readwrite,retain) NSData * data;
+@property(readwrite,retain) GITPackIndex * idx;
+@end
+/*! \endcond */
 
 @implementation GITPackFileVersion2
+@synthesize path;
+@synthesize data;
+@synthesize idx;
+
 - (id)initWithPath:(NSString*)thePath
 {
     if (self = [super init])

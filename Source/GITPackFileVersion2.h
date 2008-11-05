@@ -16,4 +16,9 @@
     GITPackIndex * idx;
 }
 
+// These may be removed at a later date.
+@property(readonly,copy) NSString * path;
+@property(readonly,retain) NSData * data;
+@property(readonly,retain) GITPackIndex * idx;
+
 @end
