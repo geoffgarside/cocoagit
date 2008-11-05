@@ -18,7 +18,13 @@
 - (id)copyWithZone:(NSZone*)zone;
 
 #pragma mark -
+#pragma mark Primitive Methods
+- (id)initWithPath:(NSString*)path;
 - (NSUInteger)version;
+- (NSArray*)offsets;
+
+#pragma mark -
+#pragma mark Derived Methods
 - (NSUInteger)numberOfObjects;
 
 @end

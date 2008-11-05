@@ -23,12 +23,31 @@
         return [GITPlaceholderPackIndex allocWithZone:zone];
     else return [super allocWithZone:zone];
 }
+- (id)copyWithZone:(NSZone*)zone
+{
+    return self;
+}
 
 #pragma mark -
+#pragma mark Primitive Methods
+- (id)initWithPath:(NSString*)thePath
+{
+    [self doesNotRecognizeSelector: _cmd];
+    [self release];
+    return nil;
+}
 - (NSUInteger)version
 {
     return 0;
 }
+- (NSArray*)offsets
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return nil;
+}
+
+#pragma mark -
+#pragma mark Derived Methods
 - (NSUInteger)numberOfObjects
 {
     return [[[self offsets] lastObject] unsignedIntegerValue];
