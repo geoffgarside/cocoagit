@@ -100,4 +100,44 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
     }
     return _offsets;
 }
+- (NSUInteger)packOffsetForSha1:(NSString*)sha1
+{
+    NSRange range = [self rangeOfObjectsWithFirstByte:[sha1 characterAtIndex:0]];
+    if (range.length > 0)
+    {
+        unsigned char buf[20];
+
+        NSUInteger location = kGITPackIndexFanOutEnd +
+        (kGITPackIndexEntrySize * range.location);
+        NSUInteger finish   = location +
+        (kGITPackIndexEntrySize * range.length);
+
+        for (location; location < finish; location += kGITPackIndexEntrySize)
+        {
+            memset(buf, 0x0, 20);
+            [self.data getBytes:buf range:NSMakeRange(location, 4)];
+            NSUInteger offset = integerFromBytes(buf, 4);
+
+            memset(buf, 0x0, 20);
+            [self.data getBytes:buf range:NSMakeRange(location + 4, 20)];
+            NSString * packedSha1 = [[NSString alloc] initWithBytes:buf
+                                                             length:20
+                                                           encoding:NSASCIIStringEncoding];
+            NSString * name = unpackSHA1FromString(packedSha1);
+
+            if ([name isEqualToString:sha1])
+                return offset;
+        }
+    }
+
+    // If its found the SHA1 then it will have returned by now.
+    // Otherwise the SHA1 is not in this PACK file, so we should
+    // raise an error.
+    NSString * reason = [NSString stringWithFormat:@"SHA1 %@ is not known in this Index file %@",
+                         sha1, [[self path] lastPathComponent]];
+    NSException * ex  = [NSException exceptionWithName:@"GITPackIndexUnknownSHA1"
+                                                reason:reason
+                                              userInfo:nil];
+    @throw ex;
+}
 @end
