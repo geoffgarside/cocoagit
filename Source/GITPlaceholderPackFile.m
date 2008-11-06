@@ -18,7 +18,7 @@ const NSRange kGITPackFileVersionRange   = {     4,      4 };
 @implementation GITPlaceholderPackFile
 - (id)initWithPath:(NSString*)thePath
 {
-    char buf[4];
+    uint8_t buf[4];
     NSError * err;
     NSUInteger ver;
     NSString * reason;

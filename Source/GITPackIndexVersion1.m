@@ -60,7 +60,7 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
 }
 - (NSArray*)loadOffsets
 {
-    unsigned char buf[4];
+    uint8_t buf[4];
     NSUInteger i, lastCount, thisCount;
     NSMutableArray * _offsets = [NSMutableArray arrayWithCapacity:256];
 
@@ -90,7 +90,7 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
     NSRange range = [self rangeOfObjectsWithFirstByte:[sha1 characterAtIndex:0]];
     if (range.length > 0)
     {
-        unsigned char buf[20];
+        uint8_t buf[20];
 
         NSUInteger location = kGITPackIndexFanOutEnd +
         (kGITPackIndexEntrySize * range.location);

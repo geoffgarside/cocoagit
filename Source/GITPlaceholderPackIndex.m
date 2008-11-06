@@ -14,7 +14,7 @@ static const char const kGITPackIndexMagicNumber[] = { '\377', 't', 'O', 'c' };
 @implementation GITPlaceholderPackIndex
 - (id)initWithPath:(NSString*)thePath
 {
-    unsigned char buf[4];
+    uint8_t buf[4];
     NSError * err;
     NSUInteger ver;
     NSString * reason;
