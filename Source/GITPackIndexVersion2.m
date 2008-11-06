@@ -62,7 +62,7 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
 }
 - (NSArray*)loadOffsets
 {
-    char buf[4];
+    unsigned char buf[4];
     NSUInteger i, lastCount, thisCount;
     NSMutableArray * _offsets = [NSMutableArray arrayWithCapacity:256];
 
