@@ -39,6 +39,11 @@ int main (int argc, const char * argv[]) {
         NSLog(@"%lu: %lu", i++, [offset unsignedIntegerValue]);
     }
 
+    NSLog(@"Number of objects in index: %lu", [idx numberOfObjects]);
+
+    // Find all entries in the main table starting with 'g'
+    NSLog(@"Number of objects starting with '%c' (%d): %lu", 'g', 'g', [idx numberOfObjectsWithFirstByte:'g']);
+
     [pool drain];
     return 0;
 }
