@@ -26,6 +26,13 @@
 #pragma mark -
 #pragma mark Derived Methods
 - (NSUInteger)numberOfObjects;
+- (NSUInteger)numberOfObjectsWithFirstByte:(char)byte;
+
+/*! Returns a range describing the number of objects to the beginning of
+ * those starting with <tt>byte</tt> and the number of objects ending
+ * with <tt>byte</tt>.
+ */
+- (NSRange)rangeOfObjectsWithFirstByte:(char)byte;
 
 @end
 
