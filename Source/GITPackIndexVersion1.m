@@ -14,6 +14,12 @@ static const NSUInteger kGITPackIndexFanOutCount = 256;
 static const NSUInteger kGITPackIndexFanOutEnd   = 4 * 256;    //!< Update when either of the two above change
 static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
 
+/*! \cond */
+@interface GITPackIndexVersion1 ()
+- (NSArray*)loadOffsets;
+@end
+/*! \endcond */
+
 @implementation GITPackIndexVersion1
 @synthesize path;
 @synthesize data;
