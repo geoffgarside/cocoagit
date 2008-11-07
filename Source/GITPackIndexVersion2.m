@@ -9,15 +9,28 @@
 #import "GITPackIndexVersion2.h"
 #import "GITUtilityBelt.h"
 
-static const NSUInteger kGITPackIndexFanOutSize  = 4;          //!< bytes
-static const NSUInteger kGITPackIndexFanOutCount = 256;
-static const NSUInteger kGITPackIndexFanOutStart = 2 * 4;      //!< Starts 2*Size entries in
-static const NSUInteger kGITPackIndexFanOutEnd   = 4 * 256;    //!< Update when either of the two above change
-static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
+static const NSUInteger kGITPackIndexSignature   = NSMakeRange(0, 4);
+static const NSUInteger kGITPackIndexVersion     = NSMakeRange(4, 4);
+
+static const NSUInteger kGITPackIndexFanout      = NSMakeRange(8, 256 * 4);
+static const NSUInteger kGITPackIndexFanoutSize  = 4;
+static const NSUInteger kGITPackIndexFanoutCount = 256;
+
+static const NSUInteger kGITPackIndexSHASize     = 20;
+static const NSUInteger kGITPackIndexCRCSize     = 4;
+static const NSUInteger kGITPackIndexOffsetSize  = 4;
+static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 
 /*! \cond */
 @interface GITPackIndexVersion2 ()
 - (NSArray*)loadOffsets;
+- (NSRange)rangeOfSignature;
+- (NSRange)rangeOfVersion;
+- (NSRange)rangeOfFanoutTable;
+- (NSRange)rangeOfSHATable;
+- (NSRange)rangeOfCRCTable;
+- (NSRange)rangeOfOffsetTable;
+- (NSRange)rangeOfExtendedOffsetTable;
 @end
 /*! \endcond */
 
@@ -86,5 +99,37 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
         lastCount = thisCount;
     }
     return _offsets;
+}
+- (NSRange)rangeOfSignature
+{
+    return kGITPackIndexSignature;
+}
+- (NSRange)rangeOfVersion
+{
+    return kGITPackIndexVersion;
+}
+- (NSRange)rangeOfFanoutTable
+{
+    return kGITPackIndexFanout;
+}
+- (NSRange)rangeOfSHATable
+{
+    NSUInteger endOfFanout = [self rangeOfFanoutTable].location + [self rangeOfFanoutTable].length;
+    return NSMakeRange(endOfFanout, kGITPackIndexSHASize * [self numberOfObjects]);
+}
+- (NSRange)rangeOfCRCTable
+{
+    NSUInteger endOfSHATable = [self rangeOfSHATable].location + [self rangeOfSHATable].length;
+    return NSMakeRange(endOfSHATable, kGITPackIndexCRCSize * [self numberOfObjects]);
+}
+- (NSRange)rangeOfOffsetTable
+{
+    NSUInteger endOfCRCTable = [self rangeOfCRCTable].location + [self rangeOfCRCTable].length;
+    return NSMakeRange(endOfCRCTable, kGITPackIndexOffsetSize * [self numberOfObjects]);
+}
+- (NSRange)rangeOfExtendedOffsetTable
+{
+    NSUInteger endOfOffsetTable = [self rangeOfOffsetTable].location + [self rangeOfOffsetTable].length;
+    return NSMakeRange(endOfOffsetTable, 0);    //!< Not sure what the length value should be here.
 }
 @end
