@@ -10,6 +10,8 @@
 #import "GITUtilityBelt.h"
 #import "NSData+Hashing.h"
 
+#define EXTENDED_OFFSET_FLAG (1 << 31)
+
 static const NSRange kGITPackIndexSignature             = {0, 4};
 static const NSRange kGITPackIndexVersion               = {4, 4};
 
@@ -79,7 +81,7 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 }
 - (NSArray*)loadOffsets
 {
-    uint8_t buf[4];
+    uint32_t value;
     NSUInteger i, lastCount, thisCount;
     NSMutableArray * _offsets = [NSMutableArray arrayWithCapacity:256];
 
@@ -88,8 +90,8 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
     {
         NSRange range = NSMakeRange(i * kGITPackIndexFanoutSize +
             [self rangeOfFanoutTable].location, kGITPackIndexFanoutSize);
-        [self.data getBytes:buf range:range];
-        thisCount = integerFromBytes(buf, kGITPackIndexFanoutSize);
+        [self.data getBytes:&value range:range];
+        thisCount = CFSwapInt32BigToHost(value);
 
         if (lastCount > thisCount)
         {
@@ -186,7 +188,7 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 - (NSRange)rangeOfExtendedOffsetTable
 {
     NSUInteger endOfOffsetTable = [self rangeOfOffsetTable].location + [self rangeOfOffsetTable].length;
-    return NSMakeRange(endOfOffsetTable, 0);    //!< Not sure what the length value should be here.
+    return NSMakeRange(endOfOffsetTable, endOfOffsetTable - [self.data length] - 40);    //!< Not sure what the length value should be here.
 }
 - (NSRange)rangeOfPackChecksum
 {
@@ -203,10 +205,19 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 
     if (positionFromStart < offsetsRange.length)
     {
-        uint8_t buf[4]; //!< NOTE: Should we make this buf[kGITPackIndexOffsetSize] ?
-        [self.data getBytes:buf range:NSMakeRange(offsetsRange.location + positionFromStart, kGITPackIndexOffsetSize)];
+        uint32_t value;
+        [self.data getBytes:&value range:NSMakeRange(offsetsRange.location + positionFromStart, kGITPackIndexOffsetSize)];
 
-        return integerFromBytes(buf, kGITPackIndexOffsetSize);
+        value = CFSwapInt32BigToHost(value);
+        if ((value & EXTENDED_OFFSET_FLAG) == 0)
+            return value;
+        else
+        {
+            value = (value | ~EXTENDED_OFFSET_FLAG);
+            // Now get the correct offset from the extended offset table
+            NSLog(@"Value (%lu) extended offset range { %lu, %lu }", value,
+                  [self rangeOfExtendedOffsetTable].location, [self rangeOfExtendedOffsetTable].length);
+        }
     }
     return 0;
 }
