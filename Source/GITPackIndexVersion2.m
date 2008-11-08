@@ -9,16 +9,16 @@
 #import "GITPackIndexVersion2.h"
 #import "GITUtilityBelt.h"
 
-static const NSUInteger kGITPackIndexSignature   = NSMakeRange(0, 4);
-static const NSUInteger kGITPackIndexVersion     = NSMakeRange(4, 4);
+static const NSRange kGITPackIndexSignature             = {0, 4};
+static const NSRange kGITPackIndexVersion               = {4, 4};
 
-static const NSUInteger kGITPackIndexFanout      = NSMakeRange(8, 256 * 4);
-static const NSUInteger kGITPackIndexFanoutSize  = 4;
-static const NSUInteger kGITPackIndexFanoutCount = 256;
+static const NSRange kGITPackIndexFanout                = {8, 256 * 4};
+static const NSUInteger kGITPackIndexFanoutSize         = 4;
+static const NSUInteger kGITPackIndexFanoutCount        = 256;
 
-static const NSUInteger kGITPackIndexSHASize     = 20;
-static const NSUInteger kGITPackIndexCRCSize     = 4;
-static const NSUInteger kGITPackIndexOffsetSize  = 4;
+static const NSUInteger kGITPackIndexSHASize            = 20;
+static const NSUInteger kGITPackIndexCRCSize            = 4;
+static const NSUInteger kGITPackIndexOffsetSize         = 4;
 static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 
 /*! \cond */
