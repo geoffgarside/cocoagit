@@ -18,8 +18,8 @@ int main (int argc, const char * argv[]) {
     NSProcessInfo * info = [NSProcessInfo processInfo];
     NSArray * args = [info arguments];
     
-    if ([args count] != 2) {
-        p([NSString stringWithFormat:@"Usage: %@ path/to/pack-hash.pack", [info processName]]);
+    if ([args count] != 3) {
+        p([NSString stringWithFormat:@"Usage: %@ path/to/pack-hash.pack sha1", [info processName]]);
         exit(0);
     }
     
@@ -40,9 +40,7 @@ int main (int argc, const char * argv[]) {
     }
 
     NSLog(@"Number of objects in index: %lu", [idx numberOfObjects]);
-
-    // Find all entries in the main table starting with 'g'
-    NSLog(@"Number of objects starting with '%c' (%d): %lu", 'g', 'g', [idx numberOfObjectsWithFirstByte:'g']);
+    NSLog(@"Offset for '%@': %lu", [args objectAtIndex:2], [idx packOffsetForSha1:[args objectAtIndex:2]]);
 
     [pool drain];
     return 0;
