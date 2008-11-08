@@ -31,6 +31,7 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 - (NSRange)rangeOfCRCTable;
 - (NSRange)rangeOfOffsetTable;
 - (NSRange)rangeOfExtendedOffsetTable;
+- (NSUInteger)packOffsetWithIndex:(NSUInteger)i;
 @end
 /*! \endcond */
 
@@ -102,6 +103,41 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
     }
     return _offsets;
 }
+// The sha1 to offset mapping in v2 Index files works like this
+//  - the fanout table tells you where in the main entry table you can find SHA's with a specific first byte
+//  - the main sha1 list table gives you a sorted list of SHA1's in the Index and Pack file. The array index
+//    of the SHA1 in this table equates to the array index of the pack offset in the offsets table.
+- (NSUInteger)packOffsetForSha1:(NSString*)sha1
+{
+    uint8_t byte;
+    NSData * packedSha1 = packSHA1(sha1);
+    [packedSha1 getBytes:&byte length:1];
+
+    NSRange rangeOfShas = [self rangeOfObjectsWithFirstByte:byte];
+    if (rangeOfShas.length > 0)
+    {
+        uint8_t buf[20];
+        NSUInteger i;
+        NSUInteger location = [self rangeOfSHATable].location +
+            (kGITPackIndexSHASize * rangeOfShas.location);
+        NSUInteger finish   = location +
+            (kGITPackIndexSHASize * rangeOfShas.length);
+
+        for (i = 0; location < finish; i++, location += kGITPackIndexSHASize)
+        {
+            memset(buf, 0x0, 20);
+            [self.data getBytes:buf range:NSMakeRange(location, 20)];
+            NSString * packedSha1 = [[NSString alloc] initWithBytes:buf
+                                                             length:20
+                                                           encoding:NSASCIIStringEncoding];
+            NSString * name = unpackSHA1FromString(packedSha1);
+
+            if ([name isEqualToString:sha1])
+                return [self packOffsetWithIndex:i + rangeOfShas.location];
+        }
+    }
+    return 0;
+}
 - (NSRange)rangeOfSignature
 {
     return kGITPackIndexSignature;
@@ -133,5 +169,19 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 {
     NSUInteger endOfOffsetTable = [self rangeOfOffsetTable].location + [self rangeOfOffsetTable].length;
     return NSMakeRange(endOfOffsetTable, 0);    //!< Not sure what the length value should be here.
+}
+- (NSUInteger)packOffsetWithIndex:(NSUInteger)i
+{
+    NSRange offsetsRange = [self rangeOfOffsetTable];
+    NSUInteger positionFromStart = i * kGITPackIndexOffsetSize;
+
+    if (positionFromStart < offsetsRange.length)
+    {
+        uint8_t buf[4]; //!< NOTE: Should we make this buf[kGITPackIndexOffsetSize] ?
+        [self.data getBytes:buf range:NSMakeRange(offsetsRange.location + positionFromStart, kGITPackIndexOffsetSize)];
+
+        return integerFromBytes(buf, kGITPackIndexOffsetSize);
+    }
+    return 0;
 }
 @end

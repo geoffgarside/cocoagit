@@ -87,15 +87,19 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
 }
 - (NSUInteger)packOffsetForSha1:(NSString*)sha1
 {
-    NSRange range = [self rangeOfObjectsWithFirstByte:[sha1 characterAtIndex:0]];
-    if (range.length > 0)
+    uint8_t byte;
+    NSData * packedSha1 = packSHA1(sha1);
+    [packedSha1 getBytes:&byte length:1];
+
+    NSRange rangeOfShas = [self rangeOfObjectsWithFirstByte:byte];
+    if (rangeOfShas.length > 0)
     {
         uint8_t buf[20];
 
         NSUInteger location = kGITPackIndexFanOutEnd +
-        (kGITPackIndexEntrySize * range.location);
+        (kGITPackIndexEntrySize * rangeOfShas.location);
         NSUInteger finish   = location +
-        (kGITPackIndexEntrySize * range.length);
+        (kGITPackIndexEntrySize * rangeOfShas.length);
 
         for (location; location < finish; location += kGITPackIndexEntrySize)
         {

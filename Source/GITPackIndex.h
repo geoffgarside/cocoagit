@@ -22,6 +22,7 @@
 - (id)initWithPath:(NSString*)path;
 - (NSUInteger)version;
 - (NSArray*)offsets;
+- (NSUInteger)packOffsetForSha1:(NSString*)sha1;
 
 #pragma mark -
 #pragma mark Derived Methods
