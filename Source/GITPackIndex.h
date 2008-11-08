@@ -25,6 +25,13 @@
 - (NSUInteger)packOffsetForSha1:(NSString*)sha1;
 
 #pragma mark -
+- (NSData*)checksum;
+- (NSData*)packChecksum;
+- (NSString*)checksumString;
+- (NSString*)packChecksumString;
+- (BOOL)verifyChecksum;
+
+#pragma mark -
 #pragma mark Derived Methods
 - (NSUInteger)numberOfObjects;
 - (NSUInteger)numberOfObjectsWithFirstByte:(char)byte;

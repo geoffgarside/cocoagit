@@ -45,6 +45,36 @@
     [self doesNotRecognizeSelector: _cmd];
     return nil;
 }
+- (NSData*)checksum
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return nil;
+}
+- (NSData*)packChecksum
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return nil;
+}
+- (NSString*)checksumString
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return nil;
+}
+- (NSString*)packChecksumString
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return nil;
+}
+- (BOOL)verifyChecksum
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return NO;
+}
+- (NSUInteger)packOffsetForSha1:(NSString*)sha1
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return 0;
+}
 
 #pragma mark -
 #pragma mark Derived Methods

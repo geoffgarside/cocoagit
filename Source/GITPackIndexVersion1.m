@@ -17,6 +17,8 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
 /*! \cond */
 @interface GITPackIndexVersion1 ()
 - (NSArray*)loadOffsets;
+- (NSRange)rangeOfPackChecksum;
+- (NSRange)rangeOfChecksum;
 @end
 /*! \endcond */
 
@@ -123,5 +125,34 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
                                                 reason:reason
                                               userInfo:nil];
     @throw ex;
+}
+- (NSData*)packChecksum
+{
+    return [self.data subdataWithRange:[self rangeOfPackChecksum]];
+}
+- (NSString*)packChecksumString
+{
+    return unpackSHA1FromData([self packChecksum]);
+}
+- (NSData*)checksum
+{
+    return [self.data subdataWithRange:[self rangeOfChecksum]];
+}
+- (NSString*)checksumString
+{
+    return unpackSHA1FromData([self checksum]);
+}
+- (BOOL)verifyChecksum
+{
+    NSData * checkData = [[self.data subdataWithRange:NSMakeRange(0, [self.data length] - 20)] sha1Digest];
+    return [checkData isEqualToData:[self checksum]];
+}
+- (NSRange)rangeOfPackChecksum
+{
+    return NSMakeRange([self.data length] - 40, 20);
+}
+- (NSRange)rangeOfChecksum
+{
+    return NSMakeRange([self.data length] - 20, 20);
 }
 @end
