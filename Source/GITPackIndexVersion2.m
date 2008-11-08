@@ -116,7 +116,6 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
     NSRange rangeOfShas = [self rangeOfObjectsWithFirstByte:byte];
     if (rangeOfShas.length > 0)
     {
-        uint8_t buf[20];
         NSUInteger i;
         NSUInteger location = [self rangeOfSHATable].location +
             (kGITPackIndexSHASize * rangeOfShas.location);
@@ -125,14 +124,9 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 
         for (i = 0; location < finish; i++, location += kGITPackIndexSHASize)
         {
-            memset(buf, 0x0, 20);
-            [self.data getBytes:buf range:NSMakeRange(location, 20)];
-            NSString * packedSha1 = [[NSString alloc] initWithBytes:buf
-                                                             length:20
-                                                           encoding:NSASCIIStringEncoding];
-            NSString * name = unpackSHA1FromString(packedSha1);
+            NSData * foundSha1 = [self.data subdataWithRange:NSMakeRange(location, 20)];
 
-            if ([name isEqualToString:sha1])
+            if ([foundSha1 isEqualToData:packedSha1])
                 return [self packOffsetWithIndex:i + rangeOfShas.location];
         }
     }
