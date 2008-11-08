@@ -63,15 +63,15 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
 }
 - (NSArray*)loadOffsets
 {
-    uint8_t buf[4];
+    uint32_t value;
     NSUInteger i, lastCount, thisCount;
     NSMutableArray * _offsets = [NSMutableArray arrayWithCapacity:256];
 
     lastCount = thisCount = 0;
     for (i = 0; i < kGITPackIndexFanOutCount; i++)
     {
-        [self.data getBytes:buf range:NSMakeRange(i * kGITPackIndexFanOutSize, kGITPackIndexFanOutSize)];
-        thisCount = integerFromBytes(buf, kGITPackIndexFanOutSize);
+        [self.data getBytes:&value range:NSMakeRange(i * kGITPackIndexFanOutSize, kGITPackIndexFanOutSize)];
+        thisCount = CFSwapInt32BigToHost(value);
 
         if (lastCount > thisCount)
         {
@@ -97,8 +97,6 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
     NSRange rangeOfShas = [self rangeOfObjectsWithFirstByte:byte];
     if (rangeOfShas.length > 0)
     {
-        uint8_t buf[4];
-
         NSUInteger location = kGITPackIndexFanOutEnd +
         (kGITPackIndexEntrySize * rangeOfShas.location);
         NSUInteger finish   = location +
@@ -106,9 +104,9 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
 
         for (location; location < finish; location += kGITPackIndexEntrySize)
         {
-            memset(buf, 0x0, 4);
-            [self.data getBytes:buf range:NSMakeRange(location, 4)];
-            NSUInteger offset = integerFromBytes(buf, 4);
+            uint32_t value = 0;
+            [self.data getBytes:&value range:NSMakeRange(location, 4)];
+            NSUInteger offset = CFSwapInt32BigToHost(value);
 
             NSData * foundSha1 = [self.data subdataWithRange:NSMakeRange(location + 4, 20)];
 
