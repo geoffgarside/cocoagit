@@ -80,10 +80,12 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
     NSMutableArray * _offsets = [NSMutableArray arrayWithCapacity:256];
 
     lastCount = thisCount = 0;
-    for (i = 0; i < kGITPackIndexFanOutCount; i++)
+    for (i = 0; i < kGITPackIndexFanoutCount; i++)
     {
-        [self.data getBytes:buf range:NSMakeRange((i * kGITPackIndexFanOutSize) + kGITPackIndexFanOutStart, kGITPackIndexFanOutSize)];
-        thisCount = integerFromBytes(buf, kGITPackIndexFanOutSize);
+        NSRange range = NSMakeRange(i * kGITPackIndexFanoutSize +
+            [self rangeOfFanoutTable].location, kGITPackIndexFanoutSize);
+        [self.data getBytes:buf range:range];
+        thisCount = integerFromBytes(buf, kGITPackIndexFanoutSize);
 
         if (lastCount > thisCount)
         {
