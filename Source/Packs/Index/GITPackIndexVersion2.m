@@ -8,6 +8,7 @@
 
 #import "GITPackIndexVersion2.h"
 #import "GITUtilityBelt.h"
+#import "NSData+Hashing.h"
 
 static const NSRange kGITPackIndexSignature             = {0, 4};
 static const NSRange kGITPackIndexVersion               = {4, 4};

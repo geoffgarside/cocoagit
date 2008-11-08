@@ -8,6 +8,7 @@
 
 #import "GITPackIndexVersion1.h"
 #import "GITUtilityBelt.h"
+#import "NSData+Hashing.h"
 
 static const NSUInteger kGITPackIndexFanOutSize  = 4;          //!< bytes
 static const NSUInteger kGITPackIndexFanOutCount = 256;
