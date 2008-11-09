@@ -88,16 +88,16 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
 }
 - (NSData*)objectAtOffset:(NSUInteger)offset
 {
-    char buf;    // a single byte buffer
+    uint8_t buf;    // a single byte buffer
     NSUInteger size, type, shift = 4;
     
     // NOTE: ++ should increment offset after the range has been created
     [self.data getBytes:&buf range:NSMakeRange(offset++, 1)];
-    
+
     size = buf & 0xf;
     type = (buf >> 4) & 0x7;
     
-    while (buf & 0x80 != 0)
+    while ((buf & 0x80) != 0)
     {
         // NOTE: ++ should increment offset after the range has been created
         [self.data getBytes:&buf range:NSMakeRange(offset++, 1)];
@@ -105,13 +105,15 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
         shift += 7;
     }
     
+	NSLog(@"offset: %d size: %d type: %d", offset, size, type);
+	
 	NSData *objectData = nil;
 	switch (type) {
 		case kGITPackFileTypeCommit:
 		case kGITPackFileTypeTree:
 		case kGITPackFileTypeTag:
 		case kGITPackFileTypeBlob:
-			objectData = [self.data	subdataWithRange:NSMakeRange(offset, size)];
+			objectData = [self.data subdataWithRange:NSMakeRange(offset, size)];
 			break;
 		case kGITPackFileTypeDeltaOfs:
 		case kGITPackFileTypeDeltaRefs:
