@@ -9,6 +9,8 @@
 #import "GITPackFileVersion2.h"
 #import "GITPackIndex.h"
 
+static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
+
 /*! \cond */
 @interface GITPackFileVersion2 ()
 @property(readwrite,copy) NSString * path;
@@ -40,6 +42,17 @@
 - (NSUInteger)version
 {
     return 2;
+}
+- (NSUInteger)numberOfObjects
+{
+    if (!numberOfObjects)
+    {
+        uint32_t value;
+        [self.data getBytes:&value range:kGITPackFileObjectCountRange];
+        numberOfObjects = CFSwapInt32BigToHost(value);
+    }
+
+    return numberOfObjects;
 }
 - (NSRange)rangeOfPackedObjects
 {

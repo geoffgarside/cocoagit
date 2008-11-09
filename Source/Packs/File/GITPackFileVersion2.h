@@ -14,6 +14,7 @@
     NSString * path;
     NSData   * data;
     GITPackIndex * idx;
+    NSUInteger numberOfObjects;
 }
 
 // These may be removed at a later date.
