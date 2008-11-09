@@ -32,6 +32,10 @@
 #pragma mark Primitive Methods
 - (id)initWithPath:(NSString*)thePath
 {
+    return [self initWithPath:thePath error:NULL];
+}
+- (id)initWithPath:(NSString*)thePath error:(NSError**)outError
+{
     [self doesNotRecognizeSelector: _cmd];
     [self release];
     return nil;

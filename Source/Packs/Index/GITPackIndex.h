@@ -36,6 +36,7 @@
  * as part of itself. Instead it is recommended to use [super init] instead.
  */
 - (id)initWithPath:(NSString*)path;
+- (id)initWithPath:(NSString*)thePath error:(NSError**)outError;
 
 /*! Returns the offset within the associated PACK file where the
  * object specified by the given <tt>sha1</tt> can be located.
