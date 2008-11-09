@@ -1,8 +1,10 @@
 #import <Foundation/Foundation.h>
 #import "GITPackFile.h"
 #import "GITPackIndex.h"
+#import "NSData+Compression.h"
 
 void p(NSString * str);
+void pp(NSString *fmt, ...);
 
 // Silence warnings
 @interface GITPackFile ()
@@ -40,8 +42,18 @@ int main (int argc, const char * argv[]) {
     }
 
     NSLog(@"Number of objects in index: %lu", [idx numberOfObjects]);
-    NSLog(@"Offset for '%@': %lu", [args objectAtIndex:2], [idx packOffsetForSha1:[args objectAtIndex:2]]);
+    
+	NSUInteger objectOffset = [idx packOffsetForSha1:[args objectAtIndex:2]];
+	NSLog(@"Offset for '%@': %lu", [args objectAtIndex:2], objectOffset);
 
+	if (objectOffset > 0) {
+		NSData *rawObjectData = [pack objectAtOffset:objectOffset];
+		NSData *objectData = [rawObjectData zlibInflate];
+		NSString *s = [[NSString alloc] initWithData:objectData encoding:NSUTF8StringEncoding];
+		pp(@"\nObject Data:\n%@", s);
+		[s release];
+	}
+	
     [pool drain];
     return 0;
 }
@@ -50,4 +62,17 @@ void p(NSString * str)
 {
     printf([str UTF8String]);
     printf("\n");
+}
+
+void pp(NSString *fmt, ...)
+{
+	va_list ap;
+	va_start(ap, fmt);
+
+	NSString *output = [[NSString alloc] initWithFormat:fmt arguments:ap];
+	printf([output UTF8String]);
+	printf("\n");
+	[output release];
+	
+	va_end(ap);
 }

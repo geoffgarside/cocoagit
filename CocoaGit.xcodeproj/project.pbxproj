@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		57CFF6A50EC772E700BB4B1E /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212770E179A2C005AC693 /* NSData+Compression.m */; };
 		9F01049B0E9997C700A47227 /* GITUtilityBeltTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F01049A0E9997C700A47227 /* GITUtilityBeltTests.m */; };
 		9F2150FC0EA3D4F8004C6188 /* GITFileStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F2150FB0EA3D4F8004C6188 /* GITFileStoreTests.m */; };
 		9F2151AA0EA43298004C6188 /* GITBlob.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9213850E17F17C005AC693 /* GITBlob.m */; };
@@ -641,6 +642,7 @@
 				9F35B91A0EBFE45B00FC0770 /* GITPackIndexVersion2.m in Sources */,
 				9FCCCF7A0EC0E6DD00ED3215 /* GITPlaceholderPackFile.m in Sources */,
 				9FCCCF7D0EC0E79700ED3215 /* GITPackFileVersion2.m in Sources */,
+				57CFF6A50EC772E700BB4B1E /* NSData+Compression.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
