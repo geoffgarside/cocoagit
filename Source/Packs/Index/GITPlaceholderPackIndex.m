@@ -47,7 +47,7 @@ static const char const kGITPackIndexMagicNumber[] = { '\377', 't', 'O', 'c' };
             switch (ver)
             {
                 case 2:
-                    return [[GITPackIndexVersion2 allocWithZone:z] initWithPath:thePath];
+                    return [[GITPackIndexVersion2 allocWithZone:z] initWithPath:thePath error:outError];
                 default:
                     description = NSLocalizedString(@"Pack Index version is not supported", @"");
                     NSArray * errKeys = [NSArray arrayWithObjects:NSLocalizedDescriptionKey,
@@ -62,7 +62,7 @@ static const char const kGITPackIndexMagicNumber[] = { '\377', 't', 'O', 'c' };
             }
         }
         else
-            return [[GITPackIndexVersion1 allocWithZone:z] initWithPath:thePath];
+            return [[GITPackIndexVersion1 allocWithZone:z] initWithPath:thePath error:outError];
     }
     else
     {

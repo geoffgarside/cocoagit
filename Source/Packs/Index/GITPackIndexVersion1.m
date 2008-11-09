@@ -26,7 +26,7 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
 @implementation GITPackIndexVersion1
 @synthesize path;
 @synthesize data;
-- (id)initWithPath:(NSString*)thePath
+- (id)initWithPath:(NSString*)thePath error:(NSError**)outError
 {
     if (self = [super init])
     {

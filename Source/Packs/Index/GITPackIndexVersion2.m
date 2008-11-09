@@ -44,7 +44,7 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 @synthesize path;
 @synthesize data;
 
-- (id)initWithPath:(NSString*)thePath
+- (id)initWithPath:(NSString*)thePath error:(NSError**)outError
 {
     if (self = [super init])
     {
