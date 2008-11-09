@@ -8,6 +8,8 @@
 
 #import "GITPackFileVersion2.h"
 #import "GITPackIndex.h"
+#import "GITUtilityBelt.h"
+#import "NSData+Hashing.h"
 
 static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
 
@@ -16,6 +18,7 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
 @property(readwrite,copy) NSString * path;
 @property(readwrite,retain) NSData * data;
 @property(readwrite,retain) GITPackIndex * idx;
+- (NSRange)rangeOfChecksum;
 @end
 /*! \endcond */
 
