@@ -13,6 +13,14 @@
 
 static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
 
+// Object Types (These should move to a more generic location)
+#define kGITPackFileTypeCommit		1
+#define kGITPackFileTypeTree		2
+#define kGITPackFileTypeBlob		3
+#define kGITPackFileTypeTag			4
+#define kGITPackFileTypeDeltaOfs	6
+#define kGITPackFileTypeDeltaRefs	7
+
 /*! \cond */
 @interface GITPackFileVersion2 ()
 @property(readwrite,copy) NSString * path;
@@ -97,7 +105,24 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
         shift += 7;
     }
     
-    return nil; // Method not finished yet
+	NSData *objectData = nil;
+	switch (type) {
+		case kGITPackFileTypeCommit:
+		case kGITPackFileTypeTree:
+		case kGITPackFileTypeTag:
+		case kGITPackFileTypeBlob:
+			objectData = [self.data	subdataWithRange:NSMakeRange(offset, size)];
+			break;
+		case kGITPackFileTypeDeltaOfs:
+		case kGITPackFileTypeDeltaRefs:
+			NSAssert(NO, @"Cannot handle Delta Object types yet");
+			break;
+		default:
+			NSLog(@"bad object type %d", type);
+			break;
+	}
+	
+    return objectData; 
 }
 
 @end
