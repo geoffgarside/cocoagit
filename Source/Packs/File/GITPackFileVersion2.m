@@ -41,6 +41,27 @@
 {
     return 2;
 }
+- (NSRange)rangeOfPackedObjects
+{
+    return NSMakeRange(12, [self rangeOfChecksum].location - 12);
+}
+- (NSRange)rangeOfChecksum
+{
+    return NSMakeRange([self.data length] - 20, 20);
+}
+- (NSData*)checksum
+{
+    return [self.data subdataWithRange:[self rangeOfChecksum]];
+}
+- (NSString*)checksumString
+{
+    return unpackSHA1FromData([self checksum]);
+}
+- (BOOL)verifyChecksum
+{
+    NSData * checkData = [[self.data subdataWithRange:NSMakeRange(0, [self.data length] - 20)] sha1Digest];
+    return [checkData isEqualToData:[self checksum]];
+}
 - (NSData*)objectAtOffset:(NSUInteger)offset
 {
     char buf;    // a single byte buffer
