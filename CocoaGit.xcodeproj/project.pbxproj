@@ -94,6 +94,7 @@
 		9FA4E0860E19A6DD00724E6B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97325FDCFA39411CA2CEA /* Foundation.framework */; };
 		9FA4E08A0E19A6E800724E6B /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212770E179A2C005AC693 /* NSData+Compression.m */; };
 		9FA4E08B0E19A6E900724E6B /* NSData+Hashing.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212940E179B4B005AC693 /* NSData+Hashing.m */; };
+		9FB1F0A70EC6F2DA006C68D0 /* GITErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB1F0A60EC6F2DA006C68D0 /* GITErrors.m */; };
 		9FCCCF7A0EC0E6DD00ED3215 /* GITPlaceholderPackFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCCCF790EC0E6DD00ED3215 /* GITPlaceholderPackFile.m */; };
 		9FCCCF7D0EC0E79700ED3215 /* GITPackFileVersion2.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCCCF7C0EC0E79700ED3215 /* GITPackFileVersion2.m */; };
 		9FCF27B70E98F86C00665A41 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FCF27B60E98F86C00665A41 /* SenTestingKit.framework */; };
@@ -170,6 +171,8 @@
 		9F96B1BB0E9E334E00AD0A80 /* GITObjectStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITObjectStore.m; path = Source/Stores/GITObjectStore.m; sourceTree = "<group>"; };
 		9FA4E06F0E19A57600724E6B /* git-inspect */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "git-inspect"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FA4E0810E19A62500724E6B /* git-inspect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "git-inspect.m"; path = "Source/Tools/git-inspect.m"; sourceTree = "<group>"; };
+		9FB1F0A50EC6F2DA006C68D0 /* GITErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITErrors.h; path = Source/GITErrors.h; sourceTree = "<group>"; };
+		9FB1F0A60EC6F2DA006C68D0 /* GITErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITErrors.m; path = Source/GITErrors.m; sourceTree = "<group>"; };
 		9FCCCF780EC0E6DD00ED3215 /* GITPlaceholderPackFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITPlaceholderPackFile.h; path = Source/Packs/File/GITPlaceholderPackFile.h; sourceTree = "<group>"; };
 		9FCCCF790EC0E6DD00ED3215 /* GITPlaceholderPackFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITPlaceholderPackFile.m; path = Source/Packs/File/GITPlaceholderPackFile.m; sourceTree = "<group>"; };
 		9FCCCF7B0EC0E79700ED3215 /* GITPackFileVersion2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITPackFileVersion2.h; path = Source/Packs/File/GITPackFileVersion2.h; sourceTree = "<group>"; };
@@ -294,6 +297,8 @@
 				9F2153020EA68E3D004C6188 /* git-pack-inspect.m */,
 				9F63998C0E51952F0034F279 /* GITUtilityBelt.h */,
 				9F63998D0E51952F0034F279 /* GITUtilityBelt.m */,
+				9FB1F0A50EC6F2DA006C68D0 /* GITErrors.h */,
+				9FB1F0A60EC6F2DA006C68D0 /* GITErrors.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -643,6 +648,7 @@
 				9FCCCF7A0EC0E6DD00ED3215 /* GITPlaceholderPackFile.m in Sources */,
 				9FCCCF7D0EC0E79700ED3215 /* GITPackFileVersion2.m in Sources */,
 				57CFF6A50EC772E700BB4B1E /* NSData+Compression.m in Sources */,
+				9FB1F0A70EC6F2DA006C68D0 /* GITErrors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
