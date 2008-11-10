@@ -13,13 +13,17 @@
 
 static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
 
-// Object Types (These should move to a more generic location)
-#define kGITPackFileTypeCommit		1
-#define kGITPackFileTypeTree		2
-#define kGITPackFileTypeBlob		3
-#define kGITPackFileTypeTag			4
-#define kGITPackFileTypeDeltaOfs	6
-#define kGITPackFileTypeDeltaRefs	7
+enum {
+    // Base Types
+    kGITPackFileTypeCommit = 1,
+    kGITPackFileTypeTree   = 2,
+    kGITPackFileTypeBlob   = 3,
+    kGITPackFileTypeTag    = 4,
+
+    // Delta Types
+    kGITPackFileTypeDeltaOfs  = 6,
+    kGITPackFileTypeDeltaRefs = 7
+};
 
 /*! \cond */
 @interface GITPackFileVersion2 ()
