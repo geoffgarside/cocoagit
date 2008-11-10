@@ -40,6 +40,11 @@
 {
     return 0;
 }
+- (NSData*)objectAtOffset:(NSUInteger)offset
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return nil;
+}
 
 #pragma mark -
 #pragma mark Derived Methods

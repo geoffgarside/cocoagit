@@ -14,6 +14,7 @@
 
 - (id)initWithPath:(NSString*)path;
 - (NSUInteger)version;
+- (NSData*)objectAtOffset:(NSUInteger)offset;
 
 @end
 
