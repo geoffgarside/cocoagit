@@ -17,6 +17,17 @@
  To download the source code
  \verbatim
  git clone git://github.com/geoffgarside/cocoagit.git\endverbatim
+ 
+ \section test_sec Testing
+ The unit tests are the moment are independent from the other targets of the project. Once work is further along towards
+ goal of a usable framework they'll be made a dependency of the framework build. For the moment though you have to first
+ change the current target to the "Unit Tests" target and then build the project.
+ 
+ The build process will compile the unit tests and run the test suite, any errors will show up as build errors.
+ 
+ Also note that the test repository is in UnitTests/Resources/test_repo and the .git directory is called dot_git_dir due
+ to some issues with git storing another git repository within itself. A script is run before and after the unit tests to
+ rename dot_git_dir to .git and back again afterwards.
 
  \section support_sec Bug Reports and Feature Requests
  A bug tracker is available on <a href="http://lighthouseapp.com/">LightHouse</a> at
