@@ -10,6 +10,7 @@
 #import "GITPackIndex.h"
 #import "GITUtilityBelt.h"
 #import "NSData+Hashing.h"
+#import "NSData+Compression.h"
 
 static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
 
