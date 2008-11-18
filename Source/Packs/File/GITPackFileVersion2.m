@@ -29,16 +29,27 @@ enum {
 @interface GITPackFileVersion2 ()
 @property(readwrite,copy) NSString * path;
 @property(readwrite,retain) NSData * data;
-@property(readwrite,retain) GITPackIndex * idx;
+@property(readwrite,retain) GITPackIndex * index;
+- (NSData*)objectAtOffset:(NSUInteger)offset;
+- (NSRange)rangeOfPackedObjects;
 - (NSRange)rangeOfChecksum;
+- (NSData*)checksum;
+- (NSString*)checksumString;
+- (BOOL)verifyChecksum;
 @end
 /*! \endcond */
 
 @implementation GITPackFileVersion2
 @synthesize path;
 @synthesize data;
-@synthesize idx;
+@synthesize index;
 
+#pragma mark -
+#pragma mark Primitive Methods
+- (NSUInteger)version
+{
+    return 2;
+}
 - (id)initWithPath:(NSString*)thePath
 {
     if (self = [super init])
@@ -50,13 +61,9 @@ enum {
                                              error:&err];
         NSString * idxPath = [[thePath stringByDeletingPathExtension] 
                               stringByAppendingPathExtension:@"idx"];
-        self.idx  = [[GITPackIndex alloc] initWithPath:idxPath];
+        self.index  = [[GITPackIndex alloc] initWithPath:idxPath];
     }
     return self;
-}
-- (NSUInteger)version
-{
-    return 2;
 }
 - (NSUInteger)numberOfObjects
 {
@@ -66,30 +73,22 @@ enum {
         [self.data getBytes:&value range:kGITPackFileObjectCountRange];
         numberOfObjects = CFSwapInt32BigToHost(value);
     }
-
     return numberOfObjects;
 }
-- (NSRange)rangeOfPackedObjects
+- (NSData*)dataForObjectWithSha1:(NSString*)sha1
 {
-    return NSMakeRange(12, [self rangeOfChecksum].location - 12);
+    // We've defined it this way so if we can determine a better way
+    // to test for hasObjectWithSha1 then packOffsetForSha1 > 0
+    // then we can simply change the implementation in GITPackIndex.
+    if (![self hasObjectWithSha1:sha1]) return nil;
+
+    NSUInteger offset = [self.index packOffsetForSha1:sha1];
+    NSData * raw = [self objectAtOffset:offset];
+    return [raw zlibInflate];
 }
-- (NSRange)rangeOfChecksum
-{
-    return NSMakeRange([self.data length] - 20, 20);
-}
-- (NSData*)checksum
-{
-    return [self.data subdataWithRange:[self rangeOfChecksum]];
-}
-- (NSString*)checksumString
-{
-    return unpackSHA1FromData([self checksum]);
-}
-- (BOOL)verifyChecksum
-{
-    NSData * checkData = [[self.data subdataWithRange:NSMakeRange(0, [self.data length] - 20)] sha1Digest];
-    return [checkData isEqualToData:[self checksum]];
-}
+
+#pragma mark -
+#pragma mark Internal Methods
 - (NSData*)objectAtOffset:(NSUInteger)offset
 {
     uint8_t buf;    // a single byte buffer
@@ -130,5 +129,25 @@ enum {
 	
     return objectData; 
 }
-
+- (NSRange)rangeOfPackedObjects
+{
+    return NSMakeRange(12, [self rangeOfChecksum].location - 12);
+}
+- (NSRange)rangeOfChecksum
+{
+    return NSMakeRange([self.data length] - 20, 20);
+}
+- (NSData*)checksum
+{
+    return [self.data subdataWithRange:[self rangeOfChecksum]];
+}
+- (NSString*)checksumString
+{
+    return unpackSHA1FromData([self checksum]);
+}
+- (BOOL)verifyChecksum
+{
+    NSData * checkData = [[self.data subdataWithRange:NSMakeRange(0, [self.data length] - 20)] sha1Digest];
+    return [checkData isEqualToData:[self checksum]];
+}
 @end

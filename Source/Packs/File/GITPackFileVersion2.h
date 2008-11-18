@@ -13,13 +13,13 @@
 {
     NSString * path;
     NSData   * data;
-    GITPackIndex * idx;
+    GITPackIndex * index;
     NSUInteger numberOfObjects;
 }
 
 // These may be removed at a later date.
 @property(readonly,copy) NSString * path;
 @property(readonly,retain) NSData * data;
-@property(readonly,retain) GITPackIndex * idx;
+@property(readonly,retain) GITPackIndex * index;
 
 @end

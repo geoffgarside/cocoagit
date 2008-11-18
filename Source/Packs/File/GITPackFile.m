@@ -30,23 +30,53 @@
 
 #pragma mark -
 #pragma mark Primitive Methods
+- (NSUInteger)version
+{
+    return 0;
+}
+- (GITPackIndex*)index
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return nil;
+}
 - (id)initWithPath:(NSString*)thePath
 {
     [self doesNotRecognizeSelector: _cmd];
     [self release];
     return nil;
 }
-- (NSUInteger)version
-{
-    return 0;
-}
-- (NSData*)objectAtOffset:(NSUInteger)offset
+- (NSData*)dataForObjectWithSha1:(NSString*)sha1
 {
     [self doesNotRecognizeSelector: _cmd];
     return nil;
 }
 
 #pragma mark -
-#pragma mark Derived Methods
+#pragma mark Checksum Methods
+- (NSData*)checksum
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return nil;
+}
+- (NSString*)checksumString
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return nil;
+}
+- (BOOL)verifyChecksum
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return NO;
+}
 
+#pragma mark -
+#pragma mark Derived Methods
+- (NSUInteger)numberOfObjects
+{
+    return [[self index] numberOfObjects];
+}
+- (BOOL)hasObjectWithSha1:(NSString*)sha1
+{
+    return [[self index] hasObjectWithSha1:sha1];
+}
 @end
