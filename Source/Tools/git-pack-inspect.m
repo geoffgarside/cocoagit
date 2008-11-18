@@ -1,6 +1,5 @@
 #import <Foundation/Foundation.h>
 #import "GITPackFile.h"
-#import "GITPackIndex.h"
 #import "NSData+Compression.h"
 
 void p(NSString * str);
@@ -8,7 +7,6 @@ void pp(NSString *fmt, ...);
 
 // Silence warnings
 @interface GITPackFile ()
-- (GITPackIndex*)idx;
 - (NSString*)path;
 @end
 @interface GITPackIndex ()
@@ -26,7 +24,7 @@ int main (int argc, const char * argv[]) {
     }
     
     GITPackFile * pack = [[GITPackFile alloc] initWithPath:[args objectAtIndex:1]];
-    GITPackIndex * idx = [pack idx];
+    GITPackIndex * idx = [pack index];
     
     NSLog(@"packPath: %@", [pack path]);
     NSLog(@"idxPath: %@", [idx path]);
@@ -46,14 +44,13 @@ int main (int argc, const char * argv[]) {
 	NSUInteger objectOffset = [idx packOffsetForSha1:[args objectAtIndex:2]];
 	NSLog(@"Offset for '%@': %lu", [args objectAtIndex:2], objectOffset);
 
-	if (objectOffset > 0) {
-		NSData *rawObjectData = [pack objectAtOffset:objectOffset];
-		NSData *objectData = [rawObjectData zlibInflate];
-		NSString *s = [[NSString alloc] initWithData:objectData encoding:NSUTF8StringEncoding];
-		pp(@"\nObject Data:\n%@", s);
-		[s release];
-	}
-	
+    NSData * objectData = [pack dataForObjectWithSha1:[args objectAtIndex:2]];
+    if (objectData)
+    {
+        NSString *s = [[[NSString alloc] initWithData:objectData encoding:NSUTF8StringEncoding] autorelease];
+        pp(@"\nObject Data:\n%@", s);
+    }
+
     [pool drain];
     return 0;
 }
