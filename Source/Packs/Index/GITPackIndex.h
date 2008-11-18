@@ -109,7 +109,7 @@
  * \param sha1 The name of the object to search for
  * \return YES if the sha1 exists in the receiver, NO if it doesn't.
  */
-- (BOOL)hasObjectForSha1:(NSString*)sha1;
+- (BOOL)hasObjectWithSha1:(NSString*)sha1;
 
 @end
 

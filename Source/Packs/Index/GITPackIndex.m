@@ -94,7 +94,7 @@
         prevFanout = [[[self offsets] objectAtIndex:byte - 1] unsignedIntegerValue];
     return NSMakeRange(prevFanout, thisFanout - prevFanout);
 }
-- (BOOL)hasObjectForSha1:(NSString*)sha1
+- (BOOL)hasObjectWithSha1:(NSString*)sha1
 {
     if ([self packOffsetForSha1:sha1] > 0)
         return YES;
