@@ -13,6 +13,7 @@
 @interface GITPackStore ()
 @property(readwrite,copy) NSString * packsDir;
 @property(readwrite,copy) NSArray * packFiles;
+@property(readwrite,assign) GITPackFile * lastReadPack;
 
 - (NSArray*)loadPackFilesWithError:(NSError**)outError;
 @end
@@ -21,6 +22,7 @@
 @implementation GITPackStore
 @synthesize packsDir;
 @synthesize packFiles;
+@synthesize lastReadPack;
 
 - (id)initWithRoot:(NSString*)root
 {

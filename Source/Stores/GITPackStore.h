@@ -40,6 +40,7 @@
 {
     NSString * packsDir;    //!< Path to <tt>.git/objects/pack</tt> directory.
     NSArray * packFiles;
+    GITPackFile * lastReadPack;
 }
 
 @property(readonly,copy) NSString * packsDir;
