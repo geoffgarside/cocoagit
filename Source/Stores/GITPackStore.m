@@ -34,6 +34,30 @@
     }
     return self;
 }
+- (NSData*)dataWithContentsOfObject:(NSString*)sha1
+{
+    NSData * objectData;
+
+    // Check the cached lastReadPack first
+    if (self.lastReadPack)
+        objectData = [self.lastReadPack dataForObjectWithSha1:sha1];
+
+    if (objectData) return objectData;
+    for (GITPackFile * pack in self.packFiles)
+    {
+        if (pack != self.lastReadPack)
+        {
+            objectData = [pack dataForObjectWithSha1:sha1];
+            if (objectData)
+            {
+                self.lastReadPack = pack;
+                return objectData;
+            }
+        }
+    }
+
+    return nil;
+}
 - (NSArray*)loadPackFilesWithError:(NSError**)outError
 {
     NSError * error;
