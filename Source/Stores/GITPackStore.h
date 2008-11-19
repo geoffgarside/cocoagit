@@ -39,6 +39,7 @@
 @interface GITPackStore : GITObjectStore
 {
     NSString * packsDir;    //!< Path to <tt>.git/objects/pack</tt> directory.
+    NSArray * packFiles;
 }
 
 @property(readonly,copy) NSString * packsDir;

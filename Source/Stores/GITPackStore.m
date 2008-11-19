@@ -11,11 +11,13 @@
 /*! \cond */
 @interface GITPackStore ()
 @property(readwrite,copy) NSString * packsDir;
+@property(readwrite,copy) NSArray * packFiles;
 @end
 /*! \endcond */
 
 @implementation GITPackStore
 @synthesize packsDir;
+@synthesize packFiles;
 
 - (id)initWithRoot:(NSString*)root
 {
