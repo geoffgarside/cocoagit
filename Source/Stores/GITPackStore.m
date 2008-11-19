@@ -7,6 +7,7 @@
 //
 
 #import "GITPackStore.h"
+#import "GITPackFile.h"
 
 /*! \cond */
 @interface GITPackStore ()
