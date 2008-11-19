@@ -54,7 +54,7 @@
     }
     else
     {
-        outError = error; // The simple way, if we want to add more later we can :D
+        *outError = error; // The simple way, if we want to add more later we can :D
         packs = nil;
     }
 
