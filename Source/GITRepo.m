@@ -53,6 +53,10 @@
         NSString * descFile = [self.root stringByAppendingPathComponent:@"description"];
         self.desc = [NSString stringWithContentsOfFile:descFile];
 
+        // Now that PackStores are nearly working which do we load up?
+        // One? Both? Depend on existence of Pack Files?
+        // Or do we abstract further and add a GITStoreManager to handle
+        // the complexities of choosing which Store to use.
         self.store = [[GITFileStore alloc] initWithRoot:self.root];
     }
     return self;
