@@ -41,8 +41,8 @@
     // Check the cached lastReadPack first
     if (self.lastReadPack)
         objectData = [self.lastReadPack dataForObjectWithSha1:sha1];
-
     if (objectData) return objectData;
+
     for (GITPackFile * pack in self.packFiles)
     {
         if (pack != self.lastReadPack)
