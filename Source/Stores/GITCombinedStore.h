@@ -17,6 +17,11 @@ typedef enum {
     GITLowPriority = 2,     //!< Adds the store to the end of the list
 } GITCombinedStorePriority;
 
+/*! Implements a store which is composed of other stores.
+ * The GITCombinedStore allows the user to combine a selection of GITObjectStore subclasses into
+ * a single store unit. The primary use would be for combining a GITFileStore with a GITPackStore
+ * so that both loose file objects and packed objects can be accessed through one object.
+ */
 @interface GITCombinedStore : GITObjectStore
 {
     NSMutableArray * stores;
