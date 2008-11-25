@@ -21,6 +21,11 @@
     [self doesNotRecognizeSelector:_cmd];
     return nil;
 }
+- (BOOL)hasObjectWithSha1:(NSString*)sha1
+{
+    [self doesNotRecognizeSelector:_cmd];
+    return NO;
+}
 - (BOOL)extractFromObject:(NSString*)sha1 type:(NSString**)type
                      size:(NSUInteger*)size data:(NSData**)data
 {
