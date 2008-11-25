@@ -118,6 +118,8 @@
 		9F01049A0E9997C700A47227 /* GITUtilityBeltTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITUtilityBeltTests.m; path = UnitTests/Source/GITUtilityBeltTests.m; sourceTree = "<group>"; };
 		9F0862050E20F02E00FD6CF6 /* GITTreeEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITTreeEntry.h; path = Source/Types/GITTreeEntry.h; sourceTree = "<group>"; };
 		9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITTreeEntry.m; path = Source/Types/GITTreeEntry.m; sourceTree = "<group>"; };
+		9F16B9010EDB595A003CFD93 /* GITCombinedStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITCombinedStore.h; path = Source/Stores/GITCombinedStore.h; sourceTree = "<group>"; };
+		9F16B9020EDB595A003CFD93 /* GITCombinedStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITCombinedStore.m; path = Source/Stores/GITCombinedStore.m; sourceTree = "<group>"; };
 		9F2150FA0EA3D4F8004C6188 /* GITFileStoreTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITFileStoreTests.h; path = UnitTests/Source/GITFileStoreTests.h; sourceTree = "<group>"; };
 		9F2150FB0EA3D4F8004C6188 /* GITFileStoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITFileStoreTests.m; path = UnitTests/Source/GITFileStoreTests.m; sourceTree = "<group>"; };
 		9F2152FD0EA68DA7004C6188 /* git-pack-inspect */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "git-pack-inspect"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -460,6 +462,8 @@
 				9FE329AF0E9BA2F8001E37D5 /* GITPackStore.m */,
 				9F96B1BA0E9E334E00AD0A80 /* GITObjectStore.h */,
 				9F96B1BB0E9E334E00AD0A80 /* GITObjectStore.m */,
+				9F16B9010EDB595A003CFD93 /* GITCombinedStore.h */,
+				9F16B9020EDB595A003CFD93 /* GITCombinedStore.m */,
 			);
 			name = Stores;
 			sourceTree = "<group>";
