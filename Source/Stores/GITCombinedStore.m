@@ -23,6 +23,10 @@
 {
     return [self initWithStores:nil];
 }
+- (id)initWithRoot:(NSString*)root
+{
+    return [self initWithStores:nil];
+}
 - (id)initWithStores:(GITObjectStore*)firstStore, ...
 {
     GITObjectStore * eachStore;
@@ -78,6 +82,25 @@
             [self.stores addObject:store];
             break;
     }
+}
+- (NSData*)dataWithContentsOfObject:(NSString*)sha1
+{
+    NSData * objectData;
+    if (self.recentStore)
+        objectData = [self.recentStore dataWithContentsOfObject:sha1];
+    if (objectData) return objectData;
+
+    for (GITObjectStore * store in self.stores)
+    {
+        objectData = [store dataWithContentsOfObject:sha1];
+        if (objectData)
+        {
+            self.recentStore = store;
+            return objectData;
+        }
+    }
+
+    return nil;
 }
 
 @end
