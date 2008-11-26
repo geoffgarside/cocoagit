@@ -4,3 +4,5 @@ f7e7e7d240ccdae143b064aa7467eb2fa91aa8a5 f7e7e7d240ccdae143b064aa7467eb2fa91aa8a
 f7e7e7d240ccdae143b064aa7467eb2fa91aa8a5 5543323c6b02f4fb30940f780c4431d32829e76b Brian Chapados <chapados@sciencegeeks.org> 1224735294 -0700	commit: convert hello.txt into a ruby script
 5543323c6b02f4fb30940f780c4431d32829e76b 3ca188481c60fe3f0a1a60f500a26710a5961593 Brian Chapados <chapados@sciencegeeks.org> 1224735329 -0700	commit: renamed to hello.rb
 3ca188481c60fe3f0a1a60f500a26710a5961593 d8094720229e2975cc639b028f56602baa6f8715 Brian Chapados <chapados@sciencegeeks.org> 1224735915 -0700	commit: added docs directory for fake HTML docs
+d8094720229e2975cc639b028f56602baa6f8715 f7e7e7d240ccdae143b064aa7467eb2fa91aa8a5 Geoff Garside <geoff@geoffgarside.co.uk> 1227725532 +0000	checkout: moving from ruby to master
+f7e7e7d240ccdae143b064aa7467eb2fa91aa8a5 d8094720229e2975cc639b028f56602baa6f8715 Geoff Garside <geoff@geoffgarside.co.uk> 1227725542 +0000	checkout: moving from master to ruby
