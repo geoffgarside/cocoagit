@@ -64,7 +64,7 @@
     GITPackFile * pack;
     NSMutableArray * packs;
     NSFileManager * fm = [NSFileManager defaultManager];
-    NSArray * files    = [fm contentsOfDirectoryAtPath:dir error:&error];
+    NSArray * files    = [fm contentsOfDirectoryAtPath:self.packsDir error:&error];
 
     if (files)
     {
@@ -74,7 +74,7 @@
         {
             if ([[file pathExtension] isEqualToString:@"pack"])
             {
-                pack = [[GITPackFile alloc] initWithPath:[dir stringByAppendingPathComponent:file]]; // retain?
+                pack = [[GITPackFile alloc] initWithPath:[self.packsDir stringByAppendingPathComponent:file]]; // retain?
                 [packs addObject:pack];
             }
         }
