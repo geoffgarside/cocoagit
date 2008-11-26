@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "GITObjectStore.h"
 
+@class GITPackFile;
+
 /*! Packed objects storage.
  * Accesses objects stored as in PACK files in
  * <tt>.git/objects/pack</tt> directory.
