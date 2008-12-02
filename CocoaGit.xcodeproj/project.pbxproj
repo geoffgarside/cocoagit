@@ -118,6 +118,10 @@
 		9FD708A00EDDD740002B3001 /* GITPackIndexVersion1.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F35B9160EBFE44B00FC0770 /* GITPackIndexVersion1.m */; };
 		9FD708A10EDDD742002B3001 /* GITPackIndexVersion2.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F35B9190EBFE45B00FC0770 /* GITPackIndexVersion2.m */; };
 		9FD708A20EDDD743002B3001 /* GITPlaceholderPackIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F35B9130EBFE24000FC0770 /* GITPlaceholderPackIndex.m */; };
+		9FD70AC70EE4C675002B3001 /* GITPackFileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD70AC60EE4C675002B3001 /* GITPackFileTests.m */; };
+		9FD70AE90EE4C911002B3001 /* GITPackFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EC0E48C5650004CD44 /* GITPackFile.m */; };
+		9FD70AEA0EE4C912002B3001 /* GITPackFileVersion2.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCCCF7C0EC0E79700ED3215 /* GITPackFileVersion2.m */; };
+		9FD70AEB0EE4C913002B3001 /* GITPlaceholderPackFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCCCF790EC0E6DD00ED3215 /* GITPlaceholderPackFile.m */; };
 		9FE328C60E9B623E001E37D5 /* GITDateTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE328C50E9B623E001E37D5 /* GITDateTime.m */; };
 		9FE328CB0E9B6F2B001E37D5 /* GITDateTimeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE328CA0E9B6F2B001E37D5 /* GITDateTimeTests.m */; };
 		9FE329AD0E9BA2EF001E37D5 /* GITFileStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE329AC0E9BA2EF001E37D5 /* GITFileStore.m */; };
@@ -203,6 +207,8 @@
 		9FD240740EA216D5000F7B60 /* GITObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITObject.m; path = Source/Types/GITObject.m; sourceTree = "<group>"; };
 		9FD708900EDDD358002B3001 /* GITPackIndexTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITPackIndexTests.h; path = UnitTests/Source/GITPackIndexTests.h; sourceTree = "<group>"; };
 		9FD708910EDDD358002B3001 /* GITPackIndexTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITPackIndexTests.m; path = UnitTests/Source/GITPackIndexTests.m; sourceTree = "<group>"; };
+		9FD70AC50EE4C675002B3001 /* GITPackFileTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITPackFileTests.h; path = UnitTests/Source/GITPackFileTests.h; sourceTree = "<group>"; };
+		9FD70AC60EE4C675002B3001 /* GITPackFileTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITPackFileTests.m; path = UnitTests/Source/GITPackFileTests.m; sourceTree = "<group>"; };
 		9FE328C40E9B623E001E37D5 /* GITDateTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITDateTime.h; path = Source/Utils/GITDateTime.h; sourceTree = "<group>"; };
 		9FE328C50E9B623E001E37D5 /* GITDateTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITDateTime.m; path = Source/Utils/GITDateTime.m; sourceTree = "<group>"; };
 		9FE328C90E9B6F2B001E37D5 /* GITDateTimeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITDateTimeTests.h; path = UnitTests/Source/GITDateTimeTests.h; sourceTree = "<group>"; };
@@ -414,6 +420,7 @@
 		9FD708930EDDD35D002B3001 /* Packs */ = {
 			isa = PBXGroup;
 			children = (
+				9FD70AC40EE4C656002B3001 /* GITPackFile */,
 				9FD708940EDDD375002B3001 /* GITPackIndex */,
 			);
 			name = Packs;
@@ -426,6 +433,15 @@
 				9FD708910EDDD358002B3001 /* GITPackIndexTests.m */,
 			);
 			name = GITPackIndex;
+			sourceTree = "<group>";
+		};
+		9FD70AC40EE4C656002B3001 /* GITPackFile */ = {
+			isa = PBXGroup;
+			children = (
+				9FD70AC50EE4C675002B3001 /* GITPackFileTests.h */,
+				9FD70AC60EE4C675002B3001 /* GITPackFileTests.m */,
+			);
+			name = GITPackFile;
 			sourceTree = "<group>";
 		};
 		9FE329520E9B9357001E37D5 /* Core */ = {
@@ -773,6 +789,10 @@
 				9FD708A00EDDD740002B3001 /* GITPackIndexVersion1.m in Sources */,
 				9FD708A10EDDD742002B3001 /* GITPackIndexVersion2.m in Sources */,
 				9FD708A20EDDD743002B3001 /* GITPlaceholderPackIndex.m in Sources */,
+				9FD70AC70EE4C675002B3001 /* GITPackFileTests.m in Sources */,
+				9FD70AE90EE4C911002B3001 /* GITPackFile.m in Sources */,
+				9FD70AEA0EE4C912002B3001 /* GITPackFileVersion2.m in Sources */,
+				9FD70AEB0EE4C913002B3001 /* GITPlaceholderPackFile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
