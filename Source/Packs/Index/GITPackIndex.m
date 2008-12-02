@@ -7,6 +7,7 @@
 //
 
 #import "GITPackIndex.h"
+#import "GITUtilityBelt.h"
 
 @implementation GITPackIndex
 #pragma mark -
@@ -57,13 +58,11 @@
 }
 - (NSString*)checksumString
 {
-    [self doesNotRecognizeSelector: _cmd];
-    return nil;
+    return unpackSHA1FromData([self checksum]);
 }
 - (NSString*)packChecksumString
 {
-    [self doesNotRecognizeSelector: _cmd];
-    return nil;
+    return unpackSHA1FromData([self packChecksum]);
 }
 - (BOOL)verifyChecksum
 {
