@@ -28,6 +28,8 @@ typedef enum {
     GITObjectStore * recentStore;
 }
 
+@property(readonly,retain) NSMutableArray * stores;
+
 /*! Creates and returns a new combined store.
  * The newly created store will have no internal stores until you add them with
  * a call to <tt>-addStore:</tt> or <tt>-addStore:priority:</tt>.
