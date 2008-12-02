@@ -43,6 +43,11 @@
     NSString * sha1 = unpackSHA1FromString(packedSHA1String);
     STAssertEqualObjects(sha1, unpackedSHA1, nil);
 }
+- (void)testShouldUnpackSHA1FromData
+{
+    NSString * sha1 = unpackSHA1FromData(packedSHA1Data);
+    STAssertEqualObjects(sha1, unpackedSHA1, nil);
+}
 - (void)testShouldConvertBinaryToInteger
 {   // Contents similar to PACK File version
     uint8_t bytes[4] = { 0x0, 0x0, 0x0, 0x2 };

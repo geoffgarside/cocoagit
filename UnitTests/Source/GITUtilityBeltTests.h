@@ -22,6 +22,7 @@
 - (void)testPackedSHA1String;
 - (void)testShouldPackSHA1FromString;
 - (void)testShouldUnpackSHA1FromString;
+- (void)testShouldUnpackSHA1FromData;
 - (void)testShouldConvertBinaryToInteger;
 
 @end
