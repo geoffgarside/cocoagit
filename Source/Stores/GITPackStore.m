@@ -37,35 +37,26 @@
 }
 - (NSData*)dataWithContentsOfObject:(NSString*)sha1
 {
-    NSData * objectData;
+    NSData * objectData = nil;
 
     // Check the cached lastReadPack first
-    NSLog(@"Checking to see if lastReadPack is set");
-    if (lastReadPack != nil) {
-        NSLog(@"lastReadPack is set, attempting to read data");
+    if (lastReadPack != nil)
         objectData = [self.lastReadPack dataForObjectWithSha1:sha1];
-    }
-    NSLog(@"objectData is now: %@", objectData);
     if (objectData) return objectData;
 
-    NSLog(@"objectData not found in lastReadPack, checking other packs");
     for (GITPackFile * pack in self.packFiles)
     {
-        NSLog(@"pack(%@) != lastReadPack(%@)", pack, lastReadPack);
         if (pack != self.lastReadPack)
         {
-            NSLog(@"Checking pack(%@) for sha1 data", pack);
             objectData = [pack dataForObjectWithSha1:sha1];
             if (objectData)
             {
-                NSLog(@"Object data found, setting lastReadPack and returning");
                 self.lastReadPack = pack;
                 return objectData;
             }
         }
     }
 
-    NSLog(@"All failed, returning nil");
     return nil;
 }
 - (NSArray*)loadPackFilesWithError:(NSError**)outError
