@@ -34,6 +34,9 @@
 
     if (self = [super init])
     {
+        self.stores = [NSMutableArray array];
+        self.recentStore = nil;
+
         // process arguments
         if (firstStore)                                                 // The first argument isn't part of the varargs list,
         {                                                               // so we'll handle it separately.
@@ -69,9 +72,6 @@
 }
 - (void)addStore:(GITObjectStore*)store priority:(GITCombinedStorePriority)priority
 {
-    // Lazily init stores
-    if (!stores)
-        self.stores = [NSMutableArray array];
     [store retain];     //!< Added as we might well need to retain this before it goes into the array
 
     // High goes at the front, Normal and Low append to the end.
