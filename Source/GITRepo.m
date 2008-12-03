@@ -54,16 +54,9 @@
         
         NSString * descFile = [self.root stringByAppendingPathComponent:@"description"];
         self.desc = [NSString stringWithContentsOfFile:descFile];
-
-        //GITFileStore * fileStore = [[GITFileStore alloc] initWithRoot:self.root];
-        //GITPackStore * packStore = [[GITPackStore alloc] initWithRoot:self.root];
-        //self.store = [[GITCombinedStore alloc] initWithStores: fileStore, packStore, nil];
-
-        // Works for b0095ba41e318e940c6daef7ef474efb6f67ccea
-        self.store = [[GITFileStore alloc] initWithRoot:self.root];
-
-        // Works for 870849a4f96ed63dc812f770815b338540fd0e33
-        //self.store = [[GITPackStore alloc] initWithRoot:self.root];
+        self.store = [[GITCombinedStore alloc] initWithStores:
+                        [[GITFileStore alloc] initWithRoot:self.root],
+                        [[GITPackStore alloc] initWithRoot:self.root], nil];
     }
     return self;
 }
