@@ -88,7 +88,7 @@
 }
 - (NSData*)dataWithContentsOfObject:(NSString*)sha1
 {
-    NSData * objectData;
+    NSData * objectData = nil;
     if (self.recentStore)
         objectData = [self.recentStore dataWithContentsOfObject:sha1];
     if (objectData) return objectData;
