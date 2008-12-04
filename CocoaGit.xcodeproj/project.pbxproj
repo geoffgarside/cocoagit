@@ -23,6 +23,7 @@
 /* Begin PBXBuildFile section */
 		57CFF6A50EC772E700BB4B1E /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212770E179A2C005AC693 /* NSData+Compression.m */; };
 		9F01049B0E9997C700A47227 /* GITUtilityBeltTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F01049A0E9997C700A47227 /* GITUtilityBeltTests.m */; };
+		9F0486FB0EE71068003128C3 /* GITCombinedStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F16B9020EDB595A003CFD93 /* GITCombinedStore.m */; };
 		9F2150FC0EA3D4F8004C6188 /* GITFileStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F2150FB0EA3D4F8004C6188 /* GITFileStoreTests.m */; };
 		9F2151AA0EA43298004C6188 /* GITBlob.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9213850E17F17C005AC693 /* GITBlob.m */; };
 		9F2151AB0EA43299004C6188 /* GITCommit.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC9030E1A7032001668EB /* GITCommit.m */; };
@@ -801,6 +802,7 @@
 				9FD70AEB0EE4C913002B3001 /* GITPlaceholderPackFile.m in Sources */,
 				9FD70B1A0EE4CD1F002B3001 /* GITPackStoreTests.m in Sources */,
 				9FD70B1E0EE4D5E8002B3001 /* GITPackStore.m in Sources */,
+				9F0486FB0EE71068003128C3 /* GITCombinedStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

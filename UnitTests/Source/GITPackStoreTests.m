@@ -30,12 +30,15 @@
 - (void)testDataWithContentsOfObject
 {
     NSString * sha = @"226e91f3b4cca13890325f5d33ec050beca99f89";
-	NSString * str = @"blob 64\x00blob 64#!/usr/bin/env ruby\n\nputs \"hello world!\"\n\nputs \"goodbye world.\"";
+    NSString * str = @"blob 64\x00#!/usr/bin/env ruby\n\nputs \"hello world!\"\n\nputs \"goodbye world.\"";
 
-	NSData * data  = [NSData dataWithData:[str dataUsingEncoding:NSASCIIStringEncoding]];
-
+    NSData * data  = [str dataUsingEncoding:NSASCIIStringEncoding];
     NSData * raw   = [store dataWithContentsOfObject:sha];
-	//STAssertEqualObjects(raw, data, nil);
+
+    NSLog(@"raw as str:\n%@", [[NSString alloc] initWithData:raw encoding:NSASCIIStringEncoding]);
+
+    STAssertEquals([raw length], [data length], nil);
+    STAssertEqualObjects(raw, data, nil);
 }
 
 @end
