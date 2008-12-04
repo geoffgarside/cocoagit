@@ -109,7 +109,7 @@ enum {
         shift += 7;
     }
     
-	NSLog(@"offset: %d size: %d type: %d", offset, size, type);
+	//NSLog(@"offset: %d size: %d type: %d", offset, size, type);
 	
 	NSData *objectData = nil;
 	switch (type) {
