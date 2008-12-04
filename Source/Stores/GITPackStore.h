@@ -37,6 +37,25 @@
  * reading a Commit, accessing its Tree and the Tree
  * contents. These objects are all reasonably likely
  * to be contained within the same PACK file.
+ *
+ * Houston we have a problem
+ * PACK files do not store the object data in a similar
+ * way to loose files. Loose files include a type/size
+ * meta header at the top of the loose file. The data
+ * for an object in a PACK file is just the contents.
+ * The type/size meta header information is not present
+ * within the object data. Instead this information is
+ * separate within the PACK file just before the object
+ * data. This poses a problem for the current method of
+ * extracting the object data from a store and creating
+ * an instance of the correct class from that data.
+ * This could require a fundamental re-engineering of
+ * the way in which objects are retrieved from stores &
+ * the way in which objects are instanciated from the
+ * data retrieved from the stores.
+ *
+ * The main question is, how do we change it and into
+ * what form?
  */
 @interface GITPackStore : GITObjectStore
 {
