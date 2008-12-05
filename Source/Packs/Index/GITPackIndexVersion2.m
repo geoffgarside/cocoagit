@@ -141,17 +141,9 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 {
     return [self.data subdataWithRange:[self rangeOfPackChecksum]];
 }
-- (NSString*)packChecksumString
-{
-    return unpackSHA1FromData([self packChecksum]);
-}
 - (NSData*)checksum
 {
     return [self.data subdataWithRange:[self rangeOfChecksum]];
-}
-- (NSString*)checksumString
-{
-    return unpackSHA1FromData([self checksum]);
 }
 - (BOOL)verifyChecksum
 {

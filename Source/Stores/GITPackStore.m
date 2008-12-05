@@ -13,6 +13,7 @@
 @interface GITPackStore ()
 @property(readwrite,copy) NSString * packsDir;
 @property(readwrite,copy) NSArray * packFiles;
+@property(readwrite,assign) GITPackFile * lastReadPack;
 
 - (NSArray*)loadPackFilesWithError:(NSError**)outError;
 @end
@@ -21,6 +22,7 @@
 @implementation GITPackStore
 @synthesize packsDir;
 @synthesize packFiles;
+@synthesize lastReadPack;
 
 - (id)initWithRoot:(NSString*)root
 {
@@ -29,8 +31,33 @@
         NSError * error;
         self.packsDir = [root stringByAppendingPathComponent:@"objects/pack"];
         self.packFiles = [self loadPackFilesWithError:&error];
+        self.lastReadPack = nil;
     }
     return self;
+}
+- (NSData*)dataWithContentsOfObject:(NSString*)sha1
+{
+    NSData * objectData = nil;
+
+    // Check the cached lastReadPack first
+    if (lastReadPack != nil)
+        objectData = [self.lastReadPack dataForObjectWithSha1:sha1];
+    if (objectData) return objectData;
+
+    for (GITPackFile * pack in self.packFiles)
+    {
+        if (pack != self.lastReadPack)
+        {
+            objectData = [pack dataForObjectWithSha1:sha1];
+            if (objectData)
+            {
+                self.lastReadPack = pack;
+                return objectData;
+            }
+        }
+    }
+
+    return nil;
 }
 - (NSArray*)loadPackFilesWithError:(NSError**)outError
 {
@@ -38,7 +65,7 @@
     GITPackFile * pack;
     NSMutableArray * packs;
     NSFileManager * fm = [NSFileManager defaultManager];
-    NSArray * files    = [fm contentsOfDirectoryAtPath:dir error:&error];
+    NSArray * files    = [fm contentsOfDirectoryAtPath:self.packsDir error:&error];
 
     if (files)
     {
@@ -48,7 +75,7 @@
         {
             if ([[file pathExtension] isEqualToString:@"pack"])
             {
-                pack = [[GITPackFile alloc] initWithPath:[dir stringByAppendingPathComponent:file]]; // retain?
+                pack = [[GITPackFile alloc] initWithPath:[self.packsDir stringByAppendingPathComponent:file]]; // retain?
                 [packs addObject:pack];
             }
         }
@@ -56,6 +83,7 @@
     else
     {
         *outError = error; // The simple way, if we want to add more later we can :D
+        NSLog(@"Error loading pack files: %@", [error userInfo]);
         packs = nil;
     }
 

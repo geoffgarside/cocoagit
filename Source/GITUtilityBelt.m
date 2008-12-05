@@ -49,7 +49,7 @@ unpackSHA1FromString(NSString * packedSHA1)
 NSString *
 unpackSHA1FromData(NSData * packedSHA1)
 {
-    unsigned int bits;
+    uint8_t bits;
     NSMutableString *unpackedSHA1 = [NSMutableString stringWithCapacity:kGITUnpackedSha1Length];
     for(int i = 0; i < kGITPackedSha1Length; i++)
     {

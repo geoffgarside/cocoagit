@@ -33,6 +33,15 @@
  */
 - (NSData*)dataWithContentsOfObject:(NSString*)sha1;
 
+/*! \internal
+ * Returns if the receiver can return the object with the given <tt>sha1</tt>.
+ * Indicates if the receiver is able to return data for an object with the
+ * given <tt>sha1</tt> identifer.
+ * \param sha1 Name of the object to check for
+ * \return YES if has data for object, NO if not.
+ */
+//- (BOOL)hasObjectWithSha1:(NSString*)sha1;
+
 /*! Extracts the basic information from a git object file.
  * \param sha1 The object reference to extract the data from
  * \param[out] type The type of the object as a string

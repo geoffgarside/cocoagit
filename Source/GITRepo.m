@@ -8,6 +8,8 @@
 
 #import "GITRepo.h"
 #import "GITFileStore.h"
+#import "GITPackStore.h"
+#import "GITCombinedStore.h"
 #import "GITObject.h"
 #import "GITCommit.h"
 #import "GITBlob.h"
@@ -52,8 +54,9 @@
         
         NSString * descFile = [self.root stringByAppendingPathComponent:@"description"];
         self.desc = [NSString stringWithContentsOfFile:descFile];
-
-        self.store = [[GITFileStore alloc] initWithRoot:self.root];
+        self.store = [[GITCombinedStore alloc] initWithStores:
+                        [[GITFileStore alloc] initWithRoot:self.root],
+                        [[GITPackStore alloc] initWithRoot:self.root], nil];
     }
     return self;
 }
