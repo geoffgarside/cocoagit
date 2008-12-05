@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GITErrors.h"
 
 /*! Generic object storage class.
  * Desendants of GITObjectStore implement different ways of
@@ -51,4 +52,6 @@
  */
 - (BOOL)extractFromObject:(NSString*)sha1 type:(NSString**)type
                      size:(NSUInteger*)size data:(NSData**)data;
+
+- (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)data type:(GITObjectType*)type error:(NSError**)error;
 @end
