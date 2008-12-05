@@ -56,7 +56,7 @@ static const char const kGITPackIndexMagicNumber[] = { '\377', 't', 'O', 'c' };
                     NSDictionary * eInfo = [NSDictionary dictionaryWithObjects:errObjs forKeys:errKeys];
                     if (outError != NULL)
                         *outError = [[[NSError alloc] initWithDomain:GITErrorDomain
-                                                                code:GITPackIndexErrorVersionUnsupported
+                                                                code:GITErrorPackIndexUnsupportedVersion
                                                             userInfo:eInfo] autorelease];
                     return nil;
             }
@@ -74,7 +74,7 @@ static const char const kGITPackIndexMagicNumber[] = { '\377', 't', 'O', 'c' };
         NSDictionary * eInfo = [NSDictionary dictionaryWithObjects:errObjs forKeys:errKeys];
         if (outError != NULL)
             *outError = [[[NSError alloc] initWithDomain:GITErrorDomain
-                                                    code:GITPackIndexErrorCannotRead
+                                                    code:GITErrorPackIndexReadFailure
                                                 userInfo:eInfo] autorelease];
         return nil;
     }

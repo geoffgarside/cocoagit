@@ -11,7 +11,11 @@
 extern NSString const * GITErrorDomain;
 
 #pragma mark PACK and Index Error Codes
-const NSInteger GITPackIndexErrorCannotRead = -1;
-const NSInteger GITPackIndexErrorVersionUnsupported = -2;
+extern const NSInteger GITErrorPackIndexReadFailure;
+extern const NSInteger GITErrorPackIndexUnsupportedVersion;
+
+#pragma mark Store error codes
+extern const NSInteger GITErrorObjectStoreSizeMismatch;
+extern const NSInteger GITErrorObjectStoreMissingObject;
 
 @end
