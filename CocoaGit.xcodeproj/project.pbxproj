@@ -21,6 +21,17 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		57AEB91B0EEAFDE90086A415 /* GITPackStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE329AF0E9BA2F8001E37D5 /* GITPackStore.m */; };
+		57AEB91C0EEAFDE90086A415 /* GITCombinedStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F16B9020EDB595A003CFD93 /* GITCombinedStore.m */; };
+		57AEB91E0EEAFE0C0086A415 /* GITPackFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EC0E48C5650004CD44 /* GITPackFile.m */; };
+		57AEB9200EEAFE190086A415 /* GITPlaceholderPackFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCCCF790EC0E6DD00ED3215 /* GITPlaceholderPackFile.m */; };
+		57AEB9210EEAFE190086A415 /* GITPackFileVersion2.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCCCF7C0EC0E79700ED3215 /* GITPackFileVersion2.m */; };
+		57AEB9230EEAFE2C0086A415 /* GITPackIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F35B9100EBFE1EF00FC0770 /* GITPackIndex.m */; };
+		57AEB9240EEAFE2C0086A415 /* GITPlaceholderPackIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F35B9130EBFE24000FC0770 /* GITPlaceholderPackIndex.m */; };
+		57AEB9250EEAFE2C0086A415 /* GITPackIndexVersion1.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F35B9160EBFE44B00FC0770 /* GITPackIndexVersion1.m */; };
+		57AEB9260EEAFE2C0086A415 /* GITPackIndexVersion2.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F35B9190EBFE45B00FC0770 /* GITPackIndexVersion2.m */; };
+		57AEB92B0EEAFE6D0086A415 /* GITPackIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F35B90F0EBFE1EF00FC0770 /* GITPackIndex.h */; };
+		57AEB92C0EEAFE760086A415 /* GITPackFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F33C9EB0E48C5650004CD44 /* GITPackFile.h */; };
 		57CFF6A50EC772E700BB4B1E /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212770E179A2C005AC693 /* NSData+Compression.m */; };
 		9F01049B0E9997C700A47227 /* GITUtilityBeltTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F01049A0E9997C700A47227 /* GITUtilityBeltTests.m */; };
 		9F0486FB0EE71068003128C3 /* GITCombinedStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F16B9020EDB595A003CFD93 /* GITCombinedStore.m */; };
@@ -531,6 +542,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57AEB92C0EEAFE760086A415 /* GITPackFile.h in Headers */,
+				57AEB92B0EEAFE6D0086A415 /* GITPackIndex.h in Headers */,
 				9F754ECF0EAD21F600788FFF /* GITActor.h in Headers */,
 				9F754ED20EAD220000788FFF /* NSData+Compression.h in Headers */,
 				9F754ED40EAD220100788FFF /* NSData+Hashing.h in Headers */,
@@ -710,6 +723,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57AEB9230EEAFE2C0086A415 /* GITPackIndex.m in Sources */,
+				57AEB9240EEAFE2C0086A415 /* GITPlaceholderPackIndex.m in Sources */,
+				57AEB9250EEAFE2C0086A415 /* GITPackIndexVersion1.m in Sources */,
+				57AEB9260EEAFE2C0086A415 /* GITPackIndexVersion2.m in Sources */,
+				57AEB9200EEAFE190086A415 /* GITPlaceholderPackFile.m in Sources */,
+				57AEB9210EEAFE190086A415 /* GITPackFileVersion2.m in Sources */,
+				57AEB91E0EEAFE0C0086A415 /* GITPackFile.m in Sources */,
+				9F754EFA0EAD225C00788FFF /* GITFileStore.m in Sources */,
+				57AEB91B0EEAFDE90086A415 /* GITPackStore.m in Sources */,
+				9F754EFE0EAD225F00788FFF /* GITObjectStore.m in Sources */,
+				57AEB91C0EEAFDE90086A415 /* GITCombinedStore.m in Sources */,
 				9F754ED00EAD21F700788FFF /* GITActor.m in Sources */,
 				9F754ED30EAD220000788FFF /* NSData+Compression.m in Sources */,
 				9F754ED50EAD220200788FFF /* NSData+Hashing.m in Sources */,
@@ -719,9 +743,7 @@
 				9F754EF20EAD224A00788FFF /* GITBlob.m in Sources */,
 				9F754EF60EAD224C00788FFF /* GITCommit.m in Sources */,
 				9F754EF80EAD224E00788FFF /* GITDateTime.m in Sources */,
-				9F754EFA0EAD225C00788FFF /* GITFileStore.m in Sources */,
 				9F754EFC0EAD225E00788FFF /* GITObject.m in Sources */,
-				9F754EFE0EAD225F00788FFF /* GITObjectStore.m in Sources */,
 				9F754F000EAD226700788FFF /* GITRepo.m in Sources */,
 				9F754F020EAD226A00788FFF /* GITTag.m in Sources */,
 				9F754F040EAD226E00788FFF /* GITTree.m in Sources */,
