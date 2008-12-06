@@ -146,14 +146,14 @@ enum {
             return YES;
         else
         {
-            errorCode = GITErrorPackFileSizeMismatch;
-            errorDescription = NSLocalizedString(@"Object data sizes do not match", @"");
+            errorCode = GITErrorObjectSizeMismatch;
+            errorDescription = NSLocalizedString(@"Object size mismatch", @"GITErrorObjectSizeMismatch");
         }
     }
     else
     {
-        errorCode = GITErrorPackFileMissingObject;
-        errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Unable to load object %@", @""), sha1];
+        errorCode = GITErrorObjectNotFound;
+        errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Object %@ not found", @"GITErrorObjectNotFound"), sha1];
     }
 
     if (errorCode != 0 && error != NULL)

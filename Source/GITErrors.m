@@ -7,11 +7,17 @@
 //
 
 #import "GITErrors.h"
+#define __git_error(code, val) const NSInteger code = val
+#define __git_error_domain(dom, str) NSString const * dom = str
 
-NSString const * GITErrorDomain = @"com.manicpanda.GIT.ErrorDomain";
+__git_error_domain(GITErrorDomain, @"com.manicpanda.GIT.ErrorDomain");
 
-const NSInteger GITErrorPackIndexReadFailure        = -1;
-const NSInteger GITErrorPackIndexUnsupportedVersion = -2;
+#pragma mark Object Loading Errors
+__git_error(GITErrorObjectSizeMismatch,             -1);
+__git_error(GITErrorObjectNotFound,                 -2);
 
-const NSInteger GITErrorObjectStoreSizeMismatch     = -3;
-const NSInteger GITErrorObjectStoreMissingObject    = -4;
+#pragma mark PACK and Index Error Codes
+__git_error(GITErrorPackIndexReadFailure,           -3);
+__git_error(GITErrorPackIndexUnsupportedVersion,    -4);
+
+#undef __git_error
