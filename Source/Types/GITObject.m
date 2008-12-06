@@ -29,6 +29,18 @@
     [self doesNotRecognizeSelector:_cmd];
     return nil;
 }
++ (GITObjectType)objectTypeForString:(NSString*)type
+{
+    if ([type isEqualToString:@"commit"])
+        return GITObjectTypeCommit;
+    else if ([type isEqualToString:@"tree"])
+        return GITObjectTypeTree;
+    else if ([type isEqualToString:@"blob"])
+        return GITObjectTypeBlob;
+    else if ([type isEqualToString:@"tag"])
+        return GITObjectTypeTag;
+    return 0;
+}
 - (id)init
 {
     [self doesNotRecognizeSelector:_cmd];

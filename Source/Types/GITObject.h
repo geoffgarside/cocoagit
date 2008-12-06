@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+    GITObjectTypeCommit = 1,
+    GITObjectTypeTree   = 2,
+    GITObjectTypeBlob   = 3,
+    GITObjectTypeTag    = 4,
+} GITObjectType;
+
 @class GITRepo;
 /*! Abstract base class for the git objects
  */
@@ -27,6 +34,12 @@
 /*! Returns the string name of the type.
  */
 + (NSString*)typeName;
+
+/*! Returns the enum type value for the type string
+ * \param type String to return the corresponding object type for
+ * \return Object type which corresponds to the type passed
+ */
++ (GITObjectType)objectTypeForString:(NSString*)type;
 
 /*! Raises a doesNotRecognizeSelector error to enforce the use of
  * the correct initialiser.
