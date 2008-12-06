@@ -87,6 +87,83 @@ enum {
     NSData * raw = [self objectAtOffset:offset];
     return [raw zlibInflate];
 }
+- (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)objectData
+                      type:(GITObjectType*)objectType error:(NSError**)error
+{
+    NSUInteger errorCode = 0;
+    NSString * errorDescription = nil;
+    NSDictionary * errorUserInfo = nil;
+
+    uint8_t buf = 0x0;    // a single byte buffer
+    NSUInteger size, type, shift = 4;
+    NSUInteger offset = [self.index packOffsetForSha1:sha1];
+
+    if (offset > 0)
+    {
+        [self.data getBytes:&buf range:NSMakeRange(offset++, 1)];
+        NSAssert(buf != 0x0, @"buf should not be NULL");
+
+        size = buf & 0xf;
+        type = (buf >> 4) & 0x7;
+
+        while ((buf & 0x80) != 0)
+        {
+            [self.data getBytes:&buf range:NSMakeRange(offset++, 1)];
+            NSAssert(buf != 0x0, @"buf should not be NULL");
+
+            size |= ((buf & 0x7f) << shift);
+            shift += 7;
+        }
+
+        *objectData = nil;    //!< nil out the outgoing data
+        switch (type) {
+            case kGITPackFileTypeCommit:
+                *objectType = type;
+                *objectData = [self.data subdataWithRange:NSMakeRange(offset, size)];
+                break;
+            case kGITPackFileTypeTree:
+                *objectType = type;
+                *objectData = [self.data subdataWithRange:NSMakeRange(offset, size)];
+                break;
+            case kGITPackFileTypeTag:
+                *objectType = type;
+                *objectData = [self.data subdataWithRange:NSMakeRange(offset, size)];
+                break;
+            case kGITPackFileTypeBlob:
+                *objectType = type;
+                *objectData = [self.data subdataWithRange:NSMakeRange(offset, size)];
+                break;
+            case kGITPackFileTypeDeltaOfs:
+            case kGITPackFileTypeDeltaRefs:
+                NSAssert(NO, @"Cannot handle Delta Object types yet");
+                break;
+            default:
+                NSLog(@"bad object type %d", type);
+                break;
+        }
+
+        if (*objectData && *objectType && size == [*objectData length])
+            return YES;
+        else
+        {
+            errorCode = GITErrorPackFileSizeMismatch;
+            errorDescription = NSLocalizedString(@"Object data sizes do not match", @"");
+        }
+    }
+    else
+    {
+        errorCode = GITErrorPackFileMissingObject;
+        errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Unable to load object %@", @""), sha1];
+    }
+
+    if (errorCode != 0 && error != NULL)
+    {
+        errorUserInfo = [NSDictionary dictionaryWithObject:errorDescription forKey:NSLocalizedDescriptionKey];
+        *error = [[[NSError alloc] initWithDomain:GITErrorDomain code:errorCode userInfo:errorUserInfo] autorelease];
+    }
+
+    return NO;
+}
 
 #pragma mark -
 #pragma mark Internal Methods

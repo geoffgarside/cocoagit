@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "GITPackIndex.h"
+#import "GITErrors.h"
 
 /*! GITPackFile is a class which provides access to individual
  * PACK files within a git repository.
@@ -54,9 +55,17 @@
  * \param sha1 The SHA1 of the object to retrieve the data for.
  * \return Data for the object or <tt>nil</tt> if the object is not in
  * the receiver
+ * \deprecated use -loadObjectWithSha1:intoData:type:error: instead
  */
 - (NSData*)dataForObjectWithSha1:(NSString*)sha1;
 
+/*! Loads and returns the contents of an object.
+ * \param sha1 The SHA1 name of the object to load
+ * \param[out] data Data to load the object contents into
+ * \param[out] type The GITObjectType of the object
+ * \param[out] error NSError object containing any errors, pass NULL if you don't care
+ * \return YES on successful load, NO if an error occurred
+ */
 - (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)data
                       type:(GITObjectType*)type error:(NSError**)error;
 
