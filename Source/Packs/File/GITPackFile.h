@@ -57,6 +57,9 @@
  */
 - (NSData*)dataForObjectWithSha1:(NSString*)sha1;
 
+- (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)data
+                      type:(GITObjectType*)type error:(NSError**)error;
+
 #pragma mark -
 #pragma mark Checksum Methods
 /*! Returns checksum data for the receiver

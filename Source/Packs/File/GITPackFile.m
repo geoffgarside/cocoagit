@@ -50,6 +50,12 @@
     [self doesNotRecognizeSelector: _cmd];
     return nil;
 }
+- (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)data
+                      type:(GITObjectType*)type error:(NSError**)error
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return NO;
+}
 
 #pragma mark -
 #pragma mark Checksum Methods
