@@ -8,6 +8,7 @@
 
 #import "GITFileStore.h"
 #import "NSData+Compression.h"
+#import "GITObject.h"
 
 /*! \cond */
 @interface GITFileStore ()
@@ -71,9 +72,10 @@
         NSInteger size = [[metaStr substringFromIndex:indexOfSpace + 1] integerValue];
 
         // This needs to be a GITObjectType value instead of a string
-        *type = [metaStr substringToIndex:indexOfSpace];
+        NSString * typeStr = [metaStr substringToIndex:indexOfSpace];
+        *type = [GITObject objectTypeForString:typeStr];
 
-        if (data && type && size == [data length])
+        if (*data && *type && size == [*data length])
             return YES;
         else
         {
@@ -84,13 +86,13 @@
     else
     {
         errorCode = GITErrorObjectStoreMissingObject;
-        errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Unable to load object with %@", @""), sha1];
+        errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Unable to load object %@", @""), sha1];
     }
 
     if (errorCode != 0 && error != NULL)
     {
         errorUserInfo = [NSDictionary dictionaryWithObject:errorDescription forKey:NSLocalizedDescriptionKey];
-        *error = [[NSError alloc] initWithDomain:GITErrorDomain code:errorCode userInfo:errorUserInfo];
+        *error = [[[NSError alloc] initWithDomain:GITErrorDomain code:errorCode userInfo:errorUserInfo] autorelease];
     }
 
     return NO;
