@@ -31,6 +31,7 @@
  * \attention This method must be overridden
  * \param sha1 The object reference to return the data for
  * \return Contents of an object, nil if the object cannot be found
+ * \deprecated use -loadObjectWithSha1:intoData:type:error: instead
  */
 - (NSData*)dataWithContentsOfObject:(NSString*)sha1;
 
@@ -49,9 +50,18 @@
  * \param[out] size The size of <tt>data</tt> in bytes
  * \param[out] data The data content of the object
  * \return Indication that the extraction was successful.
+ * \deprecated use -loadObjectWithSha1:intoData:type:error: instead
  */
 - (BOOL)extractFromObject:(NSString*)sha1 type:(NSString**)type
                      size:(NSUInteger*)size data:(NSData**)data;
 
-- (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)data type:(GITObjectType*)type error:(NSError**)error;
+/*! Loads and returns the contents of an object.
+ * \param sha1 The SHA1 name of the object to load
+ * \param[out] data Data to load the object contents into
+ * \param[out] type The GITObjectType of the object
+ * \param[out] error NSError object containing any errors, pass NULL if you don't care
+ * \return YES on successful load, NO if an error occurred
+ */
+- (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)data
+                      type:(GITObjectType*)type error:(NSError**)error;
 @end
