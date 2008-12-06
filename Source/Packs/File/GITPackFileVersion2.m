@@ -15,7 +15,7 @@
 static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
 
 enum {
-    // Base Types
+    // Base Types - These mirror those of GITObjectType
     kGITPackFileTypeCommit = 1,
     kGITPackFileTypeTree   = 2,
     kGITPackFileTypeBlob   = 3,
