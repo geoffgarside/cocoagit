@@ -49,15 +49,17 @@ static const char const kGITPackIndexMagicNumber[] = { '\377', 't', 'O', 'c' };
                 case 2:
                     return [[GITPackIndexVersion2 allocWithZone:z] initWithPath:thePath error:outError];
                 default:
-                    description = NSLocalizedString(@"Pack Index version is not supported", @"");
-                    NSArray * errKeys = [NSArray arrayWithObjects:NSLocalizedDescriptionKey,
-                                         NSFilePathErrorKey, nil];
-                    NSArray * errObjs = [NSArray arrayWithObjects:description, thePath, nil];
-                    NSDictionary * eInfo = [NSDictionary dictionaryWithObjects:errObjs forKeys:errKeys];
                     if (outError != NULL)
+                    {
+                        description = [NSString stringWithFormat:NSLocalizedString(@"Pack Index version %lu is not supported",
+                                                                                   @"GITErrorPackIndexUnsupportedVersion"), ver];
+                        NSDictionary * eInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                description, NSLocalizedDescriptionKey,
+                                                thePath, NSFilePathErrorKey, nil];
                         *outError = [[[NSError alloc] initWithDomain:GITErrorDomain
                                                                 code:GITErrorPackIndexUnsupportedVersion
                                                             userInfo:eInfo] autorelease];
+                    }
                     return nil;
             }
         }
@@ -66,16 +68,18 @@ static const char const kGITPackIndexMagicNumber[] = { '\377', 't', 'O', 'c' };
     }
     else
     {
-        description = NSLocalizedString(@"The Pack Index file could not be read", @"");
-        suggestion  = NSLocalizedString(@"Check the file exists and that you have permission to read it", @"");
-        NSArray * errKeys = [NSArray arrayWithObjects:NSLocalizedDescriptionKey,
-                             NSLocalizedRecoverySuggestionErrorKey, NSFilePathErrorKey, nil];
-        NSArray * errObjs = [NSArray arrayWithObjects:description, suggestion, thePath, nil];
-        NSDictionary * eInfo = [NSDictionary dictionaryWithObjects:errObjs forKeys:errKeys];
         if (outError != NULL)
+        {
+            description = [NSString stringWithFormat:NSLocalizedString(@"File %@ not found",
+                                                                       @"GITErrorFileNotFound (GITPackIndex)"), thePath];
+            NSDictionary * eInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    description, NSLocalizedDescriptionKey,
+                                    thePath, NSFilePathErrorKey, nil];
             *outError = [[[NSError alloc] initWithDomain:GITErrorDomain
-                                                    code:GITErrorPackIndexReadFailure
+                                                    code:GITErrorFileReadFailure
                                                 userInfo:eInfo] autorelease];
+        }
+
         return nil;
     }
 }

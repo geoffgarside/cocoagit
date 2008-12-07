@@ -22,8 +22,10 @@ __git_error_domain(GITErrorDomain);
 __git_error(GITErrorObjectSizeMismatch);
 __git_error(GITErrorObjectNotFound);
 
+#pragma mark File Reading Errors
+__git_error(GITErrorFileNotFound);
+
 #pragma mark PACK and Index Error Codes
-__git_error(GITErrorPackIndexReadFailure);
 __git_error(GITErrorPackIndexUnsupportedVersion);
 
 #undef __git_error
