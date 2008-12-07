@@ -105,19 +105,19 @@
 #pragma mark Error aware loaders
 - (GITCommit*)commitWithSha1:(NSString*)sha1 error:(NSError**)error
 {
-    return [self objectWithSha1:sha1 type:GITObjectTypeCommit error:error];
+    return (GITCommit*)[self objectWithSha1:sha1 type:GITObjectTypeCommit error:error];
 }
 - (GITBlob*)blobWithSha1:(NSString*)sha1 error:(NSError**)error
 {
-    return [self objectWithSha1:sha1 type:GITObjectTypeBlob error:error];
+    return (GITBlob*)[self objectWithSha1:sha1 type:GITObjectTypeBlob error:error];
 }
 - (GITTree*)treeWithSha1:(NSString*)sha1 error:(NSError**)error
 {
-    return [self objectWithSha1:sha1 type:GITObjectTypeTree error:error];
+    return (GITTree*)[self objectWithSha1:sha1 type:GITObjectTypeTree error:error];
 }
 - (GITTag*)tagWithSha1:(NSString*)sha1 error:(NSError**)error
 {
-    return [self objectWithSha1:sha1 type:GITObjectTypeTag error:error];
+    return (GITTag*)[self objectWithSha1:sha1 type:GITObjectTypeTag error:error];
 }
 - (GITObject*)objectWithSha1:(NSString*)sha1 error:(NSError**)error
 {
