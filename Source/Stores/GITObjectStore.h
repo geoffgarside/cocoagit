@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "GITErrors.h"
+#import "GITObject.h"
 
 /*! Generic object storage class.
  * Desendants of GITObjectStore implement different ways of
