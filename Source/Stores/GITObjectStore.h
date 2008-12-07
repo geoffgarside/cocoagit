@@ -61,6 +61,11 @@
  * \param[out] type The GITObjectType of the object
  * \param[out] error NSError object containing any errors, pass NULL if you don't care
  * \return YES on successful load, NO if an error occurred
+ * \internal
+ * We might possibly consider the following extension to this method once Deltas
+ * are being parsed. If the type parameter has a non-zero value then this will be
+ * perceived as an expected type setting, an error should be returned if this
+ * expected type is not met.
  */
 - (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)data
                       type:(GITObjectType*)type error:(NSError**)error;
