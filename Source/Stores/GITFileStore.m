@@ -8,6 +8,7 @@
 
 #import "GITFileStore.h"
 #import "NSData+Compression.h"
+#import "NSData+Searching.h"
 #import "GITObject.h"
 
 /*! \cond */
