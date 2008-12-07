@@ -10,11 +10,6 @@
 #import "GITFileStore.h"
 #import "GITPackStore.h"
 #import "GITCombinedStore.h"
-#import "GITObject.h"
-#import "GITCommit.h"
-#import "GITBlob.h"
-#import "GITTree.h"
-#import "GITTag.h"
 
 #import "NSData+Searching.h"
 

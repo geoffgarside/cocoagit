@@ -7,9 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GITObjectStore.h"
+#import "GITObject.h"
+#import "GITCommit.h"
+#import "GITTree.h"
+#import "GITBlob.h"
+#import "GITTag.h"
 
-@class GITObjectStore;
-@class GITObject, GITCommit, GITBlob, GITTree, GITTag;
 /*! A repository of git objects.
  * This class serves to encapsulate the access to the
  * objects of a repository.
