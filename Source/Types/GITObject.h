@@ -9,10 +9,11 @@
 #import <Foundation/Foundation.h>
 
 typedef enum {
-    GITObjectTypeCommit = 1,
-    GITObjectTypeTree   = 2,
-    GITObjectTypeBlob   = 3,
-    GITObjectTypeTag    = 4,
+    GITObjectTypeUnknown = 0,
+    GITObjectTypeCommit  = 1,
+    GITObjectTypeTree    = 2,
+    GITObjectTypeBlob    = 3,
+    GITObjectTypeTag     = 4,
 } GITObjectType;
 
 @class GITRepo;
