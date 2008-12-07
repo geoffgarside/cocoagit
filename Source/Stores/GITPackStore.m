@@ -108,7 +108,7 @@
             errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                              [undError localizedDescription], NSLocalizedDescriptionKey,
                              undError, NSUnderlyingErrorKey, nil];
-            *error = [[[NSError alloc] initWithDomain:GITErrorDomain code:[undError code] userInfo:errorUserInfo];
+            *error = [[[NSError alloc] initWithDomain:GITErrorDomain code:[undError code] userInfo:errorUserInfo] autorelease];
             return NO;
         }
     }
@@ -127,7 +127,7 @@
                 errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                                  [undError localizedDescription], NSLocalizedDescriptionKey,
                                  undError, NSUnderlyingErrorKey, nil];
-                *error = [[[NSError alloc] initWithDomain:GITErrorDomain code:[undError code] userInfo:errorUserInfo];
+                *error = [[[NSError alloc] initWithDomain:GITErrorDomain code:[undError code] userInfo:errorUserInfo] autorelease];
                 return NO;
             }
         }
