@@ -75,7 +75,7 @@ static const char const kGITPackIndexMagicNumber[] = { '\377', 't', 'O', 'c' };
                                     description, NSLocalizedDescriptionKey,
                                     thePath, NSFilePathErrorKey, nil];
             *outError = [NSError errorWithDomain:GITErrorDomain
-                                            code:GITErrorFileReadFailure
+                                            code:GITErrorFileNotFound
                                         userInfo:eInfo];
         }
 
