@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "GITPackIndex.h"
 #import "GITErrors.h"
+#import "GITObject.h"
 
 /*! GITPackFile is a class which provides access to individual
  * PACK files within a git repository.
