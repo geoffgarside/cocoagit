@@ -50,6 +50,7 @@
 		9F35B91A0EBFE45B00FC0770 /* GITPackIndexVersion2.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F35B9190EBFE45B00FC0770 /* GITPackIndexVersion2.m */; };
 		9F464D410E3DC3EC00867506 /* NSTimeZone+Offset.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F464D400E3DC3EC00867506 /* NSTimeZone+Offset.m */; };
 		9F63998E0E51952F0034F279 /* GITUtilityBelt.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F63998D0E51952F0034F279 /* GITUtilityBelt.m */; };
+		9F69270F0EEAB0DB007B2D5C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9F69270D0EEAB0DB007B2D5C /* Localizable.strings */; };
 		9F74428A0EDCD09600980E4E /* GITPackStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE329AF0E9BA2F8001E37D5 /* GITPackStore.m */; };
 		9F74428B0EDCD09B00980E4E /* GITCombinedStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F16B9020EDB595A003CFD93 /* GITCombinedStore.m */; };
 		9F7442940EDCD0E900980E4E /* GITPackFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EC0E48C5650004CD44 /* GITPackFile.m */; };
@@ -171,6 +172,7 @@
 		9F63998D0E51952F0034F279 /* GITUtilityBelt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITUtilityBelt.m; path = Source/GITUtilityBelt.m; sourceTree = "<group>"; };
 		9F66F7C70EA1105500E7FAA9 /* doxygen.config */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = doxygen.config; path = Resources/doxygen.config; sourceTree = "<group>"; };
 		9F66F8160EA146C000E7FAA9 /* CocoaGit.dox */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CocoaGit.dox; path = Resources/CocoaGit.dox; sourceTree = "<group>"; };
+		9F69270E0EEAB0DB007B2D5C /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = Resources/English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9F754E920EAD0C8B00788FFF /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9F7EC9020E1A7032001668EB /* GITCommit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITCommit.h; path = Source/Types/GITCommit.h; sourceTree = "<group>"; };
 		9F7EC9030E1A7032001668EB /* GITCommit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITCommit.m; path = Source/Types/GITCommit.m; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9F69270D0EEAB0DB007B2D5C /* Localizable.strings */,
 				9F66F8160EA146C000E7FAA9 /* CocoaGit.dox */,
 				9F66F7C70EA1105500E7FAA9 /* doxygen.config */,
 				9F754E910EAD0C8B00788FFF /* InfoPlist.strings */,
@@ -659,6 +662,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F69270F0EEAB0DB007B2D5C /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -815,6 +819,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		9F69270D0EEAB0DB007B2D5C /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9F69270E0EEAB0DB007B2D5C /* English */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		9F754E910EAD0C8B00788FFF /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
