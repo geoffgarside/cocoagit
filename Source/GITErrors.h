@@ -14,7 +14,7 @@
 
 #import <Foundation/Foundation.h>
 #define __git_error(code) extern const NSInteger code
-#define __git_error_domain(dom) extern NSString const * dom
+#define __git_error_domain(dom) extern NSString * dom
 
 __git_error_domain(GITErrorDomain);
 

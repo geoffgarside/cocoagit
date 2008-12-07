@@ -8,7 +8,7 @@
 
 #import "GITErrors.h"
 #define __git_error(code, val) const NSInteger code = val
-#define __git_error_domain(dom, str) NSString const * dom = str
+#define __git_error_domain(dom, str) NSString * dom = str
 
 __git_error_domain(GITErrorDomain, @"com.manicpanda.GIT.ErrorDomain");
 
