@@ -68,12 +68,13 @@
 */
 
 #pragma mark -
-#pragma mark Internal Methods
+#pragma mark Internal Methods (Deprecated)
 /*! Returns the raw content data for an object.
  * \attention This method does not do anything to verify the
  * size or type of the object being returned.
  * \param sha1 Name of the object.
  * \return Data containing the content of the object
+ * \deprecated Superceeded by -objectWithSha1:error:
  */
 - (NSData*)dataWithContentsOfObject:(NSString*)sha1;
 
@@ -84,36 +85,89 @@
  * \param sha1 Name of the objects
  * \param expectedType String used to check the object is of a specific type
  * \return Data containing the content of the object or nil if not of expected type
+ * \deprecated Superceeded by -objectWithSha1:type:error:
  */
 - (NSData*)dataWithContentsOfObject:(NSString*)sha1 type:(NSString*)expectedType;
 
+#pragma mark -
+#pragma mark Deprecated Loaders
 /*! Returns an object identified by the given sha1.
  * \param sha1 The identifier of the object to load
  * \return A object with the given sha1 or nil if it cannot be found.
+ * \deprecated Use -objectWithSha1:error: instead
  */
 - (GITObject*)objectWithSha1:(NSString*)sha1;
 
 /*! Returns a commit object identified by the given sha1.
  * \param sha1 The identifier of the commit to load
  * \return A commit object with the given sha1 or nil if it cannot be found.
+ * \deprecated Use -commitWithSha1:error: instead
  */
 - (GITCommit*)commitWithSha1:(NSString*)sha1;
 
 /*! Returns a blob object identified by the given sha1.
  * \param sha1 The identifier of the blob to load
  * \return A blob object with the given sha1 or nil if it cannot be found.
+ * \deprecated Use -blobWithSha1:error: instead
  */
 - (GITBlob*)blobWithSha1:(NSString*)sha1;
 
 /*! Returns a tree object identified by the given sha1.
  * \param sha1 The identifier of the tree to load
  * \return A tree object with the given sha1 or nil if it cannot be found.
+ * \deprecated Use -treeWithSha1:error: instead
  */
 - (GITTree*)treeWithSha1:(NSString*)sha1;
 
 /*! Returns a tag object identified by the given sha1.
  * \param sha1 The identifier of the tag to load
  * \return A tag object with the given sha1 or nil if it cannot be found.
+ * \deprecated Use -tagWithSha1:error: instead
  */
 - (GITTag*)tagWithSha1:(NSString*)sha1;
+
+#pragma mark -
+#pragma mark Error Aware Loaders
+/*! Returns a commit object identified by the given sha1.
+ * \param sha1 The identifier of the commit to load
+ * \param[out] error Contains the error if nil return value
+ * \return A commit object with the given sha1 or nil if it cannot be found.
+ */
+- (GITCommit*)commitWithSha1:(NSString*)sha1 error:(NSError**)error;
+
+/*! Returns a blob object identified by the given sha1.
+ * \param sha1 The identifier of the blob to load
+ * \param[out] error Contains the error if nil return value
+ * \return A blob object with the given sha1 or nil if it cannot be found.
+ */
+- (GITBlob*)blobWithSha1:(NSString*)sha1 error:(NSError**)error;
+
+/*! Returns a tree object identified by the given sha1.
+ * \param sha1 The identifier of the tree to load
+ * \param[out] error Contains the error if nil return value
+ * \return A tree object with the given sha1 or nil if it cannot be found.
+ */
+- (GITTree*)treeWithSha1:(NSString*)sha1 error:(NSError**)error;
+
+/*! Returns a tag object identified by the given sha1.
+ * \param sha1 The identifier of the tag to load
+ * \param[out] error Contains the error if nil return value
+ * \return A tag object with the given sha1 or nil if it cannot be found.
+ */
+- (GITTag*)tagWithSha1:(NSString*)sha1 error:(NSError**)error;
+
+/*! Returns an object identified by the given sha1.
+ * \param sha1 The identifier of the object to load
+ * \param[out] error Contains the error if nil return value
+ * \return A object with the given sha1 or nil if it cannot be found.
+ */
+- (GITObject*)objectWithSha1:(NSString*)sha1 error:(NSError**)error;
+
+/*! Returns an object identified by the given sha1.
+ * \param sha1 The identifier of the object to load
+ * \param type The GITObjectType to return, GITObjectTypeUnknown if not known.
+ * \param[out] error Contains the error if nil return value
+ * \return A object with the given sha1 or nil if it cannot be found.
+ */
+- (GITObject*)objectWithSha1:(NSString*)sha1 type:(GITObjectType)type error:(NSError**)error;
 @end

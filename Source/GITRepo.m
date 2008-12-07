@@ -82,57 +82,84 @@
             return data;
     return nil;
 }
+
+#pragma mark -
+#pragma mark Deprecated Loaders
 - (GITObject*)objectWithSha1:(NSString*)sha1
 {
-    NSString * type; NSUInteger size; NSData * data;
+    return [self objectWithSha1:sha1 type:GITObjectTypeUnknown error:NULL];
+}
+- (GITCommit*)commitWithSha1:(NSString*)sha1
+{
+    return [self commitWithSha1:sha1 error:NULL];
+}
+- (GITBlob*)blobWithSha1:(NSString*)sha1
+{
+    return [self blobWithSha1:sha1 error:NULL];
+}
+- (GITTree*)treeWithSha1:(NSString*)sha1
+{
+    return [self treeWithSha1:sha1 error:NULL];
+}
+- (GITTag*)tagWithSha1:(NSString*)sha1
+{
+    return [self tagWithSha1:sha1 error:NULL];
+}
 
-    if ([self.store extractFromObject:sha1 type:&type size:&size data:&data])
+#pragma mark -
+#pragma mark Error aware loaders
+- (GITCommit*)commitWithSha1:(NSString*)sha1 error:(NSError**)error
+{
+    return [self objectWithSha1:sha1 type:GITObjectTypeCommit error:error];
+}
+- (GITBlob*)blobWithSha1:(NSString*)sha1 error:(NSError**)error
+{
+    return [self objectWithSha1:sha1 type:GITObjectTypeBlob error:error];
+}
+- (GITTree*)treeWithSha1:(NSString*)sha1 error:(NSError**)error
+{
+    return [self objectWithSha1:sha1 type:GITObjectTypeTree error:error];
+}
+- (GITTag*)tagWithSha1:(NSString*)sha1 error:(NSError**)error
+{
+    return [self objectWithSha1:sha1 type:GITObjectTypeTag error:error];
+}
+- (GITObject*)objectWithSha1:(NSString*)sha1 error:(NSError**)error
+{
+    return [self objectWithSha1:sha1 type:GITObjectTypeUnknown error:error];
+}
+- (GITObject*)objectWithSha1:(NSString*)sha1 type:(GITObjectType)eType error:(NSError**)error
+{
+    NSError * undError;
+    NSString * errorDescription;
+    NSDictionary * errorUserInfo;
+
+    GITObjectType type; NSData * data;
+
+    if ([self.store loadObjectWithSha1:sha1 intoData:&data type:&type error:&undError])
     {
-        if ([data length] == size)
+        if (eType == GITObjectTypeUnknown || eType == type)
         {
-            if ([type isEqualToString:kGITObjectBlobName])
-                return [[GITBlob alloc] initWithSha1:sha1 data:data repo:self];
-            else if ([type isEqualToString:kGITObjectTreeName])
-                return [[GITTree alloc] initWithSha1:sha1 data:data repo:self];
-            else if ([type isEqualToString:kGITObjectCommitName])
-                return [[GITCommit alloc] initWithSha1:sha1 data:data repo:self];
-            else if ([type isEqualToString:kGITObjectTagName])
-                return [[GITTag alloc] initWithSha1:sha1 data:data repo:self];
+            switch (type)
+            {
+                case GITObjectTypeCommit:
+                    return [[GITCommit alloc] initWithSha1:sha1 data:data repo:self];
+                case GITObjectTypeTree:
+                    return [[GITTree alloc] initWithSha1:sha1 data:data repo:self];
+                case GITObjectTypeBlob:
+                    return [[GITBlob alloc] initWithSha1:sha1 data:data repo:self];
+                case GITObjectTypeTag:
+                    return [[GITTag alloc] initWithSha1:sha1 data:data repo:self];
+            }
+        }
+        else if (error != NULL)
+        {
+            errorDescription = NSLocalizedString(@"Object type mismatch", @"GITErrorObjectTypeMismatch");
+            errorUserInfo = [NSDictionary dictionaryWithObject:errorDescription forKey:NSLocalizedDescriptionKey];
+            *error = [[[NSError alloc] initWithDomain:GITErrorDomain code:GITErrorObjectTypeMismatch userInfo:errorUserInfo] autorelease];
         }
     }
 
     return nil;
-}
-- (GITCommit*)commitWithSha1:(NSString*)sha1
-{
-    NSData * data = [self dataWithContentsOfObject:sha1 type:@"commit"];
-    if (data)
-        return [[GITCommit alloc] initWithSha1:sha1 data:data repo:self];
-    else
-        return nil;
-}
-- (GITBlob*)blobWithSha1:(NSString*)sha1
-{
-    NSData * data = [self dataWithContentsOfObject:sha1 type:@"blob"];
-    if (data)
-        return [[GITBlob alloc] initWithSha1:sha1 data:data repo:self];
-    else
-        return nil;
-}
-- (GITTree*)treeWithSha1:(NSString*)sha1
-{
-    NSData * data = [self dataWithContentsOfObject:sha1 type:@"tree"];
-    if (data)
-        return [[GITTree alloc] initWithSha1:sha1 data:data repo:self];
-    else
-        return nil;
-}
-- (GITTag*)tagWithSha1:(NSString*)sha1
-{
-    NSData * data = [self dataWithContentsOfObject:sha1 type:@"tag"];
-    if (data)
-        return [[GITTag alloc] initWithSha1:sha1 data:data repo:self];
-    else
-        return nil;
 }
 @end

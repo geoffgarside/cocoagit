@@ -15,11 +15,12 @@ __git_error_domain(GITErrorDomain, @"com.manicpanda.GIT.ErrorDomain");
 #pragma mark Object Loading Errors
 __git_error(GITErrorObjectSizeMismatch,             -1);
 __git_error(GITErrorObjectNotFound,                 -2);
+__git_error(GITErrorObjectTypeMismatch,             -3);
 
 #pragma mark File Reading Errors
-__git_error(GITErrorFileNotFound,                   -3);
+__git_error(GITErrorFileNotFound,                   -4);
 
 #pragma mark PACK and Index Error Codes
-__git_error(GITErrorPackIndexUnsupportedVersion,    -4);
+__git_error(GITErrorPackIndexUnsupportedVersion,    -5);
 
 #undef __git_error

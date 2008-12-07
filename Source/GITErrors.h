@@ -21,6 +21,7 @@ __git_error_domain(GITErrorDomain);
 #pragma mark Object Loading Errors
 __git_error(GITErrorObjectSizeMismatch);
 __git_error(GITErrorObjectNotFound);
+__git_error(GITErrorObjectTypeMismatch);
 
 #pragma mark File Reading Errors
 __git_error(GITErrorFileNotFound);
