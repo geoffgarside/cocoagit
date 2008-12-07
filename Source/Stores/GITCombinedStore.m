@@ -123,7 +123,7 @@
             errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                              [undError localizedDescription], NSLocalizedDescriptionKey,
                              undError, NSUnderlyingErrorKey, nil];
-            *error = [[[NSError alloc] initWithDomain:GITErrorDomain code:[undError code] userInfo:errorUserInfo] autorelease];
+            *error = [NSError errorWithDomain:GITErrorDomain code:[undError code] userInfo:errorUserInfo];
             return NO;
         }
     }
@@ -142,7 +142,7 @@
                 errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                                  [undError localizedDescription], NSLocalizedDescriptionKey,
                                  undError, NSUnderlyingErrorKey, nil];
-                *error = [[[NSError alloc] initWithDomain:GITErrorDomain code:[undError code] userInfo:errorUserInfo] autorelease];
+                *error = [NSError errorWithDomain:GITErrorDomain code:[undError code] userInfo:errorUserInfo];
                 return NO;
             }
         }
@@ -154,7 +154,7 @@
         // no other error has been detected yet, so make our NotFound error
         errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Object %@ not found", @"GITErrorObjectNotFound"), sha1];
         errorUserInfo = [NSDictionary dictionaryWithObject:errorDescription forKey:NSLocalizedDescriptionKey];
-        *error = [[[NSError alloc] initWithDomain:GITErrorDomain code:GITErrorObjectNotFound userInfo:errorUserInfo] autorelease];
+        *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectNotFound userInfo:errorUserInfo];
     }
 
     return NO;

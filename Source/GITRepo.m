@@ -156,10 +156,11 @@
         {
             errorDescription = NSLocalizedString(@"Object type mismatch", @"GITErrorObjectTypeMismatch");
             errorUserInfo = [NSDictionary dictionaryWithObject:errorDescription forKey:NSLocalizedDescriptionKey];
-            *error = [[[NSError alloc] initWithDomain:GITErrorDomain code:GITErrorObjectTypeMismatch userInfo:errorUserInfo] autorelease];
+            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectTypeMismatch userInfo:errorUserInfo];
         }
     }
 
     return nil;
 }
+
 @end

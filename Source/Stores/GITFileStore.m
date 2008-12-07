@@ -92,7 +92,7 @@
     if (errorCode != 0 && error != NULL)
     {
         errorUserInfo = [NSDictionary dictionaryWithObject:errorDescription forKey:NSLocalizedDescriptionKey];
-        *error = [[[NSError alloc] initWithDomain:GITErrorDomain code:errorCode userInfo:errorUserInfo] autorelease];
+        *error = [NSError errorWithDomain:GITErrorDomain code:errorCode userInfo:errorUserInfo];
     }
 
     return NO;
