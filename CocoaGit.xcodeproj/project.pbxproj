@@ -106,6 +106,7 @@
 		9FA4E08A0E19A6E800724E6B /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212770E179A2C005AC693 /* NSData+Compression.m */; };
 		9FA4E08B0E19A6E900724E6B /* NSData+Hashing.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212940E179B4B005AC693 /* NSData+Hashing.m */; };
 		9FB1F0A70EC6F2DA006C68D0 /* GITErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB1F0A60EC6F2DA006C68D0 /* GITErrors.m */; };
+		9FC327D90EEC4D840064B823 /* GITErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB1F0A60EC6F2DA006C68D0 /* GITErrors.m */; };
 		9FCCCF7A0EC0E6DD00ED3215 /* GITPlaceholderPackFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCCCF790EC0E6DD00ED3215 /* GITPlaceholderPackFile.m */; };
 		9FCCCF7D0EC0E79700ED3215 /* GITPackFileVersion2.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCCCF7C0EC0E79700ED3215 /* GITPackFileVersion2.m */; };
 		9FCF27B70E98F86C00665A41 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FCF27B60E98F86C00665A41 /* SenTestingKit.framework */; };
@@ -813,6 +814,7 @@
 				9FD70B1A0EE4CD1F002B3001 /* GITPackStoreTests.m in Sources */,
 				9FD70B1E0EE4D5E8002B3001 /* GITPackStore.m in Sources */,
 				9F0486FB0EE71068003128C3 /* GITCombinedStore.m in Sources */,
+				9FC327D90EEC4D840064B823 /* GITErrors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
