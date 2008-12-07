@@ -18,8 +18,7 @@ static const char const kGITPackIndexMagicNumber[] = { '\377', 't', 'O', 'c' };
     uint8_t buf[4];
     NSError * err;
     NSUInteger ver;
-    NSString * description,
-             * suggestion;
+    NSString * description;
     NSFileManager * fileManager = [NSFileManager defaultManager];
     NSZone * z = [self zone]; [self release];
 
