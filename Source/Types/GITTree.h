@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "GITObject.h"
+#import "GITTreeEntry.h"
 
 extern NSString * const kGITObjectTreeName;
 
