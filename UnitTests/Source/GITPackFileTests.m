@@ -51,5 +51,6 @@
     NSString * dataStr = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
     STAssertNotNil(dataStr, @"The string contents of the data block should not be nil");
 }
+// TODO: Add more test of the data contents and sizes
 
 @end
