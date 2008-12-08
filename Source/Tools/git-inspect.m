@@ -1,23 +1,8 @@
 #import <Foundation/Foundation.h>
 #import "GITRepo.h"
-#import "GITBlob.h"
-#import "GITTree.h"
-#import "GITCommit.h"
-#import "GITTag.h"
-#import "GITTreeEntry.h"
 
-void pp(NSString *fmt, ...)
-{
-	va_list ap;
-	va_start(ap, fmt);
-
-	NSString *output = [[NSString alloc] initWithFormat:fmt arguments:ap];
-	printf([output UTF8String]);
-	printf("\n");
-	[output release];
-
-	va_end(ap);
-}
+void pp(NSString *fmt, ...);
+void printObject(GITObject * object);
 
 int main (int argc, const char * argv[]) {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
@@ -30,11 +15,26 @@ int main (int argc, const char * argv[]) {
     }
     
     GITRepo * repo = [[GITRepo alloc] initWithRoot:@"."];
+    NSString *sha1 = [args objectAtIndex:1];
 
-    NSString *inspectHash = [args objectAtIndex:1];
-    NSLog(@"inspectHash: %@", inspectHash);
-    GITObject * object  = [[repo objectWithSha1:inspectHash] autorelease];
+    NSError * error;
+    GITObject * object = [[repo objectWithSha1:sha1 error:&error] autorelease];
+
+    if (!object)
+    {
+        pp(@"Error: %@", [error localizedDescription]);
+        return [error code];
+    }
+    else
+    {
+        printObject(object);
+    }
     
+    [pool drain];
+    return 0;
+}
+void printObject(GITObject * object)
+{
     if ([object isKindOfClass:[GITBlob class]])
     {
         GITBlob * blob = (GITBlob*)object;
@@ -81,7 +81,16 @@ int main (int argc, const char * argv[]) {
     {
         pp(@"Unknown git object type");
     }
+}
+void pp(NSString *fmt, ...)
+{
+	va_list ap;
+	va_start(ap, fmt);
     
-    [pool drain];
-    return 0;
+	NSString *output = [[NSString alloc] initWithFormat:fmt arguments:ap];
+	printf([output UTF8String]);
+	printf("\n");
+	[output release];
+
+	va_end(ap);
 }
