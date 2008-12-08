@@ -29,14 +29,17 @@
 }
 - (void)testDataWithContentsOfObject
 {
+    NSData * raw; GITObjectType type;
     NSString * sha = @"226e91f3b4cca13890325f5d33ec050beca99f89";
-    NSString * str = @"blob 64\x00#!/usr/bin/env ruby\n\nputs \"hello world!\"\n\nputs \"goodbye world.\"";
+    NSString * str = @"#!/usr/bin/env ruby\n\nputs \"hello world!\"\n\nputs \"goodbye world.\"\n";
 
     NSData * data  = [str dataUsingEncoding:NSASCIIStringEncoding];
-    NSData * raw   = [store dataWithContentsOfObject:sha];
+    BOOL result = [store loadObjectWithSha1:sha intoData:&raw type:&type error:NULL];
+    
+    NSLog(@"Inspection data\nraw %@\nnew %@\nRaw String:\n%@\n---------", raw, data, [[NSString alloc] initWithData:raw encoding:NSASCIIStringEncoding]);
 
-    NSLog(@"raw as str:\n%@", [[NSString alloc] initWithData:raw encoding:NSASCIIStringEncoding]);
-
+    STAssertTrue(result, nil);
+    STAssertEquals(type, GITObjectTypeBlob, nil);
     STAssertEquals([raw length], [data length], nil);
     STAssertEqualObjects(raw, data, nil);
 }

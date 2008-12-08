@@ -119,19 +119,19 @@ enum {
         switch (type) {
             case kGITPackFileTypeCommit:
                 *objectType = type;
-                *objectData = [self.data subdataWithRange:NSMakeRange(offset, size)];
+                *objectData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
                 break;
             case kGITPackFileTypeTree:
                 *objectType = type;
-                *objectData = [self.data subdataWithRange:NSMakeRange(offset, size)];
+                *objectData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
                 break;
             case kGITPackFileTypeTag:
                 *objectType = type;
-                *objectData = [self.data subdataWithRange:NSMakeRange(offset, size)];
+                *objectData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
                 break;
             case kGITPackFileTypeBlob:
                 *objectType = type;
-                *objectData = [self.data subdataWithRange:NSMakeRange(offset, size)];
+                *objectData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
                 break;
             case kGITPackFileTypeDeltaOfs:
             case kGITPackFileTypeDeltaRefs:
