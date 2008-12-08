@@ -27,7 +27,7 @@
 {
     STAssertEqualObjects(store.packsDir, TEST_REPO_ROOT@"/.git/objects/pack", nil);
 }
-- (void)testDataWithContentsOfObject
+- (void)testLoadObjectWithSha1
 {
     NSData * raw; GITObjectType type;
     NSString * sha = @"226e91f3b4cca13890325f5d33ec050beca99f89";
@@ -35,8 +35,6 @@
 
     NSData * data  = [str dataUsingEncoding:NSASCIIStringEncoding];
     BOOL result = [store loadObjectWithSha1:sha intoData:&raw type:&type error:NULL];
-    
-    NSLog(@"Inspection data\nraw %@\nnew %@\nRaw String:\n%@\n---------", raw, data, [[NSString alloc] initWithData:raw encoding:NSASCIIStringEncoding]);
 
     STAssertTrue(result, nil);
     STAssertEquals(type, GITObjectTypeBlob, nil);

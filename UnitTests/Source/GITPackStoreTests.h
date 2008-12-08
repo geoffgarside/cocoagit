@@ -16,6 +16,6 @@
 @property(readwrite,retain) GITPackStore * store;
 
 - (void)testStoreRootIsCorrect;
-- (void)testDataWithContentsOfObject;
+- (void)testLoadObjectWithSha1;
 
 @end
