@@ -18,4 +18,5 @@
 - (void)testStoreRootIsCorrect;
 - (void)testExpandHashIntoFilePath;
 - (void)testDataWithContentsOfObject;
+- (void)testLoadObjectWithSha1;
 @end

@@ -41,4 +41,18 @@
     NSData * raw   = [store dataWithContentsOfObject:sha];
 	STAssertEqualObjects(raw, data, nil);
 }
+- (void)testLoadObjectWithSha1
+{
+    NSData * raw; GITObjectType type;
+    NSString * sha = @"87f974580d485f3cfd5fd9cc62491341067f0c59";
+    NSString * str = @"hello world!\n\ngoodbye world.\n";
+
+    NSData * data  = [NSData dataWithData:[str dataUsingEncoding:NSASCIIStringEncoding]];
+    BOOL result = [store loadObjectWithSha1:sha intoData:&raw type:&type error:NULL];
+
+    STAssertTrue(result, nil);
+    STAssertEquals(type, GITObjectTypeBlob, nil);
+    STAssertEquals([raw length], [data length], nil);
+    STAssertEqualObjects(raw, data, nil);
+}
 @end
