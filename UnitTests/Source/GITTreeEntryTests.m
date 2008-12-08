@@ -6,6 +6,8 @@
 //  Copyright 2008 ManicPanda.com. All rights reserved.
 //
 
+#import "GITTestHelper.h"
+#import "GITUtilityBelt.h"
 #import "GITTreeEntryTests.h"
 #import "GITTreeEntry.h"
 #import "GITRepo.h"
@@ -21,15 +23,19 @@
 - (void)setUp
 {
     [super setUp];
-    self.repo = [[GITRepo alloc] initWithRoot:@"."];
-    self.tree = [repo treeWithSha1:@"d813a4972d16d95c6b9dcfa41dfc4ea2150e6dcc"];
-    
+	self.repo = [[GITRepo alloc] initWithRoot:TEST_REPO_PATH];
+    self.tree = [repo treeWithSha1:@"a9ecfd8989d7c427c5564cf918b264261866ce01"];
+	    
     self.entryMode = 100644;
-    self.entryName = @".gitignore";
-    self.entrySHA1 = @"bed4001738fa8dad666d669867afaf9f2c2b8c6a";
+    self.entryName = @"index.html";
+    self.entrySHA1 = @"b8ea533af44f544877babe0aaabc1d7f3ed2593f";
 
-    // length (38) = mode (6) + name (10) + sha1 (20) + 1 space + 1 null
-    NSData * entryData = [NSData dataWithBytes:"100644 .gitignore\000\276\324\000\0278\372\215\255fmf\230g\257\257\237,+\214j" length:38];
+	NSData *packedEntrySha1 = packSHA1(self.entrySHA1);
+	NSString *entryHeader = [NSString stringWithFormat:@"%d %@\x00", self.entryMode, self.entryName, nil];
+
+	NSMutableData *entryData = [[[entryHeader dataUsingEncoding:NSASCIIStringEncoding] mutableCopy] autorelease];
+	[entryData appendData:packedEntrySha1];
+
     self.entryLine = [[NSString alloc] initWithData:entryData encoding:NSASCIIStringEncoding];
 }
 - (void)tearDown
