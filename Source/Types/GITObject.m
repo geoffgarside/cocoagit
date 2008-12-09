@@ -97,6 +97,48 @@
     }
     return self;
 }
+
+#pragma mark -
+#pragma mark Error Aware Initializers
+- (id)initWithSha1:(NSString*)theSha1 repo:(GITRepo*)theRepo error:(NSError**)error
+{
+    NSError * undError;
+    NSString * errorDescription;
+
+    // We could get a loading error here
+    NSData * raw = [theRepo objectWithSha1:theSha1 type:[self objectType] error:&undError]
+
+    if (raw)
+    {
+        return [self initWithSha1:theSha1 type:[self objectType] raw:raw repo:theRepo error:error]
+    }
+    else if (error != NULL)
+    {
+        *error = undError;
+        [self release];
+        return nil;
+    }
+}
+- (id)initWithSha1:(NSString*)theSha1 type:(GITObjectType)theType data:(NSData*)theData
+              repo:(GITRepo*)theRepo error:(NSError**)error
+{
+    if (self = [super init])
+    {
+        self.sha1 = theSha1;
+        // Remove when type is changed to a GITObjectType instead of a string
+        self.type = [[self class] stringForObjectType:theType];
+        self.size = [raw length];
+        self.repo = theRepo;
+
+        // Should only need to override -parseRawData:error: in subclasses
+        if (![self parseRawData:theData error:error])
+        {
+            [self release];
+            return nil;
+        }
+    }
+    return self;
+}
 - (void)dealloc
 {
     self.repo = nil;
@@ -105,6 +147,13 @@
     self.size = 0;
     
     [super dealloc];
+}
+
+#pragma mark -
+#pragma mark Data Parser
+- (BOOL)parseRawData:(NSData*)data error:(NSError**)error
+{
+    return YES;     // should we return NO?
 }
 
 #pragma mark -

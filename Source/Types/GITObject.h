@@ -115,6 +115,36 @@ typedef enum {
           size:(NSUInteger)newSize repo:(GITRepo*)theRepo;
 
 #pragma mark -
+#pragma mark Error Aware Initializers
+/*! Creates and returns a new GITObject.
+ * \param sha1 The SHA1 name of the objects
+ * \param repo The GITRepo the object belongs to
+ * \param[out] error The NSError containing the error details
+ * \return New GITObject or nil if an error occurred
+ */
+- (id)initWithSha1:(NSString*)sha1 repo:(GITRepo*)repo error:(NSError**)error;
+
+/*! Creates and returns a new GITObject.
+ * \param sha1 The SHA1 name of the objects
+ * \param type The GITObjectType enum value of the object
+ * \param data The raw data of the objects contents
+ * \param repo The GITRepo the object belongs to
+ * \param[out] error The NSError containing the error details
+ * \return New GITObject or nil if an error occurred
+ */
+- (id)initWithSha1:(NSString*)sha1 type:(GITObjectType)type data:(NSData*)data
+              repo:(GITRepo*)repo error:(NSError**)error;
+
+#pragma mark -
+#pragma mark Data Parser
+/*! Parses the contents of the raw data for the reciever
+ * \param raw The raw object data to be parsed
+ * \param[out] The NSError containing the error details
+ * \return YES if parsed successfully, NO if an error occurred.
+ */
+- (BOOL)parseRawData:(NSData*)raw error:(NSError**)error;
+
+#pragma mark -
 #pragma mark NSCopying
 /*! Returns a new instance that's a copy of the receiver.
  * Children should call this implementation first when overriding it as this will init
