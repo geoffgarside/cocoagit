@@ -70,6 +70,7 @@ typedef enum {
  * \param sha1 The hash of the object to load
  * \param repo The repository to load the object from
  * \return A new git object for the given <tt>sha1</tt> in the <tt>repo</tt>
+ * \deprecated Use -initWithSha1:repo:error: or -initWithSha1:type:data:error:
  */
 - (id)initWithSha1:(NSString*)sha1 repo:(GITRepo*)repo;
 
@@ -88,6 +89,7 @@ typedef enum {
  * \param repo The repo the object belongs to
  * \return A new git object with the given <tt>sha1</tt> composed of the given 
  * <tt>data</tt> in the <tt>repo</tt>
+ * \deprecated Use -initWithSha1:repo:error: or -initWithSha1:type:data:error:
  */
 - (id)initWithSha1:(NSString*)sha1 data:(NSData*)data repo:(GITRepo*)repo;
 
@@ -110,6 +112,7 @@ typedef enum {
  * \param newSize The size of the object
  * \param theRepo The repo to which this object belongs
  * \return New git object.
+ * \deprecated Use -initWithSha1:repo:error: or -initWithSha1:type:data:error:
  */
 - (id)initType:(NSString*)newType sha1:(NSString*)newSha1
           size:(NSUInteger)newSize repo:(GITRepo*)theRepo;
