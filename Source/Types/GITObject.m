@@ -29,6 +29,9 @@
     [self doesNotRecognizeSelector:_cmd];
     return nil;
 }
+
+#pragma mark -
+#pragma mark GITObjectType Translators
 + (GITObjectType)objectTypeForString:(NSString*)type
 {
     if ([type isEqualToString:@"commit"])
@@ -55,6 +58,9 @@
             return @"tag";
     }
 }
+
+#pragma mark -
+#pragma mark Deprecated Initializsers
 - (id)init
 {
     [self doesNotRecognizeSelector:_cmd];
@@ -95,12 +101,18 @@
     
     [super dealloc];
 }
+
+#pragma mark -
+#pragma mark NSCopying
 - (id)copyWithZone:(NSZone*)zone
 {
     GITObject * obj = [[[self class] allocWithZone:zone] initType:self.type sha1:self.sha1
                                                              size:self.size repo:self.repo];
     return obj;
 }
+
+#pragma mark -
+#pragma mark Raw Format methods
 - (NSData*)rawData
 {
     NSString * head = [NSString stringWithFormat:@"%@ %lu\0",

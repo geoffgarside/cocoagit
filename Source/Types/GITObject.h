@@ -36,6 +36,8 @@ typedef enum {
  */
 + (NSString*)typeName;
 
+#pragma mark -
+#pragma mark GITObjectType Translators
 /*! Returns the enum type value for the type string
  * \param type String to return the corresponding object type for
  * \return Object type which corresponds to the type passed
@@ -48,6 +50,8 @@ typedef enum {
  */
 + (NSString*)stringForObjectType:(GITObjectType)type;
 
+#pragma mark -
+#pragma mark Deprecated Initializsers
 /*! Creates and returns a new git object for the given <tt>sha1</tt>
  * in the <tt>repo</tt>.
  *
@@ -104,6 +108,8 @@ typedef enum {
 - (id)initType:(NSString*)newType sha1:(NSString*)newSha1
           size:(NSUInteger)newSize repo:(GITRepo*)theRepo;
 
+#pragma mark -
+#pragma mark NSCopying
 /*! Returns a new instance that's a copy of the receiver.
  * Children should call this implementation first when overriding it as this will init
  * the fields of the base object first. Children can then add to the copied object any
@@ -126,6 +132,8 @@ typedef enum {
  */
 - (id)copyWithZone:(NSZone*)zone;
 
+#pragma mark -
+#pragma mark Raw Format methods
 /*! Returns the raw data of the object.
  * \attention This is a concrete method.
  * \see rawContent
