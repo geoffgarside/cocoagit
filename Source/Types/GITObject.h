@@ -47,6 +47,12 @@ typedef enum {
  */
 - (id)init;
 
+/*! Returns the string for the object type.
+ * \param type GITObjectType for the string
+ * \return String for the object type
+ */
++ (NSString*)stringForObjectType:(GITObjectType)type;
+
 /*! Creates and returns a new git object for the given <tt>sha1</tt>
  * in the <tt>repo</tt>.
  *

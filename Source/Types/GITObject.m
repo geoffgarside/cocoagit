@@ -41,6 +41,20 @@
         return GITObjectTypeTag;
     return 0;
 }
++ (NSString*)stringForObjectType:(GITObjectType)type
+{
+    switch (type)
+    {
+        case GITObjectTypeCommit:
+            return @"commit";
+        case GITObjectTypeTree:
+            return @"tree";
+        case GITObjectTypeBlob:
+            return @"blob";
+        case GITObjectTypeTag:
+            return @"tag";
+    }
+}
 - (id)init
 {
     [self doesNotRecognizeSelector:_cmd];
