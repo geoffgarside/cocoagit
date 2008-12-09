@@ -42,11 +42,6 @@ typedef enum {
  */
 + (GITObjectType)objectTypeForString:(NSString*)type;
 
-/*! Raises a doesNotRecognizeSelector error to enforce the use of
- * the correct initialiser.
- */
-- (id)init;
-
 /*! Returns the string for the object type.
  * \param type GITObjectType for the string
  * \return String for the object type
