@@ -59,6 +59,11 @@
     }
 }
 
+- (GITObjectType)objectType
+{
+    return GITObjectTypeUnknown;
+}
+
 #pragma mark -
 #pragma mark Deprecated Initializsers
 - (id)init

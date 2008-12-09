@@ -33,6 +33,7 @@ typedef enum {
 @property(readonly,assign) NSUInteger size;
 
 /*! Returns the string name of the type.
+ * \deprecated It was a bad idea and it should be removed
  */
 + (NSString*)typeName;
 
@@ -49,6 +50,11 @@ typedef enum {
  * \return String for the object type
  */
 + (NSString*)stringForObjectType:(GITObjectType)type;
+
+/*! Returns the object type for the receiver
+ * \return GITObjectType enum value of the receivers class
+ */
+- (GITObjectType)objectType;
 
 #pragma mark -
 #pragma mark Deprecated Initializsers
