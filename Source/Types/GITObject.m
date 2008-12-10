@@ -128,7 +128,7 @@
         self.sha1 = theSha1;
         // Remove when type is changed to a GITObjectType instead of a string
         self.type = [[self class] stringForObjectType:theType];
-        self.size = [raw length];
+        self.size = [theData length];
         self.repo = theRepo;
 
         // Should only need to override -parseRawData:error: in subclasses
