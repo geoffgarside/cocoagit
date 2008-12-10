@@ -174,4 +174,10 @@
  * \return A object with the given sha1 or nil if it cannot be found.
  */
 - (GITObject*)objectWithSha1:(NSString*)sha1 type:(GITObjectType)type error:(NSError**)error;
+
+#pragma mark -
+#pragma mark Low Level Loader
+/*! \see GITObjectStore */
+- (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)data
+                      type:(GITObjectType*)type error:(NSError**)error;
 @end

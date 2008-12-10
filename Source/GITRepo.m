@@ -158,4 +158,12 @@
     return nil;
 }
 
+#pragma mark -
+#pragma mark Low Level Loader
+- (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)data
+                      type:(GITObjectType*)type error:(NSError**)error
+{
+    return [self.store loadObjectWithSha1:sha1 intoData:data type:type error:error];
+}
+
 @end
