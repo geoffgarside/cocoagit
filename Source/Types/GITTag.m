@@ -87,7 +87,7 @@ NSString * const kGITObjectTagName = @"tag";
 - (BOOL)parseRawData:(NSData*)raw error:(NSError**)error
 {
     // TODO: Update this method to support errors
-    NSString  * dataStr = [[NSString alloc] initWithData:data 
+    NSString  * dataStr = [[NSString alloc] initWithData:raw
                                                 encoding:NSASCIIStringEncoding];
     NSScanner * scanner = [NSScanner scannerWithString:dataStr];
     

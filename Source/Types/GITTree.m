@@ -68,7 +68,7 @@ NSString * const kGITObjectTreeName = @"tree";
 - (BOOL)parseRawData:(NSData*)raw error:(NSError**)error
 {
     // TODO: Update this method to support errors
-    NSString  * dataStr = [[NSString alloc] initWithData:data 
+    NSString  * dataStr = [[NSString alloc] initWithData:raw
                                                 encoding:NSASCIIStringEncoding];
 
     NSMutableArray *treeEntries = [NSMutableArray arrayWithCapacity:2];
