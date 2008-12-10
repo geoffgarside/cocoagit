@@ -29,6 +29,13 @@ NSString * const kGITObjectBlobName = @"blob";
 {
     return kGITObjectBlobName;
 }
+- (GITObjectType)objectType
+{
+    return GITObjectTypeBlob;
+}
+
+#pragma mark -
+#pragma mark Deprecated Initialisers
 - (id)initWithSha1:(NSString*)newSha1 data:(NSData*)raw repo:(GITRepo*)theRepo
 {
     if (self = [super initType:kGITObjectBlobName sha1:newSha1
@@ -38,6 +45,9 @@ NSString * const kGITObjectBlobName = @"blob";
     }
     return self;
 }
+
+#pragma mark -
+#pragma mark Mem overrides
 - (void)dealloc
 {
     self.data = nil;
@@ -49,6 +59,17 @@ NSString * const kGITObjectBlobName = @"blob";
     blob.data = self.data;
     return blob;
 }
+
+#pragma mark -
+#pragma mark Data Parser
+- (BOOL)parseRawData:(NSData*)raw error:(NSError**)error
+{
+    self.data = raw;
+    return YES;
+}
+
+#pragma mark -
+#pragma mark Blob methods
 - (BOOL)canBeRepresentedAsString
 {
     // If we can't find a null byte then it can be represented as string
@@ -62,6 +83,9 @@ NSString * const kGITObjectBlobName = @"blob";
                                          encoding:NSASCIIStringEncoding];
     return [[v autorelease] retain];
 }
+
+#pragma mark -
+#pragma mark Output Methods
 - (NSData*)rawContent
 {
     return self.data;

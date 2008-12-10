@@ -41,6 +41,13 @@ NSString * const kGITObjectTagName = @"tag";
 {
     return kGITObjectTagName;
 }
+- (GITObjectType)objectType
+{
+    return GITObjectTypeTag;
+}
+
+#pragma mark -
+#pragma mark Deprecated Initialisers
 - (id)initWithSha1:(NSString*)newSha1 data:(NSData*)raw repo:(GITRepo*)theRepo
 {
     if (self = [super initType:kGITObjectTagName sha1:newSha1
@@ -50,6 +57,9 @@ NSString * const kGITObjectTagName = @"tag";
     }
     return self;
 }
+
+#pragma mark -
+#pragma mark Mem overrides
 - (void)dealloc
 {
     self.name = nil;
@@ -71,8 +81,12 @@ NSString * const kGITObjectTagName = @"tag";
     
     return tag;
 }
-- (void)extractFieldsFromData:(NSData*)data
+
+#pragma mark -
+#pragma mark Data Parser
+- (BOOL)parseRawData:(NSData*)raw error:(NSError**)error
 {
+    // TODO: Update this method to support errors
     NSString  * dataStr = [[NSString alloc] initWithData:data 
                                                 encoding:NSASCIIStringEncoding];
     NSScanner * scanner = [NSScanner scannerWithString:dataStr];
@@ -115,12 +129,21 @@ NSString * const kGITObjectTagName = @"tag";
     }
         
     self.message = [dataStr substringFromIndex:[scanner scanLocation]];
+
+    return YES;
+}
+- (void)extractFieldsFromData:(NSData*)data
+{
+    [self parseRawData:data error:NULL];
 }
 - (NSString*)description
 {
     return [NSString stringWithFormat:@"Tag: %@ <%@>",
                                         self.name, self.sha1];
 }
+
+#pragma mark -
+#pragma mark Output Methods
 - (NSData*)rawContent
 {
     return [[NSString stringWithFormat:@"object %@\ntype %@\ntag %@\ntagger %@ %@\n%@",

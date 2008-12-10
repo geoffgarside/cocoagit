@@ -31,6 +31,13 @@ NSString * const kGITObjectTreeName = @"tree";
 {
     return kGITObjectTreeName;
 }
+- (GITObjectType)objectType
+{
+    return GITObjectTypeTree;
+}
+
+#pragma mark -
+#pragma mark Deprecated Initialisers
 - (id)initWithSha1:(NSString*)newSha1 data:(NSData*)raw repo:(GITRepo*)theRepo
 {
     if (self = [super initType:kGITObjectTreeName sha1:newSha1
@@ -40,6 +47,9 @@ NSString * const kGITObjectTreeName = @"tree";
     }
     return self;
 }
+
+#pragma mark -
+#pragma mark Mem overrides
 - (void)dealloc
 {
     self.entries = nil;
@@ -52,8 +62,12 @@ NSString * const kGITObjectTreeName = @"tree";
     
     return tree;
 }
-- (void)extractEntriesFromData:(NSData*)data
+
+#pragma mark -
+#pragma mark Data Parser
+- (BOOL)parseRawData:(NSData*)raw error:(NSError**)error
 {
+    // TODO: Update this method to support errors
     NSString  * dataStr = [[NSString alloc] initWithData:data 
                                                 encoding:NSASCIIStringEncoding];
 
@@ -68,16 +82,25 @@ NSString * const kGITObjectTreeName = @"tree";
 
         NSRange entryRange = NSMakeRange(entryStart, 
             entrySha1Start - entryStart + kGITPackedSha1Length + 1);
-        
+
         NSString * treeLine = [dataStr substringWithRange:entryRange];
         GITTreeEntry * entry = [[GITTreeEntry alloc] initWithTreeLine:treeLine parent:self];
         [treeEntries addObject:entry];
 
         entryStart = entryRange.location + entryRange.length;
     } while(entryStart < [dataStr length]);
-    
+
     self.entries = treeEntries;
+
+    return YES;
 }
+- (void)extractEntriesFromData:(NSData*)data
+{
+    [self parseRawData:data error:NULL];
+}
+
+#pragma mark -
+#pragma mark Output Methods
 - (NSData*)rawContent
 {
     NSMutableData * content = [NSMutableData dataWithCapacity:self.size];
