@@ -105,20 +105,32 @@
 {
     NSError * undError;
     NSString * errorDescription;
+    NSDictionary * errorUserInfo;
+
+    NSData * raw;
+    GITObjectType theType;
 
     // We could get a loading error here
-    NSData * raw = [theRepo objectWithSha1:theSha1 type:[self objectType] error:&undError]
-
-    if (raw)
+    if ([theRepo loadObjectWithSha1:theSha1 intoData:&raw type:&theType error:&undError])
     {
-        return [self initWithSha1:theSha1 type:[self objectType] raw:raw repo:theRepo error:error]
+        if (theType == [self objectType])
+            return [self initWithSha1:theSha1 type:[self objectType] data:raw repo:theRepo error:error];
+        else if (error != NULL)
+        {
+            errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Object type mismatch %@ should be %@", @"GITErrorObjectTypeMismatch (GITObject)"),
+                                [[self class] stringForObjectType:theType], [[self class] stringForObjectType:[self objectType]]];
+            errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey,
+                             undError, NSUnderlyingErrorKey, nil];
+            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectTypeMismatch userInfo:errorUserInfo];
+        }
     }
     else if (error != NULL)
     {
-        *error = undError;
-        [self release];
-        return nil;
+        *error = undError;  // might need a retain or a copy here
     }
+
+    [self release];
+    return nil;
 }
 - (id)initWithSha1:(NSString*)theSha1 type:(GITObjectType)theType data:(NSData*)theData
               repo:(GITRepo*)theRepo error:(NSError**)error
