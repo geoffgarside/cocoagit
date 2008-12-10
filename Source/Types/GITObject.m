@@ -57,6 +57,7 @@
         case GITObjectTypeTag:
             return @"tag";
     }
+    return nil;
 }
 
 - (GITObjectType)objectType
