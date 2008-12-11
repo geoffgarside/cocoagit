@@ -93,6 +93,9 @@ NSString * const kGITObjectCommitName = @"commit";
 - (BOOL)parseRawData:(NSData*)raw error:(NSError**)error
 {
     // TODO: Update this method to support errors
+    NSString * errorDescription;
+    NSDictionary * errorUserInfo;
+
     NSString  * dataStr = [[NSString alloc] initWithData:raw
                                                 encoding:NSASCIIStringEncoding];
     NSScanner * scanner = [NSScanner scannerWithString:dataStr];
@@ -113,13 +116,35 @@ NSString * const kGITObjectCommitName = @"commit";
     if ([scanner scanString:@"tree" intoString:NULL] &&
         [scanner scanUpToString:NewLine intoString:&commitTree])
     {
-        self.tree = [self.repo treeWithSha1:commitTree];
+        self.tree = [self.repo treeWithSha1:commitTree error:error];
+        if (!self.tree) return NO;
+    }
+    else
+    {
+        if (error != NULL)
+        {
+            errorDescription = NSLocalizedString(@"Failed to parse tree reference for commit", @"GITErrorObjectParsingFailed (GITCommit:tree)");
+            errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey, nil];
+            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
+        }
+        return NO;
     }
     
     if ([scanner scanString:@"parent" intoString:NULL] &&
         [scanner scanUpToString:NewLine intoString:&commitParent])
     {
-        self.parent = [self.repo commitWithSha1:commitParent];
+        self.parent = [self.repo commitWithSha1:commitParent error:error];
+        if (!self.parent) return NO;
+    }
+    else
+    {
+        if (error != NULL)
+        {
+            errorDescription = NSLocalizedString(@"Failed to parse parent reference for commit", @"GITErrorObjectParsingFailed (GITCommit:parent)");
+            errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey, nil];
+            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
+        }
+        return NO;
     }
     
     if ([scanner scanString:@"author" intoString:NULL] &&
@@ -134,6 +159,16 @@ NSString * const kGITObjectCommitName = @"commit";
         self.authored = [[GITDateTime alloc] initWithTimestamp:authorTimestamp
                                                 timeZoneOffset:authorTimezone];
     }
+    else
+    {
+        if (error != NULL)
+        {
+            errorDescription = NSLocalizedString(@"Failed to parse author details for commit", @"GITErrorObjectParsingFailed (GITCommit:author)");
+            errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey, nil];
+            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
+        }
+        return NO;
+    }
     
     if ([scanner scanString:@"committer" intoString:NULL] &&
         [scanner scanUpToString:@"<" intoString:&committerName] &&
@@ -147,8 +182,28 @@ NSString * const kGITObjectCommitName = @"commit";
         self.committed = [[GITDateTime alloc] initWithTimestamp:committerTimestamp
                                                  timeZoneOffset:committerTimezone];
     }
+    else
+    {
+        if (error != NULL)
+        {
+            errorDescription = NSLocalizedString(@"Failed to parse committer details for commit", @"GITErrorObjectParsingFailed (GITCommit:committer)");
+            errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey, nil];
+            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
+        }
+        return NO;
+    }
         
     self.message = [[scanner string] substringFromIndex:[scanner scanLocation]];
+    if (!self.message)
+    {
+        if (error != NULL)
+        {
+            errorDescription = NSLocalizedString(@"Failed to parse message for commit", @"GITErrorObjectParsingFailed (GITCommit:message)");
+            errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey, nil];
+            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
+        }
+        return NO;
+    }
 
     return YES;
 }
