@@ -87,6 +87,9 @@ NSString * const kGITObjectTagName = @"tag";
 - (BOOL)parseRawData:(NSData*)raw error:(NSError**)error
 {
     // TODO: Update this method to support errors
+    NSString * errorDescription;
+    NSDictionary * errorUserInfo;
+
     NSString  * dataStr = [[NSString alloc] initWithData:raw
                                                 encoding:NSASCIIStringEncoding];
     NSScanner * scanner = [NSScanner scannerWithString:dataStr];
@@ -106,13 +109,34 @@ NSString * const kGITObjectTagName = @"tag";
         [scanner scanUpToString:NewLine intoString:&taggedType] &&
         [taggedType isEqualToString:@"commit"])
     {
-        self.commit = [self.repo commitWithSha1:taggedCommit];
+        self.commit = [self.repo commitWithSha1:taggedCommit error:error];
+        if (!self.commit) return NO;
+    }
+    else
+    {
+        if (error != NULL)
+        {
+            errorDescription = NSLocalizedString(@"Failed to parse object (commit) reference for tag", @"GITErrorObjectParsingFailed (GITTag:object)");
+            errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey, nil];
+            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
+        }
+        return NO;
     }
     
     if ([scanner scanString:@"tag" intoString:NULL] &&
         [scanner scanUpToString:NewLine intoString:&tagName])
     {
         self.name = tagName;
+    }
+    else
+    {
+        if (error != NULL)
+        {
+            errorDescription = NSLocalizedString(@"Failed to parse name for tag", @"GITErrorObjectParsingFailed (GITTag:tag)");
+            errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey, nil];
+            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
+        }
+        return NO;
     }
     
     if ([scanner scanString:@"tagger" intoString:NULL] &&
@@ -127,8 +151,28 @@ NSString * const kGITObjectTagName = @"tag";
         self.tagged = [[GITDateTime alloc] initWithTimestamp:taggerTimestamp
                                               timeZoneOffset:taggerTimezone];
     }
+    else
+    {
+        if (error != NULL)
+        {
+            errorDescription = NSLocalizedString(@"Failed to parse tagger for tag", @"GITErrorObjectParsingFailed (GITTag:tagger)");
+            errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey, nil];
+            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
+        }
+        return NO;
+    }
         
     self.message = [dataStr substringFromIndex:[scanner scanLocation]];
+    if (!self.message)
+    {
+        if (error != NULL)
+        {
+            errorDescription = NSLocalizedString(@"Failed to parse message for tag", @"GITErrorObjectParsingFailed (GITTag:message)");
+            errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey, nil];
+            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
+        }
+        return NO;
+    }
 
     return YES;
 }
