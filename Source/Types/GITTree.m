@@ -68,6 +68,10 @@ NSString * const kGITObjectTreeName = @"tree";
 - (BOOL)parseRawData:(NSData*)raw error:(NSError**)error
 {
     // TODO: Update this method to support errors
+    NSError * undError;
+    NSString * errorDescription;
+    NSDictionary * errorUserInfo;
+
     NSString  * dataStr = [[NSString alloc] initWithData:raw
                                                 encoding:NSASCIIStringEncoding];
 
@@ -84,8 +88,21 @@ NSString * const kGITObjectTreeName = @"tree";
             entrySha1Start - entryStart + kGITPackedSha1Length + 1);
 
         NSString * treeLine = [dataStr substringWithRange:entryRange];
-        GITTreeEntry * entry = [[GITTreeEntry alloc] initWithTreeLine:treeLine parent:self];
-        [treeEntries addObject:entry];
+        GITTreeEntry * entry = [[GITTreeEntry alloc] initWithRawString:treeLine parent:self error:&undError];
+
+        if (entry)
+            [treeEntries addObject:entry];
+        else
+        {
+            if (error != NULL)
+            {
+                errorDescription = NSLocalizedString(@"Failed to parse entry for tree", @"GITErrorObjectParsingFailed (GITTree)");
+                errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey,
+                                 undError, NSUnderlyingErrorKey, nil];
+                *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
+            }
+            return NO;
+        }
 
         entryStart = entryRange.location + entryRange.length;
     } while(entryStart < [dataStr length]);
