@@ -130,7 +130,7 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
     {
         self.mode = theMode;
         self.name = theName;
-        self.sha1 = theHash;
+        self.sha1 = theSha1;
         self.parent = parentTree;
     }
     return self;
