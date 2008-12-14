@@ -15,7 +15,8 @@ extern NSString * const kGITObjectTagName;
 @interface GITTag : GITObject
 {
     NSString * name;
-    
+    NSString * objectSha1;
+
     // At such time as Tags can reference objects
     // other than commits we'll change this.
     GITCommit * commit;
@@ -27,6 +28,7 @@ extern NSString * const kGITObjectTagName;
 }
 
 @property(readonly,copy) NSString * name;
+@property(readonly,copy) NSString * objectSha1;
 @property(readonly,copy) GITCommit * commit;
 @property(readonly,copy) GITActor * tagger;
 @property(readonly,copy) GITDateTime * tagged;

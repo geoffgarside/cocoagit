@@ -14,18 +14,23 @@ extern NSString * const kGITObjectCommitName;
 @class GITTree, GITActor, GITDateTime;
 @interface GITCommit : GITObject
 {
+    NSString * treeSha1;
+    NSString * parentSha1;
+
     GITTree  * tree;
-    
     GITCommit * parent;
+
     GITActor  * author;
     GITActor  * committer;
-    
+
     GITDateTime * authored;
     GITDateTime * committed;
     
     NSString * message;
 }
 
+@property(readonly,copy) NSString * treeSha1;
+@property(readonly,copy) NSString * parentSha1;
 @property(readonly,copy) GITTree * tree;
 @property(readonly,copy) GITCommit * parent;
 @property(readonly,copy) GITActor * author;
