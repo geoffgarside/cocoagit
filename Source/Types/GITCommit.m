@@ -92,6 +92,11 @@ NSString * const kGITObjectCommitName = @"commit";
     return commit;
 }
 
+- (BOOL)isFirstCommit
+{
+    return (self.parentSha1 == nil);
+}
+
 #pragma mark -
 #pragma mark Object Loaders
 - (GITTree*)tree

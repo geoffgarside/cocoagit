@@ -65,5 +65,10 @@
     STAssertNotNil(commit.committed, nil);
     STAssertNotNil(firstCommit.committed, nil);
 }
+- (void)testIsFirstCommit
+{
+    STAssertFalse([commit isFirstCommit], nil);
+    STAssertTrue([firstCommit isFirstCommit], nil);
+}
 
 @end

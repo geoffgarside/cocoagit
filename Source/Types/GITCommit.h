@@ -39,4 +39,6 @@ extern NSString * const kGITObjectCommitName;
 @property(readonly,copy) GITDateTime * committed;
 @property(readonly,copy) NSString * message;
 
+- (BOOL)isFirstCommit;
+
 @end
