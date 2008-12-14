@@ -144,13 +144,13 @@
             switch (type)
             {
                 case GITObjectTypeCommit:
-                    return [[GITCommit alloc] initWithSha1:sha1 data:data repo:self];
+                    return [[GITCommit alloc] initWithSha1:sha1 type:type data:data repo:self error:error];
                 case GITObjectTypeTree:
-                    return [[GITTree alloc] initWithSha1:sha1 data:data repo:self];
+                    return [[GITTree alloc] initWithSha1:sha1 type:type data:data repo:self error:error];
                 case GITObjectTypeBlob:
-                    return [[GITBlob alloc] initWithSha1:sha1 data:data repo:self];
+                    return [[GITBlob alloc] initWithSha1:sha1 type:type data:data repo:self error:error];
                 case GITObjectTypeTag:
-                    return [[GITTag alloc] initWithSha1:sha1 data:data repo:self];
+                    return [[GITTag alloc] initWithSha1:sha1 type:type data:data repo:self error:error];
             }
         }
         else if (error != NULL)
