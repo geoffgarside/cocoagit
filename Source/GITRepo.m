@@ -35,23 +35,29 @@
 }
 - (id)initWithRoot:(NSString*)repoRoot bare:(BOOL)isBare
 {
-    if (self = [super init])
+    NSString * rootPath = repoRoot;
+    GITObjectStore * objectStore;
+    if (![repoRoot hasSuffix:@".git"] && !isBare)
+        rootPath = [repoRoot stringByAppendingPathComponent:@".git"];
+    objectStore = [[GITCombinedStore alloc] initWithStores:
+                   [[GITFileStore alloc] initWithRoot:rootPath],
+                   [[GITPackStore alloc] initWithRoot:rootPath], nil];
+
+    if ([self initWithStore:objectStore])
     {
-        if ([repoRoot hasSuffix:@".git"])
-            self.root = repoRoot;
-        else
-        {
-            if (isBare)
-                self.root = repoRoot; //[repoRoot stringByAppendingPathExtension:@".git"];
-            else
-                self.root = [repoRoot stringByAppendingPathComponent:@".git"];
-        }
-        
+        self.root = rootPath;
         NSString * descFile = [self.root stringByAppendingPathComponent:@"description"];
         self.desc = [NSString stringWithContentsOfFile:descFile];
-        self.store = [[GITCombinedStore alloc] initWithStores:
-                        [[GITFileStore alloc] initWithRoot:self.root],
-                        [[GITPackStore alloc] initWithRoot:self.root], nil];
+    }
+    return self;
+}
+- (id)initWithStore:(GITObjectStore*)objectStore
+{
+    if (self = [super init])
+    {
+        self.root = nil;
+        self.desc = nil;
+        self.store = objectStore;
     }
     return self;
 }
