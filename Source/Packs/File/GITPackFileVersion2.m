@@ -51,19 +51,22 @@ enum {
 {
     return 2;
 }
-- (id)initWithPath:(NSString*)thePath
+- (id)initWithPath:(NSString*)thePath error:(NSError **)error
 {
-    if (self = [super init])
-    {
-        NSError * err;
-        self.path = thePath;
-        self.data = [NSData dataWithContentsOfFile:thePath
-                                           options:NSUncachedRead
-                                             error:&err];
-        NSString * idxPath = [[thePath stringByDeletingPathExtension] 
-                              stringByAppendingPathExtension:@"idx"];
-        self.index  = [[GITPackIndex alloc] initWithPath:idxPath];
-    }
+    if (! [super init])
+		return nil;
+
+	self.path = thePath;
+	self.data = [NSData dataWithContentsOfFile:thePath
+									   options:NSUncachedRead
+										 error:error];
+	if (!data)
+		return nil;
+	
+	NSString * idxPath = [[thePath stringByDeletingPathExtension] 
+						  stringByAppendingPathExtension:@"idx"];
+	self.index  = [[GITPackIndex alloc] initWithPath:idxPath];
+
     return self;
 }
 - (NSUInteger)numberOfObjects
