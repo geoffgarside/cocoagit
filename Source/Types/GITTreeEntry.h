@@ -72,7 +72,7 @@ extern const NSUInteger kGITUnpackedSha1Length;
 /*! Creates and returns a new entry by extracting the fields from the raw string.
  * \param raw The raw string from a tree object file
  * \param parent The parent tree this entry belongs to
- * \param[out] Error containing a description of any errors if they occurred
+ * \param[out] error Error containing a description of any errors if they occurred
  * \return A new entry or nil if error
  */
 - (id)initWithRawString:(NSString*)raw parent:(GITTree*)parent error:(NSError**)error;
@@ -82,7 +82,7 @@ extern const NSUInteger kGITUnpackedSha1Length;
  * \param name The file name of the filr or directory described
  * \param sha1 The SHA1 of the object referenced
  * \param parent The parent tree this entry belongs to
- * \param[out] Error containing a description of any errors if they occurred
+ * \param[out] error Error containing a description of any errors if they occurred
  * \return A new entry or nil if error
  */
 - (id)initWithFileMode:(NSUInteger)mode name:(NSString*)name sha1:(NSString*)sha1 parent:(GITTree*)parent error:(NSError**)error;

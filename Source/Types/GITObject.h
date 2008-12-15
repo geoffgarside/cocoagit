@@ -140,9 +140,9 @@ typedef enum {
 
 #pragma mark -
 #pragma mark Data Parser
-/*! Parses the contents of the raw data for the reciever
+/*! Parses the contents of the raw data for the reciever.
  * \param raw The raw object data to be parsed
- * \param[out] The NSError containing the error details
+ * \param[out] error The NSError containing the error details
  * \return YES if parsed successfully, NO if an error occurred.
  */
 - (BOOL)parseRawData:(NSData*)raw error:(NSError**)error;
