@@ -36,7 +36,7 @@ static const char const kGITPackIndexMagicNumber[] = { '\377', 't', 'O', 'c' };
 	// File opened successfully, read the first four bytes to see if
 	// we are a version 1 index or a later version index.
 	[data getBytes:buf range:NSMakeRange(0, 4)];
-	if (memcmp(buf, kGITPackIndexMagicNumber, 4) =! 0)
+	if (memcmp(buf, kGITPackIndexMagicNumber, 4) != 0)
 		return [[GITPackIndexVersion1 allocWithZone:z] initWithPath:thePath error:outError];
 	
 	// Its a v2+ index file
