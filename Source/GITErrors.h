@@ -18,6 +18,12 @@
 
 __git_error_domain(GITErrorDomain);
 
+#import "NSError-OBExtensions.h"
+
+// Define GITError* macros to use the OmniBase _OBError helper functions. If we decide to move away from OmniBase code, we can just redfine these.
+#define GITError(error, code, description) _OBError(error, GITErrorDomain, code, __FILE__, __LINE__, NSLocalizedDescriptionKey, description, nil)
+#define GITErrorWithInfo(error, code, ...) _OBError(error, GITErrorDomain, code, __FILE__, __LINE__, ## __VA_ARGS__)
+
 #pragma mark Object Loading Errors
 __git_error(GITErrorObjectSizeMismatch);
 __git_error(GITErrorObjectNotFound);
@@ -29,6 +35,10 @@ __git_error(GITErrorFileNotFound);
 
 #pragma mark PACK and Index Error Codes
 __git_error(GITErrorPackIndexUnsupportedVersion);
+__git_error(GITErrorPackStoreNotAccessible);
+__git_error(GITErrorPackFileInvalid);
+__git_error(GITErrorPackFileNotSupported);
+
 
 #undef __git_error
 #undef __git_error_domain

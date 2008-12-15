@@ -48,11 +48,10 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 {
     if (self = [super init])
     {
-        NSError * err;
         self.path = thePath;
         self.data = [NSData dataWithContentsOfFile:thePath
                                            options:NSUncachedRead
-                                             error:&err];
+                                             error:outError];
     }
     return self;
 }

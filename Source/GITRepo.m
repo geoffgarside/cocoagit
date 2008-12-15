@@ -131,35 +131,30 @@
 }
 - (GITObject*)objectWithSha1:(NSString*)sha1 type:(GITObjectType)eType error:(NSError**)error
 {
-    NSError * undError;
-    NSString * errorDescription;
-    NSDictionary * errorUserInfo;
-
     GITObjectType type; NSData * data;
+    if (![self.store loadObjectWithSha1:sha1 intoData:&data type:&type error:error]) {
+		return nil;
+	}
+	
+ 	if (! (eType == GITObjectTypeUnknown || eType == type)) {
+		GITError(error, GITErrorObjectTypeMismatch, NSLocalizedString(@"Object type mismatch", @"GITErrorObjectTypeMismatch")); 
+		return nil;
+	}
+		
+	switch (type)
+	{
+		case GITObjectTypeCommit:
+			return [[GITCommit alloc] initWithSha1:sha1 data:data repo:self];
+		case GITObjectTypeTree:
+			return [[GITTree alloc] initWithSha1:sha1 data:data repo:self];
+		case GITObjectTypeBlob:
+			return [[GITBlob alloc] initWithSha1:sha1 data:data repo:self];
+		case GITObjectTypeTag:
+			return [[GITTag alloc] initWithSha1:sha1 data:data repo:self];
+	}
 
-    if ([self.store loadObjectWithSha1:sha1 intoData:&data type:&type error:&undError])
-    {
-        if (eType == GITObjectTypeUnknown || eType == type)
-        {
-            switch (type)
-            {
-                case GITObjectTypeCommit:
-                    return [[GITCommit alloc] initWithSha1:sha1 type:type data:data repo:self error:error];
-                case GITObjectTypeTree:
-                    return [[GITTree alloc] initWithSha1:sha1 type:type data:data repo:self error:error];
-                case GITObjectTypeBlob:
-                    return [[GITBlob alloc] initWithSha1:sha1 type:type data:data repo:self error:error];
-                case GITObjectTypeTag:
-                    return [[GITTag alloc] initWithSha1:sha1 type:type data:data repo:self error:error];
-            }
-        }
-        else if (error != NULL)
-        {
-            errorDescription = NSLocalizedString(@"Object type mismatch", @"GITErrorObjectTypeMismatch");
-            errorUserInfo = [NSDictionary dictionaryWithObject:errorDescription forKey:NSLocalizedDescriptionKey];
-            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectTypeMismatch userInfo:errorUserInfo];
-        }
-    }
+	// If we get here, then we've got a type that we don't understand. If the only way this could happen is a programming error, then it should be an exception.  For now, just create an error.
+	GITError(error, GITErrorObjectTypeMismatch, NSLocalizedString(@"Object type mismatch", @"GITErrorObjectTypeMismatch"));
 
     return nil;
 }

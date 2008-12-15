@@ -12,5 +12,4 @@
 @interface GITPlaceholderPackFile : GITPackFile
 {
 }
-
 @end
