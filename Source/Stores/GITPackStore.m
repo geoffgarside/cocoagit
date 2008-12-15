@@ -61,31 +61,25 @@
 }
 - (NSArray*)loadPackFilesWithError:(NSError**)outError
 {
-    NSError * error;
     GITPackFile * pack;
     NSMutableArray * packs;
     NSFileManager * fm = [NSFileManager defaultManager];
-    NSArray * files    = [fm contentsOfDirectoryAtPath:self.packsDir error:&error];
+    NSArray * files    = [fm contentsOfDirectoryAtPath:self.packsDir error:outError];
 
-    if (files)
-    {
-        // Should only be pack & idx files, so div(2) should be about right
-        packs = [NSMutableArray arrayWithCapacity:[files count] / 2];
-        for (NSString * file in files)
-        {
-            if ([[file pathExtension] isEqualToString:@"pack"])
-            {
-                pack = [[GITPackFile alloc] initWithPath:[self.packsDir stringByAppendingPathComponent:file]]; // retain?
-                [packs addObject:pack];
-            }
-        }
-    }
-    else
-    {
-        *outError = error; // The simple way, if we want to add more later we can :D
-        NSLog(@"Error loading pack files: %@", [error userInfo]);
-        packs = nil;
-    }
+    if (!files) {
+		GITError(outError, GITErrorPackStoreNotAccessible, NSLocalizedString(@"Could not access pack directory", @"GITErrorPackStoreNotAccessible"));
+		return nil;
+	}
+
+	// Should only be pack & idx files, so div(2) should be about right
+	packs = [NSMutableArray arrayWithCapacity:[files count] / 2];
+	for (NSString * file in files) {
+		if ([[file pathExtension] isEqualToString:@"pack"]) {
+			pack = [[GITPackFile alloc] initWithPath:[self.packsDir stringByAppendingPathComponent:file]];
+			[packs addObject:pack];
+			[pack release];
+		}
+	}
 
     return packs;
 }

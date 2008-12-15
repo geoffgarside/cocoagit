@@ -23,6 +23,6 @@ __git_error(GITErrorFileNotFound,                   -5);
 
 #pragma mark PACK and Index Error Codes
 __git_error(GITErrorPackIndexUnsupportedVersion,    -6);
-__git_error(GITErrorPackStoreNotFound,				-7);
+__git_error(GITErrorPackStoreNotAccessible,			-7);
 
 #undef __git_error
