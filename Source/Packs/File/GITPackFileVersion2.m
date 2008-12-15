@@ -98,71 +98,61 @@ enum {
     NSUInteger size, type, shift = 4;
     NSUInteger offset = [self.index packOffsetForSha1:sha1];
 
-    if (offset > 0)
-    {
-        [self.data getBytes:&buf range:NSMakeRange(offset++, 1)];
-        NSAssert(buf != 0x0, @"buf should not be NULL");
-
-        size = buf & 0xf;
-        type = (buf >> 4) & 0x7;
-
-        while ((buf & 0x80) != 0)
-        {
-            [self.data getBytes:&buf range:NSMakeRange(offset++, 1)];
-            NSAssert(buf != 0x0, @"buf should not be NULL");
-
-            size |= ((buf & 0x7f) << shift);
-            shift += 7;
-        }
-
-        *objectData = nil;    //!< nil out the outgoing data
-        switch (type) {
-            case kGITPackFileTypeCommit:
-                *objectType = type;
-                *objectData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
-                break;
-            case kGITPackFileTypeTree:
-                *objectType = type;
-                *objectData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
-                break;
-            case kGITPackFileTypeTag:
-                *objectType = type;
-                *objectData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
-                break;
-            case kGITPackFileTypeBlob:
-                *objectType = type;
-                *objectData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
-                break;
-            case kGITPackFileTypeDeltaOfs:
-            case kGITPackFileTypeDeltaRefs:
-                NSAssert(NO, @"Cannot handle Delta Object types yet");
-                break;
-            default:
-                NSLog(@"bad object type %d", type);
-                break;
-        }
-
-        if (*objectData && *objectType && size == [*objectData length])
-            return YES;
-        else
-        {
-            errorCode = GITErrorObjectSizeMismatch;
-            errorDescription = NSLocalizedString(@"Object size mismatch", @"GITErrorObjectSizeMismatch");
-        }
-    }
-    else
-    {
-        errorCode = GITErrorObjectNotFound;
+	if (offset <= 0) {
         errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Object %@ not found", @"GITErrorObjectNotFound"), sha1];
-    }
-
-    if (errorCode != 0 && error != NULL)
-    {
-        errorUserInfo = [NSDictionary dictionaryWithObject:errorDescription forKey:NSLocalizedDescriptionKey];
-        *error = [NSError errorWithDomain:GITErrorDomain code:errorCode userInfo:errorUserInfo];
-    }
-
-    return NO;
+		GITError(error, GITErrorObjectNotFound, errorDescription);
+		return NO;
+	}
+	
+	[self.data getBytes:&buf range:NSMakeRange(offset++, 1)];
+	NSAssert(buf != 0x0, @"buf should not be NULL");
+	
+	size = buf & 0xf;
+	type = (buf >> 4) & 0x7;
+	
+	while ((buf & 0x80) != 0)
+	{
+		[self.data getBytes:&buf range:NSMakeRange(offset++, 1)];
+		NSAssert(buf != 0x0, @"buf should not be NULL");
+		
+		size |= ((buf & 0x7f) << shift);
+		shift += 7;
+	}
+	
+	*objectData = nil;    //!< nil out the outgoing data
+	switch (type) {
+		case kGITPackFileTypeCommit:
+			*objectType = type;
+			*objectData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
+			break;
+		case kGITPackFileTypeTree:
+			*objectType = type;
+			*objectData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
+			break;
+		case kGITPackFileTypeTag:
+			*objectType = type;
+			*objectData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
+			break;
+		case kGITPackFileTypeBlob:
+			*objectType = type;
+			*objectData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
+			break;
+		case kGITPackFileTypeDeltaOfs:
+		case kGITPackFileTypeDeltaRefs:
+			NSAssert(NO, @"Cannot handle Delta Object types yet");
+			break;
+		default:
+			NSLog(@"bad object type %d", type);
+			break;
+	}
+	
+	// Similar to situation in GITFileStore: we could create different errors for each of these.
+	if (! (*objectData && *objectType && size == [*objectData length])) {
+		GITError(error, GITErrorObjectSizeMismatch, NSLocalizedString(@"Object size mismatch", @"GITErrorObjectSizeMismatch"));
+		return NO;
+	}
+	
+	return YES;
 }
 
 #pragma mark -
