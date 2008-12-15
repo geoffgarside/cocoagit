@@ -90,16 +90,12 @@ enum {
 - (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)objectData
                       type:(GITObjectType*)objectType error:(NSError**)error
 {
-    NSUInteger errorCode = 0;
-    NSString * errorDescription = nil;
-    NSDictionary * errorUserInfo = nil;
-
     uint8_t buf = 0x0;    // a single byte buffer
     NSUInteger size, type, shift = 4;
     NSUInteger offset = [self.index packOffsetForSha1:sha1];
 
 	if (offset <= 0) {
-        errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Object %@ not found", @"GITErrorObjectNotFound"), sha1];
+        NSString *errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Object %@ not found", @"GITErrorObjectNotFound"), sha1];
 		GITError(error, GITErrorObjectNotFound, errorDescription);
 		return NO;
 	}
