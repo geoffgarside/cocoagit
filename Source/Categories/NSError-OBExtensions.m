@@ -36,12 +36,12 @@
 // RCS_ID("$Header: svn+ssh://source.omnigroup.com/Source/svn/Omni/tags/OmniSourceRelease/2008-09-09/OmniGroup/Frameworks/OmniBase/NSError-OBExtensions.m 103848 2008-08-07 00:10:55Z wiml $");
 
 // If this is built as part of a tool (like the OSU check tool), we won't get a bundle identifier defined.
-#ifndef OMNI_BUNDLE_IDENTIFIER
-	#define OMNI_BUNDLE_IDENTIFIER GIT_BUNDLE_IDENTIFIER
-#endif
 
-NSString * const OBUserCancelledActionErrorKey = OMNI_BUNDLE_IDENTIFIER @".ErrorDomain.ErrorDueToUserCancel";
-NSString * const OBFileNameAndNumberErrorKey = OMNI_BUNDLE_IDENTIFIER @".ErrorDomain.FileLineAndNumber";
+// Must be a better way to do this, rather than redefine it here.
+#define DEFAULT_ERROR_DOMAIN @"com.manicpanda.GIT.ErrorDomain"
+
+NSString * const OBUserCancelledActionErrorKey = DEFAULT_ERROR_DOMAIN @".ErrorDueToUserCancel";
+NSString * const OBFileNameAndNumberErrorKey = DEFAULT_ERROR_DOMAIN @".FileLineAndNumber";
 
 static NSMutableDictionary *_createUserInfo(NSString *firstKey, va_list args)
 {
