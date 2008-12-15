@@ -19,6 +19,8 @@ NSString * const kGITObjectCommitName = @"commit";
  them within the class.
 */
 @interface GITCommit ()
+@property(readwrite,copy) NSString * treeSha1;
+@property(readwrite,copy) NSString * parentSha1;
 @property(readwrite,copy) GITTree * tree;
 @property(readwrite,copy) GITCommit * parent;
 @property(readwrite,copy) GITActor * author;
@@ -33,6 +35,8 @@ NSString * const kGITObjectCommitName = @"commit";
 /*! \endcond */
 
 @implementation GITCommit
+@synthesize treeSha1;
+@synthesize parentSha1;
 @synthesize tree;
 @synthesize parent;
 @synthesize author;
@@ -88,6 +92,26 @@ NSString * const kGITObjectCommitName = @"commit";
     return commit;
 }
 
+- (BOOL)isFirstCommit
+{
+    return (self.parentSha1 == nil);
+}
+
+#pragma mark -
+#pragma mark Object Loaders
+- (GITTree*)tree
+{
+    if (!tree && self.treeSha1)
+        self.tree = [self.repo treeWithSha1:self.treeSha1 error:NULL];  //!< Ideally we'd like to care about the error
+    return tree;
+}
+- (GITCommit*)commit
+{
+    if (!parent && self.parentSha1)
+        self.parent = [self.repo commitWithSha1:self.parentSha1 error:NULL];    //!< Ideally we'd like to care about the error
+    return parent;
+}
+
 #pragma mark -
 #pragma mark Data Parser
 - (BOOL)parseRawData:(NSData*)raw error:(NSError**)error
@@ -116,8 +140,8 @@ NSString * const kGITObjectCommitName = @"commit";
     if ([scanner scanString:@"tree" intoString:NULL] &&
         [scanner scanUpToString:NewLine intoString:&commitTree])
     {
-        self.tree = [self.repo treeWithSha1:commitTree error:error];
-        if (!self.tree) return NO;
+        self.treeSha1 = commitTree;
+        if (!self.treeSha1) return NO;
     }
     else
     {
@@ -130,21 +154,24 @@ NSString * const kGITObjectCommitName = @"commit";
         return NO;
     }
     
-    if ([scanner scanString:@"parent" intoString:NULL] &&
-        [scanner scanUpToString:NewLine intoString:&commitParent])
+    if ([scanner scanString:@"parent" intoString:NULL])
     {
-        self.parent = [self.repo commitWithSha1:commitParent error:error];
-        if (!self.parent) return NO;
-    }
-    else
-    {
-        if (error != NULL)
+        // If we've got a parent at all then we'll parse the name
+        if ([scanner scanUpToString:NewLine intoString:&commitParent])
         {
-            errorDescription = NSLocalizedString(@"Failed to parse parent reference for commit", @"GITErrorObjectParsingFailed (GITCommit:parent)");
-            errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey, nil];
-            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
+            // If parentSha1 is nil then commit is the first commit
+            self.parentSha1 = commitParent;
         }
-        return NO;
+        else
+        {
+            if (error != NULL)
+            {
+                errorDescription = NSLocalizedString(@"Failed to parse parent reference for commit", @"GITErrorObjectParsingFailed (GITCommit:parent)");
+                errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey, nil];
+                *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
+            }
+            return NO;
+        }
     }
     
     if ([scanner scanString:@"author" intoString:NULL] &&

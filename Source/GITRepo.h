@@ -49,6 +49,12 @@
  */
 - (id)initWithRoot:(NSString*)repoRoot bare:(BOOL)isBare;
 
+/*! Creates and returns a new repo using the provided store for object retreival.
+ * \param store GITObjectStore to use for object retreival
+ * \return A new repo object
+ */
+- (id)initWithStore:(GITObjectStore*)store;
+
 /*! Returns a new instance that's a copy of the receiver.
  * \internal
  * This will create a new instance of the GITObjectStore for the receiver.

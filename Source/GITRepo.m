@@ -35,25 +35,30 @@
 }
 - (id)initWithRoot:(NSString*)repoRoot bare:(BOOL)isBare
 {
-    if (! [super init])
-		return nil;
+    NSString * rootPath = repoRoot;
+    GITObjectStore * objectStore;
+    if (![repoRoot hasSuffix:@".git"] && !isBare)
+        rootPath = [repoRoot stringByAppendingPathComponent:@".git"];
+    objectStore = [[GITCombinedStore alloc] initWithStores:
+                   [[GITFileStore alloc] initWithRoot:rootPath],
+                   [[GITPackStore alloc] initWithRoot:rootPath], nil];
 
-	if ([repoRoot hasSuffix:@".git"])
-		self.root = repoRoot;
-	else
-	{
-		if (isBare)
-			self.root = repoRoot; //[repoRoot stringByAppendingPathExtension:@".git"];
-		else
-			self.root = [repoRoot stringByAppendingPathComponent:@".git"];
-	}
-	
-	NSString * descFile = [self.root stringByAppendingPathComponent:@"description"];
-	self.desc = [NSString stringWithContentsOfFile:descFile];
-	self.store = [[GITCombinedStore alloc] initWithStores:
-					[[GITFileStore alloc] initWithRoot:self.root],
-					[[GITPackStore alloc] initWithRoot:self.root], nil];
-
+    if ([self initWithStore:objectStore])
+    {
+        self.root = rootPath;
+        NSString * descFile = [self.root stringByAppendingPathComponent:@"description"];
+        self.desc = [NSString stringWithContentsOfFile:descFile];
+    }
+    return self;
+}
+- (id)initWithStore:(GITObjectStore*)objectStore
+{
+    if (self = [super init])
+    {
+        self.root = nil;
+        self.desc = nil;
+        self.store = objectStore;
+    }
     return self;
 }
 - (id)copyWithZone:(NSZone*)zone
@@ -150,6 +155,7 @@
 
 	// If we get here, then we've got a type that we don't understand. If the only way this could happen is a programming error, then it should be an exception.  For now, just create an error.
 	GITError(error, GITErrorObjectTypeMismatch, NSLocalizedString(@"Object type mismatch", @"GITErrorObjectTypeMismatch"));
+
     return nil;
 }
 

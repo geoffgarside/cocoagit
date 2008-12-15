@@ -20,6 +20,7 @@ NSString * const kGITObjectTagName = @"tag";
 */
 @interface GITTag ()
 @property(readwrite,copy) NSString * name;
+@property(readwrite,copy) NSString * objectSha1;
 @property(readwrite,copy) GITCommit * commit;
 @property(readwrite,copy) GITActor * tagger;
 @property(readwrite,copy) GITDateTime * tagged;
@@ -32,6 +33,7 @@ NSString * const kGITObjectTagName = @"tag";
 
 @implementation GITTag
 @synthesize name;
+@synthesize objectSha1;
 @synthesize commit;
 @synthesize tagger;
 @synthesize tagged;
@@ -83,6 +85,15 @@ NSString * const kGITObjectTagName = @"tag";
 }
 
 #pragma mark -
+#pragma mark Object Loaders
+- (GITCommit*)commit
+{
+    if (!commit && self.objectSha1)
+        self.commit = [self.repo commitWithSha1:objectSha1 error:NULL]; //!< Ideally we'd like to care about the error
+    return commit;
+}
+
+#pragma mark -
 #pragma mark Data Parser
 - (BOOL)parseRawData:(NSData*)raw error:(NSError**)error
 {
@@ -109,8 +120,8 @@ NSString * const kGITObjectTagName = @"tag";
         [scanner scanUpToString:NewLine intoString:&taggedType] &&
         [taggedType isEqualToString:@"commit"])
     {
-        self.commit = [self.repo commitWithSha1:taggedCommit error:error];
-        if (!self.commit) return NO;
+        self.objectSha1 = taggedCommit;
+        if (!self.objectSha1) return NO;
     }
     else
     {
