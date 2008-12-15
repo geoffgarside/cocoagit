@@ -72,8 +72,6 @@
 }
 - (void)addStore:(GITObjectStore*)store priority:(GITCombinedStorePriority)priority
 {
-    [store retain];     //!< Added as we might well need to retain this before it goes into the array
-
     // High goes at the front, Normal and Low append to the end.
     switch (priority)
     {
