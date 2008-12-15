@@ -35,24 +35,25 @@
 }
 - (id)initWithRoot:(NSString*)repoRoot bare:(BOOL)isBare
 {
-    if (self = [super init])
-    {
-        if ([repoRoot hasSuffix:@".git"])
-            self.root = repoRoot;
-        else
-        {
-            if (isBare)
-                self.root = repoRoot; //[repoRoot stringByAppendingPathExtension:@".git"];
-            else
-                self.root = [repoRoot stringByAppendingPathComponent:@".git"];
-        }
-        
-        NSString * descFile = [self.root stringByAppendingPathComponent:@"description"];
-        self.desc = [NSString stringWithContentsOfFile:descFile];
-        self.store = [[GITCombinedStore alloc] initWithStores:
-                        [[GITFileStore alloc] initWithRoot:self.root],
-                        [[GITPackStore alloc] initWithRoot:self.root], nil];
-    }
+    if (! [super init])
+		return nil;
+
+	if ([repoRoot hasSuffix:@".git"])
+		self.root = repoRoot;
+	else
+	{
+		if (isBare)
+			self.root = repoRoot; //[repoRoot stringByAppendingPathExtension:@".git"];
+		else
+			self.root = [repoRoot stringByAppendingPathComponent:@".git"];
+	}
+	
+	NSString * descFile = [self.root stringByAppendingPathComponent:@"description"];
+	self.desc = [NSString stringWithContentsOfFile:descFile];
+	self.store = [[GITCombinedStore alloc] initWithStores:
+					[[GITFileStore alloc] initWithRoot:self.root],
+					[[GITPackStore alloc] initWithRoot:self.root], nil];
+
     return self;
 }
 - (id)copyWithZone:(NSZone*)zone
@@ -125,36 +126,30 @@
 }
 - (GITObject*)objectWithSha1:(NSString*)sha1 type:(GITObjectType)eType error:(NSError**)error
 {
-    NSError * undError;
-    NSString * errorDescription;
-    NSDictionary * errorUserInfo;
-
     GITObjectType type; NSData * data;
+    if (![self.store loadObjectWithSha1:sha1 intoData:&data type:&type error:error]) {
+		return nil;
+	}
+	
+ 	if (! (eType == GITObjectTypeUnknown || eType == type)) {
+		GITError(error, GITErrorObjectTypeMismatch, NSLocalizedString(@"Object type mismatch", @"GITErrorObjectTypeMismatch")); 
+		return nil;
+	}
+		
+	switch (type)
+	{
+		case GITObjectTypeCommit:
+			return [[GITCommit alloc] initWithSha1:sha1 data:data repo:self];
+		case GITObjectTypeTree:
+			return [[GITTree alloc] initWithSha1:sha1 data:data repo:self];
+		case GITObjectTypeBlob:
+			return [[GITBlob alloc] initWithSha1:sha1 data:data repo:self];
+		case GITObjectTypeTag:
+			return [[GITTag alloc] initWithSha1:sha1 data:data repo:self];
+	}
 
-    if ([self.store loadObjectWithSha1:sha1 intoData:&data type:&type error:&undError])
-    {
-        if (eType == GITObjectTypeUnknown || eType == type)
-        {
-            switch (type)
-            {
-                case GITObjectTypeCommit:
-                    return [[GITCommit alloc] initWithSha1:sha1 data:data repo:self];
-                case GITObjectTypeTree:
-                    return [[GITTree alloc] initWithSha1:sha1 data:data repo:self];
-                case GITObjectTypeBlob:
-                    return [[GITBlob alloc] initWithSha1:sha1 data:data repo:self];
-                case GITObjectTypeTag:
-                    return [[GITTag alloc] initWithSha1:sha1 data:data repo:self];
-            }
-        }
-        else if (error != NULL)
-        {
-            errorDescription = NSLocalizedString(@"Object type mismatch", @"GITErrorObjectTypeMismatch");
-            errorUserInfo = [NSDictionary dictionaryWithObject:errorDescription forKey:NSLocalizedDescriptionKey];
-            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectTypeMismatch userInfo:errorUserInfo];
-        }
-    }
-
+	// If we get here, then we've got a type that we don't understand. If the only way this could happen is a programming error, then it should be an exception.  For now, just create an error.
+	GITError(error, GITErrorObjectTypeMismatch, NSLocalizedString(@"Object type mismatch", @"GITErrorObjectTypeMismatch"));
     return nil;
 }
 
