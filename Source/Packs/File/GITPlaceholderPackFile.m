@@ -16,53 +16,39 @@ const NSRange kGITPackFileSignatureRange = {     0,      4 };
 const NSRange kGITPackFileVersionRange   = {     4,      4 };
 
 @implementation GITPlaceholderPackFile
-- (id)initWithPath:(NSString*)thePath
-{
+- (id)initWithPath:(NSString*)thePath error:(NSError **)error
+{	
     uint8_t buf[4];
-    NSError * err;
     NSUInteger ver;
-    NSString * reason;
+    NSString * errorDescription;
     NSZone * z = [self zone]; [self release];
     NSData * data = [NSData dataWithContentsOfFile:thePath
                                            options:NSUncachedRead
-                                             error:&err];
+                                             error:error];
     if (!data)
-    {
-        reason = [NSString stringWithFormat:@"Pack File %@ failed to open", thePath];
-        NSException * ex  = [NSException exceptionWithName:@"GITPackFileOpeningFailed"
-                                                    reason:reason
-                                                  userInfo:[err userInfo]];
-        @throw ex;
-    }
+		return nil;
     
     // File opened successfully
     [data getBytes:buf range:kGITPackFileSignatureRange];
-    if (memcmp(buf, kGITPackFileSignature, kGITPackFileSignatureRange.length) == 0)
-    {   // Its a valid PACK file
-        memset(buf, 0x0, kGITPackFileSignatureRange.length);
-        [data getBytes:buf range:kGITPackFileVersionRange];
-        ver = integerFromBytes(buf, kGITPackFileVersionRange.length);
-        
-        switch (ver)
-        {
-            case 2:
-                return [[GITPackFileVersion2 allocWithZone:z] initWithPath:thePath];
-            //case 3:
-            //    return [[GITPackFileVersion3 allocWithZone:z] initWithPath:thePath];
-            default:
-                reason = [NSString stringWithFormat:@"Pack version %lu not supported", ver];
-                NSException * ex  = [NSException exceptionWithName:@"GITPackFileVersionUnsupported"
-                                                            reason:reason userInfo:nil];
-                @throw ex;
-        }
-    }
-    else
-    {
-        reason = [NSString stringWithFormat:@"File %@ is not a PACK file", thePath];
-        NSException * ex = [NSException exceptionWithName:@"GITPackFileInvalid"
-                                                   reason:reason
-                                                 userInfo:nil];
-        @throw ex;
-    }
+    if (memcmp(buf, kGITPackFileSignature, kGITPackFileSignatureRange.length) != 0) {
+		NSString *errorDescription = [NSString stringWithFormat:@"File %@ is not a PACK file", thePath];
+		GITError(error, GITErrorPackFileInvalid, errorDescription);
+		return nil;
+	}
+	
+	// Its a valid PACK file
+	memset(buf, 0x0, kGITPackFileSignatureRange.length);
+	[data getBytes:buf range:kGITPackFileVersionRange];
+	ver = integerFromBytes(buf, kGITPackFileVersionRange.length);
+
+	switch (ver)
+	{
+		case 2:
+			return [[GITPackFileVersion2 allocWithZone:z] initWithPath:thePath];
+		default:
+			errorDescription = [NSString stringWithFormat:@"Pack version %lu not supported", ver];
+			GITError(error, GITErrorPackFileNotSupported, errorDescription);
+			return nil;
+	}
 }
 @end
