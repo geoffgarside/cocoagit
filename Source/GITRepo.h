@@ -30,11 +30,13 @@
     NSString * desc;    //!< Description of the repository
                         // Interesting issue here the function used for
                         // an object to print itself is -description
+    BOOL bare;          //!< Flag indicating that is a bare repository
     GITObjectStore * store;     //!< The store which will be used to find objects
 }
 
 @property(readonly,copy) NSString * root;
 @property(readonly,copy) NSString * desc;
+@property(readonly,assign,getter=isBare) BOOL bare;
 
 /*! Creates and returns a repo object with the provided root.
  * \param repoRoot The path, relative or absolute, to the repository root.
