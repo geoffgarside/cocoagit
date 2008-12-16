@@ -31,6 +31,7 @@
 		573B49D40EF5A2090020159D /* NSError-OBExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49D10EF5A2090020159D /* NSError-OBExtensions.m */; };
 		573B49D50EF5A2090020159D /* NSError-OBExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49D10EF5A2090020159D /* NSError-OBExtensions.m */; };
 		573B49D60EF5A2090020159D /* NSError-OBExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49D10EF5A2090020159D /* NSError-OBExtensions.m */; };
+		577AA5A60EF7794E00A0B12B /* GITTestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 577AA5A50EF7794E00A0B12B /* GITTestHelper.m */; };
 		57CFF6A50EC772E700BB4B1E /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212770E179A2C005AC693 /* NSData+Compression.m */; };
 		57E13E790EECF291003A3761 /* GITErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB1F0A60EC6F2DA006C68D0 /* GITErrors.m */; };
 		57E13E7A0EECF2AA003A3761 /* GITPackStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE329AF0E9BA2F8001E37D5 /* GITPackStore.m */; };
@@ -161,6 +162,7 @@
 		573B49C80EF5A1F90020159D /* assertions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = assertions.m; path = Source/assertions.m; sourceTree = "<group>"; };
 		573B49D00EF5A2090020159D /* NSError-OBExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError-OBExtensions.h"; path = "Source/Categories/NSError-OBExtensions.h"; sourceTree = "<group>"; };
 		573B49D10EF5A2090020159D /* NSError-OBExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError-OBExtensions.m"; path = "Source/Categories/NSError-OBExtensions.m"; sourceTree = "<group>"; };
+		577AA5A50EF7794E00A0B12B /* GITTestHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITTestHelper.m; path = UnitTests/Source/GITTestHelper.m; sourceTree = "<group>"; };
 		57C17FF50EB01E1C00B7AE7E /* GITTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITTestHelper.h; path = UnitTests/Source/GITTestHelper.h; sourceTree = "<group>"; };
 		9F0104990E9997C700A47227 /* GITUtilityBeltTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITUtilityBeltTests.h; path = UnitTests/Source/GITUtilityBeltTests.h; sourceTree = "<group>"; };
 		9F01049A0E9997C700A47227 /* GITUtilityBeltTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITUtilityBeltTests.m; path = UnitTests/Source/GITUtilityBeltTests.m; sourceTree = "<group>"; };
@@ -451,8 +453,9 @@
 		9FCF27950E98F67D00665A41 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				9FD708930EDDD35D002B3001 /* Packs */,
+				577AA5A50EF7794E00A0B12B /* GITTestHelper.m */,
 				57C17FF50EB01E1C00B7AE7E /* GITTestHelper.h */,
+				9FD708930EDDD35D002B3001 /* Packs */,
 				9F2150F90EA3D4DE004C6188 /* Stores */,
 				9FE329680E9B97A8001E37D5 /* Core */,
 				9FE329690E9B97BF001E37D5 /* Utility */,
@@ -725,7 +728,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\nTEST_REPO_PATH=\"UnitTests/Resources/test_repo\"\nDOT_GIT_DIR=\"dot_git_dir\"\n\nTEST_REPO_GIT_DIR=\"${TEST_REPO_PATH}/${DOT_GIT_DIR}\"\n\nmv \"${TEST_REPO_GIT_DIR}\" \"${TEST_REPO_PATH}/.git\"\n\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n\nmv \"${TEST_REPO_PATH}/.git\" \"${TEST_REPO_GIT_DIR}\" \n";
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -865,6 +868,7 @@
 				9FC327D90EEC4D840064B823 /* GITErrors.m in Sources */,
 				573B49CD0EF5A1F90020159D /* assertions.m in Sources */,
 				573B49D60EF5A2090020159D /* NSError-OBExtensions.m in Sources */,
+				577AA5A60EF7794E00A0B12B /* GITTestHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
