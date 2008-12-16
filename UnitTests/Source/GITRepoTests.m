@@ -15,7 +15,7 @@
 - (void)setUp
 {
     [super setUp];
-    self.repo = [[GITRepo alloc] initWithRoot:TEST_REPO_PATH];
+    self.repo = [[GITRepo alloc] initWithRoot:DOT_GIT bare:YES];
 }
 - (void)tearDown
 {
@@ -26,9 +26,9 @@
 {
     STAssertNotNil(repo, nil);
 }
-- (void)testRootHasDotGitSuffix
+- (void)testRepoIsBare
 {
-    STAssertTrue([repo.root hasSuffix:@".git"], nil);
+    STAssertTrue([repo isBare], nil);
 }
 - (void)testShouldLoadDataForHash
 {

@@ -20,6 +20,7 @@
 @interface GITRepo ()
 @property(readwrite,copy) NSString * root;
 @property(readwrite,copy) NSString * desc;
+@property(readwrite,assign) BOOL bare;
 @property(readwrite,retain) GITObjectStore * store;
 @end
 /*! \endcond */
@@ -27,6 +28,7 @@
 @implementation GITRepo
 @synthesize root;
 @synthesize desc;
+@synthesize bare;
 @synthesize store;
 
 - (id)initWithRoot:(NSString*)repoRoot
@@ -48,6 +50,7 @@
         self.root = rootPath;
         NSString * descFile = [self.root stringByAppendingPathComponent:@"description"];
         self.desc = [NSString stringWithContentsOfFile:descFile];
+        self.bare = isBare;
     }
     return self;
 }
@@ -57,6 +60,7 @@
     {
         self.root = nil;
         self.desc = nil;
+        self.bare = NO;
         self.store = objectStore;
     }
     return self;

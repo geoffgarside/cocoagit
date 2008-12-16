@@ -23,7 +23,7 @@
 - (void)setUp
 {
     [super setUp];
-	self.repo = [[GITRepo alloc] initWithRoot:TEST_REPO_PATH];
+	self.repo = [[GITRepo alloc] initWithRoot:DOT_GIT bare:YES];
     self.tree = [repo treeWithSha1:@"a9ecfd8989d7c427c5564cf918b264261866ce01"];
 	    
     self.entryMode = 100644;

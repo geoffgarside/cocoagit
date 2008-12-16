@@ -1,4 +1,13 @@
+#import <Foundation/Foundation.h>
 #import <SenTestingKit/SenTestingKit.h>
 
-#define TEST_REPO_ROOT "UnitTests/Resources/test_repo"
-#define TEST_REPO_PATH @TEST_REPO_ROOT
+#define COCOAGIT_REPO @"."
+#define TEST_RESOURCES_PATH @"UnitTests/Resources/"
+
+#define DOT_GIT TEST_RESOURCES_PATH @"dot_git/"
+
+@interface GITTestHelper : NSObject
+{}
++ (NSString *) createTempRepoWithDotGitDir:(NSString *)clonePath;
++ (BOOL) removeTempRepoAtPath:(NSString *)aPath;
+@end
