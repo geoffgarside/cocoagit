@@ -31,7 +31,7 @@ const NSRange kGITPackFileVersionRange   = {     4,      4 };
     // File opened successfully
     [data getBytes:buf range:kGITPackFileSignatureRange];
     if (memcmp(buf, kGITPackFileSignature, kGITPackFileSignatureRange.length) != 0) {
-		NSString *errorDescription = [NSString stringWithFormat:@"File %@ is not a PACK file", thePath];
+		NSString *errorDescription = [NSString stringWithFormat:NSLocalizedString(@"File %@ is not a PACK file", "GITErrorPackFileInvalid"), thePath];
 		GITError(error, GITErrorPackFileInvalid, errorDescription);
 		return nil;
 	}
@@ -46,7 +46,7 @@ const NSRange kGITPackFileVersionRange   = {     4,      4 };
 		case 2:
 			return [[GITPackFileVersion2 allocWithZone:z] initWithPath:thePath];
 		default:
-			errorDescription = [NSString stringWithFormat:@"Pack version %lu not supported", ver];
+			errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Pack version %lu not supported", @"GITErrorPackFileNotSupported"), ver];
 			GITError(error, GITErrorPackFileNotSupported, errorDescription);
 			return nil;
 	}
