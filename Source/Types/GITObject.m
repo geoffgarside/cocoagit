@@ -118,7 +118,7 @@
         {
             errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Object type mismatch %@ should be %@", @"GITErrorObjectTypeMismatch (GITObject)"),
                                 [[self class] stringForObjectType:theType], [[self class] stringForObjectType:[self objectType]]];
-            GITError(error, GITErrorObjectTypeMismatch, NSLocalizedDescriptionKey, errorDescription, NSUnderlyingErrorKey, undError, nil);
+            GITErrorWithInfo(error, GITErrorObjectTypeMismatch, NSLocalizedDescriptionKey, errorDescription, NSUnderlyingErrorKey, undError, nil);
         }
     }
     else if (error != NULL)

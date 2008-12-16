@@ -94,7 +94,7 @@ NSString * const kGITObjectTreeName = @"tree";
         else
         {
             errorDescription = NSLocalizedString(@"Failed to parse entry for tree", @"GITErrorObjectParsingFailed (GITTree)");
-            GITError(error, GITErrorObjectParsingFailed, NSLocalizedDescriptionKey, errorDescription, NSUnderlyingErrorKey, undError, nil);
+            GITErrorWithInfo(error, GITErrorObjectParsingFailed, NSLocalizedDescriptionKey, errorDescription, NSUnderlyingErrorKey, undError, nil);
             return NO;
         }
 
