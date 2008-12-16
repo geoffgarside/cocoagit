@@ -70,7 +70,6 @@ NSString * const kGITObjectTreeName = @"tree";
     // TODO: Update this method to support errors
     NSError * undError;
     NSString * errorDescription;
-    NSDictionary * errorUserInfo;
 
     NSString  * dataStr = [[NSString alloc] initWithData:raw
                                                 encoding:NSASCIIStringEncoding];
@@ -94,13 +93,8 @@ NSString * const kGITObjectTreeName = @"tree";
             [treeEntries addObject:entry];
         else
         {
-            if (error != NULL)
-            {
-                errorDescription = NSLocalizedString(@"Failed to parse entry for tree", @"GITErrorObjectParsingFailed (GITTree)");
-                errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey,
-                                 undError, NSUnderlyingErrorKey, nil];
-                *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
-            }
+            errorDescription = NSLocalizedString(@"Failed to parse entry for tree", @"GITErrorObjectParsingFailed (GITTree)");
+            GITError(error, GITErrorObjectParsingFailed, NSLocalizedDescriptionKey, errorDescription, NSUnderlyingErrorKey, undError, nil);
             return NO;
         }
 

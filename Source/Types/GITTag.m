@@ -99,7 +99,6 @@ NSString * const kGITObjectTagName = @"tag";
 {
     // TODO: Update this method to support errors
     NSString * errorDescription;
-    NSDictionary * errorUserInfo;
 
     NSString  * dataStr = [[NSString alloc] initWithData:raw
                                                 encoding:NSASCIIStringEncoding];
@@ -125,12 +124,8 @@ NSString * const kGITObjectTagName = @"tag";
     }
     else
     {
-        if (error != NULL)
-        {
-            errorDescription = NSLocalizedString(@"Failed to parse object (commit) reference for tag", @"GITErrorObjectParsingFailed (GITTag:object)");
-            errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey, nil];
-            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
-        }
+        errorDescription = NSLocalizedString(@"Failed to parse object (commit) reference for tag", @"GITErrorObjectParsingFailed (GITTag:object)");
+        GITError(error, GITErrorObjectParsingFailed, errorDescription);
         return NO;
     }
     
@@ -141,12 +136,9 @@ NSString * const kGITObjectTagName = @"tag";
     }
     else
     {
-        if (error != NULL)
-        {
-            errorDescription = NSLocalizedString(@"Failed to parse name for tag", @"GITErrorObjectParsingFailed (GITTag:tag)");
-            errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey, nil];
-            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
-        }
+
+        errorDescription = NSLocalizedString(@"Failed to parse name for tag", @"GITErrorObjectParsingFailed (GITTag:tag)");
+        GITError(error, GITErrorObjectParsingFailed, errorDescription);
         return NO;
     }
     
@@ -164,24 +156,16 @@ NSString * const kGITObjectTagName = @"tag";
     }
     else
     {
-        if (error != NULL)
-        {
-            errorDescription = NSLocalizedString(@"Failed to parse tagger for tag", @"GITErrorObjectParsingFailed (GITTag:tagger)");
-            errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey, nil];
-            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
-        }
+        errorDescription = NSLocalizedString(@"Failed to parse tagger for tag", @"GITErrorObjectParsingFailed (GITTag:tagger)");
+        GITError(error, GITErrorObjectParsingFailed, errorDescription);
         return NO;
     }
         
     self.message = [dataStr substringFromIndex:[scanner scanLocation]];
     if (!self.message)
     {
-        if (error != NULL)
-        {
-            errorDescription = NSLocalizedString(@"Failed to parse message for tag", @"GITErrorObjectParsingFailed (GITTag:message)");
-            errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey, nil];
-            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
-        }
+        errorDescription = NSLocalizedString(@"Failed to parse message for tag", @"GITErrorObjectParsingFailed (GITTag:message)");
+        GITError(error, GITErrorObjectParsingFailed, errorDescription);
         return NO;
     }
 

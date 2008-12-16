@@ -105,7 +105,6 @@
 {
     NSError * undError;
     NSString * errorDescription;
-    NSDictionary * errorUserInfo;
 
     NSData * raw;
     GITObjectType theType;
@@ -115,13 +114,11 @@
     {
         if (theType == [self objectType])
             return [self initWithSha1:theSha1 type:[self objectType] data:raw repo:theRepo error:error];
-        else if (error != NULL)
+        else
         {
             errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Object type mismatch %@ should be %@", @"GITErrorObjectTypeMismatch (GITObject)"),
                                 [[self class] stringForObjectType:theType], [[self class] stringForObjectType:[self objectType]]];
-            errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey,
-                             undError, NSUnderlyingErrorKey, nil];
-            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectTypeMismatch userInfo:errorUserInfo];
+            GITError(error, GITErrorObjectTypeMismatch, NSLocalizedDescriptionKey, errorDescription, NSUnderlyingErrorKey, undError, nil);
         }
     }
     else if (error != NULL)

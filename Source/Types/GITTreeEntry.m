@@ -84,7 +84,6 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
 - (id)initWithRawString:(NSString*)raw parent:(GITTree*)parentTree error:(NSError**)error
 {
     NSString * errorDescription;
-    NSDictionary * errorUserInfo;
 
     NSScanner * scanner = [NSScanner scannerWithString:raw];
     NSString  * entryMode, * entryName, * entrySha1;
@@ -99,23 +98,15 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
 
             if (!entrySha1)
             {
-                if (error != NULL)
-                {
-                    errorDescription = NSLocalizedString(@"Failed to parse object reference for tree entry", @"GITErrorObjectParsingFailed (GITTreeEntry:entrySha1)");
-                    errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey, nil];
-                    *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
-                }
+                errorDescription = NSLocalizedString(@"Failed to parse object reference for tree entry", @"GITErrorObjectParsingFailed (GITTreeEntry:entrySha1)");
+                GITError(error, GITErrorObjectParsingFailed, errorDescription);
                 return nil;
             }
         }
         else
         {
-            if (error != NULL)
-            {
-                errorDescription = NSLocalizedString(@"Failed to parse file mode or name for tree entry", @"GITErrorObjectParsingFailed (GITTreeEntry)");
-                errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey, nil];
-                *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
-            }
+            errorDescription = NSLocalizedString(@"Failed to parse file mode or name for tree entry", @"GITErrorObjectParsingFailed (GITTreeEntry)");
+            GITError(error, GITErrorObjectParsingFailed, errorDescription);
             return nil;
         }
     }
