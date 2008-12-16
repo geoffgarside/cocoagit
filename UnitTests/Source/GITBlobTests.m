@@ -18,7 +18,7 @@
 - (void)setUp
 {
     [super setUp];
-    self.repo = [[GITRepo alloc] initWithRoot:TEST_REPO_PATH];
+    self.repo = [[GITRepo alloc] initWithRoot:DOT_GIT bare:YES];
     self.blobSHA1 = @"87f974580d485f3cfd5fd9cc62491341067f0c59";
     self.blob = [repo blobWithSha1:blobSHA1];
 }

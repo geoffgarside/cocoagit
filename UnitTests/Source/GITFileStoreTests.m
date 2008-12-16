@@ -15,7 +15,7 @@
 - (void)setUp
 {
     [super setUp];
-    self.store = [[GITFileStore alloc] initWithRoot:TEST_REPO_PATH@"/.git"];
+    self.store = [[GITFileStore alloc] initWithRoot:DOT_GIT];
 }
 - (void)tearDown
 {
@@ -24,12 +24,12 @@
 }
 - (void)testStoreRootIsCorrect
 {
-    STAssertEqualObjects(store.objectsDir, TEST_REPO_PATH@"/.git/objects", nil);
+    STAssertEqualObjects(store.objectsDir, DOT_GIT@"objects", nil);
 }
 - (void)testExpandHashIntoFilePath
 {
     NSString * path = [store stringWithPathToObject:@"87f974580d485f3cfd5fd9cc62491341067f0c59"];
-    STAssertEqualObjects(path, TEST_REPO_PATH@"/.git/objects/87/f974580d485f3cfd5fd9cc62491341067f0c59", nil);
+    STAssertEqualObjects(path, DOT_GIT@"objects/87/f974580d485f3cfd5fd9cc62491341067f0c59", nil);
 }
 - (void)testDataWithContentsOfObject
 {
