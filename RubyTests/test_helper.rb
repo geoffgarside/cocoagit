@@ -4,4 +4,5 @@ class String; alias :each :each_line; end
 
 require 'grit'
 
-framework File.join(File.dirname(__FILE__), "..", "build", "Debug", "Git")
+git_framework_xcode = File.join(File.dirname(__FILE__), '..', 'build', 'Debug', 'Git.framework')
+framework git_framework_xcode
