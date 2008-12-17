@@ -89,15 +89,14 @@ NSString * const kGITObjectTreeName = @"tree";
         NSString * treeLine = [dataStr substringWithRange:entryRange];
         GITTreeEntry * entry = [[GITTreeEntry alloc] initWithRawString:treeLine parent:self error:&undError];
 
-        if (entry)
-            [treeEntries addObject:entry];
-        else
+        if (!entry)
         {
             errorDescription = NSLocalizedString(@"Failed to parse entry for tree", @"GITErrorObjectParsingFailed (GITTree)");
             GITErrorWithInfo(error, GITErrorObjectParsingFailed, NSLocalizedDescriptionKey, errorDescription, NSUnderlyingErrorKey, undError, nil);
             return NO;
         }
 
+        [treeEntries addObject:entry];
         entryStart = entryRange.location + entryRange.length;
     } while(entryStart < [dataStr length]);
 
