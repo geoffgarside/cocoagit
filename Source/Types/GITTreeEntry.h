@@ -73,7 +73,9 @@ extern const NSUInteger kGITUnpackedSha1Length;
  * \param raw The raw string from a tree object file
  * \param parent The parent tree this entry belongs to
  * \param[out] error Error containing a description of any errors if they occurred
- * \return A new entry or nil if error
+ * \return A new entry or nil if an error occurred
+ * \par Errors:
+ * \li \c GITErrorObjectParsingFailed indicates a problem parsing the formatted tree entry
  */
 - (id)initWithRawString:(NSString*)raw parent:(GITTree*)parent error:(NSError**)error;
 
