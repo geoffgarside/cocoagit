@@ -103,50 +103,38 @@
 #pragma mark Error Aware Initializers
 - (id)initWithSha1:(NSString*)theSha1 repo:(GITRepo*)theRepo error:(NSError**)error
 {
-    NSError * undError;
-    NSString * errorDescription;
-
     NSData * raw;
     GITObjectType theType;
 
     // We could get a loading error here
-    if ([theRepo loadObjectWithSha1:theSha1 intoData:&raw type:&theType error:&undError])
-    {
-        if (theType == [self objectType])
-            return [self initWithSha1:theSha1 type:[self objectType] data:raw repo:theRepo error:error];
-        else
-        {
-            errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Object type mismatch %@ should be %@", @"GITErrorObjectTypeMismatch (GITObject)"),
-                                [[self class] stringForObjectType:theType], [[self class] stringForObjectType:[self objectType]]];
-            GITErrorWithInfo(error, GITErrorObjectTypeMismatch, NSLocalizedDescriptionKey, errorDescription, NSUnderlyingErrorKey, undError, nil);
-        }
-    }
-    else if (error != NULL)
-    {
-        *error = undError;  // might need a retain or a copy here
-    }
-
-    [self release];
-    return nil;
+    if (! [theRepo loadObjectWithSha1:theSha1 intoData:&raw type:&theType error:error])
+        return nil;
+    
+    return [self initWithSha1:theSha1 type:theType data:raw repo:theRepo error:error];
 }
 - (id)initWithSha1:(NSString*)theSha1 type:(GITObjectType)theType data:(NSData*)theData
               repo:(GITRepo*)theRepo error:(NSError**)error
 {
-    if (self = [super init])
-    {
-        self.sha1 = theSha1;
-        // Remove when type is changed to a GITObjectType instead of a string
-        self.type = [[self class] stringForObjectType:theType];
-        self.size = [theData length];
-        self.repo = theRepo;
-
-        // Should only need to override -parseRawData:error: in subclasses
-        if (![self parseRawData:theData error:error])
-        {
-            [self release];
-            return nil;
-        }
+    if (! [super init])
+        return nil;
+    
+    if (theType != [self objectType]) {
+        NSString *errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Object type mismatch %@ should be %@", @"GITErrorObjectTypeMismatch (GITObject)"),
+                            [[self class] stringForObjectType:theType], [[self class] stringForObjectType:[self objectType]]];
+        GITError(error, GITErrorObjectTypeMismatch, errorDescription);
+        return nil;
     }
+    
+    // Should only need to override -parseRawData:error: in subclasses
+    if (! [self parseRawData:theData error:error])
+        return nil;
+    
+    self.sha1 = theSha1;
+    // Remove when type is changed to a GITObjectType instead of a string
+    self.type = [[self class] stringForObjectType:theType];
+    self.size = [theData length];
+    self.repo = theRepo;
+
     return self;
 }
 - (void)dealloc
