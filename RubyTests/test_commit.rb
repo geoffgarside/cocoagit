@@ -16,9 +16,10 @@ class TestCommit < Test::Unit::TestCase
   end
 
   def test_unknown_object_error
-    errorP = Pointer.allocate.new
-    commit = @r.commitWithSha1 "0007e7d240ccdae143b064aa7467eb2fa91aa8a5", error:nil
-    
+    errorP = Pointer.new_with_type('@')
+    commit = @r.commitWithSha1 "0007e7d240ccdae143b064aa7467eb2fa91aa8a5", error:errorP
+    # how do I access constants defined in ObjC
+    assert_equal -2, errorP[0].code
     assert_nil commit
   end
 
