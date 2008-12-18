@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+/*! Series of constants to define the different types of GIT objects.
+ */
 typedef enum {
     GITObjectTypeUnknown = 0,
     GITObjectTypeCommit  = 1,
@@ -124,6 +126,9 @@ typedef enum {
  * \param repo The GITRepo the object belongs to
  * \param[out] error The NSError containing the error details
  * \return New GITObject or nil if an error occurred
+ * \see -initWithSha1:type:data:repo:error:
+ * \see GITRepo
+ * \see GITObjectStore
  */
 - (id)initWithSha1:(NSString*)sha1 repo:(GITRepo*)repo error:(NSError**)error;
 
@@ -134,16 +139,21 @@ typedef enum {
  * \param repo The GITRepo the object belongs to
  * \param[out] error The NSError containing the error details
  * \return New GITObject or nil if an error occurred
+ * \par Errors:
+ * \li \c GITErrorObjectParsingFailed indicates a problem parsing the raw object data
+ * \li \c GITErrorObjectTypeMismatch indicates the object identified by \a sha1 is not of type \a type
  */
 - (id)initWithSha1:(NSString*)sha1 type:(GITObjectType)type data:(NSData*)data
               repo:(GITRepo*)repo error:(NSError**)error;
 
 #pragma mark -
 #pragma mark Data Parser
-/*! Parses the contents of the raw data for the reciever
+/*! Parses the contents of the raw data for the reciever.
  * \param raw The raw object data to be parsed
- * \param[out] The NSError containing the error details
+ * \param[out] error The NSError containing the error details
  * \return YES if parsed successfully, NO if an error occurred.
+ * \par Errors:
+ * \li \c GITErrorObjectParsingFailed indicates a problem parsing the raw object data
  */
 - (BOOL)parseRawData:(NSData*)raw error:(NSError**)error;
 

@@ -14,7 +14,7 @@
 - (void)setUp
 {
     [super setUp];
-    self.versionTwo = [[GITPackFile alloc] initWithPath:TEST_REPO_PATH @"/.git/objects/pack/pack-709b858145841a007ab0c53e130630fd1eecea6f.pack"];
+    self.versionTwo = [[GITPackFile alloc] initWithPath:DOT_GIT @"objects/pack/pack-709b858145841a007ab0c53e130630fd1eecea6f.pack"];
 }
 - (void)tearDown
 {

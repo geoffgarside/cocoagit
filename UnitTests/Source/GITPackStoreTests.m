@@ -15,7 +15,7 @@
 - (void)setUp
 {
     [super setUp];
-    self.store = [[GITPackStore alloc] initWithRoot:TEST_REPO_ROOT@"/.git"];
+    self.store = [[GITPackStore alloc] initWithRoot:DOT_GIT];
 }
 - (void)tearDown
 {
@@ -25,7 +25,7 @@
 
 - (void)testStoreRootIsCorrect
 {
-    STAssertEqualObjects(store.packsDir, TEST_REPO_ROOT@"/.git/objects/pack", nil);
+    STAssertEqualObjects(store.packsDir, DOT_GIT @"objects/pack", nil);
 }
 - (void)testLoadObjectWithSha1
 {

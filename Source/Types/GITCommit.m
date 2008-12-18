@@ -118,7 +118,6 @@ NSString * const kGITObjectCommitName = @"commit";
 {
     // TODO: Update this method to support errors
     NSString * errorDescription;
-    NSDictionary * errorUserInfo;
 
     NSString  * dataStr = [[NSString alloc] initWithData:raw
                                                 encoding:NSASCIIStringEncoding];
@@ -145,12 +144,8 @@ NSString * const kGITObjectCommitName = @"commit";
     }
     else
     {
-        if (error != NULL)
-        {
-            errorDescription = NSLocalizedString(@"Failed to parse tree reference for commit", @"GITErrorObjectParsingFailed (GITCommit:tree)");
-            errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey, nil];
-            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
-        }
+        errorDescription = NSLocalizedString(@"Failed to parse tree reference for commit", @"GITErrorObjectParsingFailed (GITCommit:tree)");
+        GITError(error, GITErrorObjectParsingFailed, errorDescription);
         return NO;
     }
     
@@ -164,12 +159,8 @@ NSString * const kGITObjectCommitName = @"commit";
         }
         else
         {
-            if (error != NULL)
-            {
-                errorDescription = NSLocalizedString(@"Failed to parse parent reference for commit", @"GITErrorObjectParsingFailed (GITCommit:parent)");
-                errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey, nil];
-                *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
-            }
+            errorDescription = NSLocalizedString(@"Failed to parse parent reference for commit", @"GITErrorObjectParsingFailed (GITCommit:parent)");
+            GITError(error, GITErrorObjectParsingFailed, errorDescription);
             return NO;
         }
     }
@@ -188,12 +179,8 @@ NSString * const kGITObjectCommitName = @"commit";
     }
     else
     {
-        if (error != NULL)
-        {
-            errorDescription = NSLocalizedString(@"Failed to parse author details for commit", @"GITErrorObjectParsingFailed (GITCommit:author)");
-            errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey, nil];
-            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
-        }
+        errorDescription = NSLocalizedString(@"Failed to parse author details for commit", @"GITErrorObjectParsingFailed (GITCommit:author)");
+        GITError(error, GITErrorObjectParsingFailed, errorDescription);
         return NO;
     }
     
@@ -211,24 +198,16 @@ NSString * const kGITObjectCommitName = @"commit";
     }
     else
     {
-        if (error != NULL)
-        {
-            errorDescription = NSLocalizedString(@"Failed to parse committer details for commit", @"GITErrorObjectParsingFailed (GITCommit:committer)");
-            errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey, nil];
-            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
-        }
+        errorDescription = NSLocalizedString(@"Failed to parse committer details for commit", @"GITErrorObjectParsingFailed (GITCommit:committer)");
+        GITError(error, GITErrorObjectParsingFailed, errorDescription);
         return NO;
     }
         
     self.message = [[scanner string] substringFromIndex:[scanner scanLocation]];
     if (!self.message)
     {
-        if (error != NULL)
-        {
-            errorDescription = NSLocalizedString(@"Failed to parse message for commit", @"GITErrorObjectParsingFailed (GITCommit:message)");
-            errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorDescription, NSLocalizedDescriptionKey, nil];
-            *error = [NSError errorWithDomain:GITErrorDomain code:GITErrorObjectParsingFailed userInfo:errorUserInfo];
-        }
+        errorDescription = NSLocalizedString(@"Failed to parse message for commit", @"GITErrorObjectParsingFailed (GITCommit:message)");
+        GITError(error, GITErrorObjectParsingFailed, errorDescription);
         return NO;
     }
 

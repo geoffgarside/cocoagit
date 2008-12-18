@@ -16,7 +16,7 @@
 {
     [super setUp];
     // Need to make a version 1 index file
-    self.versionTwo = [[GITPackIndex alloc] initWithPath:TEST_REPO_PATH @"/.git/objects/pack/pack-709b858145841a007ab0c53e130630fd1eecea6f.idx"];
+    self.versionTwo = [[GITPackIndex alloc] initWithPath:DOT_GIT@"objects/pack/pack-709b858145841a007ab0c53e130630fd1eecea6f.idx"];
 }
 - (void)tearDown
 {
