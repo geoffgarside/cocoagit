@@ -3,7 +3,9 @@
 class String; alias :each :each_line; end
 
 require 'test/unit'
-require "grit"
+
+# Grit (v 0.9.4) is not working under macruby
+#require "mojombo-grit"
 
 DOT_GIT = File.join(File.dirname(__FILE__), *%w[.. UnitTests Resources dot_git])
 
