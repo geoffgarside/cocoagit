@@ -62,6 +62,9 @@
  * \param[out] type The GITObjectType of the object
  * \param[out] error NSError object containing any errors, pass NULL if you don't care
  * \return YES on successful load, NO if an error occurred
+ * \par Errors:
+ * \li \c GITErrorObjectNotFound no object with \a sha1 could be found in the receiver
+ * \li \c GITErrorObjectSizeMismatch size of object identified by \a sha1 does not match meta data
  * \internal
  * We might possibly consider the following extension to this method once Deltas
  * are being parsed. If the type parameter has a non-zero value then this will be
