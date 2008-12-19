@@ -28,6 +28,23 @@
     }
     return self;
 }
+- (id)initWithRoot:(NSString*)root error:(NSError**)error
+{
+    if (self = [super init])
+    {
+        self.objectsDir = [root stringByAppendingPathComponent:@"objects"];
+
+        NSFileManager * fm = [NSFileManager defaultManager];
+        if (! [fm fileExistsAtPath:self.objectsDir isDirectory:YES]) {
+            NSString * errFmt = NSLocalizedString(@"File store not accessible %@ does not exist or is not a directory", @"GITErrorObjectStoreNotAccessible (GITFileStore)");
+            NSString * errDesc = [NSString stringWithFormat:errFmt, self.objectsDir];
+            GITError(error, GITErrorObjectStoreNotAccessible, errDesc);
+            [self release];
+            return nil;
+        }
+    }
+    return self;
+}
 - (NSString*)stringWithPathToObject:(NSString*)sha1
 {
     NSString * ref = [NSString stringWithFormat:@"%@/%@",

@@ -25,6 +25,16 @@
  */
 - (id)initWithRoot:(NSString*)root;
 
+/*! Creates and returns a new store object from the provided .git root
+ * \attention This method must be overridden
+ * \param root Path to the .git root directory
+ * \param[out] error Object encapsulating any errors which occur
+ * \return A new store object or nil on error
+ * \par Error Codes:
+ * \li \c GITErrorObjectStoreNotAccessible store could not be loaded
+ */
+- (id)initwithRoot:(NSString*)root error:(NSError**)error;
+
 /*! Returns the contents of an object for the given <tt>sha1</tt>.
  * The data returned should be in a form which is usable to initialise an
  * object. If the data is stored compressed or encrypted it should be

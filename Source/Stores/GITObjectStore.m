@@ -16,6 +16,12 @@
     [self release];
     return nil;
 }
+- (id)initWithRoot:(NSString*)root error:(NSError**)error
+{
+    [self doesNotRecognizeSelector:_cmd];
+    [self release];
+    return nil;
+}
 - (NSData*)dataWithContentsOfObject:(NSString*)sha1
 {
     [self doesNotRecognizeSelector:_cmd];
