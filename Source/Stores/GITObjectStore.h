@@ -12,7 +12,7 @@
 
 /*! Generic object storage class.
  * Desendants of GITObjectStore implement different ways of
- * accessing the objects of a repository. 
+ * accessing the objects of a repository.
  */
 @interface GITObjectStore : NSObject
 {
