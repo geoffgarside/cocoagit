@@ -33,18 +33,36 @@
 
 - (id)initWithRoot:(NSString*)repoRoot
 {
-    return [self initWithRoot:repoRoot bare:NO];
+    return [self initWithRoot:repoRoot bare:NO error:NULL];
+}
+- (id)initWithRoot:(NSString*)repoRoot error:(NSError**)error
+{
+    return [self initWithRoot:repoRoot bare:NO error:error];
 }
 - (id)initWithRoot:(NSString*)repoRoot bare:(BOOL)isBare
+{
+    return [self initWithRoot:repoRoot bare:isBare error:NULL];
+}
+- (id)initWithRoot:(NSString*)repoRoot bare:(BOOL)isBare error:(NSError**)error
 {
     NSString * rootPath = repoRoot;
     GITObjectStore * objectStore;
     if (![repoRoot hasSuffix:@".git"] && !isBare)
         rootPath = [repoRoot stringByAppendingPathComponent:@".git"];
-    objectStore = [[GITCombinedStore alloc] initWithStores:
-                   [[GITFileStore alloc] initWithRoot:rootPath],
-                   [[GITPackStore alloc] initWithRoot:rootPath], nil];
 
+    GITFileStore * fileStore = [[GITFileStore alloc] initWithRoot:rootPath error:error];
+    if (!fileStore) {
+        [self release];
+        return nil;
+    }
+
+    GITPackStore * packStore = [[GITPackStore alloc] initWithRoot:rootPath error:error];
+    if (!packStore) {
+        [self release];
+        return nil;
+    }
+
+    objectStore = [[GITCombinedStore alloc] initWithStores: fileStore, packStore, nil];
     if ([self initWithStore:objectStore])
     {
         self.root = rootPath;
