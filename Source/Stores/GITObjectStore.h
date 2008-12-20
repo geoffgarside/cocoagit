@@ -33,7 +33,7 @@
  * \par Error Codes:
  * \li \c GITErrorObjectStoreNotAccessible store could not be loaded
  */
-- (id)initwithRoot:(NSString*)root error:(NSError**)error;
+- (id)initWithRoot:(NSString*)root error:(NSError**)error;
 
 /*! Returns the contents of an object for the given <tt>sha1</tt>.
  * The data returned should be in a form which is usable to initialise an

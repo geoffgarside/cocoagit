@@ -28,7 +28,7 @@
 {
     return [self initWithRoot:root error:NULL];
 }
-- (id)initWithRoot:(NSString*)root error:(NSString**)error
+- (id)initWithRoot:(NSString*)root error:(NSError**)error
 {
     if(self = [super init])
     {
