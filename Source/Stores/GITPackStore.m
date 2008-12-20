@@ -35,8 +35,9 @@
         self.lastReadPack = nil;
         self.packsDir = [root stringByAppendingPathComponent:@"objects/pack"];
 
+        BOOL aDirectory;
         NSFileManager * fm = [NSFileManager defaultManager];
-        if (! [fm fileExistsAtPath:self.packsDir isDirectory:YES]) {
+        if (! [fm fileExistsAtPath:self.packsDir isDirectory:&aDirectory] || !aDirectory) {
             NSString * errFmt = NSLocalizedString(@"PACK store not accessible %@ does not exist or is not a directory", @"GITErrorObjectStoreNotAccessible (GITPackStore:init)");
             NSString * errDesc = [NSString stringWithFormat:errFmt, self.packsDir];
             GITError(error, GITErrorObjectStoreNotAccessible, errDesc);

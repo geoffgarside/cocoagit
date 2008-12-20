@@ -34,8 +34,9 @@
     {
         self.objectsDir = [root stringByAppendingPathComponent:@"objects"];
 
+        BOOL aDirectory;
         NSFileManager * fm = [NSFileManager defaultManager];
-        if (! [fm fileExistsAtPath:self.objectsDir isDirectory:YES]) {
+        if (! [fm fileExistsAtPath:self.objectsDir isDirectory:&aDirectory] || !aDirectory) {
             NSString * errFmt = NSLocalizedString(@"File store not accessible %@ does not exist or is not a directory", @"GITErrorObjectStoreNotAccessible (GITFileStore)");
             NSString * errDesc = [NSString stringWithFormat:errFmt, self.objectsDir];
             GITError(error, GITErrorObjectStoreNotAccessible, errDesc);
