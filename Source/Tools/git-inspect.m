@@ -13,11 +13,15 @@ int main (int argc, const char * argv[]) {
         pp(@"Usage: %@ sha1hash", [info processName]);
         exit(0);
     }
-    
-    GITRepo * repo = [[GITRepo alloc] initWithRoot:@"."];
-    NSString *sha1 = [args objectAtIndex:1];
 
     NSError * error;
+    GITRepo * repo = [[GITRepo alloc] initWithRoot:@"." error:&error];
+    if (!repo) {
+        pp(@"Error loading Repo: %@", [error localizedDescription]);
+        return [error code];
+    }
+
+    NSString *sha1 = [args objectAtIndex:1];
     GITObject * object = [[repo objectWithSha1:sha1 error:&error] autorelease];
 
     if (!object)
