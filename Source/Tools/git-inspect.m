@@ -56,8 +56,8 @@ void printObject(GITObject * object)
     {
         GITCommit * commit = (GITCommit*)object;
         pp(@"Commit (%lu)", commit.size);
-        pp(@"Tree\t\t%@", commit.tree.sha1);
-        pp(@"Parent\t\t%@", commit.parent.sha1);
+        pp(@"Tree\t\t%@", commit.treeSha1);
+        pp(@"Parent\t\t%@", commit.parentSha1);
         pp(@"Author\t\t%@\t%@", commit.author, commit.authored);
         pp(@"Committer\t%@\t%@", commit.committer, commit.committed);
         pp(@"Message\n%@", commit.message);
@@ -66,7 +66,7 @@ void printObject(GITObject * object)
     {
         GITTag * tag = (GITTag*)object;
         pp(@"Tag (%lu)", tag.size);
-        pp(@"Commit\t\t%@", tag.commit.sha1);
+        pp(@"Commit\t\t%@", tag.objectSha1);
         pp(@"Name\t\t%@", tag.name);
         pp(@"Tagger\t\t%@\t%@", tag.tagger, tag.tagged);
         pp(@"Message\n%@", tag.message);
