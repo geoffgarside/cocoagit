@@ -1,0 +1,16 @@
+#
+# Rakefile for CocoaGit project + macruby
+#  
+# Copyright 2008, Brian Chapados <chapados@sciencegeeks.org>
+# Release under the MIT License. See LICENSE file.
+#
+
+desc "Open a macirb session preloaded with Git framework"
+task :console do
+  sh "macirb -rubygems -r lib/cocoagit.rb"
+end
+
+desc "Run test suite"
+task :test do
+  sh "macruby test/suite.rb"
+end
