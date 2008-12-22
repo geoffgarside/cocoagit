@@ -9,6 +9,7 @@
 #import "GITPackIndexVersion1.h"
 #import "GITUtilityBelt.h"
 #import "NSData+Hashing.h"
+#import "GITErrors.h"
 
 static const NSUInteger kGITPackIndexFanOutSize  = 4;          //!< bytes
 static const NSUInteger kGITPackIndexFanOutCount = 256;
@@ -17,7 +18,7 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
 
 /*! \cond */
 @interface GITPackIndexVersion1 ()
-- (NSArray*)loadOffsets;
+- (NSArray*)loadOffsetsWithError:(NSError**)error;
 - (NSRange)rangeOfPackChecksum;
 - (NSRange)rangeOfChecksum;
 @end
@@ -57,10 +58,10 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
 - (NSArray*)offsets
 {
     if (!offsets)
-        offsets = [[self loadOffsets] retain];
+        offsets = [[self loadOffsetsWithError:NULL] retain];
     return offsets;
 }
-- (NSArray*)loadOffsets
+- (NSArray*)loadOffsetsWithError:(NSError**)error
 {
     uint32_t value;
     NSUInteger i, lastCount, thisCount;
@@ -74,12 +75,10 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
 
         if (lastCount > thisCount)
         {
-            NSString * reason = [NSString stringWithFormat:@"Index: %@ : Invalid fanout %lu -> %lu for entry %d",
-                                 [self.path lastPathComponent], lastCount, thisCount, i];
-            NSException * ex  = [NSException exceptionWithName:@"GITPackIndexCorrupted"
-                                                        reason:reason
-                                                      userInfo:nil];
-            @throw ex;
+            NSString * format = NSLocalizedString(@"Index: %@ : Invalid fanout %lu -> %lu for entry %d", @"GITErrorPackIndexCorrupted (GITPackIndexVersion1)");
+            NSString * reason = [NSString stringWithFormat:format, [self.path lastPathComponent], lastCount, thisCount, i];
+            GITError(error, GITErrorPackIndexCorrupted, reason);
+            return nil;
         }
 
         [_offsets addObject:[NSNumber numberWithUnsignedInteger:thisCount]];
@@ -88,6 +87,10 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
     return _offsets;
 }
 - (NSUInteger)packOffsetForSha1:(NSString*)sha1
+{
+    return [self packOffsetForSha1:sha1 error:NULL];
+}
+- (NSUInteger)packOffsetForSha1:(NSString*)sha1 error:(NSError**)error
 {
     uint8_t byte;
     NSData * packedSha1 = packSHA1(sha1);
@@ -117,12 +120,10 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
     // If its found the SHA1 then it will have returned by now.
     // Otherwise the SHA1 is not in this PACK file, so we should
     // raise an error.
-    NSString * reason = [NSString stringWithFormat:@"SHA1 %@ is not known in this Index file %@",
-                         sha1, [[self path] lastPathComponent]];
-    NSException * ex  = [NSException exceptionWithName:@"GITPackIndexUnknownSHA1"
-                                                reason:reason
-                                              userInfo:nil];
-    @throw ex;
+    NSString * errorFormat = NSLocalizedString(@"Object %@ is not in index file",@"GITErrorObjectNotFound (GITPackIndexVersion1)");
+    NSString * errorDesc = [NSString stringWithFormat:errorFormat, sha1];
+    GITError(error, GITErrorObjectNotFound, errorDesc);
+    return NSNotFound;
 }
 - (NSData*)packChecksum
 {
