@@ -105,7 +105,7 @@ NSString * const kGITObjectCommitName = @"commit";
         self.tree = [self.repo treeWithSha1:self.treeSha1 error:NULL];  //!< Ideally we'd like to care about the error
     return tree;
 }
-- (GITCommit*)commit
+- (GITCommit*)parent
 {
     if (!parent && self.parentSha1)
         self.parent = [self.repo commitWithSha1:self.parentSha1 error:NULL];    //!< Ideally we'd like to care about the error

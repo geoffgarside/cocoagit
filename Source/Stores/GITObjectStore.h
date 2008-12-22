@@ -12,7 +12,7 @@
 
 /*! Generic object storage class.
  * Desendants of GITObjectStore implement different ways of
- * accessing the objects of a repository. 
+ * accessing the objects of a repository.
  */
 @interface GITObjectStore : NSObject
 {
@@ -24,6 +24,16 @@
  * \return A new store object.
  */
 - (id)initWithRoot:(NSString*)root;
+
+/*! Creates and returns a new store object from the provided .git root
+ * \attention This method must be overridden
+ * \param root Path to the .git root directory
+ * \param[out] error Object encapsulating any errors which occur
+ * \return A new store object or nil on error
+ * \par Error Codes:
+ * \li \c GITErrorObjectStoreNotAccessible store could not be loaded
+ */
+- (id)initWithRoot:(NSString*)root error:(NSError**)error;
 
 /*! Returns the contents of an object for the given <tt>sha1</tt>.
  * The data returned should be in a form which is usable to initialise an
@@ -62,6 +72,9 @@
  * \param[out] type The GITObjectType of the object
  * \param[out] error NSError object containing any errors, pass NULL if you don't care
  * \return YES on successful load, NO if an error occurred
+ * \par Errors:
+ * \li \c GITErrorObjectNotFound no object with \a sha1 could be found in the receiver
+ * \li \c GITErrorObjectSizeMismatch size of object identified by \a sha1 does not match meta data
  * \internal
  * We might possibly consider the following extension to this method once Deltas
  * are being parsed. If the type parameter has a non-zero value then this will be

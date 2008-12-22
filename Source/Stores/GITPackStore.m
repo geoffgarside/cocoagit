@@ -26,12 +26,30 @@
 
 - (id)initWithRoot:(NSString*)root
 {
+    return [self initWithRoot:root error:NULL];
+}
+- (id)initWithRoot:(NSString*)root error:(NSError**)error
+{
     if(self = [super init])
     {
-        NSError * error;
-        self.packsDir = [root stringByAppendingPathComponent:@"objects/pack"];
-        self.packFiles = [self loadPackFilesWithError:&error];
         self.lastReadPack = nil;
+        self.packsDir = [root stringByAppendingPathComponent:@"objects/pack"];
+
+        BOOL aDirectory;
+        NSFileManager * fm = [NSFileManager defaultManager];
+        if (! [fm fileExistsAtPath:self.packsDir isDirectory:&aDirectory] || !aDirectory) {
+            NSString * errFmt = NSLocalizedString(@"PACK store not accessible %@ does not exist or is not a directory", @"GITErrorObjectStoreNotAccessible (GITPackStore:init)");
+            NSString * errDesc = [NSString stringWithFormat:errFmt, self.packsDir];
+            GITError(error, GITErrorObjectStoreNotAccessible, errDesc);
+            [self release];
+            return nil;
+        }
+
+        self.packFiles = [self loadPackFilesWithError:error];
+        if (! self.packFiles) {
+            [self release];
+            return nil;
+        }
     }
     return self;
 }
@@ -66,9 +84,11 @@
     NSArray * files    = [fm contentsOfDirectoryAtPath:self.packsDir error:outError];
 
     if (!files) {
-		GITError(outError, GITErrorPackStoreNotAccessible, NSLocalizedString(@"Could not access pack directory", @"GITErrorPackStoreNotAccessible"));
-		return nil;
-	}
+        NSString * errFmt = NSLocalizedString(@"PACK store not accessible, load packs from %@ failed", @"GITErrorObjectStoreNotAccessible (GITPackStore:load)");
+        NSString * errDesc = [NSString stringWithFormat:errFmt, self.packsDir];
+        GITError(outError, GITErrorObjectStoreNotAccessible, errDesc);
+        return nil;
+    }
 
 	// Should only be pack & idx files, so div(2) should be about right
 	packs = [NSMutableArray arrayWithCapacity:[files count] / 2];

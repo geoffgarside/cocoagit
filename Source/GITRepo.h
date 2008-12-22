@@ -46,10 +46,25 @@
 
 /*! Creates and returns a repo object with the provided root.
  * \param repoRoot The path, relative or absolute, to the repository root.
+ * \param[out] error Object encapsulating the error information
+ * \return A repo object with the provided root or nil if an error occurred
+ */
+- (id)initWithRoot:(NSString*)repoRoot error:(NSError**)error;
+
+/*! Creates and returns a repo object with the provided root.
+ * \param repoRoot The path, relative or absolute, to the repository root.
  * \param isBare Flag indicating if the repository is bare.
  * \return A repo object with the provided root.
  */
 - (id)initWithRoot:(NSString*)repoRoot bare:(BOOL)isBare;
+
+/*! Creates and returns a repo object with the provided root.
+ * \param repoRoot The path, relative or absolute, to the repository root.
+ * \param isBare Flag indicating if the repository is bare.
+ * \param[out] error Object encapsulating the error information
+ * \return A repo object with the provided root or nil if an error occurred
+ */
+- (id)initWithRoot:(NSString*)repoRoot bare:(BOOL)isBare error:(NSError**)error;
 
 /*! Creates and returns a new repo using the provided store for object retreival.
  * \param store GITObjectStore to use for object retreival

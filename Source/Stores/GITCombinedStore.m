@@ -27,6 +27,10 @@
 {
     return [self initWithStores:nil];
 }
+- (id)initWithRoot:(NSString*)root error:(NSError**)error
+{
+    return [self initWithStores:nil];
+}
 - (id)initWithStores:(GITObjectStore*)firstStore, ...
 {
     GITObjectStore * eachStore;

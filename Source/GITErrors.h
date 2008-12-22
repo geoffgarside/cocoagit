@@ -33,9 +33,11 @@ __git_error(GITErrorObjectParsingFailed);
 #pragma mark File Reading Errors
 __git_error(GITErrorFileNotFound);
 
+#pragma mark Store Error Codes
+__git_error(GITErrorObjectStoreNotAccessible);
+
 #pragma mark PACK and Index Error Codes
 __git_error(GITErrorPackIndexUnsupportedVersion);
-__git_error(GITErrorPackStoreNotAccessible);
 __git_error(GITErrorPackFileInvalid);
 __git_error(GITErrorPackFileNotSupported);
 
