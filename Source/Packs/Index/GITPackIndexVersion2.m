@@ -101,8 +101,8 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 
         if (lastCount > thisCount)
         {
-            NSString * reason = [NSString stringWithFormat:@"Index: %@ : Invalid fanout %lu -> %lu for entry %d",
-                                 [self.path lastPathComponent], lastCount, thisCount, i];
+            NSString * format = NSLocalizedString(@"Index: %@ : Invalid fanout %lu -> %lu for entry %d", @"GITErrorPackIndexCorrupted");
+            NSString * reason = [NSString stringWithFormat:format, [self.path lastPathComponent], lastCount, thisCount, i];
             GITError(error, GITErrorPackIndexCorrupted, reason);
             return nil;
         }
