@@ -39,6 +39,7 @@ __git_error(GITErrorObjectStoreNotAccessible);
 #pragma mark PACK and Index Error Codes
 __git_error(GITErrorPackIndexUnsupportedVersion);
 __git_error(GITErrorPackIndexCorrupted);
+__git_error(GITErrorPackIndexChecksumMismatch);
 __git_error(GITErrorPackFileInvalid);
 __git_error(GITErrorPackFileNotSupported);
 
