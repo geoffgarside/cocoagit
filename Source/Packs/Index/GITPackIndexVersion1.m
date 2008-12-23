@@ -35,6 +35,12 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
         self.data = [NSData dataWithContentsOfFile:thePath
                                            options:NSUncachedRead
                                              error:outError];
+        if (! [self verifyChecksum]) {
+            NSString * errDesc = NSLocalizedString(@"PACK Index file checksum failed", @"GITErrorPackIndexChecksumMismatch (GITPackIndexVersion1)");
+            GITErrorWithInfo(outError, GITErrorPackIndexChecksumMismatch, errDesc, NSLocalizedDescriptionKey, thePath, NSFilePathErrorKey);
+            [self release];
+            return nil;
+        }
     }
     return self;
 }
