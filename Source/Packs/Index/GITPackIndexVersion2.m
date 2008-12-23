@@ -54,7 +54,7 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
                                            options:NSUncachedRead
                                              error:outError];
         if (! [self verifyChecksum]) {
-            NSString * errDesc = NSLocalizedString(@"PACK Index file checksum failed", @"GITErrorPackIndexChecksumMismatch (GITPackIndexVersion2)");
+            NSString * errDesc = NSLocalizedString(@"PACK Index file checksum failed", @"GITErrorPackIndexChecksumMismatch");
             GITErrorWithInfo(outError, GITErrorPackIndexChecksumMismatch, errDesc, NSLocalizedDescriptionKey, thePath, NSFilePathErrorKey);
             [self release];
             return nil;
@@ -147,7 +147,7 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
     // If its found the SHA1 then it will have returned by now.
     // Otherwise the SHA1 is not in this PACK file, so we should
     // raise an error.
-    NSString * errorFormat = NSLocalizedString(@"Object %@ is not in index file",@"GITErrorObjectNotFound (GITPackIndexVersion2)");
+    NSString * errorFormat = NSLocalizedString(@"Object %@ is not in index file",@"GITErrorObjectNotFound");
     NSString * errorDesc = [NSString stringWithFormat:errorFormat, sha1];
     GITError(error, GITErrorObjectNotFound, errorDesc);
     return NSNotFound;
