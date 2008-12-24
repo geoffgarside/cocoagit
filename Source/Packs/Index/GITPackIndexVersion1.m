@@ -37,7 +37,7 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
                                              error:outError];
         if (! [self verifyChecksum]) {
             NSString * errDesc = NSLocalizedString(@"PACK Index file checksum failed", @"GITErrorPackIndexChecksumMismatch");
-            GITErrorWithInfo(outError, GITErrorPackIndexChecksumMismatch, errDesc, NSLocalizedDescriptionKey, thePath, NSFilePathErrorKey);
+            GITErrorWithInfo(outError, GITErrorPackIndexChecksumMismatch, errDesc, NSLocalizedDescriptionKey, thePath, NSFilePathErrorKey, nil);
             [self release];
             return nil;
         }

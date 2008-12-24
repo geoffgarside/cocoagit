@@ -68,7 +68,7 @@ enum {
     // Verify the data checksum
     if (! [self verifyChecksum]) {
         NSString * errDesc = NSLocalizedString(@"PACK file checksum failed", @"GITErrorPackFileChecksumMismatch");
-        GITErrorWithInfo(error, GITErrorPackFileChecksumMismatch, errDesc, NSLocalizedDescriptionKey, thePath, NSFilePathErrorKey);
+        GITErrorWithInfo(error, GITErrorPackFileChecksumMismatch, errDesc, NSLocalizedDescriptionKey, thePath, NSFilePathErrorKey, nil);
         [self release];
         return nil;
     }
