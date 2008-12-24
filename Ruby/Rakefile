@@ -5,19 +5,14 @@
 # Released under the MIT License. See LICENSE file.
 #
 
-
 desc "Open a macirb session preloaded with Git framework"
 task :console do
-  sh "bin/macirb -rubygems -r lib/cocoagit.rb"
+  sh "./bin/macirb -rubygems -r lib/cocoagit.rb"
 end
 
 desc "Run test suite"
 task :test do
-  if defined? RUBY_ENGINE && RUBY_ENGINE == 'macruby'
-    require 'test/suite'
-  else
-    sh "bin/macruby test/suite.rb"
-  end
+  sh "bin/macruby test/suite.rb"
 end
 
 namespace :macruby do
@@ -95,5 +90,4 @@ namespace :macruby do
   
   desc "build embeddable MacRuby.framework for use with cocoagit"
   task :bootstrap => [:checkout, :build, :install, :clean]
-  
 end
