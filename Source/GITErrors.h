@@ -42,6 +42,7 @@ __git_error(GITErrorPackIndexCorrupted);
 __git_error(GITErrorPackIndexChecksumMismatch);
 __git_error(GITErrorPackFileInvalid);
 __git_error(GITErrorPackFileNotSupported);
+__git_error(GITErrorPackFileChecksumMismatch);
 
 
 #undef __git_error

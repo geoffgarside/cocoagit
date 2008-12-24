@@ -54,18 +54,33 @@ enum {
 - (id)initWithPath:(NSString*)thePath error:(NSError **)error
 {
     if (! [super init])
-		return nil;
+        return nil;
 
-	self.path = thePath;
-	self.data = [NSData dataWithContentsOfFile:thePath
-									   options:NSUncachedRead
-										 error:error];
-	if (!data)
-		return nil;
-	
-	NSString * idxPath = [[thePath stringByDeletingPathExtension] 
-						  stringByAppendingPathExtension:@"idx"];
-	self.index  = [[GITPackIndex alloc] initWithPath:idxPath];
+    self.path = thePath;
+    self.data = [NSData dataWithContentsOfFile:thePath
+                                       options:NSUncachedRead
+                                         error:error];
+    if (!data) {
+        [self release];
+        return nil;
+    }
+
+    // Verify the data checksum
+    if (! [self verifyChecksum]) {
+        NSString * errDesc = NSLocalizedString(@"PACK file checksum failed", @"GITErrorPackFileChecksumMismatch");
+        GITErrorWithInfo(error, GITErrorPackFileChecksumMismatch, errDesc, NSLocalizedDescriptionKey, thePath, NSFilePathErrorKey);
+        [self release];
+        return nil;
+    }
+
+    // initialize the index file
+    NSString * idxPath = [[thePath stringByDeletingPathExtension]
+                          stringByAppendingPathExtension:@"idx"];
+    self.index  = [[GITPackIndex alloc] initWithPath:thePath error:error];
+    if (!index) {
+        [self release];
+        return nil;
+    }
 
     return self;
 }
