@@ -1,0 +1,4 @@
+macruby-src/
+macruby-build/
+MacRuby.framework/
+bin/
