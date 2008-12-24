@@ -10,7 +10,7 @@ require 'cocoagit/extensions/macruby'
 
 # load frameworks
 framework 'Foundation'
-git_xcode = File.join(File.dirname(__FILE__), '..', '..', 'build', 'Debug', 'Git.framework')
+git_xcode = File.join(File.dirname(__FILE__), '..', '..', 'build', 'Debug-GC', 'Git.framework')
 framework git_xcode
 
 # load macruby extensions for cocoagit classes
