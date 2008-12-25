@@ -7,13 +7,48 @@
 
 desc "Open a macirb session preloaded with Git framework"
 task :console do
+  # update_warning_exit unless latest_cocoagit_build("Debug-GC")
   sh "./bin/macirb -rubygems -r lib/cocoagit.rb"
 end
 
 desc "Run test suite"
 task :test do
+  # update_warning_exit unless latest_cocoagit_build("Debug-GC")
   sh "bin/macruby test/suite.rb"
 end
+
+def update_warning_exit
+  warning = <<END
+MacRuby requires a garbage-collection aware framework, and therefore
+uses the Debug-GC build of cocoagit.
+
+It appears that your Debug-GC build of Git.framework might be out of date.
+Rebuild the Debug-GC target in xcode to make sure you are using your latest changes
+END
+  puts warning
+  exit 1
+end
+
+# Not correct - can't just use the date
+def latest_cocoagit_build(target)
+  build_dir = File.join(File.dirname(__FILE__), '..', 'build')
+  projects = %w[Debug Debug-GC Release Release-GC]
+  project_dates = 
+    projects.map do |p|
+      project_file = File.join(build_dir, p, "Git.framework", "Git")
+      date = File.exist?(project_file) && File.mtime(project_file)
+      if date
+        {:project => p, :date => date}
+      else
+        nil
+      end
+    end.compact
+  project_dates.sort! { |a, b| a[:date] <=> b[:date] }
+  target == project_dates.last[:project]
+end
+
+
+# MacRuby management tasks
 
 namespace :macruby do
   MACRUBY_SRC = "macruby-src"
