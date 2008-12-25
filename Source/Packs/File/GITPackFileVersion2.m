@@ -110,13 +110,10 @@ enum {
 {
     uint8_t buf = 0x0;    // a single byte buffer
     NSUInteger size, type, shift = 4;
-    NSUInteger offset = [self.index packOffsetForSha1:sha1];
+    NSUInteger offset = [self.index packOffsetForSha1:sha1 error:error];
 
-	if (offset <= 0) {
-        NSString *errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Object %@ not found", @"GITErrorObjectNotFound"), sha1];
-		GITError(error, GITErrorObjectNotFound, errorDescription);
-		return NO;
-	}
+    if (offset == NSNotFound)
+        return NO;
 	
 	[self.data getBytes:&buf range:NSMakeRange(offset++, 1)];
 	NSAssert(buf != 0x0, @"buf should not be NULL");

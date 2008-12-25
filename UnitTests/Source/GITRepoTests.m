@@ -40,4 +40,16 @@
     STAssertNotNil(raw, nil);
     STAssertEqualObjects(data, raw, nil);
 }
+
+/* This test case causes a crash with GC turned off.
+ * Leave it out for now, but this issue definitely requires more investigation
+- (void)testObjectNotFoundError
+{
+    NSError *error;
+    GITObject *o = [repo objectWithSha1:@"0123456789012345678901234567890123456789"
+                                  error:&error];
+    STAssertNil(o, nil);
+    STAssertEquals(GITErrorObjectNotFound, [error code], nil);
+}
+*/
 @end
