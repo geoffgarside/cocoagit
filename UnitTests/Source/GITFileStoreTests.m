@@ -55,4 +55,14 @@
     STAssertEquals([raw length], [data length], nil);
     STAssertEqualObjects(raw, data, nil);
 }
+- (void)testObjectNotFoundError
+{
+    NSError *error = nil;   // We get a segfault if this is not preset to nil.
+    NSData *raw; GITObjectType type;
+    BOOL result = [store loadObjectWithSha1:@"cafebabe0d485f3cfd5fd9cc62491341067f0c59" intoData:&raw type:&type error:&error];
+    
+    STAssertFalse(result, @"Object should not be found");
+    STAssertNotNil(error, @"Should not be nil");
+    STAssertEquals(GITErrorObjectNotFound, [error code], @"Should have correct error code");
+}
 @end
