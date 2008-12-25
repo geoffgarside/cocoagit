@@ -128,7 +128,7 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
     // raise an error.
     NSString * errorFormat = NSLocalizedString(@"Object %@ is not in index file",@"GITErrorObjectNotFound");
     NSString * errorDesc = [NSString stringWithFormat:errorFormat, sha1];
-    GITError(error, GITErrorObjectNotFound, errorDesc);
+    GITError(error, GITErrorObjectNotFound, errorDesc);     // FIXME: Getting segfaults here
     return NSNotFound;
 }
 - (NSData*)packChecksum
