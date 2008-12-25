@@ -113,7 +113,7 @@
  * \param byte The byte to get the number of objects for
  * \return Number of objects starting with <tt>byte</tt>
  */
-- (NSUInteger)numberOfObjectsWithFirstByte:(char)byte;
+- (NSUInteger)numberOfObjectsWithFirstByte:(uint8_t)byte;
 
 /*! Returns a range describing the number of objects to the beginning of
  * those starting with <tt>byte</tt> and the number of objects ending
@@ -121,7 +121,7 @@
  * \param byte The byte to get the range of objects for
  * \return Range describing the objects with the first byte
  */
-- (NSRange)rangeOfObjectsWithFirstByte:(char)byte;
+- (NSRange)rangeOfObjectsWithFirstByte:(uint8_t)byte;
 
 /*! Returns YES if the object identified by <tt>sha1</tt> exists in the
  * receivers PACK file.

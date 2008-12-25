@@ -88,11 +88,11 @@
 {
     return [[[self offsets] lastObject] unsignedIntegerValue];
 }
-- (NSUInteger)numberOfObjectsWithFirstByte:(char)byte
+- (NSUInteger)numberOfObjectsWithFirstByte:(uint8_t)byte
 {
     return [self rangeOfObjectsWithFirstByte:byte].length;
 }
-- (NSRange)rangeOfObjectsWithFirstByte:(char)byte
+- (NSRange)rangeOfObjectsWithFirstByte:(uint8_t)byte
 {
     NSUInteger thisFanout, prevFanout = 0;
     thisFanout = [[[self offsets] objectAtIndex:byte] unsignedIntegerValue];
