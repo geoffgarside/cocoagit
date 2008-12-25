@@ -73,12 +73,15 @@
     [self doesNotRecognizeSelector: _cmd];
     return NO;
 }
-- (NSUInteger)packOffsetForSha1:(NSString*)sha1
+- (NSUInteger)packOffsetForSha1:(NSString *)sha1
+{
+    return [self packOffsetForSha1:sha1 error:NULL];
+}
+- (NSUInteger)packOffsetForSha1:(NSString *)sha1 error:(NSError **)error
 {
     [self doesNotRecognizeSelector: _cmd];
     return 0;
 }
-
 #pragma mark -
 #pragma mark Derived Methods
 - (NSUInteger)numberOfObjects
