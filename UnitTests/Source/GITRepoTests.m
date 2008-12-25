@@ -40,4 +40,12 @@
     STAssertNotNil(raw, nil);
     STAssertEqualObjects(data, raw, nil);
 }
+- (void)testObjectNotFoundError
+{
+    NSError *error;
+    GITObject *o = [repo objectWithSha1:@"0123456789012345678901234567890123456789"
+                                  error:&error];
+    STAssertNil(o, nil);
+    STAssertEquals(GITErrorObjectNotFound, [error code], nil);
+}
 @end
