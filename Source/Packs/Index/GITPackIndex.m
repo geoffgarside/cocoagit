@@ -102,9 +102,9 @@
 }
 - (BOOL)hasObjectWithSha1:(NSString*)sha1
 {
-    if ([self packOffsetForSha1:sha1] > 0)
-        return YES;
-    return NO;
+    if ([self packOffsetForSha1:sha1] == NSNotFound)
+        return NO;
+    return YES;
 }
 
 @end
