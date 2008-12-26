@@ -110,15 +110,14 @@
 - (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)data
                       type:(GITObjectType*)type error:(NSError**)error
 {
-    NSError * undError;
+    NSError * undError = nil;
 	
     if (recentStore != nil) {
         if ([self.recentStore loadObjectWithSha1:sha1 intoData:data type:type error:&undError])
             return YES;
 
         if ([undError code] != GITErrorObjectNotFound) {
-            if (error != NULL)
-				*error = undError;
+            GITError(error, [undError code], [undError localizedDescription]);
 			return NO;
 		}
     }
@@ -133,8 +132,7 @@
 		}
         
 		if ([undError code] != GITErrorObjectNotFound) {
-			if (error != NULL)
-				*error = undError;
+            GITError(error, [undError code], [undError localizedDescription]);
 			return NO;
 		}
     }

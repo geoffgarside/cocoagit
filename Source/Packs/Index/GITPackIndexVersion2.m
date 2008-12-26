@@ -148,8 +148,8 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
     // Otherwise the SHA1 is not in this PACK file, so we should
     // raise an error.
     NSString * errorFormat = NSLocalizedString(@"Object %@ is not in index file",@"GITErrorObjectNotFound");
-    NSString * errorDesc = [NSString stringWithFormat:errorFormat, sha1];
-    GITError(error, GITErrorObjectNotFound, errorDesc);     // FIXME: Getting segfaults here
+    NSString * errorDesc = [NSString stringWithFormat:errorFormat, sha1];    
+    GITError(error, GITErrorObjectNotFound, errorDesc);
     return NSNotFound;
 }
 - (NSData*)packChecksum
