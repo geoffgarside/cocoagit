@@ -33,23 +33,15 @@
 }
 - (id)initWithStores:(GITObjectStore*)firstStore, ...
 {
-    GITObjectStore * eachStore;
-    va_list argumentList;
-
     if (self = [super init])
     {
         self.stores = [NSMutableArray array];
         self.recentStore = nil;
 
-        // process arguments
-        if (firstStore)                                                 // The first argument isn't part of the varargs list,
-        {                                                               // so we'll handle it separately.
-            [self addStore:firstStore priority:GITNormalPriority];
-            va_start(argumentList, firstStore);                         // Start scanning for arguments after firstStore.
-            while (eachStore = va_arg(argumentList, GITObjectStore*))   // As many times as we can get an argument of type "GITObjectStore*"
-                [self addStore:eachStore priority:GITNormalPriority];   // that isn't nil, add it to self's contents.
-            va_end(argumentList);
-        }
+        va_list args;
+        va_start(args, firstStore);
+        [self addStores:firstStore args:args];
+        va_end(args);
     }
 
     return self;
@@ -61,17 +53,17 @@
 }
 - (void)addStores:(GITObjectStore*)firstStore, ...
 {
-    GITObjectStore * eachStore;
-    va_list argumentList;
-    
-    // process arguments
-    if (firstStore)                                                 // The first argument isn't part of the varargs list,
-    {                                                               // so we'll handle it separately.
-        [self addStore:firstStore priority:GITNormalPriority];
-        va_start(argumentList, firstStore);                         // Start scanning for arguments after firstStore.
-        while (eachStore = va_arg(argumentList, GITObjectStore*))   // As many times as we can get an argument of type "GITObjectStore*"
-            [self addStore:eachStore priority:GITNormalPriority];   // that isn't nil, add it to self's contents.
-        va_end(argumentList);
+    va_list args;
+    va_start(args, firstStore);
+    [self addStores:firstStore args:args];
+    va_end(args);
+}
+- (void)addStores:(GITObjectStore*)firstStore args:(va_list)args
+{
+    GITObjectStore * eachStore = firstStore;
+    while (eachStore) {
+        [self addStore:eachStore priority:GITNormalPriority];
+        eachStore = va_arg(args, GITObjectStore*);
     }
 }
 - (void)addStore:(GITObjectStore*)store priority:(GITCombinedStorePriority)priority
