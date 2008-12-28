@@ -99,4 +99,33 @@
     STAssertNil(error, @"No Error Occurred");
     STAssertNotNil(raw, @"Data was retrieved");
 }
+- (void)testShouldFindObjectFromFileAndPackStore
+{
+    NSError * error = nil;
+
+    GITFileStore * fileStore = [[GITFileStore alloc] initWithRoot:DOT_GIT error:&error];
+    STAssertNotNil(fileStore, nil); STAssertNil(error, nil);
+
+    GITPackStore * packStore = [[GITPackStore alloc] initWithRoot:DOT_GIT error:&error];
+    STAssertNotNil(packStore, nil); STAssertNil(error, nil);
+
+    [store addStores:fileStore, packStore, nil];
+
+    NSData * raw = nil; GITObjectType type;
+    NSString * sha1File = @"87f974580d485f3cfd5fd9cc62491341067f0c59",
+             * sha1Pack = @"226e91f3b4cca13890325f5d33ec050beca99f89";
+
+    BOOL result = [store loadObjectWithSha1:sha1File intoData:&raw type:&type error:&error];
+    STAssertTrue(result, @"No Error Occurred");
+    STAssertNil(error, @"No Error Occurred");
+    STAssertNotNil(raw, @"Data was retrieved");
+
+    // I'd like to release here, but I get a segfault...
+    //[raw release]; raw = nil;
+
+    result = [store loadObjectWithSha1:sha1Pack intoData:&raw type:&type error:&error];
+    STAssertTrue(result, @"No Error Occurred");
+    STAssertNil(error, @"No Error Occurred");
+    STAssertNotNil(raw, @"Data was retrieved");
+}
 @end
