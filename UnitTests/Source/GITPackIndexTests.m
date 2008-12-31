@@ -40,10 +40,13 @@
 {
     NSUInteger offset = [versionTwo packOffsetForSha1:@"226e91f3b4cca13890325f5d33ec050beca99f89"];
     STAssertEquals(offset, (NSUInteger)1032, nil);
+
+    STAssertEquals([versionTwo packOffsetForSha1:@"cafebabe0d485f3cfd5fd9cc62491341067f0c59"], (NSUInteger)NSNotFound, nil);
 }
-- (void)testHashObjectWithSha1InVersionTwo
+- (void)testHasObjectWithSha1InVersionTwo
 {
     STAssertTrue([versionTwo hasObjectWithSha1:@"226e91f3b4cca13890325f5d33ec050beca99f89"], nil);
+    STAssertFalse([versionTwo hasObjectWithSha1:@"cafebabe0d485f3cfd5fd9cc62491341067f0c59"], nil);
 }
 - (void)testChecksumStringInVersionTwo
 {
