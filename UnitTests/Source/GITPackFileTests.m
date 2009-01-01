@@ -44,6 +44,7 @@
 - (void)testHasObjectWithSha1InVersionTwo
 {
     STAssertTrue([versionTwo hasObjectWithSha1:@"226e91f3b4cca13890325f5d33ec050beca99f89"], nil);
+    STAssertFalse([versionTwo hasObjectWithSha1:@"cafebabe0d485f3cfd5fd9cc62491341067f0c59"], nil);
 }
 - (void)testDataForObjectWithSha1InVersionTwo
 {
