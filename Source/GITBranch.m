@@ -6,7 +6,7 @@
 //  Copyright 2008 ManicPanda.com. All rights reserved.
 //
 
-#import "GITBranch.m"
+#import "GITBranch.h"
 #import "GITRepo.h"
 #import "GITCommit.h"
 
