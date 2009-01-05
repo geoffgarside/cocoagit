@@ -21,6 +21,48 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		319B44480F1128BB00336E0A /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 319B44470F1128BB00336E0A /* CoreServices.framework */; };
+		319B450F0F112E5500336E0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 319B42E00F10526A00336E0A /* Foundation.framework */; };
+		319B45140F112FD300336E0A /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 319B44120F10551300336E0A /* CoreFoundation.framework */; };
+		319B45A20F116E9500336E0A /* GITErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB1F0A60EC6F2DA006C68D0 /* GITErrors.m */; };
+		319B45A40F116E9500336E0A /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212770E179A2C005AC693 /* NSData+Compression.m */; };
+		319B45A50F116E9500336E0A /* NSData+Hashing.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212940E179B4B005AC693 /* NSData+Hashing.m */; };
+		319B45A60F116E9500336E0A /* NSData+Searching.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F8CFFA40E2FFCF200D0E65A /* NSData+Searching.m */; };
+		319B45A70F116E9500336E0A /* GITBlob.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9213850E17F17C005AC693 /* GITBlob.m */; };
+		319B45A80F116E9500336E0A /* NSTimeZone+Offset.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F464D400E3DC3EC00867506 /* NSTimeZone+Offset.m */; };
+		319B45A90F116E9500336E0A /* GITRepo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EF0E48C5650004CD44 /* GITRepo.m */; };
+		319B45AA0F116E9500336E0A /* GITUtilityBelt.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F63998D0E51952F0034F279 /* GITUtilityBelt.m */; };
+		319B45AB0F116E9500336E0A /* GITActor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC93D0E1A8917001668EB /* GITActor.m */; };
+		319B45AC0F116E9500336E0A /* GITDateTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE328C50E9B623E001E37D5 /* GITDateTime.m */; };
+		319B45AD0F116E9500336E0A /* GITCommit.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC9030E1A7032001668EB /* GITCommit.m */; };
+		319B45AE0F116E9500336E0A /* GITTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC9060E1A709D001668EB /* GITTag.m */; };
+		319B45AF0F116E9500336E0A /* GITTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9213BE0E1822A1005AC693 /* GITTree.m */; };
+		319B45B00F116E9500336E0A /* GITTreeEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */; };
+		319B45B10F116E9500336E0A /* GITObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD240740EA216D5000F7B60 /* GITObject.m */; };
+		319B45B20F116E9500336E0A /* GITObjectStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F96B1BB0E9E334E00AD0A80 /* GITObjectStore.m */; };
+		319B45B30F116E9500336E0A /* GITFileStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE329AC0E9BA2EF001E37D5 /* GITFileStore.m */; };
+		319B45B40F116E9500336E0A /* GITPackStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE329AF0E9BA2F8001E37D5 /* GITPackStore.m */; };
+		319B45B50F116E9500336E0A /* GITCombinedStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F16B9020EDB595A003CFD93 /* GITCombinedStore.m */; };
+		319B45B60F116E9500336E0A /* GITPackFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EC0E48C5650004CD44 /* GITPackFile.m */; };
+		319B45B70F116E9500336E0A /* GITPackFileVersion2.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCCCF7C0EC0E79700ED3215 /* GITPackFileVersion2.m */; };
+		319B45B80F116E9500336E0A /* GITPackIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F35B9100EBFE1EF00FC0770 /* GITPackIndex.m */; };
+		319B45B90F116E9500336E0A /* GITPackIndexVersion1.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F35B9160EBFE44B00FC0770 /* GITPackIndexVersion1.m */; };
+		319B45BA0F116E9500336E0A /* GITPackIndexVersion2.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F35B9190EBFE45B00FC0770 /* GITPackIndexVersion2.m */; };
+		319B45BB0F116E9500336E0A /* GITPlaceholderPackFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCCCF790EC0E6DD00ED3215 /* GITPlaceholderPackFile.m */; };
+		319B45BC0F116E9500336E0A /* GITPlaceholderPackIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F35B9130EBFE24000FC0770 /* GITPlaceholderPackIndex.m */; };
+		319B45BD0F116E9500336E0A /* assertions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49C80EF5A1F90020159D /* assertions.m */; };
+		319B45BE0F116E9500336E0A /* NSError-OBExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49D10EF5A2090020159D /* NSError-OBExtensions.m */; };
+		319B45CA0F116F8E00336E0A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 319B45C90F116F8E00336E0A /* libz.dylib */; };
+		319B466B0F11AF3600336E0A /* GITClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 319B46660F11AF3600336E0A /* GITClient.m */; };
+		319B466C0F11AF3600336E0A /* GITServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 319B46680F11AF3600336E0A /* GITServer.m */; };
+		319B466D0F11AF3600336E0A /* GITServerHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 319B466A0F11AF3600336E0A /* GITServerHandler.m */; };
+		319B46720F11AF6B00336E0A /* NSFileManager+DirHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 319B466F0F11AF6B00336E0A /* NSFileManager+DirHelper.m */; };
+		319B46730F11AF6B00336E0A /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 319B46710F11AF6B00336E0A /* TCPServer.m */; };
+		319B46750F11AF9000336E0A /* git-server.m in Sources */ = {isa = PBXBuildFile; fileRef = 319B46740F11AF9000336E0A /* git-server.m */; };
+		319B46EB0F11CC7600336E0A /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 319B46EA0F11CC7600336E0A /* libSystem.dylib */; };
+		319B46F20F11CCCF00336E0A /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 319B46EA0F11CC7600336E0A /* libSystem.dylib */; };
+		319B46F50F11CD4D00336E0A /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 319B45CC0F116FD700336E0A /* libcrypto.dylib */; };
+		319B46FE0F11CD9700336E0A /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 319B45CC0F116FD700336E0A /* libcrypto.dylib */; };
 		573B49C90EF5A1F90020159D /* assertions.h in Headers */ = {isa = PBXBuildFile; fileRef = 573B49C70EF5A1F90020159D /* assertions.h */; };
 		573B49CA0EF5A1F90020159D /* assertions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49C80EF5A1F90020159D /* assertions.m */; };
 		573B49CB0EF5A1F90020159D /* assertions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49C80EF5A1F90020159D /* assertions.m */; };
@@ -158,6 +200,24 @@
 
 /* Begin PBXFileReference section */
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		319B42D10F10518C00336E0A /* git-server */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "git-server"; path = "build/Debug/git-server"; sourceTree = "<group>"; };
+		319B42E00F10526A00336E0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		319B44120F10551300336E0A /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		319B44470F1128BB00336E0A /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		319B45C90F116F8E00336E0A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		319B45CC0F116FD700336E0A /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
+		319B46650F11AF3600336E0A /* GITClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITClient.h; sourceTree = "<group>"; };
+		319B46660F11AF3600336E0A /* GITClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITClient.m; sourceTree = "<group>"; };
+		319B46670F11AF3600336E0A /* GITServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITServer.h; sourceTree = "<group>"; };
+		319B46680F11AF3600336E0A /* GITServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITServer.m; sourceTree = "<group>"; };
+		319B46690F11AF3600336E0A /* GITServerHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITServerHandler.h; sourceTree = "<group>"; };
+		319B466A0F11AF3600336E0A /* GITServerHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITServerHandler.m; sourceTree = "<group>"; };
+		319B466E0F11AF6B00336E0A /* NSFileManager+DirHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSFileManager+DirHelper.h"; path = "Source/Categories/NSFileManager+DirHelper.h"; sourceTree = "<group>"; };
+		319B466F0F11AF6B00336E0A /* NSFileManager+DirHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSFileManager+DirHelper.m"; path = "Source/Categories/NSFileManager+DirHelper.m"; sourceTree = "<group>"; };
+		319B46700F11AF6B00336E0A /* TCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCPServer.h; path = Source/Categories/TCPServer.h; sourceTree = "<group>"; };
+		319B46710F11AF6B00336E0A /* TCPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TCPServer.m; path = Source/Categories/TCPServer.m; sourceTree = "<group>"; };
+		319B46740F11AF9000336E0A /* git-server.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "git-server.m"; path = "Source/Tools/git-server.m"; sourceTree = "<group>"; };
+		319B46EA0F11CC7600336E0A /* libSystem.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSystem.dylib; path = usr/lib/libSystem.dylib; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* Git_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Git_Prefix.pch; sourceTree = "<group>"; };
 		573B49C70EF5A1F90020159D /* assertions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = assertions.h; path = Source/assertions.h; sourceTree = "<group>"; };
 		573B49C80EF5A1F90020159D /* assertions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = assertions.m; path = Source/assertions.m; sourceTree = "<group>"; };
@@ -261,6 +321,19 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		319B42CF0F10518C00336E0A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				319B450F0F112E5500336E0A /* Foundation.framework in Frameworks */,
+				319B44480F1128BB00336E0A /* CoreServices.framework in Frameworks */,
+				319B45140F112FD300336E0A /* CoreFoundation.framework in Frameworks */,
+				319B45CA0F116F8E00336E0A /* libz.dylib in Frameworks */,
+				319B46EB0F11CC7600336E0A /* libSystem.dylib in Frameworks */,
+				319B46FE0F11CD9700336E0A /* libcrypto.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9F2152FB0EA68DA7004C6188 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -272,6 +345,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				319B46F20F11CCCF00336E0A /* libSystem.dylib in Frameworks */,
+				319B46F50F11CD4D00336E0A /* libcrypto.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +372,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				319B46640F11AF3600336E0A /* Network */,
 				9FE329A90E9BA2C0001E37D5 /* Stores */,
 				9FE329530E9B937F001E37D5 /* Utility */,
 				9FE329520E9B9357001E37D5 /* Core */,
@@ -332,6 +408,7 @@
 				9FCF27B10E98F7CE00665A41 /* Unit Tests.octest */,
 				9F2152FD0EA68DA7004C6188 /* git-pack-inspect */,
 				9F3694170EACF05500E6777B /* Git.framework */,
+				319B42D10F10518C00336E0A /* git-server */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -346,6 +423,12 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				319B42E00F10526A00336E0A /* Foundation.framework */,
+				319B44120F10551300336E0A /* CoreFoundation.framework */,
+				319B44470F1128BB00336E0A /* CoreServices.framework */,
+				319B45C90F116F8E00336E0A /* libz.dylib */,
+				319B45CC0F116FD700336E0A /* libcrypto.dylib */,
+				319B46EA0F11CC7600336E0A /* libSystem.dylib */,
 			);
 			name = CocoaGit;
 			sourceTree = "<group>";
@@ -353,6 +436,7 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				319B46740F11AF9000336E0A /* git-server.m */,
 				573B49C70EF5A1F90020159D /* assertions.h */,
 				573B49C80EF5A1F90020159D /* assertions.m */,
 				32CA4F630368D1EE00C91783 /* Git_Prefix.pch */,
@@ -388,6 +472,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		319B46640F11AF3600336E0A /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				319B46650F11AF3600336E0A /* GITClient.h */,
+				319B46660F11AF3600336E0A /* GITClient.m */,
+				319B46670F11AF3600336E0A /* GITServer.h */,
+				319B46680F11AF3600336E0A /* GITServer.m */,
+				319B46690F11AF3600336E0A /* GITServerHandler.h */,
+				319B466A0F11AF3600336E0A /* GITServerHandler.m */,
+			);
+			name = Network;
+			path = Source/Network;
+			sourceTree = "<group>";
+		};
 		9F2150F90EA3D4DE004C6188 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
@@ -404,6 +502,10 @@
 		9F33C9E60E48C4840004CD44 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				319B466E0F11AF6B00336E0A /* NSFileManager+DirHelper.h */,
+				319B466F0F11AF6B00336E0A /* NSFileManager+DirHelper.m */,
+				319B46700F11AF6B00336E0A /* TCPServer.h */,
+				319B46710F11AF6B00336E0A /* TCPServer.m */,
 				573B49D00EF5A2090020159D /* NSError-OBExtensions.h */,
 				573B49D10EF5A2090020159D /* NSError-OBExtensions.m */,
 				9F9212760E179A2C005AC693 /* NSData+Compression.h */,
@@ -601,6 +703,22 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		319B42D00F10518C00336E0A /* git-server */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 319B42D90F1051C500336E0A /* Build configuration list for PBXNativeTarget "git-server" */;
+			buildPhases = (
+				319B42CE0F10518C00336E0A /* Sources */,
+				319B42CF0F10518C00336E0A /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "git-server";
+			productName = "git-server";
+			productReference = 319B42D10F10518C00336E0A /* git-server */;
+			productType = "com.apple.product-type.tool";
+		};
 		9F2152FC0EA68DA7004C6188 /* git-pack-inspect */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9F2153010EA68DC5004C6188 /* Build configuration list for PBXNativeTarget "git-pack-inspect" */;
@@ -686,6 +804,7 @@
 				9F2152FC0EA68DA7004C6188 /* git-pack-inspect */,
 				9FCF27B00E98F7CE00665A41 /* Unit Tests */,
 				9F66F7E70EA112C400E7FAA9 /* Docs */,
+				319B42D00F10518C00336E0A /* git-server */,
 			);
 		};
 /* End PBXProject section */
@@ -738,6 +857,47 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		319B42CE0F10518C00336E0A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				319B45A20F116E9500336E0A /* GITErrors.m in Sources */,
+				319B45A40F116E9500336E0A /* NSData+Compression.m in Sources */,
+				319B45A50F116E9500336E0A /* NSData+Hashing.m in Sources */,
+				319B45A60F116E9500336E0A /* NSData+Searching.m in Sources */,
+				319B45A70F116E9500336E0A /* GITBlob.m in Sources */,
+				319B45A80F116E9500336E0A /* NSTimeZone+Offset.m in Sources */,
+				319B45A90F116E9500336E0A /* GITRepo.m in Sources */,
+				319B45AA0F116E9500336E0A /* GITUtilityBelt.m in Sources */,
+				319B45AB0F116E9500336E0A /* GITActor.m in Sources */,
+				319B45AC0F116E9500336E0A /* GITDateTime.m in Sources */,
+				319B45AD0F116E9500336E0A /* GITCommit.m in Sources */,
+				319B45AE0F116E9500336E0A /* GITTag.m in Sources */,
+				319B45AF0F116E9500336E0A /* GITTree.m in Sources */,
+				319B45B00F116E9500336E0A /* GITTreeEntry.m in Sources */,
+				319B45B10F116E9500336E0A /* GITObject.m in Sources */,
+				319B45B20F116E9500336E0A /* GITObjectStore.m in Sources */,
+				319B45B30F116E9500336E0A /* GITFileStore.m in Sources */,
+				319B45B40F116E9500336E0A /* GITPackStore.m in Sources */,
+				319B45B50F116E9500336E0A /* GITCombinedStore.m in Sources */,
+				319B45B60F116E9500336E0A /* GITPackFile.m in Sources */,
+				319B45B70F116E9500336E0A /* GITPackFileVersion2.m in Sources */,
+				319B45B80F116E9500336E0A /* GITPackIndex.m in Sources */,
+				319B45B90F116E9500336E0A /* GITPackIndexVersion1.m in Sources */,
+				319B45BA0F116E9500336E0A /* GITPackIndexVersion2.m in Sources */,
+				319B45BB0F116E9500336E0A /* GITPlaceholderPackFile.m in Sources */,
+				319B45BC0F116E9500336E0A /* GITPlaceholderPackIndex.m in Sources */,
+				319B45BD0F116E9500336E0A /* assertions.m in Sources */,
+				319B45BE0F116E9500336E0A /* NSError-OBExtensions.m in Sources */,
+				319B466B0F11AF3600336E0A /* GITClient.m in Sources */,
+				319B466C0F11AF3600336E0A /* GITServer.m in Sources */,
+				319B466D0F11AF3600336E0A /* GITServerHandler.m in Sources */,
+				319B46720F11AF6B00336E0A /* NSFileManager+DirHelper.m in Sources */,
+				319B46730F11AF6B00336E0A /* TCPServer.m in Sources */,
+				319B46750F11AF9000336E0A /* git-server.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9F2152FA0EA68DA7004C6188 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -900,6 +1060,92 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		319B42D30F10518D00336E0A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "git-server";
+			};
+			name = Debug;
+		};
+		319B42D40F10518D00336E0A /* Debug-GC */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "git-server";
+			};
+			name = "Debug-GC";
+		};
+		319B42D50F10518D00336E0A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "git-server";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		319B42D60F10518D00336E0A /* Release-GC */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "git-server";
+			};
+			name = "Release-GC";
+		};
 		9F2152FF0EA68DA7004C6188 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1435,6 +1681,17 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		319B42D90F1051C500336E0A /* Build configuration list for PBXNativeTarget "git-server" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				319B42D30F10518D00336E0A /* Debug */,
+				319B42D40F10518D00336E0A /* Debug-GC */,
+				319B42D50F10518D00336E0A /* Release */,
+				319B42D60F10518D00336E0A /* Release-GC */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		9F2153010EA68DC5004C6188 /* Build configuration list for PBXNativeTarget "git-pack-inspect" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
