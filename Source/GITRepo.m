@@ -10,8 +10,12 @@
 #import "GITFileStore.h"
 #import "GITPackStore.h"
 #import "GITCombinedStore.h"
+#import "GITUtilityBelt.h"
+#include <CommonCrypto/CommonDigest.h>
 
 #import "NSData+Searching.h"
+#import "NSData+Compression.h"
+#import "NSFileManager+DirHelper.h"
 
 /*! \cond
  Make properties readwrite so we can use
@@ -188,5 +192,136 @@
 {
     return [self.store loadObjectWithSha1:sha1 intoData:data type:type error:error];
 }
+
+#pragma mark -
+#pragma mark Refs Stuff
+
+// KVC accessors for refs
+- (NSUInteger) countOfRefs { return [[self refs] count]; }
+
+- (id) objectInRefsAtIndex:(NSUInteger) i;
+{
+	return [[self refs] objectAtIndex:i];
+}
+// end KVC accessors
+
+- (NSString *) refsPath;
+{
+	return [[self root] stringByAppendingPathComponent:@"refs"];
+}
+
+- (NSDictionary *) dictionaryWithRefName:(NSString *) aName sha:(NSString *) shaString;
+{
+	NSDictionary *refInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+							 aName, @"name",
+							 shaString, @"sha", nil];
+	return refInfo;
+}
+
+- (NSArray *) refs;
+{
+	NSMutableArray *refs = [[NSMutableArray alloc] init];
+	
+	NSString *tempRef, *thisSha;
+	NSString *refsPath = [self refsPath];
+	
+	NSFileManager *fm = [NSFileManager defaultManager];
+	if ([NSFileManager directoryExistsAtPath:refsPath]) {
+		NSEnumerator *e = [fm enumeratorAtPath:refsPath];
+		NSString *thisRef;
+		while ( (thisRef = [e nextObject]) ) {
+			tempRef = [refsPath stringByAppendingPathComponent:thisRef];
+			thisRef = [@"refs" stringByAppendingPathComponent:thisRef];
+			
+			BOOL isDir;
+			if ([fm fileExistsAtPath:tempRef isDirectory:&isDir] && !isDir) {
+				NSString *shaString = [[NSString alloc] initWithContentsOfFile:tempRef
+																	  encoding:NSASCIIStringEncoding 
+																		 error:nil];
+				thisSha = [shaString stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+				[shaString release];
+				
+				[refs addObject:[self dictionaryWithRefName:thisRef sha:thisSha]];
+				
+				if([thisRef hasSuffix:@"refs/heads/master"]) {
+					[refs addObject:[self dictionaryWithRefName:@"HEAD" sha:thisSha]];
+				}
+			}
+		}
+	}
+	NSArray *refsCopy = [[refs copy] autorelease];
+	[refs release];
+	
+	return refsCopy;
+}
+
+- (BOOL) updateRef:(NSString *)refName toSha:(NSString *)toSha;
+{
+	return [self updateRef:refName toSha:toSha error:nil];
+}
+
+- (BOOL) updateRef:(NSString *)refName toSha:(NSString *)toSha error:(NSError **)error;
+{
+	NSString *refPath = [[self root] stringByAppendingPathComponent:refName];
+	return [toSha writeToFile:refPath atomically:YES encoding:NSUTF8StringEncoding error:error];
+}
+
+
++ (BOOL) isShaValid:(NSString *) shaString;
+{
+	// should also check for invalid chars
+	return ([shaString length] == 40);
+}
+
+- (NSString *) pathForLooseObjectWithSha:(NSString *) shaValue;
+{
+	if (! [GITRepo isShaValid:shaValue])
+		return nil;
+	
+	NSString *looseSubDir   = [shaValue substringWithRange:NSMakeRange(0, 2)];
+	NSString *looseFileName = [shaValue substringWithRange:NSMakeRange(2, 38)];
+	
+	NSString *dir = [NSString stringWithFormat: @"%@/objects/%@", [self root], looseSubDir];
+	
+	NSFileManager *fm = [NSFileManager defaultManager];
+	if (! [NSFileManager directoryExistsAtPath:dir]) {
+		[fm createDirectoryAtPath:dir attributes:nil];
+	}
+	
+	return [NSString stringWithFormat: @"%@/objects/%@/%@", [self root], looseSubDir, looseFileName];
+}
+
+- (BOOL) writeObject:(NSData *)objectData withType:(NSString *)type size:(NSUInteger)size;
+{
+	NSMutableData *object;
+	NSString *header, *objectPath, *shaStr;
+	unsigned char rawsha[20];
+	
+	header = [NSString stringWithFormat:@"%@ %d", type, size];	
+	object = [[header dataUsingEncoding:NSASCIIStringEncoding] mutableCopy];
+	
+	[object appendData:objectData];
+	
+	CC_SHA1([object bytes], [object length], rawsha);
+	
+	// write object to file
+	shaStr = unpackSHA1FromData(rawsha);
+	objectPath = [self pathForLooseObjectWithSha:shaStr];
+	//NSData *compress = [[NSData dataWithBytes:[object bytes] length:[object length]] compressedData];
+	NSData *compressedData = [object zlibDeflate];
+	
+	BOOL success = [compressedData writeToFile:objectPath atomically:YES];
+	[object release];
+	
+	// return a string? Should probably return a BOOL to indicate that file has been written...
+	return success;
+}
+
+
+- (BOOL) hasObject: (NSString *)sha1;
+{
+	return [self.store hasObjectWithSha1:sha1];
+}
+
 
 @end

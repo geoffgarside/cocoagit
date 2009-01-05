@@ -16,6 +16,7 @@ extern NSString * const kGITObjectCommitName;
 {
     NSString * treeSha1;
     NSString * parentSha1;
+	NSArray	 * parentShas;
 
     GITTree  * tree;
     GITCommit * parent;
@@ -31,6 +32,7 @@ extern NSString * const kGITObjectCommitName;
 
 @property(readonly,copy) NSString * treeSha1;
 @property(readonly,copy) NSString * parentSha1;
+@property(readwrite,copy) NSArray  * parentShas;
 @property(readonly,copy) GITTree * tree;
 @property(readonly,copy) GITCommit * parent;
 @property(readonly,copy) GITActor * author;

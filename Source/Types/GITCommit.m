@@ -37,6 +37,7 @@ NSString * const kGITObjectCommitName = @"commit";
 @implementation GITCommit
 @synthesize treeSha1;
 @synthesize parentSha1;
+@synthesize parentShas;
 @synthesize tree;
 @synthesize parent;
 @synthesize author;
@@ -133,6 +134,8 @@ NSString * const kGITObjectCommitName = @"commit";
              * committerEmail,
              * committerTimezone;
 
+	NSMutableArray *parents = [NSMutableArray new];
+
     NSTimeInterval authorTimestamp,
                    committerTimestamp;
      
@@ -149,13 +152,14 @@ NSString * const kGITObjectCommitName = @"commit";
         return NO;
     }
     
-    if ([scanner scanString:@"parent" intoString:NULL])
+    while ([scanner scanString:@"parent" intoString:NULL])
     {
         // If we've got a parent at all then we'll parse the name
         if ([scanner scanUpToString:NewLine intoString:&commitParent])
         {
             // If parentSha1 is nil then commit is the first commit
             self.parentSha1 = commitParent;
+			[parents addObject:commitParent];
         }
         else
         {
@@ -164,6 +168,8 @@ NSString * const kGITObjectCommitName = @"commit";
             return NO;
         }
     }
+	
+	[self setParentShas:parents];
     
     if ([scanner scanString:@"author" intoString:NULL] &&
         [scanner scanUpToString:@"<" intoString:&authorName] &&

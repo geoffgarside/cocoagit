@@ -203,4 +203,22 @@
 /*! \see GITObjectStore */
 - (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)data
                       type:(GITObjectType*)type error:(NSError**)error;
+
+#pragma mark -
+#pragma mark Refs Stuff
+
+- (NSString *) refsPath;
+- (NSArray *) refs;
+- (NSUInteger) countOfRefs;
+- (NSDictionary *) dictionaryWithRefName:(NSString *) aName sha:(NSString *) shaString;
+- (id) objectInRefsAtIndex:(NSUInteger) i;
+
+- (BOOL) updateRef:(NSString *)refName toSha:(NSString *)toSha;
+- (BOOL) updateRef:(NSString *)refName toSha:(NSString *)toSha error:(NSError **)error;
+
+
+- (BOOL) writeObject:(NSData *)objectData withType:(NSString *)type size:(NSUInteger)size;
+
+- (BOOL) hasObject: (NSString *)sha1;
+
 @end

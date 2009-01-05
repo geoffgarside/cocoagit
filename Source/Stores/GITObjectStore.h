@@ -53,7 +53,7 @@
  * \param sha1 Name of the object to check for
  * \return YES if has data for object, NO if not.
  */
-//- (BOOL)hasObjectWithSha1:(NSString*)sha1;
+- (BOOL)hasObjectWithSha1:(NSString*)sha1;
 
 /*! Extracts the basic information from a git object file.
  * \param sha1 The object reference to extract the data from
