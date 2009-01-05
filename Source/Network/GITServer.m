@@ -47,6 +47,9 @@
 	
 	NSLog(@"INIT WITH GIT:  %@ : %@ : %@ : %@ : %@", obsh, git, workingDir, inStream, outStream);
 	[obsh initWithGit:git gitPath:workingDir input:inStream output:outStream];	
+
+	[outStream close];
+	[inStream  close];
 }
 
 @end

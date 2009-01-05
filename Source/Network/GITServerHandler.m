@@ -34,7 +34,6 @@
 
 @implementation GITServerHandler
 
-@synthesize remoteURL;
 @synthesize workingDir;
 
 @synthesize inStream;
@@ -47,23 +46,6 @@
 @synthesize refDict;
 
 @synthesize capabilitiesSent;
-
-- (id) initWithURL:(NSURL *) gitURL workingDir:(NSString *) wd;
-{
-	if (!(self = [super init]))
-		return nil;
-	
-	[self setRemoteURL:gitURL];
-	
-	// initialize ivars for collections
-	
-	return self;	
-}
-
-- (id) initWithURL:(NSURL *) gitURL;
-{
-	return [self initWithURL:gitURL workingDir:nil];
-}
 
 - (void) initWithGit:(GITRepo *)git gitPath:(NSString *)gitRepoPath input:(NSInputStream *)streamIn output:(NSOutputStream *)streamOut
 {
@@ -101,38 +83,6 @@
 	return tmpWorkingDir;
 }
 
-- (void) connectToURL:(NSURL *) gitURL;
-{		
-	// typical git:// url =  git://<host>/path/to/repo.git
-	if ([[gitURL scheme] isEqualToString:@"git"]) {
-		NSHost *host = [NSHost hostWithName:[gitURL host]];
-		NSUInteger port = [gitURL port] || DEFAULT_GIT_PORT;
-		//NSString *repoPath = [gitURL path];
-		//NSString *repoName = [repoPath lastPathComponent];
-		
-		// *** not available for iPhone ***
-		// need to use CFStream or switch to SmallSockets...
-		// for now quick and dirty - this will change anyway
-		NSInputStream *sin;
-		NSOutputStream *sout;
-		[NSStream getStreamsToHost:host
-							  port:port 
-					   inputStream:&sin 
-					  outputStream:&sout];
-		[self setInStream:sin];
-		[self setOutStream:sout];
-	} else if ([gitURL isFileURL]) {
-		// Not sure that this will work properly...
-		NSString *path = [gitURL path];
-		[self setInStream:[NSInputStream inputStreamWithFileAtPath:path]];
-		[self setOutStream:[NSOutputStream outputStreamToFileAtPath:path append:YES]];
-	}
-	
-	if (inStream && outStream)
-		[self handleRequest];
-}
-
-
 /* 
  * initiates communication with an incoming request
  * and passes it to the appropriate receiving function
@@ -152,15 +102,9 @@
 	hostpath	= [values objectAtIndex: 1];
 	
 	NSLog(@"header: %@ : %@ : %@", command, repo, hostpath);
-	
-	// create local repository
-	if ([self workingDir] == nil) {
-		[self setWorkingDir:[self tmpWorkingDir]];
-		NSLog(@"Using temporary working dir: %@", [self workingDir]);
-	}
-	
+		
 	NSError *repoError;
-	NSString *dir = [[self workingDir] stringByAppendingString:repo];
+	NSString *dir = [[self gitPath] stringByAppendingString:repo];
 	GITRepo *repoObj = [[GITRepo alloc] initWithRoot:dir error:&repoError];
 	
 	NSAssert(repoObj != nil, @"Could not initialize local Git repository");

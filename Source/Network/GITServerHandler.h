@@ -11,7 +11,6 @@
 #import "GITObject.h"
 
 @interface GITServerHandler : NSObject {
-	NSURL *remoteURL;
 	NSString *workingDir;
 
 	// use SmallSockets library?
@@ -29,7 +28,6 @@
 	int	capabilitiesSent; // Why not use a BOOL here?
 }
 
-@property(copy, readwrite) NSURL *remoteURL;
 @property(copy, readwrite) NSString *workingDir;
 
 @property(retain, readwrite) NSInputStream *inStream;	
