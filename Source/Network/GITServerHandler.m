@@ -26,6 +26,7 @@
 #import "GITObject.h"
 #import "GITCommit.h"
 #import "GITTree.h"
+#import "GITTreeEntry.h"
 #import "GITServerHandler.h"
 #import "GITUtilityBelt.h"
 #import "NSData+Compression.h"
@@ -199,7 +200,9 @@
 	NSEnumerator *e;
 	
 	CC_SHA1_CTX *checksum;
+	NSLog(@"sha1 crap");
 	CC_SHA1_Init(checksum);
+	NSLog(@"sha1 crap");
 	
 	//NSArray *shas;
 	//shas = [refDict keysSortedByValueUsingSelector:@selector(compare:)];
@@ -207,6 +210,7 @@
 	uint8_t buffer[5];	
 	
 	// write pack header
+	NSLog(@"write pack header");
 	
 	[self longVal:htonl(PACK_SIGNATURE) toByteBuffer:buffer];
 	[self respondPack:buffer length:4 checkSum:checksum];
@@ -283,6 +287,8 @@
 	GITCommit *commit = [gitRepo commitWithSha1:shaValue];
 	[refDict setObject:@"_commit" forKey:shaValue];
 	
+	NSLog(@"GATHER COMMIT SHAS: %@", shaValue);
+	
 	// add the tree objects
 	[self gatherObjectShasFromTree:[commit treeSha1]];
 	
@@ -298,19 +304,22 @@
 
 - (void) gatherObjectShasFromTree:(NSString *)shaValue 
 {
+	NSLog(@"GATHER TREE SHAS: %@", shaValue);
+
 	GITTree *tree = [gitRepo treeWithSha1:shaValue];
 	[refDict setObject:@"/" forKey:shaValue];
 	
 	NSArray *treeEntries = [NSArray arrayWithArray:[tree entries]];
 	[tree release];
 	
-	NSString *name, *sha, *mode;
-	for (NSArray *entry in treeEntries) {
-		mode = [entry objectAtIndex:0];
-		name = [entry objectAtIndex:1];
-		sha = [entry objectAtIndex:2];
+	NSString *name, *sha;
+	int mode;
+	for (GITTreeEntry *entry in treeEntries) {
+		mode = [entry mode];
+		name = [entry name];
+		sha = [entry sha1];
 		[refDict setObject:name forKey:sha];
-		if ([mode isEqualToString:@"40000"]) { // tree
+		if (mode == 0040000) { // tree
 			// TODO : check that refDict does not have this
 			[self gatherObjectShasFromTree:sha];
 		}		
