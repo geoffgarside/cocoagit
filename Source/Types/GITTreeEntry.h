@@ -11,6 +11,12 @@
 extern const NSUInteger kGITPackedSha1Length;
 extern const NSUInteger kGITUnpackedSha1Length;
 
+extern const NSUInteger GITTreeEntryTypeMask;
+extern const NSUInteger GITTreeEntryLinkMask;
+extern const NSUInteger GITTreeEntryFileMask;
+extern const NSUInteger GITTreeEntryDirMask;
+extern const NSUInteger GITTreeEntryModMask;
+
 @class GITObject, GITTree;
 /*! An entry in tree listing.
  * \todo Consider changing from having a GITRepo instance
