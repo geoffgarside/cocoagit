@@ -321,7 +321,7 @@
 		name = [entry name];
 		sha = [entry sha1];
 		[refDict setObject:name forKey:sha];
-		if (mode == 40000) { // tree
+		if (mode == GITTreeEntryDirMask) { // tree
 			// TODO : check that refDict does not have this
 			[self gatherObjectShasFromTree:sha];
 		}		
