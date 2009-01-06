@@ -11,4 +11,5 @@
 NSData   * packSHA1(NSString * unpackedSHA1);
 NSString * unpackSHA1FromString(NSString * packedSHA1);
 NSString * unpackSHA1FromData(NSData * packedSHA1);
+NSData   * bytesToData(const uint8_t *bytes, unsigned int length);
 NSUInteger integerFromBytes(uint8_t * bytes, NSUInteger length);

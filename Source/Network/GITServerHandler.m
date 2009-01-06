@@ -106,11 +106,13 @@
 		
 	NSError *repoError;
 	NSString *dir = [[self gitPath] stringByAppendingString:repo];
+	NSLog(@"initializing repo");
 	GITRepo *repoObj = [[GITRepo alloc] initWithRoot:dir error:&repoError];
+	NSLog(@"repo initialized");
 	
 	NSAssert(repoObj != nil, @"Could not initialize local Git repository");
 	[self setGitRepo:repoObj];
-	
+
 	if([command isEqualToString: @"git-receive-pack"]) {		// git push  //
 		[self receivePack:repository];
 	} else if ([command isEqualToString: @"git-upload-pack"]) {	// git fetch //
@@ -348,7 +350,7 @@
  */
 - (void) receivePack:(NSString *)repositoryName {
 	capabilitiesSent = 0;
-	
+	NSLog(@"rec pack");
 	[self sendRefs];
 	[self readRefs];
 	[self readPack];
@@ -611,9 +613,9 @@
 	NSLog(@"read server sha");
 	uint8_t rawsha[20];
 	[inStream read:rawsha maxLength:20];
-	return @"sha";
-	//unpackSHA1FromData(rawsha);
+	unpackSHA1FromData(bytesToData(rawsha, 20));
 }
+
 
 - (NSString *) typeString:(int)type {
 	if (type == OBJ_COMMIT) 
