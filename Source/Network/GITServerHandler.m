@@ -613,7 +613,7 @@
 	NSLog(@"read server sha");
 	uint8_t rawsha[20];
 	[inStream read:rawsha maxLength:20];
-	unpackSHA1FromData(bytesToData(rawsha, 20));
+	return unpackSHA1FromData(bytesToData(rawsha, 20));
 }
 
 
