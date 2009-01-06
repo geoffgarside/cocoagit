@@ -305,7 +305,7 @@
 	CC_SHA1([object bytes], [object length], rawsha);
 	
 	// write object to file
-	shaStr = unpackSHA1FromData(rawsha);
+	shaStr = unpackSHA1FromData(bytesToData(rawsha, 20));
 	objectPath = [self pathForLooseObjectWithSha:shaStr];
 	//NSData *compress = [[NSData dataWithBytes:[object bytes] length:[object length]] compressedData];
 	NSData *compressedData = [object zlibDeflate];
