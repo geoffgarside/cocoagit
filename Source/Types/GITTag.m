@@ -52,6 +52,7 @@ NSString * const kGITObjectTagName = @"tag";
 #pragma mark Deprecated Initialisers
 - (id)initWithSha1:(NSString*)newSha1 data:(NSData*)raw repo:(GITRepo*)theRepo
 {
+	self.cachedRawData = raw;
     if (self = [super initType:kGITObjectTagName sha1:newSha1
                           size:[raw length] repo:theRepo])
     {

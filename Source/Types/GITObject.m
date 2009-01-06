@@ -23,6 +23,7 @@
 @synthesize sha1;
 @synthesize type;
 @synthesize size;
+@synthesize cachedRawData;
 
 + (NSString*)typeName
 {
@@ -128,7 +129,9 @@
     // Should only need to override -parseRawData:error: in subclasses
     if (! [self parseRawData:theData error:error])
         return nil;
-    
+
+	self.cachedRawData = theData;
+
     self.sha1 = theSha1;
     // Remove when type is changed to a GITObjectType instead of a string
     self.type = [[self class] stringForObjectType:theType];
@@ -139,6 +142,7 @@
 }
 - (void)dealloc
 {
+	self.cachedRawData = nil;
     self.repo = nil;
     self.sha1 = nil;
     self.type = nil;
@@ -167,12 +171,16 @@
 #pragma mark Raw Format methods
 - (NSData*)rawData
 {
-    NSString * head = [NSString stringWithFormat:@"%@ %lu\0",
-                       self.type, (unsigned long)self.size];
-    NSMutableData * raw = [NSMutableData dataWithData:[head dataUsingEncoding:NSASCIIStringEncoding]];
-    [raw appendData:[self rawContent]];
+	if(cachedRawData) {
+		return cachedRawData;
+	} else {
+		NSString * head = [NSString stringWithFormat:@"%@ %lu\0",
+						   self.type, (unsigned long)self.size];
+		NSMutableData * raw = [NSMutableData dataWithData:[head dataUsingEncoding:NSASCIIStringEncoding]];
+		[raw appendData:[self rawContent]];
 
-    return raw;
+		return raw;
+	}
 }
 - (NSData*)rawContent
 {

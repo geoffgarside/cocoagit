@@ -27,12 +27,14 @@ typedef enum {
     NSString * sha1;    //!< The SHA1 identifier of the object
     NSString * type;    //!< The blob/commit/tag/tree type
     NSUInteger size;    //!< Size of the content of the object
+    NSData   * cachedRawData;
 }
 
 @property(readonly,retain) GITRepo  * repo;
 @property(readonly,copy)   NSString * sha1;
 @property(readonly,copy)   NSString * type;
 @property(readonly,assign) NSUInteger size;
+@property(readwrite,assign) NSData * cachedRawData;
 
 /*! Returns the string name of the type.
  * \deprecated It was a bad idea and it should be removed

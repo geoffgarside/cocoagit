@@ -124,9 +124,9 @@
 	[self sendRefs];
 	[self receiveNeeds];
 	[self uploadPackFile];
-	//NSLog(@"out:%@", outStream);	
-	//NSLog(@"out avail:%d", [outStream hasSpaceAvailable]);
-	//NSLog(@" in avail:%d", [inStream  hasBytesAvailable]);
+	NSLog(@"out:%@", outStream);	
+	NSLog(@"out avail:%d", [outStream hasSpaceAvailable]);
+	NSLog(@" in avail:%d", [inStream  hasBytesAvailable]);
 }
 
 - (void) receiveNeeds
@@ -166,14 +166,14 @@
 	NSString *command, *shaValue;
 	NSArray *thisRef;
 	
-	NSMutableDictionary *refHash = [[NSMutableDictionary alloc] init];
+	refDict = [[NSMutableDictionary alloc] init];
 	
 	NSEnumerator *e    = [[self needRefs] objectEnumerator];
 	while ( (thisRef = [e nextObject]) ) {
 		command  = [thisRef objectAtIndex:0];
 		shaValue = [thisRef objectAtIndex:1];
 		if([command isEqualToString:@"have"]) {
-			[refHash setObject:@"have" forKey:shaValue];
+			[refDict setObject:@"have" forKey:shaValue];
 		}
 	}
 	
@@ -186,10 +186,7 @@
 			[self gatherObjectShasFromCommit:shaValue];
 		}
 	}
-	
-	[self setRefDict:refHash];
-	[refHash release];
-	
+		
 	[self sendPackData];
 }
 
@@ -213,17 +210,18 @@
 	NSLog(@"write pack header");
 	
 	[self longVal:htonl(PACK_SIGNATURE) toByteBuffer:buffer];
+	NSLog(@"write sig [%d %d %d %d]", buffer[0], buffer[1], buffer[2], buffer[3]);
 	[self respondPack:buffer length:4 checkSum:&checksum];
 	
 	[self longVal:htonl(PACK_VERSION) toByteBuffer:buffer];
+	NSLog(@"write ver [%d %d %d %d]", buffer[0], buffer[1], buffer[2], buffer[3]);
 	[self respondPack:buffer length:4 checkSum:&checksum];
 	
 	[self longVal:htonl([refDict count]) toByteBuffer:buffer];
 	NSLog(@"write len [%d %d %d %d]", buffer[0], buffer[1], buffer[2], buffer[3]);
 	[self respondPack:buffer length:4 checkSum:&checksum];
 	
-	//NSLog(@"refs: %@", shas);
-	e    = [refDict keyEnumerator];
+	e = [refDict keyEnumerator];
 	GITObject *obj;
 	NSData *data;
 	int size, btype, c;
@@ -231,6 +229,7 @@
 		obj = [gitRepo objectWithSha1:current];
 		size = [obj size];
 		btype = [self typeInt:[obj type]];
+		NSLog(@"curr:%@ %d %d", current, size, btype);
 		
 		c = (btype << 4) | (size & 15);
 		size = (size >> 4);
@@ -249,7 +248,6 @@
 		}
 		
 		// pack object data
-		//NSLog(@"srclen:%d, %d", [obj size], [obj rawContentLen]);
 		//objData = [NSData dataWithBytes:[obj rawContents] length:([obj rawContentLen])];
 		data = [[obj rawData] zlibDeflate];
 		
@@ -285,20 +283,22 @@
 {
 	NSString *parentSha;
 	GITCommit *commit = [gitRepo commitWithSha1:shaValue];
-	[refDict setObject:@"_commit" forKey:shaValue];
-	
-	NSLog(@"GATHER COMMIT SHAS: %@", shaValue);
-	
-	// add the tree objects
-	[self gatherObjectShasFromTree:[commit treeSha1]];
-	
-	NSArray *parents = [commit parentShas];
-	
-	NSEnumerator *e = [parents objectEnumerator];
-	while ( (parentSha = [e nextObject]) ) {
-		NSLog(@"parent sha:%@", parentSha);
-		// TODO : check that refDict does not have this
-		[self gatherObjectShasFromCommit:parentSha];
+	if(commit) {
+		[refDict setObject:@"_commit" forKey:shaValue];
+		
+		NSLog(@"GATHER COMMIT SHAS: %@", shaValue);
+		
+		// add the tree objects
+		[self gatherObjectShasFromTree:[commit treeSha1]];
+		
+		NSArray *parents = [commit parentShas];
+		
+		NSEnumerator *e = [parents objectEnumerator];
+		while ( (parentSha = [e nextObject]) ) {
+			NSLog(@"parent sha:%@", parentSha);
+			// TODO : check that refDict does not have this
+			[self gatherObjectShasFromCommit:parentSha];
+		}
 	}
 }
 
@@ -319,7 +319,7 @@
 		name = [entry name];
 		sha = [entry sha1];
 		[refDict setObject:name forKey:sha];
-		if (mode == 0040000) { // tree
+		if (mode == 40000) { // tree
 			// TODO : check that refDict does not have this
 			[self gatherObjectShasFromTree:sha];
 		}		
@@ -473,14 +473,14 @@
 		NSData *objectData, *contents;
 		
 		sha1 = [self readServerSha];
-		//NSLog(@"DELTA SHA: %@", sha1);
+		NSLog(@"DELTA SHA: %@", sha1);
 		objectData = [self readData:size];
 		
 		if([gitRepo hasObject:sha1]) {
 			GITObject *object;
 			object = [gitRepo objectWithSha1:sha1];
 			contents = [self patchDelta:objectData withObject:object];
-			//NSLog(@"unpacked delta: %@ : %@", contents, [object type]);
+			NSLog(@"unpacked delta: %@ : %@", contents, [object type]);
 			[gitRepo writeObject:contents withType:[object type] size:[contents length]];
 			//[object release];
 		} else {
@@ -509,7 +509,7 @@
 	sourceSize	= [[sizePos objectAtIndex:0] longValue];
 	position	= [[sizePos objectAtIndex:1] longValue];
 	
-	//NSLog(@"SS: %d  Pos:%d", sourceSize, position);
+	NSLog(@"SS: %d  Pos:%d", sourceSize, position);
 	
 	sizePos = [self patchDeltaHeaderSize:deltaData position:position];
 	destSize	= [[sizePos objectAtIndex:0] longValue];
@@ -517,12 +517,12 @@
 	
 	NSData *source = [gitObject rawData];
 	
-	//NSLog(@"SOURCE:%@", source);
+	NSLog(@"SOURCE:%@", source);
 	NSMutableData *destination = [NSMutableData dataWithCapacity:destSize];
 	
 	while (position < ([deltaData length])) {
 		[deltaData getBytes:c range:NSMakeRange(position, 1)];
-		//NSLog(@"DS: %d  Pos:%d", destSize, position);
+		NSLog(@"DS: %d  Pos:%d", destSize, position);
 		//NSLog(@"CHR: %d", c[0]);
 		
 		position += 1;
@@ -765,7 +765,7 @@
 	buffer[2] = hex(length >> 4);
 	buffer[3] = hex(length);
 	
-	//NSLog(@"write len [%c %c %c %c]", buffer[0], buffer[1], buffer[2], buffer[3]);
+	NSLog(@"write len [%c %c %c %c]", buffer[0], buffer[1], buffer[2], buffer[3]);
 	[outStream write:buffer maxLength:4];	
 }
 
