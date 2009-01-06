@@ -199,9 +199,9 @@
 	NSString *current;
 	NSEnumerator *e;
 	
-	CC_SHA1_CTX *checksum;
+	CC_SHA1_CTX checksum;
 	NSLog(@"sha1 crap");
-	CC_SHA1_Init(checksum);
+	CC_SHA1_Init(&checksum);
 	NSLog(@"sha1 crap");
 	
 	//NSArray *shas;
@@ -213,14 +213,14 @@
 	NSLog(@"write pack header");
 	
 	[self longVal:htonl(PACK_SIGNATURE) toByteBuffer:buffer];
-	[self respondPack:buffer length:4 checkSum:checksum];
+	[self respondPack:buffer length:4 checkSum:&checksum];
 	
 	[self longVal:htonl(PACK_VERSION) toByteBuffer:buffer];
-	[self respondPack:buffer length:4 checkSum:checksum];
+	[self respondPack:buffer length:4 checkSum:&checksum];
 	
 	[self longVal:htonl([refDict count]) toByteBuffer:buffer];
 	NSLog(@"write len [%d %d %d %d]", buffer[0], buffer[1], buffer[2], buffer[3]);
-	[self respondPack:buffer length:4 checkSum:checksum];
+	[self respondPack:buffer length:4 checkSum:&checksum];
 	
 	//NSLog(@"refs: %@", shas);
 	e    = [refDict keyEnumerator];
@@ -237,7 +237,7 @@
 		if(size > 0) 
 			c |= 0x80;
 		buffer[0] = c;
-		[self respondPack:buffer length:1 checkSum:checksum];
+		[self respondPack:buffer length:1 checkSum:&checksum];
 		
 		while (size > 0) {
 			c = size & 0x7f;
@@ -245,7 +245,7 @@
 			if(size > 0)
 				c |= 0x80;
 			buffer[0] = c;
-			[self respondPack:buffer length:1 checkSum:checksum];
+			[self respondPack:buffer length:1 checkSum:&checksum];
 		}
 		
 		// pack object data
@@ -257,11 +257,11 @@
 		uint8_t dataBuffer[len + 1];
 		[data getBytes:dataBuffer];
 		
-		[self respondPack:dataBuffer length:len checkSum:checksum];
+		[self respondPack:dataBuffer length:len checkSum:&checksum];
 	}
 	
 	unsigned char finalSha[20];
-	CC_SHA1_Final(finalSha, checksum);
+	CC_SHA1_Final(finalSha, &checksum);
 	
 	[outStream write:finalSha maxLength:20];
 	NSLog(@"end sent");
@@ -608,9 +608,11 @@
 
 - (NSString *) readServerSha 
 {
+	NSLog(@"read server sha");
 	uint8_t rawsha[20];
 	[inStream read:rawsha maxLength:20];
-	return unpackSHA1FromData(rawsha);
+	return @"sha";
+	//unpackSHA1FromData(rawsha);
 }
 
 - (NSString *) typeString:(int)type {
