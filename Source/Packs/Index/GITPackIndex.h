@@ -27,6 +27,24 @@
  */
 - (NSUInteger)version;
 
+/*! Convenience method that creates and returns a new, autoreleased IDX object 
+ * at the specified <tt>path</tt>.
+ * \param path Path of the IDX file in the repository
+ * \return A new IDX object
+ * \internal
+ * This method is wrapper that eventually calls -initWithPath:error:
+ */
++ (id)packIndexWithPath:(NSString*)thePath;
+
+/*! Convenience method that creates and returns a new, autoreleased IDX object 
+ * at the specified <tt>path</tt>.
+ * \param path Path of the IDX file in the repository
+ * \return A new IDX object
+ * \internal
+ * This method is wrapper that calls -initWithPath:error:
+ */
++ (id)packIndexWithPath:(NSString*)thePath error:(NSError**)outError;
+
 /*! Creates and returns a new IDX object at the specified <tt>path</tt>.
  * \param path Path of the IDX file in the repository
  * \return A new IDX object
