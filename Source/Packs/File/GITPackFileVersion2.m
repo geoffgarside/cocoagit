@@ -47,6 +47,14 @@ enum {
 
 #pragma mark -
 #pragma mark Primitive Methods
+- (void) dealloc
+{
+    [path release], path = nil;
+    [data release], data = nil;
+    [index release], index = nil;
+    [super dealloc];
+}
+
 - (NSUInteger)version
 {
     return 2;

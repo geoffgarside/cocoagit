@@ -48,6 +48,7 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
 {
     self.path = nil;
     self.data = nil;
+    [offsets release], offsets = nil;
     [super dealloc];
 }
 - (id)copyWithZone:(NSZone *)zone

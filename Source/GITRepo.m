@@ -31,6 +31,14 @@
 @synthesize bare;
 @synthesize store;
 
+- (void) dealloc
+{
+    [root release], root = nil;
+    [desc release], desc = nil;
+    [store release], store = nil;
+    [super dealloc];
+}
+
 - (id)initWithRoot:(NSString*)repoRoot
 {
     return [self initWithRoot:repoRoot bare:NO error:NULL];

@@ -20,6 +20,12 @@
 @implementation GITFileStore
 @synthesize objectsDir;
 
+- (void) dealloc
+{
+    [objectsDir release], objectsDir = nil;
+    [super dealloc];
+}
+
 - (id)initWithRoot:(NSString*)root
 {
     if (self = [super init])
