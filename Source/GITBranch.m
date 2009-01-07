@@ -24,6 +24,13 @@
 @synthesize repo;
 @synthesize name;
 
+- (void) dealloc
+{
+    [repo release], repo = nil;
+    [name release], name = nil;
+    [super dealloc];
+}
+
 - (GITCommit*)head
 {
     NSString * heads = [self.repo.root stringByAppendingPathComponent:@"refs/heads"];
