@@ -28,28 +28,30 @@
 
 - (id)initWithRoot:(NSString*)root
 {
-    if (self = [super init])
-    {
-        self.objectsDir = [root stringByAppendingPathComponent:@"objects"];
-    }
+    if (! [super init])
+        return nil;
+
+    self.objectsDir = [root stringByAppendingPathComponent:@"objects"];
     return self;
 }
+
 - (id)initWithRoot:(NSString*)root error:(NSError**)error
 {
-    if (self = [super init])
-    {
-        self.objectsDir = [root stringByAppendingPathComponent:@"objects"];
+    if (! [super init])
+        return nil;
 
-        BOOL aDirectory;
-        NSFileManager * fm = [NSFileManager defaultManager];
-        if (! [fm fileExistsAtPath:self.objectsDir isDirectory:&aDirectory] || !aDirectory) {
-            NSString * errFmt = NSLocalizedString(@"File store not accessible %@ does not exist or is not a directory", @"GITErrorObjectStoreNotAccessible (GITFileStore)");
-            NSString * errDesc = [NSString stringWithFormat:errFmt, self.objectsDir];
-            GITError(error, GITErrorObjectStoreNotAccessible, errDesc);
-            [self release];
-            return nil;
-        }
+    self.objectsDir = [root stringByAppendingPathComponent:@"objects"];
+
+    BOOL aDirectory;
+    NSFileManager * fm = [NSFileManager defaultManager];
+    if (! [fm fileExistsAtPath:self.objectsDir isDirectory:&aDirectory] || !aDirectory) {
+        NSString * errFmt = NSLocalizedString(@"File store not accessible %@ does not exist or is not a directory", @"GITErrorObjectStoreNotAccessible (GITFileStore)");
+        NSString * errDesc = [NSString stringWithFormat:errFmt, self.objectsDir];
+        GITError(error, GITErrorObjectStoreNotAccessible, errDesc);
+        [self release];
+        return nil;
     }
+
     return self;
 }
 - (NSString*)stringWithPathToObject:(NSString*)sha1

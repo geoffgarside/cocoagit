@@ -17,6 +17,21 @@
 @interface GITObjectStore : NSObject
 {
 }
+/*! Convenience method that creates and returns a new, autoreleased
+ * store object from the provided .git root. 
+ * \attention This method calls -initWithRoot:error:
+ * \param root Path to the .git root directory
+ * \return A new store object.
+ */
++ (id) storeWithRoot:(NSString *)root;
+
+/*! Convenience method that creates and returns a new, autoreleased
+ * store object from the provided .git root. 
+ * \attention This method calls -initWithRoot:error:
+ * \param root Path to the .git root directory
+ * \return A new store object.
+ */
++ (id) storeWithRoot:(NSString *)root error:(NSError **)error;
 
 /*! Creates and returns a new store object from the provided .git root
  * \attention This method must be overridden

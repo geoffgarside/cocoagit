@@ -39,10 +39,22 @@
     [self doesNotRecognizeSelector: _cmd];
     return nil;
 }
+
++ (id)packFileWithPath:(NSString *)thePath;
+{
+    return [[[self alloc] initWithPath:thePath] autorelease];
+}
+
 - (id)initWithPath:(NSString*)thePath
 {
     return [self initWithPath:thePath error:NULL];
 }
+
++ (id)packFileWithPath:(NSString *)thePath error:(NSError **)error;
+{
+    return [[[self alloc] initWithPath:thePath error:error] autorelease];
+}
+
 - (id)initWithPath:(NSString*)thePath error:(NSError **)error
 {
 	[self doesNotRecognizeSelector: _cmd];

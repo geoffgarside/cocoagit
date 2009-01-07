@@ -58,19 +58,15 @@
     if (![repoRoot hasSuffix:@".git"] && !isBare)
         rootPath = [repoRoot stringByAppendingPathComponent:@".git"];
 
-    GITFileStore * fileStore = [[GITFileStore alloc] initWithRoot:rootPath error:error];
-    if (!fileStore) {
-        [self release];
+    GITFileStore * fileStore = [GITFileStore storeWithRoot:rootPath error:error];
+    if (!fileStore)
         return nil;
-    }
 
-    GITPackStore * packStore = [[GITPackStore alloc] initWithRoot:rootPath error:error];
-    if (!packStore) {
-        [self release];
+    GITPackStore * packStore = [GITPackStore storeWithRoot:rootPath error:error];
+    if (!packStore)
         return nil;
-    }
 
-    objectStore = [[GITCombinedStore alloc] initWithStores: fileStore, packStore, nil];
+    objectStore = [[[GITCombinedStore alloc] initWithStores: fileStore, packStore, nil] autorelease];
     if ([self initWithStore:objectStore])
     {
         self.root = rootPath;
@@ -82,13 +78,14 @@
 }
 - (id)initWithStore:(GITObjectStore*)objectStore
 {
-    if (self = [super init])
-    {
-        self.root = nil;
-        self.desc = nil;
-        self.bare = NO;
-        self.store = objectStore;
-    }
+    if (! [super init])
+        return nil;
+
+    self.root = nil;
+    self.desc = nil;
+    self.bare = NO;
+    self.store = objectStore;
+    
     return self;
 }
 - (id)copyWithZone:(NSZone*)zone

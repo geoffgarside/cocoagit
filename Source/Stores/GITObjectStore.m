@@ -10,6 +10,16 @@
 #import "NSData+Searching.h"
 
 @implementation GITObjectStore
++ (id) storeWithRoot:(NSString *)root;
+{
+    return [[[self alloc] initWithRoot:root error:NULL] autorelease];
+}
+
++ (id) storeWithRoot:(NSString *)root error:(NSError **)error;
+{
+    return [[[self alloc] initWithRoot:root error:error] autorelease];
+}
+
 - (id)initWithRoot:(NSString*)root
 {
     [self doesNotRecognizeSelector:_cmd];

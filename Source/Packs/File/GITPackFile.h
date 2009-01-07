@@ -41,6 +41,15 @@
  */
 - (GITPackIndex*)index;
 
+/*! Convenience method to create and returns a new, autoreleased
+ * PACK object at the specified <tt>path</tt>.
+ * This is a convenience method that calls -initWithPath:path error:NULL.
+ * \param path Path of the PACK file in the repository
+ * \return A new PACK object
+ * \internal
+ */
++ (id) packFileWithPath:(NSString *)thePath;
+
 /*! Creates and returns a new PACK object at the specified <tt>path</tt>.
  * This is a convenience method that calls -initWithPath:path error:NULL.
  * \param path Path of the PACK file in the repository
@@ -48,6 +57,15 @@
  * \internal
  */
 - (id)initWithPath:(NSString*)path;
+
+/*! Convenience method to create and returns a new, autoreleased
+ * PACK object at the specified <tt>path</tt>.
+ * This is a convenience method that calls -initWithPath:path error:NULL.
+ * \param path Path of the PACK file in the repository
+ * \return A new PACK object
+ * \internal
+ */
++ (id) packFileWithPath:(NSString *)thePath error:(NSError **)error;
 
 /*! Creates and returns a new PACK object at the specified <tt>path</tt>.
  * \param path Path of the PACK file in the repository

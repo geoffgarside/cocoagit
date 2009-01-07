@@ -24,35 +24,45 @@
 @synthesize packFiles;
 @synthesize lastReadPack;
 
+- (void) dealloc
+{
+    [packsDir release], packsDir = nil;
+    [packFiles release], packFiles = nil;
+    lastReadPack = nil;
+    [super dealloc];
+}
+
 - (id)initWithRoot:(NSString*)root
 {
     return [self initWithRoot:root error:NULL];
 }
 - (id)initWithRoot:(NSString*)root error:(NSError**)error
 {
-    if(self = [super init])
-    {
-        self.lastReadPack = nil;
-        self.packsDir = [root stringByAppendingPathComponent:@"objects/pack"];
+    if(! [super init])
+        return nil;
+    
+    self.lastReadPack = nil;
+    self.packsDir = [root stringByAppendingPathComponent:@"objects/pack"];
 
-        BOOL aDirectory;
-        NSFileManager * fm = [NSFileManager defaultManager];
-        if (! [fm fileExistsAtPath:self.packsDir isDirectory:&aDirectory] || !aDirectory) {
-            NSString * errFmt = NSLocalizedString(@"PACK store not accessible %@ does not exist or is not a directory", @"GITErrorObjectStoreNotAccessible (GITPackStore:init)");
-            NSString * errDesc = [NSString stringWithFormat:errFmt, self.packsDir];
-            GITError(error, GITErrorObjectStoreNotAccessible, errDesc);
-            [self release];
-            return nil;
-        }
-
-        self.packFiles = [self loadPackFilesWithError:error];
-        if (! self.packFiles) {
-            [self release];
-            return nil;
-        }
+    BOOL aDirectory;
+    NSFileManager * fm = [NSFileManager defaultManager];
+    if (! [fm fileExistsAtPath:self.packsDir isDirectory:&aDirectory] || !aDirectory) {
+        NSString * errFmt = NSLocalizedString(@"PACK store not accessible %@ does not exist or is not a directory", @"GITErrorObjectStoreNotAccessible (GITPackStore:init)");
+        NSString * errDesc = [NSString stringWithFormat:errFmt, self.packsDir];
+        GITError(error, GITErrorObjectStoreNotAccessible, errDesc);
+        [self release];
+        return nil;
     }
+
+    self.packFiles = [self loadPackFilesWithError:error];
+    if (! self.packFiles) {
+        [self release];
+        return nil;
+    }
+    
     return self;
 }
+
 - (NSData*)dataWithContentsOfObject:(NSString*)sha1
 {
     NSData * objectData = nil;
@@ -94,9 +104,8 @@
 	packs = [NSMutableArray arrayWithCapacity:[files count] / 2];
 	for (NSString * file in files) {
 		if ([[file pathExtension] isEqualToString:@"pack"]) {
-			pack = [[GITPackFile alloc] initWithPath:[self.packsDir stringByAppendingPathComponent:file]];
+			pack = [GITPackFile packFileWithPath:[self.packsDir stringByAppendingPathComponent:file] error:outError];
 			[packs addObject:pack];
-			[pack release];
 		}
 	}
 
