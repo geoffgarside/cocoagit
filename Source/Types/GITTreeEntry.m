@@ -133,10 +133,7 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
     self.mode = 0;
     self.sha1 = nil;
     self.parent = nil;
-    
-    if (object)     //!< can't check with self.object as that would load it
-        self.object = nil;
-    
+    [object release], object = nil;
     [super dealloc];
 }
 - (GITObject*)object    //!< Lazily loads the target object
