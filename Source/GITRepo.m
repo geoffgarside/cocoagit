@@ -166,13 +166,13 @@
 	switch (type)
 	{
 		case GITObjectTypeCommit:
-			return [[GITCommit alloc] initWithSha1:sha1 data:data repo:self];
+			return [[[GITCommit alloc] initWithSha1:sha1 data:data repo:self] autorelease];
 		case GITObjectTypeTree:
-			return [[GITTree alloc] initWithSha1:sha1 data:data repo:self];
+			return [[[GITTree alloc] initWithSha1:sha1 data:data repo:self] autorelease];
 		case GITObjectTypeBlob:
-			return [[GITBlob alloc] initWithSha1:sha1 data:data repo:self];
+			return [[[GITBlob alloc] initWithSha1:sha1 data:data repo:self] autorelease];
 		case GITObjectTypeTag:
-			return [[GITTag alloc] initWithSha1:sha1 data:data repo:self];
+			return [[[GITTag alloc] initWithSha1:sha1 data:data repo:self] autorelease];
 	}
 
 	// If we get here, then we've got a type that we don't understand. If the only way this could happen is a programming error, then it should be an exception.  For now, just create an error.
