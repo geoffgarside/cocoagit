@@ -83,7 +83,7 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 - (NSArray*)offsets
 {
     if (!offsets)
-        offsets = [[self loadOffsetsWithError:NULL] retain];
+        offsets = [[self loadOffsetsWithError:NULL] copy];
     return offsets;
 }
 - (NSArray*)loadOffsetsWithError:(NSError**)error
@@ -111,7 +111,7 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
         [_offsets addObject:[NSNumber numberWithUnsignedInteger:thisCount]];
         lastCount = thisCount;
     }
-    return _offsets;
+    return [[_offsets copy] autorelease];
 }
 // The sha1 to offset mapping in v2 Index files works like this
 //  - the fanout table tells you where in the main entry table you can find SHA's with a specific first byte
