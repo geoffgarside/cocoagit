@@ -29,7 +29,7 @@ packSHA1(NSString * unpackedSHA1)
             [packedSHA1 appendBytes:&bits length:1];
         }
     }
-    return packedSHA1;
+    return [NSData dataWithData:packedSHA1];
 }
 
 NSString *
@@ -43,7 +43,7 @@ unpackSHA1FromString(NSString * packedSHA1)
         [unpackedSHA1 appendFormat:@"%c", hexchars[bits >> 4]];
         [unpackedSHA1 appendFormat:@"%c", hexchars[bits & 0xf]];
     }
-    return unpackedSHA1;
+    return [NSString stringWithString:unpackedSHA1];
 }
 
 NSString *
@@ -57,7 +57,7 @@ unpackSHA1FromData(NSData * packedSHA1)
         [unpackedSHA1 appendFormat:@"%c", hexchars[bits >> 4]];
         [unpackedSHA1 appendFormat:@"%c", hexchars[bits & 0xf]];
     }
-    return unpackedSHA1;
+    return [NSString stringWithString:unpackedSHA1];
 }
 
 NSUInteger
