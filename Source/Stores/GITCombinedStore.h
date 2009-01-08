@@ -55,6 +55,12 @@ typedef enum {
  */
 - (void)addStores:(GITObjectStore*)firstStore, ...;
 
+/*! Adds a list of stores to the receiver with normal priority.
+ * \param firstStore A variable nil terminated list of stores to add to the receiver
+ * \param args Variable argument list of extra stores to add to the receiver
+ */
+- (void)addStores:(GITObjectStore*)firstStore args:(va_list)args;
+
 /*! Adds a store to the receiver with <tt>priority</tt>.
  * \param store The GITObjectStore instance to add to the receiver
  * \param priority The priority indicates where the list of stores the <tt>store</tt>

@@ -16,7 +16,7 @@
 @property(readwrite,retain) GITRepo * repo;
 
 - (void)testIsNotNil;
-- (void)testRootHasDotGitSuffix;
+- (void)testRepoIsBare;
 - (void)testShouldLoadDataForHash;
 
 @end

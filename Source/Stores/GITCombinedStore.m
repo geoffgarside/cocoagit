@@ -27,25 +27,21 @@
 {
     return [self initWithStores:nil];
 }
+- (id)initWithRoot:(NSString*)root error:(NSError**)error
+{
+    return [self initWithStores:nil];
+}
 - (id)initWithStores:(GITObjectStore*)firstStore, ...
 {
-    GITObjectStore * eachStore;
-    va_list argumentList;
-
     if (self = [super init])
     {
         self.stores = [NSMutableArray array];
         self.recentStore = nil;
 
-        // process arguments
-        if (firstStore)                                                 // The first argument isn't part of the varargs list,
-        {                                                               // so we'll handle it separately.
-            [self addStore:firstStore priority:GITNormalPriority];
-            va_start(argumentList, firstStore);                         // Start scanning for arguments after firstStore.
-            while (eachStore = va_arg(argumentList, GITObjectStore*))   // As many times as we can get an argument of type "GITObjectStore*"
-                [self addStore:eachStore priority:GITNormalPriority];   // that isn't nil, add it to self's contents.
-            va_end(argumentList);
-        }
+        va_list args;
+        va_start(args, firstStore);
+        [self addStores:firstStore args:args];
+        va_end(args);
     }
 
     return self;
@@ -57,23 +53,21 @@
 }
 - (void)addStores:(GITObjectStore*)firstStore, ...
 {
-    GITObjectStore * eachStore;
-    va_list argumentList;
-    
-    // process arguments
-    if (firstStore)                                                 // The first argument isn't part of the varargs list,
-    {                                                               // so we'll handle it separately.
-        [self addStore:firstStore priority:GITNormalPriority];
-        va_start(argumentList, firstStore);                         // Start scanning for arguments after firstStore.
-        while (eachStore = va_arg(argumentList, GITObjectStore*))   // As many times as we can get an argument of type "GITObjectStore*"
-            [self addStore:eachStore priority:GITNormalPriority];   // that isn't nil, add it to self's contents.
-        va_end(argumentList);
+    va_list args;
+    va_start(args, firstStore);
+    [self addStores:firstStore args:args];
+    va_end(args);
+}
+- (void)addStores:(GITObjectStore*)firstStore args:(va_list)args
+{
+    GITObjectStore * eachStore = firstStore;
+    while (eachStore) {
+        [self addStore:eachStore priority:GITNormalPriority];
+        eachStore = va_arg(args, GITObjectStore*);
     }
 }
 - (void)addStore:(GITObjectStore*)store priority:(GITCombinedStorePriority)priority
 {
-    [store retain];     //!< Added as we might well need to retain this before it goes into the array
-
     // High goes at the front, Normal and Low append to the end.
     switch (priority)
     {
@@ -104,6 +98,41 @@
     }
 
     return nil;
+}
+- (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)data
+                      type:(GITObjectType*)type error:(NSError**)error
+{
+    NSError * undError = nil;
+	
+    if (recentStore != nil) {
+        if ([self.recentStore loadObjectWithSha1:sha1 intoData:data type:type error:&undError])
+            return YES;
+
+        if ([undError code] != GITErrorObjectNotFound) {
+            GITError(error, [undError code], [undError localizedDescription]);
+			return NO;
+		}
+    }
+    
+    for (GITObjectStore * store in self.stores) {
+        if (store == self.recentStore)
+			continue;
+		
+		if ([store loadObjectWithSha1:sha1 intoData:data type:type error:&undError]) {
+			self.recentStore = store;
+			return YES;
+		}
+        
+		if ([undError code] != GITErrorObjectNotFound) {
+            GITError(error, [undError code], [undError localizedDescription]);
+			return NO;
+		}
+    }
+
+    // If we've made it this far then the object can't be found
+	NSString *errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Object %@ not found", @"GITErrorObjectNotFound"), sha1];
+	GITError(error, GITErrorObjectNotFound, errorDescription);
+    return NO;
 }
 
 @end

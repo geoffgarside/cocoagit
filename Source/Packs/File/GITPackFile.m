@@ -41,7 +41,11 @@
 }
 - (id)initWithPath:(NSString*)thePath
 {
-    [self doesNotRecognizeSelector: _cmd];
+    return [self initWithPath:thePath error:NULL];
+}
+- (id)initWithPath:(NSString*)thePath error:(NSError **)error
+{
+	[self doesNotRecognizeSelector: _cmd];
     [self release];
     return nil;
 }
@@ -49,6 +53,12 @@
 {
     [self doesNotRecognizeSelector: _cmd];
     return nil;
+}
+- (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)data
+                      type:(GITObjectType*)type error:(NSError**)error
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return NO;
 }
 
 #pragma mark -

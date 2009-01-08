@@ -16,6 +16,12 @@
     [self release];
     return nil;
 }
+- (id)initWithRoot:(NSString*)root error:(NSError**)error
+{
+    [self doesNotRecognizeSelector:_cmd];
+    [self release];
+    return nil;
+}
 - (NSData*)dataWithContentsOfObject:(NSString*)sha1
 {
     [self doesNotRecognizeSelector:_cmd];
@@ -47,6 +53,12 @@
             return YES;
     }
 
+    return NO;
+}
+- (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)data
+                      type:(GITObjectType*)type error:(NSError**)error
+{
+    [self doesNotRecognizeSelector: _cmd];
     return NO;
 }
 @end

@@ -33,6 +33,10 @@
 #pragma mark Primitive Methods
 - (id)initWithPath:(NSString*)thePath
 {
+    return [self initWithPath:thePath error:NULL];
+}
+- (id)initWithPath:(NSString*)thePath error:(NSError**)outError
+{
     [self doesNotRecognizeSelector: _cmd];
     [self release];
     return nil;
@@ -69,23 +73,26 @@
     [self doesNotRecognizeSelector: _cmd];
     return NO;
 }
-- (NSUInteger)packOffsetForSha1:(NSString*)sha1
+- (NSUInteger)packOffsetForSha1:(NSString *)sha1
+{
+    return [self packOffsetForSha1:sha1 error:NULL];
+}
+- (NSUInteger)packOffsetForSha1:(NSString *)sha1 error:(NSError **)error
 {
     [self doesNotRecognizeSelector: _cmd];
     return 0;
 }
-
 #pragma mark -
 #pragma mark Derived Methods
 - (NSUInteger)numberOfObjects
 {
     return [[[self offsets] lastObject] unsignedIntegerValue];
 }
-- (NSUInteger)numberOfObjectsWithFirstByte:(char)byte
+- (NSUInteger)numberOfObjectsWithFirstByte:(uint8_t)byte
 {
     return [self rangeOfObjectsWithFirstByte:byte].length;
 }
-- (NSRange)rangeOfObjectsWithFirstByte:(char)byte
+- (NSRange)rangeOfObjectsWithFirstByte:(uint8_t)byte
 {
     NSUInteger thisFanout, prevFanout = 0;
     thisFanout = [[[self offsets] objectAtIndex:byte] unsignedIntegerValue];
@@ -95,9 +102,9 @@
 }
 - (BOOL)hasObjectWithSha1:(NSString*)sha1
 {
-    if ([self packOffsetForSha1:sha1] > 0)
-        return YES;
-    return NO;
+    if ([self packOffsetForSha1:sha1] == NSNotFound)
+        return NO;
+    return YES;
 }
 
 @end

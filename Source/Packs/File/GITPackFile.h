@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "GITPackIndex.h"
+#import "GITErrors.h"
+#import "GITObject.h"
 
 /*! GITPackFile is a class which provides access to individual
  * PACK files within a git repository.
@@ -40,22 +42,47 @@
 - (GITPackIndex*)index;
 
 /*! Creates and returns a new PACK object at the specified <tt>path</tt>.
+ * This is a convenience method that calls -initWithPath:path error:NULL.
  * \param path Path of the PACK file in the repository
+ * \return A new PACK object
+ * \internal
+ */
+- (id)initWithPath:(NSString*)path;
+
+/*! Creates and returns a new PACK object at the specified <tt>path</tt>.
+ * \param path Path of the PACK file in the repository
+ * \param[out] error NSError object containing any errors, pass NULL if you don't care
  * \return A new PACK object
  * \internal
  * Subclasses must override this method, failure to do so will result in
  * an error. The overriding implementation should not call this implementation
  * as part of itself. Instead it is recommended to use [super init] instead.
  */
-- (id)initWithPath:(NSString*)path;
+- (id)initWithPath:(NSString*)path error:(NSError **)error;
 
 /*! Returns the data for the object specified by the given <tt>sha1</tt>.
  * The <tt>sha1</tt> will first be checked to see if it exists
  * \param sha1 The SHA1 of the object to retrieve the data for.
  * \return Data for the object or <tt>nil</tt> if the object is not in
  * the receiver
+ * \deprecated use -loadObjectWithSha1:intoData:type:error: instead
  */
 - (NSData*)dataForObjectWithSha1:(NSString*)sha1;
+
+/*! Loads and returns the contents of an object.
+ * \param sha1 The SHA1 name of the object to load
+ * \param[out] data Data to load the object contents into
+ * \param[out] type The GITObjectType of the object
+ * \param[out] error NSError object containing any errors, pass NULL if you don't care
+ * \return YES on successful load, NO if an error occurred
+ * \internal
+ * We might possibly consider the following extension to this method once Deltas
+ * are being parsed. If the type parameter has a non-zero value then this will be
+ * perceived as an expected type setting, an error should be returned if this
+ * expected type is not met.
+ */
+- (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)data
+                      type:(GITObjectType*)type error:(NSError**)error;
 
 #pragma mark -
 #pragma mark Checksum Methods

@@ -31,8 +31,16 @@ NSString * const kGITObjectTreeName = @"tree";
 {
     return kGITObjectTreeName;
 }
+- (GITObjectType)objectType
+{
+    return GITObjectTypeTree;
+}
+
+#pragma mark -
+#pragma mark Deprecated Initialisers
 - (id)initWithSha1:(NSString*)newSha1 data:(NSData*)raw repo:(GITRepo*)theRepo
 {
+	self.cachedRawData = raw;
     if (self = [super initType:kGITObjectTreeName sha1:newSha1
                           size:[raw length] repo:theRepo])
     {
@@ -40,6 +48,9 @@ NSString * const kGITObjectTreeName = @"tree";
     }
     return self;
 }
+
+#pragma mark -
+#pragma mark Mem overrides
 - (void)dealloc
 {
     self.entries = nil;
@@ -52,9 +63,16 @@ NSString * const kGITObjectTreeName = @"tree";
     
     return tree;
 }
-- (void)extractEntriesFromData:(NSData*)data
+
+#pragma mark -
+#pragma mark Data Parser
+- (BOOL)parseRawData:(NSData*)raw error:(NSError**)error
 {
-    NSString  * dataStr = [[NSString alloc] initWithData:data 
+    // TODO: Update this method to support errors
+    NSError * undError;
+    NSString * errorDescription;
+
+    NSString  * dataStr = [[NSString alloc] initWithData:raw
                                                 encoding:NSASCIIStringEncoding];
 
     NSMutableArray *treeEntries = [NSMutableArray arrayWithCapacity:2];
@@ -68,16 +86,32 @@ NSString * const kGITObjectTreeName = @"tree";
 
         NSRange entryRange = NSMakeRange(entryStart, 
             entrySha1Start - entryStart + kGITPackedSha1Length + 1);
-        
-        NSString * treeLine = [dataStr substringWithRange:entryRange];
-        GITTreeEntry * entry = [[GITTreeEntry alloc] initWithTreeLine:treeLine parent:self];
-        [treeEntries addObject:entry];
 
+        NSString * treeLine = [dataStr substringWithRange:entryRange];
+        GITTreeEntry * entry = [[GITTreeEntry alloc] initWithRawString:treeLine parent:self error:&undError];
+
+        if (!entry)
+        {
+            errorDescription = NSLocalizedString(@"Failed to parse entry for tree", @"GITErrorObjectParsingFailed (GITTree)");
+            GITErrorWithInfo(error, GITErrorObjectParsingFailed, NSLocalizedDescriptionKey, errorDescription, NSUnderlyingErrorKey, undError, nil);
+            return NO;
+        }
+
+        [treeEntries addObject:entry];
         entryStart = entryRange.location + entryRange.length;
     } while(entryStart < [dataStr length]);
-    
+
     self.entries = treeEntries;
+
+    return YES;
 }
+- (void)extractEntriesFromData:(NSData*)data
+{
+    [self parseRawData:data error:NULL];
+}
+
+#pragma mark -
+#pragma mark Output Methods
 - (NSData*)rawContent
 {
     NSMutableData * content = [NSMutableData dataWithCapacity:self.size];

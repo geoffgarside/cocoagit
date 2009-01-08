@@ -15,7 +15,7 @@
 - (void)setUp
 {
     [super setUp];
-    self.repo = [[GITRepo alloc] initWithRoot:TEST_REPO_PATH];
+    self.repo = [[GITRepo alloc] initWithRoot:DOT_GIT bare:YES];
 }
 - (void)tearDown
 {
@@ -26,9 +26,9 @@
 {
     STAssertNotNil(repo, nil);
 }
-- (void)testRootHasDotGitSuffix
+- (void)testRepoIsBare
 {
-    STAssertTrue([repo.root hasSuffix:@".git"], nil);
+    STAssertTrue([repo isBare], nil);
 }
 - (void)testShouldLoadDataForHash
 {
@@ -39,5 +39,14 @@
     NSData * raw = [repo dataWithContentsOfObject:sha type:@"blob"];
     STAssertNotNil(raw, nil);
     STAssertEqualObjects(data, raw, nil);
+}
+
+- (void)testObjectNotFoundError
+{
+    NSError *error = nil;
+    GITObject *o = [repo objectWithSha1:@"0123456789012345678901234567890123456789"
+                                  error:&error];
+    STAssertNil(o, nil);
+    STAssertEquals(GITErrorObjectNotFound, [error code], nil);
 }
 @end

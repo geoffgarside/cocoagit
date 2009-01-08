@@ -8,6 +8,8 @@
 
 #import "GITFileStore.h"
 #import "NSData+Compression.h"
+#import "NSData+Searching.h"
+#import "GITObject.h"
 
 /*! \cond */
 @interface GITFileStore ()
@@ -23,6 +25,24 @@
     if (self = [super init])
     {
         self.objectsDir = [root stringByAppendingPathComponent:@"objects"];
+    }
+    return self;
+}
+- (id)initWithRoot:(NSString*)root error:(NSError**)error
+{
+    if (self = [super init])
+    {
+        self.objectsDir = [root stringByAppendingPathComponent:@"objects"];
+
+        BOOL aDirectory;
+        NSFileManager * fm = [NSFileManager defaultManager];
+        if (! [fm fileExistsAtPath:self.objectsDir isDirectory:&aDirectory] || !aDirectory) {
+            NSString * errFmt = NSLocalizedString(@"File store not accessible %@ does not exist or is not a directory", @"GITErrorObjectStoreNotAccessible (GITFileStore)");
+            NSString * errDesc = [NSString stringWithFormat:errFmt, self.objectsDir];
+            GITError(error, GITErrorObjectStoreNotAccessible, errDesc);
+            [self release];
+            return nil;
+        }
     }
     return self;
 }
@@ -45,5 +65,42 @@
     }
 
     return nil;
+}
+- (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)data
+                      type:(GITObjectType*)type error:(NSError**)error
+{
+    NSFileManager * fm = [NSFileManager defaultManager];
+    NSString * path = [self stringWithPathToObject:sha1];
+	
+	if (![fm isReadableFileAtPath:path]) {
+		NSString *errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Object %@ not found", @"GITErrorObjectNotFound"), sha1];
+		GITError(error, GITErrorObjectNotFound, errorDescription);
+		return NO;
+	}
+
+	NSData * zlibData = [NSData dataWithContentsOfFile:path options:NSUncachedRead error:error];
+	NSData * raw = [zlibData zlibInflate];
+	
+	NSRange range = [raw rangeOfNullTerminatedBytesFrom:0];
+	NSData * meta = [raw subdataWithRange:range];
+	*data = [raw subdataFromIndex:range.length + 1];
+	
+	NSString * metaStr = [[NSString alloc] initWithData:meta
+											   encoding:NSASCIIStringEncoding];
+	NSUInteger indexOfSpace = [metaStr rangeOfString:@" "].location;
+	NSInteger size = [[metaStr substringFromIndex:indexOfSpace + 1] integerValue];
+	
+	// This needs to be a GITObjectType value instead of a string
+	NSString * typeStr = [metaStr substringToIndex:indexOfSpace];
+	*type = [GITObject objectTypeForString:typeStr];
+	[metaStr release];
+
+	// We could check *data and *type individually, and bail with a more specific error if they are nil.
+	if (! (*data && *type && size == [*data length])) {
+		GITError(error, GITErrorObjectSizeMismatch, NSLocalizedString(@"Object size mismatch", @"GITErrorObjectSizeMismatch"));
+		return NO;
+	}
+
+	return YES;
 }
 @end

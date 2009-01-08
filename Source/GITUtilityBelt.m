@@ -60,6 +60,14 @@ unpackSHA1FromData(NSData * packedSHA1)
     return unpackedSHA1;
 }
 
+NSData *
+bytesToData(const uint8_t *bytes, unsigned int length)
+{
+    if (length < 0)
+        return nil;    
+    return [NSData dataWithBytes:bytes length:length];
+}
+
 NSUInteger
 integerFromBytes(uint8_t * bytes, NSUInteger length)
 {

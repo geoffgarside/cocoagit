@@ -19,6 +19,8 @@ NSString * const kGITObjectCommitName = @"commit";
  them within the class.
 */
 @interface GITCommit ()
+@property(readwrite,copy) NSString * treeSha1;
+@property(readwrite,copy) NSString * parentSha1;
 @property(readwrite,copy) GITTree * tree;
 @property(readwrite,copy) GITCommit * parent;
 @property(readwrite,copy) GITActor * author;
@@ -33,6 +35,9 @@ NSString * const kGITObjectCommitName = @"commit";
 /*! \endcond */
 
 @implementation GITCommit
+@synthesize treeSha1;
+@synthesize parentSha1;
+@synthesize parentShas;
 @synthesize tree;
 @synthesize parent;
 @synthesize author;
@@ -45,8 +50,16 @@ NSString * const kGITObjectCommitName = @"commit";
 {
     return kGITObjectCommitName;
 }
+- (GITObjectType)objectType
+{
+    return GITObjectTypeCommit;
+}
+
+#pragma mark -
+#pragma mark Deprecated Initialisers
 - (id)initWithSha1:(NSString*)newSha1 data:(NSData*)raw repo:(GITRepo*)theRepo
 {
+	self.cachedRawData = raw;
     if (self = [super initType:kGITObjectCommitName sha1:newSha1
                           size:[raw length] repo:theRepo])
     {
@@ -54,6 +67,9 @@ NSString * const kGITObjectCommitName = @"commit";
     }
     return self;
 }
+
+#pragma mark -
+#pragma mark Mem overrides
 - (void)dealloc
 {
     self.tree = nil;
@@ -77,9 +93,35 @@ NSString * const kGITObjectCommitName = @"commit";
     
     return commit;
 }
-- (void)extractFieldsFromData:(NSData*)data
+
+- (BOOL)isFirstCommit
 {
-    NSString  * dataStr = [[NSString alloc] initWithData:data 
+    return (self.parentSha1 == nil);
+}
+
+#pragma mark -
+#pragma mark Object Loaders
+- (GITTree*)tree
+{
+    if (!tree && self.treeSha1)
+        self.tree = [self.repo treeWithSha1:self.treeSha1 error:NULL];  //!< Ideally we'd like to care about the error
+    return tree;
+}
+- (GITCommit*)parent
+{
+    if (!parent && self.parentSha1)
+        self.parent = [self.repo commitWithSha1:self.parentSha1 error:NULL];    //!< Ideally we'd like to care about the error
+    return parent;
+}
+
+#pragma mark -
+#pragma mark Data Parser
+- (BOOL)parseRawData:(NSData*)raw error:(NSError**)error
+{
+    // TODO: Update this method to support errors
+    NSString * errorDescription;
+
+    NSString  * dataStr = [[NSString alloc] initWithData:raw
                                                 encoding:NSASCIIStringEncoding];
     NSScanner * scanner = [NSScanner scannerWithString:dataStr];
     
@@ -93,20 +135,42 @@ NSString * const kGITObjectCommitName = @"commit";
              * committerEmail,
              * committerTimezone;
 
+	NSMutableArray *parents = [NSMutableArray new];
+
     NSTimeInterval authorTimestamp,
                    committerTimestamp;
      
     if ([scanner scanString:@"tree" intoString:NULL] &&
         [scanner scanUpToString:NewLine intoString:&commitTree])
     {
-        self.tree = [self.repo treeWithSha1:commitTree];
+        self.treeSha1 = commitTree;
+        if (!self.treeSha1) return NO;
+    }
+    else
+    {
+        errorDescription = NSLocalizedString(@"Failed to parse tree reference for commit", @"GITErrorObjectParsingFailed (GITCommit:tree)");
+        GITError(error, GITErrorObjectParsingFailed, errorDescription);
+        return NO;
     }
     
-    if ([scanner scanString:@"parent" intoString:NULL] &&
-        [scanner scanUpToString:NewLine intoString:&commitParent])
+    while ([scanner scanString:@"parent" intoString:NULL])
     {
-        self.parent = [self.repo commitWithSha1:commitParent];
+        // If we've got a parent at all then we'll parse the name
+        if ([scanner scanUpToString:NewLine intoString:&commitParent])
+        {
+            // If parentSha1 is nil then commit is the first commit
+            self.parentSha1 = commitParent;
+			[parents addObject:commitParent];
+        }
+        else
+        {
+            errorDescription = NSLocalizedString(@"Failed to parse parent reference for commit", @"GITErrorObjectParsingFailed (GITCommit:parent)");
+            GITError(error, GITErrorObjectParsingFailed, errorDescription);
+            return NO;
+        }
     }
+	
+	[self setParentShas:parents];
     
     if ([scanner scanString:@"author" intoString:NULL] &&
         [scanner scanUpToString:@"<" intoString:&authorName] &&
@@ -119,6 +183,12 @@ NSString * const kGITObjectCommitName = @"commit";
         self.author = [[GITActor alloc] initWithName:authorName andEmail:authorEmail];
         self.authored = [[GITDateTime alloc] initWithTimestamp:authorTimestamp
                                                 timeZoneOffset:authorTimezone];
+    }
+    else
+    {
+        errorDescription = NSLocalizedString(@"Failed to parse author details for commit", @"GITErrorObjectParsingFailed (GITCommit:author)");
+        GITError(error, GITErrorObjectParsingFailed, errorDescription);
+        return NO;
     }
     
     if ([scanner scanString:@"committer" intoString:NULL] &&
@@ -133,13 +203,34 @@ NSString * const kGITObjectCommitName = @"commit";
         self.committed = [[GITDateTime alloc] initWithTimestamp:committerTimestamp
                                                  timeZoneOffset:committerTimezone];
     }
+    else
+    {
+        errorDescription = NSLocalizedString(@"Failed to parse committer details for commit", @"GITErrorObjectParsingFailed (GITCommit:committer)");
+        GITError(error, GITErrorObjectParsingFailed, errorDescription);
+        return NO;
+    }
         
     self.message = [[scanner string] substringFromIndex:[scanner scanLocation]];
+    if (!self.message)
+    {
+        errorDescription = NSLocalizedString(@"Failed to parse message for commit", @"GITErrorObjectParsingFailed (GITCommit:message)");
+        GITError(error, GITErrorObjectParsingFailed, errorDescription);
+        return NO;
+    }
+
+    return YES;
+}
+- (void)extractFieldsFromData:(NSData*)data
+{
+    [self parseRawData:data error:NULL];
 }
 - (NSString*)description
 {
     return [NSString stringWithFormat:@"Commit <%@>", self.sha1];
 }
+
+#pragma mark -
+#pragma mark Output Methods
 - (NSData*)rawContent
 {
     return [[NSString stringWithFormat:@"tree %@\nparent %@\nauthor %@ %@\ncommitter %@ %@\n%@",

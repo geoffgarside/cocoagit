@@ -1,23 +1,8 @@
 #import <Foundation/Foundation.h>
 #import "GITRepo.h"
-#import "GITBlob.h"
-#import "GITTree.h"
-#import "GITCommit.h"
-#import "GITTag.h"
-#import "GITTreeEntry.h"
 
-void pp(NSString *fmt, ...)
-{
-	va_list ap;
-	va_start(ap, fmt);
-
-	NSString *output = [[NSString alloc] initWithFormat:fmt arguments:ap];
-	printf([output UTF8String]);
-	printf("\n");
-	[output release];
-
-	va_end(ap);
-}
+void pp(NSString *fmt, ...);
+void printObject(GITObject * object);
 
 int main (int argc, const char * argv[]) {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
@@ -28,13 +13,32 @@ int main (int argc, const char * argv[]) {
         pp(@"Usage: %@ sha1hash", [info processName]);
         exit(0);
     }
-    
-    GITRepo * repo = [[GITRepo alloc] initWithRoot:@"."];
 
-    NSString *inspectHash = [args objectAtIndex:1];
-    NSLog(@"inspectHash: %@", inspectHash);
-    GITObject * object  = [[repo objectWithSha1:inspectHash] autorelease];
+    NSError * error;
+    GITRepo * repo = [[GITRepo alloc] initWithRoot:@"." error:&error];
+    if (!repo) {
+        pp(@"Error loading Repo: %@", [error localizedDescription]);
+        return [error code];
+    }
+
+    NSString *sha1 = [args objectAtIndex:1];
+    GITObject * object = [[repo objectWithSha1:sha1 error:&error] autorelease];
+
+    if (!object)
+    {
+        pp(@"Error: %@", [error localizedDescription]);
+        return [error code];
+    }
+    else
+    {
+        printObject(object);
+    }
     
+    [pool drain];
+    return 0;
+}
+void printObject(GITObject * object)
+{
     if ([object isKindOfClass:[GITBlob class]])
     {
         GITBlob * blob = (GITBlob*)object;
@@ -52,8 +56,8 @@ int main (int argc, const char * argv[]) {
     {
         GITCommit * commit = (GITCommit*)object;
         pp(@"Commit (%lu)", commit.size);
-        pp(@"Tree\t\t%@", commit.tree.sha1);
-        pp(@"Parent\t\t%@", commit.parent.sha1);
+        pp(@"Tree\t\t%@", commit.treeSha1);
+        pp(@"Parent\t\t%@", commit.parentSha1);
         pp(@"Author\t\t%@\t%@", commit.author, commit.authored);
         pp(@"Committer\t%@\t%@", commit.committer, commit.committed);
         pp(@"Message\n%@", commit.message);
@@ -62,7 +66,7 @@ int main (int argc, const char * argv[]) {
     {
         GITTag * tag = (GITTag*)object;
         pp(@"Tag (%lu)", tag.size);
-        pp(@"Commit\t\t%@", tag.commit.sha1);
+        pp(@"Commit\t\t%@", tag.objectSha1);
         pp(@"Name\t\t%@", tag.name);
         pp(@"Tagger\t\t%@\t%@", tag.tagger, tag.tagged);
         pp(@"Message\n%@", tag.message);
@@ -81,7 +85,16 @@ int main (int argc, const char * argv[]) {
     {
         pp(@"Unknown git object type");
     }
+}
+void pp(NSString *fmt, ...)
+{
+	va_list ap;
+	va_start(ap, fmt);
     
-    [pool drain];
-    return 0;
+	NSString *output = [[NSString alloc] initWithFormat:fmt arguments:ap];
+	printf([output UTF8String]);
+	printf("\n");
+	[output release];
+
+	va_end(ap);
 }

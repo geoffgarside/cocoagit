@@ -35,10 +35,13 @@ extern const NSUInteger kGITUnpackedSha1Length;
 @property(readonly,copy) GITTree   * parent;
 @property(readonly,copy) GITObject * object;
 
+#pragma mark -
+#pragma mark Deprecated Initialisers
 /*! Creates and returns a new entry by extracting the information tree line.
  * \param line The raw line as extracted from a tree object file
  * \param parent The parent tree this entry belongs to
  * \return A new entry
+ * \deprecated Use -initWithRawString:parent:error: instead
  */
 - (id)initWithTreeLine:(NSString*)line parent:(GITTree*)parent;
 
@@ -47,6 +50,8 @@ extern const NSUInteger kGITUnpackedSha1Length;
  * \param name The file name of the filr or directory described
  * \param hash The SHA1 of the object referenced
  * \param parent The parent tree this entry belongs to
+ * \return A new entry
+ * \deprecated Use -initWithFileMode:name:sha1:parent:error: instead
  */
 - (id)initWithMode:(NSUInteger)mode name:(NSString*)name
               sha1:(NSString*)hash parent:(GITTree*)parent;
@@ -56,8 +61,33 @@ extern const NSUInteger kGITUnpackedSha1Length;
  * \param name The file name of the filr or directory described
  * \param hash The SHA1 of the object referenced
  * \param parent The parent tree this entry belongs to
+ * \return A new entry
+ * \deprecated Use -initWithFileMode:name:sha1:parent:error: instead
  */
 - (id)initWithModeString:(NSString*)mode name:(NSString*)name
                     sha1:(NSString*)hash parent:(GITTree*)parent;
+
+#pragma mark -
+#pragma mark Error Aware Initialisers
+/*! Creates and returns a new entry by extracting the fields from the raw string.
+ * \param raw The raw string from a tree object file
+ * \param parent The parent tree this entry belongs to
+ * \param[out] error Error containing a description of any errors if they occurred
+ * \return A new entry or nil if an error occurred
+ * \par Errors:
+ * \li \c GITErrorObjectParsingFailed indicates a problem parsing the formatted tree entry
+ */
+- (id)initWithRawString:(NSString*)raw parent:(GITTree*)parent error:(NSError**)error;
+
+/*! Creates and returns a new entry the given settings
+ * \param mode The file mode of the file or directory described
+ * \param name The file name of the filr or directory described
+ * \param sha1 The SHA1 of the object referenced
+ * \param parent The parent tree this entry belongs to
+ * \param[out] error Error containing a description of any errors if they occurred
+ * \return A new entry or nil if error
+ */
+- (id)initWithFileMode:(NSUInteger)mode name:(NSString*)name sha1:(NSString*)sha1 parent:(GITTree*)parent error:(NSError**)error;
+
 - (NSData*)raw;
 @end

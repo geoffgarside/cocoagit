@@ -14,18 +14,25 @@ extern NSString * const kGITObjectCommitName;
 @class GITTree, GITActor, GITDateTime;
 @interface GITCommit : GITObject
 {
+    NSString * treeSha1;
+    NSString * parentSha1;
+	NSArray	 * parentShas;
+
     GITTree  * tree;
-    
     GITCommit * parent;
+
     GITActor  * author;
     GITActor  * committer;
-    
+
     GITDateTime * authored;
     GITDateTime * committed;
     
     NSString * message;
 }
 
+@property(readonly,copy) NSString * treeSha1;
+@property(readonly,copy) NSString * parentSha1;
+@property(readwrite,copy) NSArray  * parentShas;
 @property(readonly,copy) GITTree * tree;
 @property(readonly,copy) GITCommit * parent;
 @property(readonly,copy) GITActor * author;
@@ -33,5 +40,7 @@ extern NSString * const kGITObjectCommitName;
 @property(readonly,copy) GITDateTime * authored;
 @property(readonly,copy) GITDateTime * committed;
 @property(readonly,copy) NSString * message;
+
+- (BOOL)isFirstCommit;
 
 @end

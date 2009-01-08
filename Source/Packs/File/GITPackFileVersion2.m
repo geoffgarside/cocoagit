@@ -15,7 +15,7 @@
 static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
 
 enum {
-    // Base Types
+    // Base Types - These mirror those of GITObjectType
     kGITPackFileTypeCommit = 1,
     kGITPackFileTypeTree   = 2,
     kGITPackFileTypeBlob   = 3,
@@ -51,19 +51,37 @@ enum {
 {
     return 2;
 }
-- (id)initWithPath:(NSString*)thePath
+- (id)initWithPath:(NSString*)thePath error:(NSError **)error
 {
-    if (self = [super init])
-    {
-        NSError * err;
-        self.path = thePath;
-        self.data = [NSData dataWithContentsOfFile:thePath
-                                           options:NSUncachedRead
-                                             error:&err];
-        NSString * idxPath = [[thePath stringByDeletingPathExtension] 
-                              stringByAppendingPathExtension:@"idx"];
-        self.index  = [[GITPackIndex alloc] initWithPath:idxPath];
+    if (! [super init])
+        return nil;
+
+    self.path = thePath;
+    self.data = [NSData dataWithContentsOfFile:thePath
+                                       options:NSUncachedRead
+                                         error:error];
+    if (!data) {
+        [self release];
+        return nil;
     }
+
+    // Verify the data checksum
+    if (! [self verifyChecksum]) {
+        NSString * errDesc = NSLocalizedString(@"PACK file checksum failed", @"GITErrorPackFileChecksumMismatch");
+        GITErrorWithInfo(error, GITErrorPackFileChecksumMismatch, errDesc, NSLocalizedDescriptionKey, thePath, NSFilePathErrorKey, nil);
+        [self release];
+        return nil;
+    }
+
+    // initialize the index file
+    NSString * idxPath = [[thePath stringByDeletingPathExtension]
+                          stringByAppendingPathExtension:@"idx"];
+    self.index  = [[GITPackIndex alloc] initWithPath:idxPath error:error];
+    if (!index) {
+        [self release];
+        return nil;
+    }
+
     return self;
 }
 - (NSUInteger)numberOfObjects
@@ -86,6 +104,66 @@ enum {
     NSUInteger offset = [self.index packOffsetForSha1:sha1];
     NSData * raw = [self objectAtOffset:offset];
     return [raw zlibInflate];
+}
+- (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)objectData
+                      type:(GITObjectType*)objectType error:(NSError**)error
+{
+    uint8_t buf = 0x0;    // a single byte buffer
+    NSUInteger size, type, shift = 4;
+    NSUInteger offset = [self.index packOffsetForSha1:sha1 error:error];
+
+    if (offset == NSNotFound)
+        return NO;
+	
+	[self.data getBytes:&buf range:NSMakeRange(offset++, 1)];
+	NSAssert(buf != 0x0, @"buf should not be NULL");
+	
+	size = buf & 0xf;
+	type = (buf >> 4) & 0x7;
+	
+	while ((buf & 0x80) != 0)
+	{
+		[self.data getBytes:&buf range:NSMakeRange(offset++, 1)];
+		NSAssert(buf != 0x0, @"buf should not be NULL");
+		
+		size |= ((buf & 0x7f) << shift);
+		shift += 7;
+	}
+	
+	*objectData = nil;    //!< nil out the outgoing data
+	switch (type) {
+		case kGITPackFileTypeCommit:
+			*objectType = type;
+			*objectData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
+			break;
+		case kGITPackFileTypeTree:
+			*objectType = type;
+			*objectData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
+			break;
+		case kGITPackFileTypeTag:
+			*objectType = type;
+			*objectData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
+			break;
+		case kGITPackFileTypeBlob:
+			*objectType = type;
+			*objectData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
+			break;
+		case kGITPackFileTypeDeltaOfs:
+		case kGITPackFileTypeDeltaRefs:
+			NSAssert(NO, @"Cannot handle Delta Object types yet");
+			break;
+		default:
+			NSLog(@"bad object type %d", type);
+			break;
+	}
+	
+	// Similar to situation in GITFileStore: we could create different errors for each of these.
+	if (! (*objectData && *objectType && size == [*objectData length])) {
+		GITError(error, GITErrorObjectSizeMismatch, NSLocalizedString(@"Object size mismatch", @"GITErrorObjectSizeMismatch"));
+		return NO;
+	}
+	
+	return YES;
 }
 
 #pragma mark -

@@ -11,6 +11,7 @@
 #import "GITTree.h"
 #import "GITRepo.h"
 #import "GITUtilityBelt.h"
+#import "GITErrors.h"
 
 const NSUInteger GITTreeEntryTypeMask   = 00170000;
 const NSUInteger GITTreeEntryLinkMask   =  0120000;
@@ -38,6 +39,8 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
 @synthesize parent;
 @synthesize object;
 
+#pragma mark -
+#pragma mark Deprecated Initialisers
 - (id)initWithTreeLine:(NSString*)line parent:(GITTree*)parentTree
 {
     NSScanner * scanner = [NSScanner scannerWithString:line];
@@ -75,6 +78,55 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
     NSUInteger theMode = [str integerValue];
     return [self initWithMode:theMode name:theName sha1:hash parent:parentTree];
 }
+
+#pragma mark -
+#pragma mark Error Aware Initialisers
+- (id)initWithRawString:(NSString*)raw parent:(GITTree*)parentTree error:(NSError**)error
+{
+    NSString * errorDescription;
+
+    NSScanner * scanner = [NSScanner scannerWithString:raw];
+    NSString  * entryMode, * entryName, * entrySha1;
+
+    while ([scanner isAtEnd] == NO)
+    {
+        if ([scanner scanUpToString:@" " intoString:&entryMode] &&
+            [scanner scanUpToString:@"\0" intoString:&entryName])
+        {
+            entrySha1 = [[scanner string] substringFromIndex:[scanner scanLocation] + 1];
+            [scanner setScanLocation:[scanner scanLocation] + 1 + kGITPackedSha1Length];
+
+            if (!entrySha1)
+            {
+                errorDescription = NSLocalizedString(@"Failed to parse object reference for tree entry", @"GITErrorObjectParsingFailed (GITTreeEntry:entrySha1)");
+                GITError(error, GITErrorObjectParsingFailed, errorDescription);
+                return nil;
+            }
+        }
+        else
+        {
+            errorDescription = NSLocalizedString(@"Failed to parse file mode or name for tree entry", @"GITErrorObjectParsingFailed (GITTreeEntry)");
+            GITError(error, GITErrorObjectParsingFailed, errorDescription);
+            return nil;
+        }
+    }
+
+    return [self initWithFileMode:[entryMode integerValue] name:entryName
+                             sha1:unpackSHA1FromString(entrySha1) parent:parentTree error:error];
+}
+- (id)initWithFileMode:(NSUInteger)theMode name:(NSString*)theName
+                  sha1:(NSString*)theSha1 parent:(GITTree*)parentTree error:(NSError**)error
+{
+    if (self = [super init])
+    {
+        self.mode = theMode;
+        self.name = theName;
+        self.sha1 = theSha1;
+        self.parent = parentTree;
+    }
+    return self;
+}
+
 - (void)dealloc
 {
     self.name = nil;
@@ -89,6 +141,7 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
 }
 - (GITObject*)object    //!< Lazily loads the target object
 {
+    // How should we make this error aware as its doing object loading?
     if (!object && self.sha1)
         self.object = [self.parent.repo objectWithSha1:self.sha1];
     return object;
