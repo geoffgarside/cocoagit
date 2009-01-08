@@ -7,41 +7,110 @@
 //
 
 #import "GITClient.h"
-
+#import "GITUtilityBelt.h"
+#import "Socket.h"
 
 @implementation GITClient
 
-/*
-- (void) connectToURL:(NSURL *) gitURL;
-{		
-	// typical git:// url =  git://<host>/path/to/repo.git
-	if ([[gitURL scheme] isEqualToString:@"git"]) {
-		NSHost *host = [NSHost hostWithName:[gitURL host]];
-		NSUInteger port = [gitURL port] || DEFAULT_GIT_PORT;
-		//NSString *repoPath = [gitURL path];
-		//NSString *repoName = [repoPath lastPathComponent];
-		
-		// *** not available for iPhone ***
-		// need to use CFStream or switch to SmallSockets...
-		// for now quick and dirty - this will change anyway
-		NSInputStream *sin;
-		NSOutputStream *sout;
-		[NSStream getStreamsToHost:host
-							  port:port 
-					   inputStream:&sin 
-					  outputStream:&sout];
-		[self setInStream:sin];
-		[self setOutStream:sout];
-	} else if ([gitURL isFileURL]) {
-		// Not sure that this will work properly...
-		NSString *path = [gitURL path];
-		[self setInStream:[NSInputStream inputStreamWithFileAtPath:path]];
-		[self setOutStream:[NSOutputStream outputStreamToFileAtPath:path append:YES]];
+@synthesize socket;
+
+- (BOOL) clone:(NSString *) url;
+{
+	NSLog(@"clone url %@", url);
+	
+	NSMutableData* 	response;
+	NSString* 		responseString;
+	NSString* 		userHostName;
+	NSString* 		userPath;
+	int 		userPort;
+	NSURL*		userURL;
+	
+	NS_DURING
+	
+	// Parse host, port, and path out of user's URL
+	
+	userURL = [NSURL URLWithString:url];
+	userPort = [[userURL port] intValue];
+	userHostName = [userURL host];
+	userPath = [userURL path];
+	
+	// if ([[gitURL scheme] isEqualToString:@"git"]) {
+
+	if ( userPort == 0 )
+		userPort = 9418;
+
+	NSLog(@"cloning from [ %d : %@ : %@ ]", userPort, userHostName, userPath);
+	
+	// Construct request 
+	// "0032git-upload-pack /project.git\000host=myserver.com\000"
+	NSString *request = [[NSString alloc] initWithFormat:@"git-upload-pack %@\0host=%@\0", userPath, userHostName];
+
+	// Create socket, connect, and send request
+	
+	socket = [Socket socket];
+	[socket connectToHostName:userHostName port:userPort];
+	
+	NSLog(@"connected");
+
+	[self writeServer:request];
+	
+	// Read response from server
+	
+	response = [[[NSMutableData alloc] init] autorelease];
+
+	NSLog(@"wrote");
+
+	while ( [socket readData:response] )
+	{
+		// Read until other side disconnects
+		NSLog(@"read");
 	}
 	
-	if (inStream && outStream)
-		[self handleRequest];
+	// Display response in context textview
+	NSLog(@"readed");
+	
+	responseString = [[[NSString alloc] initWithData:response 
+											encoding:[NSString defaultCStringEncoding]] autorelease];
+
+	return true;
+	
+	NS_HANDLER
+	
+	// If an exception occurs, ...
+	NSLog(@"error");
+
+	NS_ENDHANDLER
+
+	return false;
 }
-*/
+
+- (void) sendPacket:(NSString *)dataWrite {
+	NSLog(@"send:[%@]", dataWrite);
+	[socket writeString:dataWrite];
+}
+
+#define hex(a) (hexchar[(a) & 15])
+- (void) writeServer:(NSString *)dataWrite {
+	NSLog(@"write:[%@]", dataWrite);
+	NSUInteger len = [dataWrite length];
+	len += 4;
+	[self writeServerLength:len];
+	NSLog(@"write data");
+	[self sendPacket:dataWrite];
+}
+
+- (void) writeServerLength:(NSUInteger)length 
+{
+	static char hexchar[] = "0123456789abcdef";
+	uint8_t buffer[5];
+	
+	buffer[0] = hex(length >> 12);
+	buffer[1] = hex(length >> 8);
+	buffer[2] = hex(length >> 4);
+	buffer[3] = hex(length);
+	
+	NSLog(@"write len [%c %c %c %c]", buffer[0], buffer[1], buffer[2], buffer[3]);
+	[socket writeData:bytesToData(buffer, 4)];
+}
 
 @end

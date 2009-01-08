@@ -23,3 +23,7 @@
 #import "GITTreeEntry.h"
 #import "GITDateTime.h"
 #import "GITActor.h"
+#pragma mark GIT Network objects
+#import "GITServer.h"
+#import "GITServerHandler.h"
+#import "GITClient.h"
