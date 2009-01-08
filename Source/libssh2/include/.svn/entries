@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="12"
+   name=""
+   committed-date="2007-05-15T21:40:43.928831Z"
+   url="http://scalp.googlecode.com/svn/trunk/libssh2/include"
+   last-author="adrian.sampson"
+   kind="dir"
+   uuid="0d53a442-862c-0410-9205-4fd00e968327"
+   repos="http://scalp.googlecode.com/svn"
+   revision="40"/>
+<entry
+   committed-rev="12"
+   name="libssh2_config.h"
+   text-time="2009-01-07T00:11:14.000000Z"
+   committed-date="2007-05-15T21:40:43.928831Z"
+   checksum="6ebe82f62e04a7046e9bc5d62796b2af"
+   last-author="adrian.sampson"
+   kind="file"
+   prop-time="2009-01-07T00:11:14.000000Z"/>
+<entry
+   committed-rev="12"
+   name="libssh2_publickey.h"
+   text-time="2009-01-07T00:11:14.000000Z"
+   committed-date="2007-05-15T21:40:43.928831Z"
+   checksum="240561e971b9c2d60d48d95c91aa7b0c"
+   last-author="adrian.sampson"
+   kind="file"
+   prop-time="2009-01-07T00:11:14.000000Z"/>
+<entry
+   committed-rev="12"
+   name="libssh2_sftp.h"
+   text-time="2009-01-07T00:11:14.000000Z"
+   committed-date="2007-05-15T21:40:43.928831Z"
+   checksum="f6aabcbfc9f936f22ea0a8fb67967d84"
+   last-author="adrian.sampson"
+   kind="file"
+   prop-time="2009-01-07T00:11:14.000000Z"/>
+<entry
+   committed-rev="12"
+   name="libssh2_priv.h"
+   text-time="2009-01-07T00:11:14.000000Z"
+   committed-date="2007-05-15T21:40:43.928831Z"
+   checksum="5b95ef971c738269d17fd336637897e3"
+   last-author="adrian.sampson"
+   kind="file"
+   prop-time="2009-01-07T00:11:14.000000Z"/>
+<entry
+   committed-rev="12"
+   name="libssh2.h"
+   text-time="2009-01-07T00:11:14.000000Z"
+   committed-date="2007-05-15T21:40:43.928831Z"
+   checksum="2195760e5d7bfe0771ca039563f8b907"
+   last-author="adrian.sampson"
+   kind="file"
+   prop-time="2009-01-07T00:11:14.000000Z"/>
+</wc-entries>

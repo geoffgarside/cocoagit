@@ -616,7 +616,6 @@
 	return unpackSHA1FromData(bytesToData(rawsha, 20));
 }
 
-
 - (NSString *) typeString:(int)type {
 	if (type == OBJ_COMMIT) 
 		return @"commit";
