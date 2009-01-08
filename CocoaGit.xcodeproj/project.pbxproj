@@ -279,7 +279,7 @@
 
 /* Begin PBXFileReference section */
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		319B42D10F10518C00336E0A /* git-server */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "git-server"; sourceTree = BUILT_PRODUCTS_DIR; };
+		319B42D10F10518C00336E0A /* git-server */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "git-server"; path = "build/Debug/git-server"; sourceTree = "<group>"; };
 		319B42E00F10526A00336E0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		319B44120F10551300336E0A /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		319B44470F1128BB00336E0A /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
@@ -319,7 +319,7 @@
 		31AF018E0F142D7A00F43D38 /* SSHConnectionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSHConnectionTest.m; path = Source/Utils/SSHConnectionTest.m; sourceTree = "<group>"; };
 		31AF01AF0F142F7B00F43D38 /* libSSH.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libSSH.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		31AF02940F14335200F43D38 /* libssh2_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libssh2_config.h; sourceTree = "<group>"; };
-		31AF03C50F14770400F43D38 /* git-remote */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "git-remote"; sourceTree = BUILT_PRODUCTS_DIR; };
+		31AF03C50F14770400F43D38 /* git-remote */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "git-remote"; path = "build/Debug/git-remote"; sourceTree = "<group>"; };
 		31AF04C10F15710C00F43D38 /* AbstractSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AbstractSocket.h; path = Source/Categories/AbstractSocket.h; sourceTree = "<group>"; };
 		31AF04C20F15710C00F43D38 /* AbstractSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AbstractSocket.m; path = Source/Categories/AbstractSocket.m; sourceTree = "<group>"; };
 		31AF04C30F15710C00F43D38 /* Socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Socket.h; path = Source/Categories/Socket.h; sourceTree = "<group>"; };
@@ -340,7 +340,7 @@
 		9F16B9020EDB595A003CFD93 /* GITCombinedStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITCombinedStore.m; path = Source/Stores/GITCombinedStore.m; sourceTree = "<group>"; };
 		9F2150FA0EA3D4F8004C6188 /* GITFileStoreTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITFileStoreTests.h; path = UnitTests/Source/GITFileStoreTests.h; sourceTree = "<group>"; };
 		9F2150FB0EA3D4F8004C6188 /* GITFileStoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITFileStoreTests.m; path = UnitTests/Source/GITFileStoreTests.m; sourceTree = "<group>"; };
-		9F2152FD0EA68DA7004C6188 /* git-pack-inspect */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "git-pack-inspect"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F2152FD0EA68DA7004C6188 /* git-pack-inspect */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "git-pack-inspect"; path = "build/Debug/git-pack-inspect"; sourceTree = "<group>"; };
 		9F2153020EA68E3D004C6188 /* git-pack-inspect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "git-pack-inspect.m"; path = "Source/Tools/git-pack-inspect.m"; sourceTree = "<group>"; };
 		9F22A0B50E9968CA006C3656 /* GITTreeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITTreeTests.h; path = UnitTests/Source/GITTreeTests.h; sourceTree = "<group>"; };
 		9F22A0B60E9968CA006C3656 /* GITTreeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITTreeTests.m; path = UnitTests/Source/GITTreeTests.m; sourceTree = "<group>"; };
@@ -390,7 +390,7 @@
 		9F9213BE0E1822A1005AC693 /* GITTree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITTree.m; path = Source/Types/GITTree.m; sourceTree = "<group>"; };
 		9F96B1BA0E9E334E00AD0A80 /* GITObjectStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITObjectStore.h; path = Source/Stores/GITObjectStore.h; sourceTree = "<group>"; };
 		9F96B1BB0E9E334E00AD0A80 /* GITObjectStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITObjectStore.m; path = Source/Stores/GITObjectStore.m; sourceTree = "<group>"; };
-		9FA4E06F0E19A57600724E6B /* git-inspect */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "git-inspect"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FA4E06F0E19A57600724E6B /* git-inspect */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "git-inspect"; path = "build/Debug/git-inspect"; sourceTree = "<group>"; };
 		9FA4E0810E19A62500724E6B /* git-inspect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "git-inspect.m"; path = "Source/Tools/git-inspect.m"; sourceTree = "<group>"; };
 		9FB1F0A50EC6F2DA006C68D0 /* GITErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITErrors.h; path = Source/GITErrors.h; sourceTree = "<group>"; };
 		9FB1F0A60EC6F2DA006C68D0 /* GITErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITErrors.m; path = Source/GITErrors.m; sourceTree = "<group>"; };
@@ -398,7 +398,7 @@
 		9FCCCF790EC0E6DD00ED3215 /* GITPlaceholderPackFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITPlaceholderPackFile.m; path = Source/Packs/File/GITPlaceholderPackFile.m; sourceTree = "<group>"; };
 		9FCCCF7B0EC0E79700ED3215 /* GITPackFileVersion2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITPackFileVersion2.h; path = Source/Packs/File/GITPackFileVersion2.h; sourceTree = "<group>"; };
 		9FCCCF7C0EC0E79700ED3215 /* GITPackFileVersion2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITPackFileVersion2.m; path = Source/Packs/File/GITPackFileVersion2.m; sourceTree = "<group>"; };
-		9FCF27B10E98F7CE00665A41 /* Unit Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Unit Tests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FCF27B10E98F7CE00665A41 /* Unit Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "Unit Tests.octest"; path = "build/Debug/Unit Tests.octest"; sourceTree = "<group>"; };
 		9FCF27B20E98F7CE00665A41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = UnitTests/Resources/Info.plist; sourceTree = "<group>"; };
 		9FCF27B60E98F86C00665A41 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		9FCF27BB0E98FC0F00665A41 /* GITBlobTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITBlobTests.h; path = UnitTests/Source/GITBlobTests.h; sourceTree = "<group>"; };
@@ -538,13 +538,10 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9FA4E06F0E19A57600724E6B /* git-inspect */,
-				9FCF27B10E98F7CE00665A41 /* Unit Tests.octest */,
-				9F2152FD0EA68DA7004C6188 /* git-pack-inspect */,
-				9F3694170EACF05500E6777B /* Git.framework */,
-				319B42D10F10518C00336E0A /* git-server */,
-				31AF01AF0F142F7B00F43D38 /* libSSH.dylib */,
-				31AF03C50F14770400F43D38 /* git-remote */,
+				9FCAA3B60F166AB00024BEC8 /* Libraries */,
+				9FCAA3A50F166AA50024BEC8 /* Frameworks */,
+				9FCAA3980F166A980024BEC8 /* Test Suites */,
+				9FCAA3910F166A860024BEC8 /* Tools & Examples */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -709,6 +706,41 @@
 				9FCCD0680EC129A600ED3215 /* GITPackIndex */,
 			);
 			name = Packs;
+			sourceTree = "<group>";
+		};
+		9FCAA3910F166A860024BEC8 /* Tools & Examples */ = {
+			isa = PBXGroup;
+			children = (
+				9FA4E06F0E19A57600724E6B /* git-inspect */,
+				9F2152FD0EA68DA7004C6188 /* git-pack-inspect */,
+				319B42D10F10518C00336E0A /* git-server */,
+				31AF03C50F14770400F43D38 /* git-remote */,
+			);
+			name = "Tools & Examples";
+			sourceTree = "<group>";
+		};
+		9FCAA3980F166A980024BEC8 /* Test Suites */ = {
+			isa = PBXGroup;
+			children = (
+				9FCF27B10E98F7CE00665A41 /* Unit Tests.octest */,
+			);
+			name = "Test Suites";
+			sourceTree = "<group>";
+		};
+		9FCAA3A50F166AA50024BEC8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9F3694170EACF05500E6777B /* Git.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9FCAA3B60F166AB00024BEC8 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				31AF01AF0F142F7B00F43D38 /* libSSH.dylib */,
+			);
+			name = Libraries;
 			sourceTree = "<group>";
 		};
 		9FCCD0680EC129A600ED3215 /* GITPackIndex */ = {
