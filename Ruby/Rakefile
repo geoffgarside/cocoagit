@@ -1,0 +1,128 @@
+#
+# Rakefile for CocoaGit project + macruby
+#  
+# Copyright 2008, Brian Chapados <chapados@sciencegeeks.org>
+# Released under the MIT License. See LICENSE file.
+#
+
+desc "Open a macirb session preloaded with Git framework"
+task :console do
+  # update_warning_exit unless latest_cocoagit_build("Debug-GC")
+  sh "./bin/macirb -rubygems -r lib/cocoagit.rb"
+end
+
+desc "Run test suite"
+task :test do
+  # update_warning_exit unless latest_cocoagit_build("Debug-GC")
+  sh "bin/macruby test/suite.rb"
+end
+
+def update_warning_exit
+  warning = <<END
+MacRuby requires a garbage-collection aware framework, and therefore
+uses the Debug-GC build of cocoagit.
+
+It appears that your Debug-GC build of Git.framework might be out of date.
+Rebuild the Debug-GC target in xcode to make sure you are using your latest changes
+END
+  puts warning
+  exit 1
+end
+
+# Not correct - can't just use the date
+def latest_cocoagit_build(target)
+  build_dir = File.join(File.dirname(__FILE__), '..', 'build')
+  projects = %w[Debug Debug-GC Release Release-GC]
+  project_dates = 
+    projects.map do |p|
+      project_file = File.join(build_dir, p, "Git.framework", "Git")
+      date = File.exist?(project_file) && File.mtime(project_file)
+      if date
+        {:project => p, :date => date}
+      else
+        nil
+      end
+    end.compact
+  project_dates.sort! { |a, b| a[:date] <=> b[:date] }
+  target == project_dates.last[:project]
+end
+
+
+# MacRuby management tasks
+
+namespace :macruby do
+  MACRUBY_SRC = "macruby-src"
+  MACRUBY_LIB = File.join(MACRUBY_SRC, "libmacruby.1.9.0.dylib")
+  MACRUBY_BUILD = File.join(File.dirname(__FILE__), "macruby-build")
+  MACRUBY_FRAMEWORK = "MacRuby.framework"
+  FRAMEWORKS_DIR = "Frameworks"
+  BIN_DIR = "bin"
+
+  file MACRUBY_SRC do
+    sh "git clone git://github.com/chapados/macruby.git macruby-src"
+    Dir.chdir(MACRUBY_SRC) do
+      sh "git fetch origin"
+      sh "git checkout -b cocoagit"
+      sh "git pull origin cocoagit"
+    end
+  end
+  desc "checkout cocoagit branch of git://github.com/chapados/macruby.git"
+  task :checkout => MACRUBY_SRC
+
+  directory MACRUBY_BUILD
+  file "#{MACRUBY_BUILD}/#{MACRUBY_FRAMEWORK}" => MACRUBY_BUILD do
+    Dir.chdir(MACRUBY_SRC) do
+      sh "rake framework_instdir=#{MACRUBY_BUILD} sym_instdir=#{MACRUBY_BUILD} archs=i386"
+      sh "sudo rake framework_instdir=#{MACRUBY_BUILD} sym_instdir=#{MACRUBY_BUILD} archs=i386 install"
+      current_uid = Process::UID.eid
+      sh "sudo chown -R #{current_uid} #{MACRUBY_BUILD}"
+    end
+  end
+  desc "build embedded MacRuby framework"
+  task :build => "#{MACRUBY_BUILD}/#{MACRUBY_FRAMEWORK}"
+  
+  directory BIN_DIR
+  file MACRUBY_FRAMEWORK => ["#{MACRUBY_BUILD}/#{MACRUBY_FRAMEWORK}", BIN_DIR] do
+    src = File.join(MACRUBY_BUILD, MACRUBY_FRAMEWORK)
+    cp_r(src, '.')
+    FileList["#{MACRUBY_FRAMEWORK}/Versions/Current/usr/bin/*"].each do |file|
+      src = File.join("..", file)
+      target = File.join(BIN_DIR, File.basename(file))
+      ln_s(src, target)
+    end
+  end
+  desc "install MacRuby framework in Ruby directory"
+  task :install => MACRUBY_FRAMEWORK
+
+  desc "Delete MacRuby git repository"
+  task :clobber do
+    if File.exist? MACRUBY_SRC
+      rm_rf MACRUBY_SRC
+    end
+  end
+  
+  desc "Remove MacRuby installed files"
+  task :uninstall do
+    rm_rf MACRUBY_FRAMEWORK
+    macruby_bin_files = FileList["bin/mac*"] + %w[bin/hotcocoa bin/rb_nibtool]
+    macruby_bin_files.each do |file|
+      rm_f file
+    end
+  end
+  
+  desc "Delete MacRuby build files"
+  task :clean do
+    if File.exist? MACRUBY_BUILD
+      rm_rf MACRUBY_BUILD
+    end
+    Dir.chdir(MACRUBY_SRC) do
+      sh "rake clean"
+    end
+  end
+  
+  desc "Delete MacRuby source, build and installed files"
+  task :destroy => [:clean, :clobber, :uninstall]
+  
+  desc "build embeddable MacRuby.framework for use with cocoagit"
+  task :bootstrap => [:checkout, :build, :install, :clean]
+end

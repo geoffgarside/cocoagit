@@ -184,6 +184,16 @@ typedef enum {
 - (id)copyWithZone:(NSZone*)zone;
 
 #pragma mark -
+#pragma mark Comparison methods
+/*! Returns a Boolean value that indicates whether the receiver and a given GITObject are equal.
+ *
+ * Instances of GITObject and GITObject subclasses are equal if their Sha1 values are equal.
+ * \otherObject The object to be compared to the receiver.
+ * \return YES if the receiver and otherObject are equal, otherwise NO.
+ */
+- (BOOL) isEqual:(GITObject *) otherObject;
+
+#pragma mark -
 #pragma mark Raw Format methods
 /*! Returns the raw data of the object.
  * \attention This is a concrete method.

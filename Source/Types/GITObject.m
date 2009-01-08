@@ -152,6 +152,13 @@
 }
 
 #pragma mark -
+#pragma mark Comparison methods
+- (BOOL) isEqual:(GITObject *) otherObject;
+{
+    return [[self sha1] isEqual:[otherObject sha1]];
+}
+
+#pragma mark -
 #pragma mark Data Parser
 - (BOOL)parseRawData:(NSData*)data error:(NSError**)error
 {
