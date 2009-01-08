@@ -59,7 +59,7 @@
 {
     struct sockaddr_in acceptAddr;
     int socketfd2 = SOCKET_INVALID_DESCRIPTOR;
-    int addrSize = sizeof(acceptAddr);
+    socklen_t addrSize = sizeof(acceptAddr);
   
     // Socket must be created, not connected, and listening
     

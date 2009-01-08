@@ -95,7 +95,7 @@
 {
     struct sockaddr_in acceptAddr;
     int socketfd2 = SOCKET_INVALID_DESCRIPTOR;
-    int addrSize = sizeof(acceptAddr);
+    socklen_t addrSize = sizeof(acceptAddr);
   
     // Socket must be created, not connected, and listening
     
@@ -220,7 +220,7 @@
     
     // Look up host 
     
-    if ( (remoteHost = gethostbyname([hostName cString])) == NULL )
+    if ( (remoteHost = gethostbyname([hostName UTF8String])) == NULL )
         [NSException raise:SOCKET_EX_HOST_NOT_FOUND 
                         format:SOCKET_EX_HOST_NOT_FOUND_F, strerror(errno)];
     
