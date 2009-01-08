@@ -259,7 +259,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 9F3694160EACF05500E6777B /* Git */;
+			remoteGlobalIDString = 9F3694160EACF05500E6777B;
 			remoteInfo = Git;
 		};
 /* End PBXContainerItemProxy section */
@@ -1444,7 +1444,8 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				INSTALL_PATH = /opt/lib;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				INSTALL_PATH = "@executable_path";
 				PREBINDING = NO;
 				PRODUCT_NAME = SSH;
 			};
@@ -1609,7 +1610,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Foundation.framework/Headers/Foundation.h";
 				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = /opt/Frameworks;
+				INSTALL_PATH = "@executable_path";
 				OTHER_LDFLAGS = (
 					"-lcrypto",
 					"-lssl",
@@ -1816,7 +1817,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Foundation.framework/Headers/Foundation.h";
 				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				INSTALL_PATH = "@executable_path";
 				OTHER_LDFLAGS = (
 					"-lcrypto",
 					"-lssl",
