@@ -47,6 +47,14 @@ enum {
 
 #pragma mark -
 #pragma mark Primitive Methods
+- (void) dealloc
+{
+    [path release], path = nil;
+    [data release], data = nil;
+    [index release], index = nil;
+    [super dealloc];
+}
+
 - (NSUInteger)version
 {
     return 2;
@@ -76,7 +84,7 @@ enum {
     // initialize the index file
     NSString * idxPath = [[thePath stringByDeletingPathExtension]
                           stringByAppendingPathExtension:@"idx"];
-    self.index  = [[GITPackIndex alloc] initWithPath:idxPath error:error];
+    self.index  = [GITPackIndex packIndexWithPath:idxPath error:error];
     if (!index) {
         [self release];
         return nil;

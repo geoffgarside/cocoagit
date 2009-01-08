@@ -22,7 +22,7 @@ int main (int argc, const char * argv[]) {
     }
 
     NSString *sha1 = [args objectAtIndex:1];
-    GITObject * object = [[repo objectWithSha1:sha1 error:&error] autorelease];
+    GITObject * object = [repo objectWithSha1:sha1 error:&error];
 
     if (!object)
     {

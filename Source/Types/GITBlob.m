@@ -78,11 +78,9 @@ NSString * const kGITObjectBlobName = @"blob";
         return YES;
     return NO;
 }
-- (NSString*)stringValue    //!< Implicitly retained by the sender
+- (NSString*)stringValue
 {
-    NSString * v = [[NSString alloc] initWithData:self.data
-                                         encoding:NSASCIIStringEncoding];
-    return [[v autorelease] retain];
+    return [[[NSString alloc] initWithData:self.data encoding:NSASCIIStringEncoding] autorelease];
 }
 
 #pragma mark -

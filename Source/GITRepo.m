@@ -35,6 +35,14 @@
 @synthesize bare;
 @synthesize store;
 
+- (void) dealloc
+{
+    [root release], root = nil;
+    [desc release], desc = nil;
+    [store release], store = nil;
+    [super dealloc];
+}
+
 - (id)initWithRoot:(NSString*)repoRoot
 {
     return [self initWithRoot:repoRoot bare:NO error:NULL];
@@ -54,19 +62,15 @@
     if (![repoRoot hasSuffix:@".git"] && !isBare)
         rootPath = [repoRoot stringByAppendingPathComponent:@".git"];
 
-    GITFileStore * fileStore = [[GITFileStore alloc] initWithRoot:rootPath error:error];
-    if (!fileStore) {
-        [self release];
+    GITFileStore * fileStore = [GITFileStore storeWithRoot:rootPath error:error];
+    if (!fileStore)
         return nil;
-    }
 
-    GITPackStore * packStore = [[GITPackStore alloc] initWithRoot:rootPath error:error];
-    if (!packStore) {
-        [self release];
+    GITPackStore * packStore = [GITPackStore storeWithRoot:rootPath error:error];
+    if (!packStore)
         return nil;
-    }
 
-    objectStore = [[GITCombinedStore alloc] initWithStores: fileStore, packStore, nil];
+    objectStore = [[[GITCombinedStore alloc] initWithStores: fileStore, packStore, nil] autorelease];
     if ([self initWithStore:objectStore])
     {
         self.root = rootPath;
@@ -78,13 +82,14 @@
 }
 - (id)initWithStore:(GITObjectStore*)objectStore
 {
-    if (self = [super init])
-    {
-        self.root = nil;
-        self.desc = nil;
-        self.bare = NO;
-        self.store = objectStore;
-    }
+    if (! [super init])
+        return nil;
+
+    self.root = nil;
+    self.desc = nil;
+    self.bare = NO;
+    self.store = objectStore;
+    
     return self;
 }
 - (id)copyWithZone:(NSZone*)zone
@@ -170,13 +175,13 @@
 	switch (type)
 	{
 		case GITObjectTypeCommit:
-			return [[GITCommit alloc] initWithSha1:sha1 data:data repo:self];
+			return [[[GITCommit alloc] initWithSha1:sha1 data:data repo:self] autorelease];
 		case GITObjectTypeTree:
-			return [[GITTree alloc] initWithSha1:sha1 data:data repo:self];
+			return [[[GITTree alloc] initWithSha1:sha1 data:data repo:self] autorelease];
 		case GITObjectTypeBlob:
-			return [[GITBlob alloc] initWithSha1:sha1 data:data repo:self];
+			return [[[GITBlob alloc] initWithSha1:sha1 data:data repo:self] autorelease];
 		case GITObjectTypeTag:
-			return [[GITTag alloc] initWithSha1:sha1 data:data repo:self];
+			return [[[GITTag alloc] initWithSha1:sha1 data:data repo:self] autorelease];
 	}
 
 	// If we get here, then we've got a type that we don't understand. If the only way this could happen is a programming error, then it should be an exception.  For now, just create an error.

@@ -48,6 +48,7 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
 {
     self.path = nil;
     self.data = nil;
+    [offsets release], offsets = nil;
     [super dealloc];
 }
 - (id)copyWithZone:(NSZone *)zone
@@ -64,7 +65,7 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
 - (NSArray*)offsets
 {
     if (!offsets)
-        offsets = [[self loadOffsetsWithError:NULL] retain];
+        offsets = [[self loadOffsetsWithError:NULL] copy];
     return offsets;
 }
 - (NSArray*)loadOffsetsWithError:(NSError**)error
@@ -90,7 +91,7 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
         [_offsets addObject:[NSNumber numberWithUnsignedInteger:thisCount]];
         lastCount = thisCount;
     }
-    return _offsets;
+    return [[_offsets copy] autorelease];
 }
 - (NSUInteger)packOffsetForSha1:(NSString*)sha1
 {

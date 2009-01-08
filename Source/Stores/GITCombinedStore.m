@@ -19,6 +19,13 @@
 @synthesize stores;
 @synthesize recentStore;
 
+- (void) dealloc
+{
+    [stores release], stores = nil;
+    recentStore = nil;
+    [super dealloc];
+}
+
 - (id)init
 {
     return [self initWithStores:nil];

@@ -23,7 +23,7 @@ int main (int argc, const char * argv[]) {
         exit(0);
     }
     
-    GITPackFile * pack = [[GITPackFile alloc] initWithPath:[args objectAtIndex:1]];
+    GITPackFile * pack = [GITPackFile packFileWithPath:[args objectAtIndex:1]];
     GITPackIndex * idx = [pack index];
     
     NSLog(@"packPath: %@", [pack path]);

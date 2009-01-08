@@ -31,10 +31,21 @@
 
 #pragma mark -
 #pragma mark Primitive Methods
++ (id)packIndexWithPath:(NSString*)thePath;
+{
+    return [[[self alloc] initWithPath:thePath] autorelease];
+}
+
 - (id)initWithPath:(NSString*)thePath
 {
     return [self initWithPath:thePath error:NULL];
 }
+
++ (id)packIndexWithPath:(NSString*)thePath error:(NSError**)outError
+{
+    return [[[self alloc] initWithPath:thePath error:outError] autorelease];
+}
+
 - (id)initWithPath:(NSString*)thePath error:(NSError**)outError
 {
     [self doesNotRecognizeSelector: _cmd];
