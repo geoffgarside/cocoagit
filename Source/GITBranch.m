@@ -6,7 +6,7 @@
 //  Copyright 2008 ManicPanda.com. All rights reserved.
 //
 
-#import "GITBranch.m"
+#import "GITBranch.h"
 #import "GITRepo.h"
 #import "GITCommit.h"
 
@@ -35,8 +35,8 @@
 {
     NSString * heads = [self.repo.root stringByAppendingPathComponent:@"refs/heads"];
     NSString * file  = [heads stringByAppendingPathComponent:self.name];
-    NSString * ref   = [NSString stringWithContentsOfFile:file];
-    return [self.repo commitWithHash:ref];
+    NSString * ref   = [[NSString stringWithContentsOfFile:file] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    return [self.repo commitWithSha1:ref];
 }
 
 @end

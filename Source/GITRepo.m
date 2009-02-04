@@ -164,6 +164,7 @@
 {
     GITObjectType type; NSData * data;
     if (![self.store loadObjectWithSha1:sha1 intoData:&data type:&type error:error]) {
+		GITError(error, GITErrorObjectNotFound, NSLocalizedString(@"Object not found", @"GITErrorObjectNotFound"));
 		return nil;
 	}
 	
