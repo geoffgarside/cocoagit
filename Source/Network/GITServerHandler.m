@@ -230,7 +230,7 @@
 	while ( (current = [e nextObject]) ) {
 		obj = [gitRepo objectWithSha1:current];
 		size = [obj size];
-		btype = [self typeInt:[obj type]];
+		btype = [GITObject objectTypeForString:[obj type]];
 		NSLog(@"curr:%@ %d %d", current, size, btype);
 		
 		c = (btype << 4) | (size & 15);
@@ -460,7 +460,7 @@
 	
 	if((type == GITObjectTypeCommit) || (type == GITObjectTypeTree) || (type == GITObjectTypeBlob) || (type == GITObjectTypeTag)) {
 		NSData *objectData = [self readData:size];
-		[gitRepo writeObject:objectData withType:[self typeString:type] size:size];
+		[gitRepo writeObject:objectData withType:[GITObject stringForObjectType:type] size:size];
 		// TODO : check saved delta objects
 	} else if ((type == OBJ_REF_DELTA) || (type == OBJ_OFS_DELTA)) {
 		[self unpackDeltified:type size:size];
