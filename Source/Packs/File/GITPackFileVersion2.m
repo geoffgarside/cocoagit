@@ -157,9 +157,28 @@ enum {
 			*objectData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
 			break;
 		case kGITPackFileTypeDeltaOfs:
-		case kGITPackFileTypeDeltaRefs:
 			NSAssert(NO, @"Cannot handle Delta Object types yet");
 			break;
+        case kGITPackFileTypeDeltaRefs:
+            NSData *baseSha1Data = [self.data subdataWithRange:NSMakeRange(offset, 20)];
+            NSData *deltaData = [self.data subdataWithRange:NSMakeRange(offset + 20, size)];
+
+            NSString *baseObjectSha1 = unpackSHA1FromData(baseSha1Data);
+            if (! [self hasObjectWithSha1:baseObjectSha1]) {
+                GITError(error, GITErrorObjectNotFound, NSLocalizedString(@"Object not found for PACK delta", @"GITErrorObjectNotFound (GITPackFile)"));
+                return NO;
+            }
+
+            NSError *undError = nil;
+            NSData *baseObjectData;
+
+            if (! [self loadObjectWithSha1:baseObjectSha1 intoData:&baseObjectData type:objectType error:&undError]) {
+                GITError(error, [undError code], [undError description]);
+                return NO;
+            }
+
+            *objectData = [baseObjectData dataByPatchingWithDelta:deltaData];
+            break;
 		default:
 			NSLog(@"bad object type %d", type);
 			break;
