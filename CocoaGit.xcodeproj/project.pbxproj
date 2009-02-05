@@ -362,6 +362,8 @@
 		9F37E6A30F1131EA00704E4E /* Git.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Git.h; sourceTree = "<group>"; };
 		9F464D3F0E3DC3EC00867506 /* NSTimeZone+Offset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSTimeZone+Offset.h"; path = "Source/Categories/NSTimeZone+Offset.h"; sourceTree = "<group>"; };
 		9F464D400E3DC3EC00867506 /* NSTimeZone+Offset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSTimeZone+Offset.m"; path = "Source/Categories/NSTimeZone+Offset.m"; sourceTree = "<group>"; };
+		9F57B96C0F35397500101EAC /* NSData+Patching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Patching.h"; path = "Source/Categories/NSData+Patching.h"; sourceTree = "<group>"; };
+		9F57B96D0F35397500101EAC /* NSData+Patching.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Patching.m"; path = "Source/Categories/NSData+Patching.m"; sourceTree = "<group>"; };
 		9F63998C0E51952F0034F279 /* GITUtilityBelt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITUtilityBelt.h; path = Source/GITUtilityBelt.h; sourceTree = "<group>"; };
 		9F63998D0E51952F0034F279 /* GITUtilityBelt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITUtilityBelt.m; path = Source/GITUtilityBelt.m; sourceTree = "<group>"; };
 		9F66F7C70EA1105500E7FAA9 /* doxygen.config */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = doxygen.config; path = Resources/doxygen.config; sourceTree = "<group>"; };
@@ -681,6 +683,8 @@
 				9F8CFFA40E2FFCF200D0E65A /* NSData+Searching.m */,
 				9F464D3F0E3DC3EC00867506 /* NSTimeZone+Offset.h */,
 				9F464D400E3DC3EC00867506 /* NSTimeZone+Offset.m */,
+				9F57B96C0F35397500101EAC /* NSData+Patching.h */,
+				9F57B96D0F35397500101EAC /* NSData+Patching.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
