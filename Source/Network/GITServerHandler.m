@@ -14,11 +14,11 @@
 #define PACK_SIGNATURE 0x5041434b	/* "PACK" */
 #define PACK_VERSION 2
 
-#define OBJ_NONE	0
-#define OBJ_COMMIT	1
-#define OBJ_TREE	2
-#define OBJ_BLOB	3
-#define OBJ_TAG		4
+#define OBJ_NONE        GITObjectTypeUnknown
+#define OBJ_COMMIT      GITObjectTypeCommit
+#define OBJ_TREE        GITObjectTypeTree
+#define OBJ_BLOB        GITObjectTypeBlob
+#define OBJ_TAG         GITObjectTypeTag
 #define OBJ_OFS_DELTA 6
 #define OBJ_REF_DELTA 7
 
@@ -458,7 +458,7 @@
 	NSLog(@"TYPE: %d", type);
 	NSLog(@"size: %d", size);
 	
-	if((type == OBJ_COMMIT) || (type == OBJ_TREE) || (type == OBJ_BLOB) || (type == OBJ_TAG)) {
+	if((type == GITObjectTypeCommit) || (type == GITObjectTypeTree) || (type == GITObjectTypeBlob) || (type == GITObjectTypeTag)) {
 		NSData *objectData = [self readData:size];
 		[gitRepo writeObject:objectData withType:[self typeString:type] size:size];
 		// TODO : check saved delta objects
