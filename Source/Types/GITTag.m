@@ -66,6 +66,7 @@ NSString * const kGITObjectTagName = @"tag";
 - (void)dealloc
 {
     self.name = nil;
+    self.objectSha1 = nil;
     self.commit = nil;
     self.tagger = nil;
     self.tagged = nil;
@@ -77,6 +78,7 @@ NSString * const kGITObjectTagName = @"tag";
 {
     GITTag * tag    = (GITTag*)[super copyWithZone:zone];
     tag.name        = self.name;
+    tag.objectSha1  = self.objectSha1;
     tag.commit      = self.commit;
     tag.tagger      = self.tagger;
     tag.tagged      = self.tagged;
