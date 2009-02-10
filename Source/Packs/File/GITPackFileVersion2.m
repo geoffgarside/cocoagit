@@ -11,6 +11,7 @@
 #import "GITUtilityBelt.h"
 #import "NSData+Hashing.h"
 #import "NSData+Compression.h"
+#import "NSData+Patching.h"
 
 static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
 
@@ -138,28 +139,19 @@ enum {
 		shift += 7;
 	}
 	
-	*objectData = nil;    //!< nil out the outgoing data
+    NSData *objData;
 	switch (type) {
 		case kGITPackFileTypeCommit:
-			*objectType = type;
-			*objectData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
-			break;
 		case kGITPackFileTypeTree:
-			*objectType = type;
-			*objectData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
-			break;
 		case kGITPackFileTypeTag:
-			*objectType = type;
-			*objectData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
-			break;
 		case kGITPackFileTypeBlob:
-			*objectType = type;
-			*objectData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
+			objData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
 			break;
 		case kGITPackFileTypeDeltaOfs:
 			NSAssert(NO, @"Cannot handle Delta Object types yet");
 			break;
         case kGITPackFileTypeDeltaRefs:
+        {
             NSData *baseSha1Data = [self.data subdataWithRange:NSMakeRange(offset, 20)];
             NSData *deltaData = [self.data subdataWithRange:NSMakeRange(offset + 20, size)];
 
@@ -169,26 +161,30 @@ enum {
                 return NO;
             }
 
-            NSError *undError = nil;
             NSData *baseObjectData;
 
-            if (! [self loadObjectWithSha1:baseObjectSha1 intoData:&baseObjectData type:objectType error:&undError]) {
-                GITError(error, [undError code], [undError description]);
+            if (! [self loadObjectWithSha1:baseObjectSha1 intoData:&baseObjectData type:objectType error:error]) {
                 return NO;
             }
 
-            *objectData = [baseObjectData dataByPatchingWithDelta:deltaData];
+            [baseObjectData retain];
+            objData = [baseObjectData dataByPatchingWithDelta:deltaData];
+            [baseObjectData release];
             break;
+        }
 		default:
 			NSLog(@"bad object type %d", type);
 			break;
 	}
 	
 	// Similar to situation in GITFileStore: we could create different errors for each of these.
-	if (! (*objectData && *objectType && size == [*objectData length])) {
+	if (! (objData && type && size == [objData length])) {
 		GITError(error, GITErrorObjectSizeMismatch, NSLocalizedString(@"Object size mismatch", @"GITErrorObjectSizeMismatch"));
 		return NO;
 	}
+    
+    *objectType = type;
+    *objectData = objData;
 	
 	return YES;
 }
