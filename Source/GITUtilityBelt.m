@@ -70,6 +70,20 @@ unpackSHA1FromBytes(const uint8_t * bytes, unsigned int length)
     return unpackSHA1FromData(data);
 }
 
+BOOL
+isSha1StringValid(NSString *shaString)
+{
+    if ([shaString length] != 40)
+        return NO;
+
+    const char *bytes = [shaString UTF8String];    
+    const char *p = bytes;
+    while ( *p >= '0' && *p <= 'f' )
+        p++;
+
+    return ((p - bytes) == 40);
+}
+
 NSData *
 bytesToData(const uint8_t *bytes, unsigned int length)
 {
@@ -85,4 +99,49 @@ integerFromBytes(uint8_t * bytes, NSUInteger length)
     for (i = 0; i < length; i++)
         value = (value << 8) | bytes[i];
     return value;
+}
+
+// Encode  as a 4-byte hex value
+#define hex(a) (hexchars[(a) & 15])
+NSData *
+intToHexLength(NSUInteger length) 
+{
+	uint8_t buffer[4];
+	
+	buffer[0] = hex(length >> 12);
+	buffer[1] = hex(length >> 8);
+	buffer[2] = hex(length >> 4);
+	buffer[3] = hex(length);
+	
+    return [NSData dataWithBytes:buffer length:4];
+}
+
+NSUInteger
+hexLengthToInt(NSData *lengthData)
+{
+	uint8_t linelen[4];
+	[lengthData getBytes:linelen length:4];
+    
+	NSUInteger len = 0;
+	int n;
+	for (n = 0; n < 4; n++) {
+		uint8_t c = linelen[n];
+		len <<= 4;
+		if (c >= '0' && c <= '9') {
+			len += c - '0';
+			continue;
+		}
+		if (c >= 'a' && c <= 'f') {
+			len += c - 'a' + 10;
+			continue;
+		}
+		if (c >= 'A' && c <= 'F') {
+			len += c - 'A' + 10;
+			continue;
+		}
+        // error: bad character, return -1 so that the caller knows there is a problem
+        return -1;
+	}
+	
+	return len;
 }
