@@ -217,10 +217,9 @@
 
 - (NSDictionary *) dictionaryWithRefName:(NSString *) aName sha:(NSString *) shaString;
 {
-	NSDictionary *refInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+	return [NSDictionary dictionaryWithObjectsAndKeys:
 							 aName, @"name",
 							 shaString, @"sha", nil];
-	return refInfo;
 }
 
 - (NSArray *) refs;
@@ -231,7 +230,8 @@
 	NSString *refsPath = [self refsPath];
 	
 	NSFileManager *fm = [NSFileManager defaultManager];
-	if ([NSFileManager directoryExistsAtPath:refsPath]) {
+	BOOL isDir;
+    if ([fm fileExistsAtPath:refsPath isDirectory:&isDir] && isDir) {
 		NSEnumerator *e = [fm enumeratorAtPath:refsPath];
 		NSString *thisRef;
 		while ( (thisRef = [e nextObject]) ) {
@@ -280,7 +280,7 @@
 
 - (NSString *) pathForLooseObjectWithSha:(NSString *) shaValue;
 {
-	if (! [GITRepo isShaValid:shaValue])
+	if (! isSha1StringValid(shaValue))
 		return nil;
 	
 	NSString *looseSubDir   = [shaValue substringWithRange:NSMakeRange(0, 2)];
