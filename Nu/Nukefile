@@ -1,0 +1,95 @@
+;;
+;; Nukefile for Cocoagit
+;;
+;; Commands:
+;;	nuke 		- builds Discount as a framework
+;;   nuke binary    - builds a 'markdown' binary that uses the Discount framework
+;;	nuke test	     - runs all of the test suites in the tests directory
+;;	nuke install	- installs Discount in /Library/Frameworks
+;;	nuke clean	- removes build artifacts
+;;	nuke clobber	- removes all generated files
+;;
+;; The "nuke" build tool is installed with Nu (http://programming.nu)
+;;
+
+;; the @variables below are instance variables of a NukeProject.
+;; for details, see tools/nuke in the Nu source distribution.
+
+;; source files
+(set @m_files     (filelistWithRoot "^Source/.*.m$" ".."))
+(@m_files minusSet:(filelistWithRoot "^Source/Tools/.*.m$" ".."))
+(set @c_files     (filelistWithRoot "^Source/libssh2/src/.*.c$" ".."))
+
+;; arch
+;(set @arch '("i386" "ppc"))
+(set @arch '("i386"))
+
+;; framework description
+(set @framework "Git")
+(set @framework_identifier   "com.manicpanda.Git")
+(set @framework_creator_code "????")
+(set @framework_install_path "@loader_path/../Frameworks")
+
+;(set @public_headers (filelist "^Source/Discount.h$"))
+;(@public_headers unionSet:(filelist "^src/#{@framework}.h"))
+
+(set source_files ((NSFileManager defaultManager) subpathsAtPath:"./Source"))
+(set source_dirs (NSSet setWithArray:
+     (source_files map:
+          (do (f) ("-ISource/#{f}" dirName)))))
+(set include_dirs ((source_dirs allObjects) join))
+
+;; build configuration
+(set @cc "gcc")
+(set @sdk
+     (cond ((NSFileManager directoryExistsNamed:"/Developer/SDKs/MacOSX10.5.sdk")
+            ("-isysroot /Developer/SDKs/MacOSX10.5.sdk"))
+           ((NSFileManager directoryExistsNamed:"/Developer/SDKs/MacOSX10.4u.sdk")
+            ("-isysroot /Developer/SDKs/MacOSX10.4u.sdk"))
+           (else "")))
+
+(set @cflags "-Wall -g -O2 -DDARWIN -DMACOSX #{@sdk} -std=gnu99 #{include_dirs}")
+(set @mflags "-fobjc-exceptions -fobjc-gc")
+(set @ldflags "-framework Foundation -lssl -lcrypto -lz")
+
+(compilation-tasks)
+(framework-tasks)
+
+; ;; build 'markdown' command line utility
+; (set discount_binary "markdown")
+; (set discount_thin_binaries (NSMutableArray array))
+; (@arch each:
+;        (do (architecture)
+;            (set discount_thin_binary "build/#{architecture}/#{discount_binary}")
+;            (discount_thin_binaries addObject:discount_thin_binary)
+;            (ifDarwin
+;                     (then
+;                          (file discount_thin_binary => "framework" "build/#{architecture}/discount-main.o" is
+;                                (SH "#{@cc} #{@cflags} #{@mflags} -arch #{architecture} -c -o build/#{architecture}/discount-main.o src/cli/discount-main.m")
+;                                (SH "#{@cc} build/#{architecture}/*.o #{@cflags} #{@mflags} -arch #{architecture} #{@ldflags} -o #{(target name)}")))
+;                     (else
+;                          (file discount_thin_binary => "dylib" (@c_objects objectForKey:architecture) (@m_objects objectForKey:architecture) is
+;                                (SH "#{@cc} #{@cflags} #{@mflags} src/cli/discount-main.m #{@library_executable_name} #{@ldflags} -o #{(target name)}"))))))
+;
+; (file discount_binary => "framework" discount_thin_binaries is
+;       (ifDarwin
+;                (then (SH "lipo -create #{(discount_thin_binaries join)} -output #{(target name)}"))
+;                (else (SH "cp '#{(discount_thin_binaries objectAtIndex:0)}' '#{(target name)}'"))))
+;
+; (task "binary" => discount_binary)
+
+;; Standard tasks
+(task "clobber" => "clean" is
+      (SH "rm -rf #{@framework_dir}")
+      (SH "rm -rf build")) ;; @framework_dir is defined by the nuke framework-tasks macro
+
+(task "default" => "framework")
+
+(task "install" => "framework" is
+      (SH "sudo rm -rf /Library/Frameworks/#{@framework}.framework")
+      (SH "ditto #{@framework}.framework /Library/Frameworks/#{@framework}.framework"))
+
+(task "test" is
+      (SH "nutest NuTest/test_*.nu"))
+
+(task "test" => )

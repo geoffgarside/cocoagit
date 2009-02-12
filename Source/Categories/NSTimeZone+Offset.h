@@ -6,6 +6,7 @@
 //  Copyright 2008 ManicPanda.com. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
 #import <Foundation/NSTimeZone.h>
 
 @interface NSTimeZone (Offset)

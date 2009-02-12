@@ -19,7 +19,8 @@ packSHA1(NSString * unpackedSHA1)
 {
     unsigned int highBits, lowBits, bits;
     NSMutableData *packedSHA1 = [NSMutableData dataWithCapacity:kGITPackedSha1Length];
-    for (int i = 0; i < [unpackedSHA1 length]; i++)
+    int i;
+    for (i = 0; i < [unpackedSHA1 length]; i++)
     {
         if (i % 2 == 0) {
             highBits = (strchr(hexchars, [unpackedSHA1 characterAtIndex:i]) - hexchars) << 4;
@@ -37,7 +38,8 @@ unpackSHA1FromString(NSString * packedSHA1)
 {
     unsigned int bits;
     NSMutableString *unpackedSHA1 = [NSMutableString stringWithCapacity:kGITUnpackedSha1Length];
-    for(int i = 0; i < kGITPackedSha1Length; i++)
+    int i;
+    for(i = 0; i < kGITPackedSha1Length; i++)
     {
         bits = [packedSHA1 characterAtIndex:i];
         [unpackedSHA1 appendFormat:@"%c", hexchars[bits >> 4]];
@@ -51,7 +53,8 @@ unpackSHA1FromData(NSData * packedSHA1)
 {
     uint8_t bits;
     NSMutableString *unpackedSHA1 = [NSMutableString stringWithCapacity:kGITUnpackedSha1Length];
-    for(int i = 0; i < kGITPackedSha1Length; i++)
+    int i;
+    for(i = 0; i < kGITPackedSha1Length; i++)
     {
         [packedSHA1 getBytes:&bits range:NSMakeRange(i, 1)];
         [unpackedSHA1 appendFormat:@"%c", hexchars[bits >> 4]];
