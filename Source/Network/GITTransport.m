@@ -8,6 +8,7 @@
 
 #import "GITTransport.h"
 #import "GITUtilityBelt.h"
+#import "NSData+Searching.h"
 
 NSString * const GITTransportFetch = @"GITTransportFetch";
 NSString * const GITTransportPush = @"GITTransportPush";
@@ -109,6 +110,10 @@ NSString * const GITTransportClosed = @"GITTransportClosed";
     }
     
     NSMutableData *packetData = [[self connection] readData:(int)len-4];
+    
+    // check for capabilities
+    
+    
     //NSLog(@"readPacket: len = %d, data:\n%@", len, [packetLen hexdump]);
     return [NSData dataWithData:packetData];
 }
@@ -121,13 +126,44 @@ NSString * const GITTransportClosed = @"GITTransportClosed";
     return [[[NSString alloc] initWithData:packetData encoding:NSASCIIStringEncoding] autorelease];
 }
 
+- (NSData *) packetByRemovingCapabilitiesFromPacket:(NSData *)data;
+{
+    NSRange refRange = [data rangeOfNullTerminatedBytesFrom:0];
+    
+    // NSLog(@"refRange: %d %d", refRange.location, refRange.length);
+    
+    if (refRange.location == NSNotFound)
+        return data;
+    
+    return [data subdataToIndex:refRange.length-1];
+}
+
+- (NSString *) capabilitiesWithPacket:(NSData *)data;
+{
+    NSRange refRange = [data rangeOfNullTerminatedBytesFrom:0];
+        
+    if (refRange.location == NSNotFound)
+        return nil;
+        
+    NSUInteger capStart = refRange.length+1;
+    NSData *capData = [data subdataFromIndex:capStart];
+ 
+    return [[[NSString alloc] initWithData:capData encoding:[NSString defaultCStringEncoding]] autorelease];
+}
+
 - (NSArray *) readPackets;
 {
 	NSMutableArray *packets = [NSMutableArray new];
     NSData *packetData = [self readPacket];
     
+    // extract capabilities string and remove '\0'
+    NSString *capabilities = [self capabilitiesWithPacket:packetData];
+    if (capabilities) {
+        packetData = [packetData subdataToIndex:([packetData length] - [capabilities length] - 1)];
+        NSLog(@"capabilities: %@", capabilities);
+    }
+        
     while (packetData && [packetData length] > 0) {
-        //NSLog(@"packet:\n%@", [packetData hexdump]);
         [packets addObject:packetData];
         packetData = [self readPacket];
     }
