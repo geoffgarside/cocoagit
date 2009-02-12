@@ -68,8 +68,8 @@
 {
     NSString *refName, *refSha1;
     NSScanner *scanner = [NSScanner scannerWithString:packetLine];
-    [scanner scanUpToString:@" " intoString:&refName];
-    [scanner scanUpToString:@"\n" intoString:&refSha1];
+    [scanner scanUpToString:@" " intoString:&refSha1];
+    [scanner scanUpToString:@"\n" intoString:&refName];
     
     if (! (refName && refSha1))
         return nil;
