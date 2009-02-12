@@ -101,6 +101,13 @@
 		31AF04C70F15710C00F43D38 /* Socket.h in Headers */ = {isa = PBXBuildFile; fileRef = 31AF04C30F15710C00F43D38 /* Socket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		31AF04C80F15710C00F43D38 /* Socket.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AF04C40F15710C00F43D38 /* Socket.m */; };
 		31AF05420F157C7500F43D38 /* git-remote.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AF05410F157C7500F43D38 /* git-remote.m */; };
+		5734D7070F4119690092523C /* GITTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5734D7060F4119690092523C /* GITTransport.m */; };
+		5734D7290F4148BA0092523C /* BufferedSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 5734D7250F4148BA0092523C /* BufferedSocket.h */; };
+		5734D72A0F4148BA0092523C /* BufferedSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5734D7260F4148BA0092523C /* BufferedSocket.m */; };
+		5734D72B0F4148BA0092523C /* MutableDataBufferExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 5734D7270F4148BA0092523C /* MutableDataBufferExtension.h */; };
+		5734D72C0F4148BA0092523C /* MutableDataBufferExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5734D7280F4148BA0092523C /* MutableDataBufferExtension.m */; };
+		5734D7430F4178390092523C /* GITTransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 5734D7050F4119690092523C /* GITTransport.h */; };
+		5734D7440F4178390092523C /* GITTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5734D7060F4119690092523C /* GITTransport.m */; };
 		573B49C90EF5A1F90020159D /* assertions.h in Headers */ = {isa = PBXBuildFile; fileRef = 573B49C70EF5A1F90020159D /* assertions.h */; };
 		573B49CA0EF5A1F90020159D /* assertions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49C80EF5A1F90020159D /* assertions.m */; };
 		573B49CB0EF5A1F90020159D /* assertions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49C80EF5A1F90020159D /* assertions.m */; };
@@ -113,6 +120,13 @@
 		573B49D60EF5A2090020159D /* NSError-OBExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49D10EF5A2090020159D /* NSError-OBExtensions.m */; };
 		577AA5A60EF7794E00A0B12B /* GITTestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 577AA5A50EF7794E00A0B12B /* GITTestHelper.m */; };
 		57CFF6A50EC772E700BB4B1E /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212770E179A2C005AC693 /* NSData+Compression.m */; };
+		57D81B2A0F419199002A571C /* NSData+HexDump.h in Headers */ = {isa = PBXBuildFile; fileRef = 57D81B280F419199002A571C /* NSData+HexDump.h */; };
+		57D81B2B0F419199002A571C /* NSData+HexDump.m in Sources */ = {isa = PBXBuildFile; fileRef = 57D81B290F419199002A571C /* NSData+HexDump.m */; };
+		57D81B500F41960D002A571C /* libSSH.dylib in Copy libSSH */ = {isa = PBXBuildFile; fileRef = 31AF01AF0F142F7B00F43D38 /* libSSH.dylib */; };
+		57D81BA80F4216BE002A571C /* GITFetchProcess.h in Headers */ = {isa = PBXBuildFile; fileRef = 57D81BA60F4216BE002A571C /* GITFetchProcess.h */; };
+		57D81BA90F4216BE002A571C /* GITFetchProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 57D81BA70F4216BE002A571C /* GITFetchProcess.m */; };
+		57D81BD20F424E53002A571C /* GITRef.h in Headers */ = {isa = PBXBuildFile; fileRef = 57D81BD00F424E53002A571C /* GITRef.h */; };
+		57D81BD30F424E53002A571C /* GITRef.m in Sources */ = {isa = PBXBuildFile; fileRef = 57D81BD10F424E53002A571C /* GITRef.m */; };
 		57E13E790EECF291003A3761 /* GITErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB1F0A60EC6F2DA006C68D0 /* GITErrors.m */; };
 		57E13E7A0EECF2AA003A3761 /* GITPackStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE329AF0E9BA2F8001E37D5 /* GITPackStore.m */; };
 		57E13E7B0EECF2AA003A3761 /* GITCombinedStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F16B9020EDB595A003CFD93 /* GITCombinedStore.m */; };
@@ -273,6 +287,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		57D81B4F0F41960B002A571C /* Copy libSSH */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = lib;
+			dstSubfolderSpec = 6;
+			files = (
+				57D81B500F41960D002A571C /* libSSH.dylib in Copy libSSH */,
+			);
+			name = "Copy libSSH";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -323,12 +348,24 @@
 		31AF04C40F15710C00F43D38 /* Socket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Socket.m; path = Source/Vendor/SmallSockets/Socket.m; sourceTree = "<group>"; };
 		31AF05410F157C7500F43D38 /* git-remote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "git-remote.m"; path = "Source/Tools/git-remote.m"; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Git_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Git_Prefix.pch; sourceTree = "<group>"; };
+		5734D7050F4119690092523C /* GITTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITTransport.h; sourceTree = "<group>"; };
+		5734D7060F4119690092523C /* GITTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITTransport.m; sourceTree = "<group>"; };
+		5734D7250F4148BA0092523C /* BufferedSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BufferedSocket.h; path = Source/Vendor/SmallSockets/BufferedSocket.h; sourceTree = "<group>"; };
+		5734D7260F4148BA0092523C /* BufferedSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BufferedSocket.m; path = Source/Vendor/SmallSockets/BufferedSocket.m; sourceTree = "<group>"; };
+		5734D7270F4148BA0092523C /* MutableDataBufferExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MutableDataBufferExtension.h; path = Source/Vendor/SmallSockets/MutableDataBufferExtension.h; sourceTree = "<group>"; };
+		5734D7280F4148BA0092523C /* MutableDataBufferExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MutableDataBufferExtension.m; path = Source/Vendor/SmallSockets/MutableDataBufferExtension.m; sourceTree = "<group>"; };
 		573B49C70EF5A1F90020159D /* assertions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = assertions.h; path = Source/assertions.h; sourceTree = "<group>"; };
 		573B49C80EF5A1F90020159D /* assertions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = assertions.m; path = Source/assertions.m; sourceTree = "<group>"; };
 		573B49D00EF5A2090020159D /* NSError-OBExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError-OBExtensions.h"; path = "Source/Categories/NSError-OBExtensions.h"; sourceTree = "<group>"; };
 		573B49D10EF5A2090020159D /* NSError-OBExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError-OBExtensions.m"; path = "Source/Categories/NSError-OBExtensions.m"; sourceTree = "<group>"; };
 		577AA5A50EF7794E00A0B12B /* GITTestHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITTestHelper.m; path = UnitTests/Source/GITTestHelper.m; sourceTree = "<group>"; };
 		57C17FF50EB01E1C00B7AE7E /* GITTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITTestHelper.h; path = UnitTests/Source/GITTestHelper.h; sourceTree = "<group>"; };
+		57D81B280F419199002A571C /* NSData+HexDump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+HexDump.h"; path = "Source/Categories/NSData+HexDump.h"; sourceTree = "<group>"; };
+		57D81B290F419199002A571C /* NSData+HexDump.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+HexDump.m"; path = "Source/Categories/NSData+HexDump.m"; sourceTree = "<group>"; };
+		57D81BA60F4216BE002A571C /* GITFetchProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITFetchProcess.h; sourceTree = "<group>"; };
+		57D81BA70F4216BE002A571C /* GITFetchProcess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITFetchProcess.m; sourceTree = "<group>"; };
+		57D81BD00F424E53002A571C /* GITRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITRef.h; path = Source/GITRef.h; sourceTree = "<group>"; };
+		57D81BD10F424E53002A571C /* GITRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITRef.m; path = Source/GITRef.m; sourceTree = "<group>"; };
 		9F0104990E9997C700A47227 /* GITUtilityBeltTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITUtilityBeltTests.h; path = UnitTests/Source/GITUtilityBeltTests.h; sourceTree = "<group>"; };
 		9F01049A0E9997C700A47227 /* GITUtilityBeltTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITUtilityBeltTests.m; path = UnitTests/Source/GITUtilityBeltTests.m; sourceTree = "<group>"; };
 		9F0862050E20F02E00FD6CF6 /* GITTreeEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITTreeEntry.h; path = Source/Types/GITTreeEntry.h; sourceTree = "<group>"; };
@@ -507,6 +544,8 @@
 				9F33C9EA0E48C5650004CD44 /* GITBranch.m */,
 				9F33C9EE0E48C5650004CD44 /* GITRepo.h */,
 				9F33C9EF0E48C5650004CD44 /* GITRepo.m */,
+				57D81BD00F424E53002A571C /* GITRef.h */,
+				57D81BD10F424E53002A571C /* GITRef.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -608,6 +647,10 @@
 				319B46680F11AF3600336E0A /* GITServer.m */,
 				319B46690F11AF3600336E0A /* GITServerHandler.h */,
 				319B466A0F11AF3600336E0A /* GITServerHandler.m */,
+				5734D7050F4119690092523C /* GITTransport.h */,
+				5734D7060F4119690092523C /* GITTransport.m */,
+				57D81BA60F4216BE002A571C /* GITFetchProcess.h */,
+				57D81BA70F4216BE002A571C /* GITFetchProcess.m */,
 			);
 			name = Network;
 			path = Source/Network;
@@ -671,6 +714,8 @@
 		9F33C9E60E48C4840004CD44 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				57D81B280F419199002A571C /* NSData+HexDump.h */,
+				57D81B290F419199002A571C /* NSData+HexDump.m */,
 				319B466E0F11AF6B00336E0A /* NSFileManager+DirHelper.h */,
 				319B466F0F11AF6B00336E0A /* NSFileManager+DirHelper.m */,
 				573B49D00EF5A2090020159D /* NSError-OBExtensions.h */,
@@ -736,6 +781,10 @@
 		9FCAA5E70F1673330024BEC8 /* SmallSockets */ = {
 			isa = PBXGroup;
 			children = (
+				5734D7250F4148BA0092523C /* BufferedSocket.h */,
+				5734D7260F4148BA0092523C /* BufferedSocket.m */,
+				5734D7270F4148BA0092523C /* MutableDataBufferExtension.h */,
+				5734D7280F4148BA0092523C /* MutableDataBufferExtension.m */,
 				31AF04C10F15710C00F43D38 /* AbstractSocket.h */,
 				31AF04C20F15710C00F43D38 /* AbstractSocket.m */,
 				31AF04C30F15710C00F43D38 /* Socket.h */,
@@ -936,6 +985,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5734D7430F4178390092523C /* GITTransport.h in Headers */,
 				31AF02C40F1437C200F43D38 /* SSHConnection.h in Headers */,
 				31AF04740F147E2000F43D38 /* GITClient.h in Headers */,
 				31AF04750F147E2000F43D38 /* GITServer.h in Headers */,
@@ -972,6 +1022,11 @@
 				9F37E6A40F1131EA00704E4E /* Git.h in Headers */,
 				31AF04C50F15710C00F43D38 /* AbstractSocket.h in Headers */,
 				31AF04C70F15710C00F43D38 /* Socket.h in Headers */,
+				5734D7290F4148BA0092523C /* BufferedSocket.h in Headers */,
+				5734D72B0F4148BA0092523C /* MutableDataBufferExtension.h in Headers */,
+				57D81B2A0F419199002A571C /* NSData+HexDump.h in Headers */,
+				57D81BA80F4216BE002A571C /* GITFetchProcess.h in Headers */,
+				57D81BD20F424E53002A571C /* GITRef.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1052,6 +1107,7 @@
 				9F3694120EACF05500E6777B /* Headers */,
 				9F3694140EACF05500E6777B /* Sources */,
 				9F3694150EACF05500E6777B /* Frameworks */,
+				57D81B4F0F41960B002A571C /* Copy libSSH */,
 			);
 			buildRules = (
 			);
@@ -1254,6 +1310,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5734D7440F4178390092523C /* GITTransport.m in Sources */,
 				31AF02C50F1437C200F43D38 /* SSHConnection.m in Sources */,
 				57E13E7F0EECF2D5003A3761 /* GITPackIndex.m in Sources */,
 				57E13E800EECF2D5003A3761 /* GITPlaceholderPackIndex.m in Sources */,
@@ -1289,6 +1346,11 @@
 				573B49D30EF5A2090020159D /* NSError-OBExtensions.m in Sources */,
 				31AF04C60F15710C00F43D38 /* AbstractSocket.m in Sources */,
 				31AF04C80F15710C00F43D38 /* Socket.m in Sources */,
+				5734D72A0F4148BA0092523C /* BufferedSocket.m in Sources */,
+				5734D72C0F4148BA0092523C /* MutableDataBufferExtension.m in Sources */,
+				57D81B2B0F419199002A571C /* NSData+HexDump.m in Sources */,
+				57D81BA90F4216BE002A571C /* GITFetchProcess.m in Sources */,
+				57D81BD30F424E53002A571C /* GITRef.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1374,6 +1436,7 @@
 				573B49D60EF5A2090020159D /* NSError-OBExtensions.m in Sources */,
 				577AA5A60EF7794E00A0B12B /* GITTestHelper.m in Sources */,
 				9FD0D6AE0F063C3F00813238 /* GITCombinedStoreTests.m in Sources */,
+				5734D7070F4119690092523C /* GITTransport.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1503,13 +1566,13 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_PREFIX = "";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				INSTALL_PATH = "@executable_path";
+				INSTALL_PATH = "@loader_path/lib";
 				PREBINDING = NO;
 				PRODUCT_NAME = SSH;
 			};
@@ -1519,10 +1582,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_PREFIX = "";
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
-				INSTALL_PATH = /usr/local/lib;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				INSTALL_PATH = "@loader_path/lib";
 				PREBINDING = NO;
 				PRODUCT_NAME = libSSH;
 			};
@@ -1534,10 +1598,11 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_PREFIX = "";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
-				INSTALL_PATH = /usr/local/lib;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				INSTALL_PATH = "@loader_path/lib";
 				PREBINDING = NO;
 				PRODUCT_NAME = libSSH;
 				ZERO_LINK = NO;
@@ -1548,10 +1613,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_PREFIX = "";
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
-				INSTALL_PATH = /usr/local/lib;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				INSTALL_PATH = "@loader_path/lib";
 				PREBINDING = NO;
 				PRODUCT_NAME = libSSH;
 			};
@@ -1674,7 +1740,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Foundation.framework/Headers/Foundation.h";
 				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "@executable_path";
+				INSTALL_PATH = "@rpath";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/lib @loader_path";
 				OTHER_LDFLAGS = (
 					"-lcrypto",
 					"-lssl",
@@ -1701,7 +1768,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				INSTALL_PATH = "@rpath";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/lib @loader_path";
 				OTHER_LDFLAGS = (
 					"-lcrypto",
 					"-lssl",
@@ -1881,7 +1949,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Foundation.framework/Headers/Foundation.h";
 				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "@executable_path";
+				INSTALL_PATH = "@rpath";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/lib @loader_path";
 				OTHER_LDFLAGS = (
 					"-lcrypto",
 					"-lssl",
@@ -2014,7 +2083,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				INSTALL_PATH = "@rpath";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/lib @loader_path";
 				OTHER_LDFLAGS = (
 					"-lcrypto",
 					"-lssl",
