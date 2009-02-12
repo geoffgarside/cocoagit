@@ -48,7 +48,7 @@
             ("-isysroot /Developer/SDKs/MacOSX10.4u.sdk"))
            (else "")))
 
-(set @cflags "-Wall -g -O2 -DDARWIN -DMACOSX #{@sdk} -std=gnu99 #{include_dirs}")
+(set @cflags "-Wall -Wno-pointer-sign -g -O2 -DDARWIN -DMACOSX #{@sdk} -std=gnu99 #{include_dirs}")
 (set @mflags "-fobjc-exceptions -fobjc-gc")
 (set @ldflags "-framework Foundation -lssl -lcrypto -lz")
 
