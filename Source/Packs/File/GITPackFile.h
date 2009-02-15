@@ -78,6 +78,30 @@
  */
 - (id)initWithPath:(NSString*)path error:(NSError **)error;
 
+/*! Creates and returns a new PACK object from the specified <tt>data</tt>.
+ * \param packData NSData containing packed objects
+ * \param[out] error NSError object containing any errors, pass NULL if you don't care
+ * \return A new PACK object
+ * \internal
+ * Subclasses must override this method, failure to do so will result in
+ * an error. The overriding implementation should not call this implementation
+ * as part of itself. Instead it is recommended to use [super init] instead.
+ */
+- (id)initWithData:(NSData *)packData error:(NSError **)error;
+
+/*! Creates and returns a new PACK object at the specified <tt>path</tt>
+ *  with a corresponding index file at the specified indexPath.
+ * \param path Path of the PACK file in the repository
+ * \param idxPath Path of the index file for this PACK file in the repository
+ * \param[out] error NSError object containing any errors, pass NULL if you don't care
+ * \return A new PACK object
+ * \internal
+ * Subclasses must override this method, failure to do so will result in
+ * an error. The overriding implementation should not call this implementation
+ * as part of itself. Instead it is recommended to use [super init] instead.
+ */
+- (id)initWithPath:(NSString*)path indexPath:(NSString *)idxPath error:(NSError **)error;
+
 /*! Returns the data for the object specified by the given <tt>sha1</tt>.
  * The <tt>sha1</tt> will first be checked to see if it exists
  * \param sha1 The SHA1 of the object to retrieve the data for.

@@ -60,39 +60,59 @@ enum {
 {
     return 2;
 }
-- (id)initWithPath:(NSString*)thePath error:(NSError **)error
+- (id)initWithData:(NSData *)packData error:(NSError **)error;
 {
     if (! [super init])
         return nil;
-
-    self.path = thePath;
-    self.data = [NSData dataWithContentsOfFile:thePath
-                                       options:NSUncachedRead
-                                         error:error];
-    if (!data) {
+    
+    if (!packData) {
         [self release];
         return nil;
     }
-
+    
+    [self setData:packData];
+    
     // Verify the data checksum
     if (! [self verifyChecksum]) {
         NSString * errDesc = NSLocalizedString(@"PACK file checksum failed", @"GITErrorPackFileChecksumMismatch");
-        GITErrorWithInfo(error, GITErrorPackFileChecksumMismatch, errDesc, NSLocalizedDescriptionKey, thePath, NSFilePathErrorKey, nil);
+        GITErrorWithInfo(error, GITErrorPackFileChecksumMismatch, errDesc, NSLocalizedDescriptionKey, nil);
         [self release];
         return nil;
     }
-
-    // initialize the index file
-    NSString * idxPath = [[thePath stringByDeletingPathExtension]
-                          stringByAppendingPathExtension:@"idx"];
-    self.index  = [GITPackIndex packIndexWithPath:idxPath error:error];
-    if (!index) {
-        [self release];
-        return nil;
-    }
-
+        
     return self;
 }
+
+- (id)initWithPath:(NSString*)thePath indexPath:(NSString *)idxPath error:(NSError **)error;
+{
+    NSData *packData = [NSData dataWithContentsOfFile:thePath
+                                              options:NSUncachedRead
+                                                error:error];
+    
+    if (! packData)
+        return nil;
+    
+    if (! [self initWithData:packData error:error])
+        return nil;
+    
+    self.path = thePath;
+    self.index  = [GITPackIndex packIndexWithPath:idxPath error:error];
+    
+    if (! index) {
+        [self release];
+        return nil;
+    }
+    
+    return self;
+}
+
+- (id)initWithPath:(NSString*)thePath error:(NSError **)error
+{
+    NSString * idxPath = [[thePath stringByDeletingPathExtension]
+                          stringByAppendingPathExtension:@"idx"];
+    return [self initWithPath:thePath indexPath:idxPath error:error];
+}
+
 - (NSUInteger)numberOfObjects
 {
     if (!numberOfObjects)
@@ -109,6 +129,8 @@ enum {
     // to test for hasObjectWithSha1 then packOffsetForSha1 > 0
     // then we can simply change the implementation in GITPackIndex.
     if (![self hasObjectWithSha1:sha1]) return nil;
+    
+    if (! self.index) return nil;
 
     NSUInteger offset = [self.index packOffsetForSha1:sha1];
     NSData * raw = [self objectAtOffset:offset];
@@ -119,6 +141,11 @@ enum {
 {
     uint8_t buf = 0x0;    // a single byte buffer
     NSUInteger size, type, shift = 4;
+    
+    if (! self.index) {
+        GITError(error, GITErrorPackIndexNotAvailable, @"This packfile is not indexed");
+    }
+    
     NSUInteger offset = [self.index packOffsetForSha1:sha1 error:error];
 
     if (offset == NSNotFound)
@@ -148,7 +175,7 @@ enum {
 			objData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
 			break;
 		case kGITPackFileTypeDeltaOfs:
-			NSAssert(NO, @"Cannot handle Delta Object types yet");
+			NSAssert(NO, @"Cannot handle Delta-Offset Object types yet");
 			break;
         case kGITPackFileTypeDeltaRefs:
         {

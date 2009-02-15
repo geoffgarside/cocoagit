@@ -61,6 +61,21 @@
     [self release];
     return nil;
 }
+
+- (id)initWithPath:(NSString*)path indexPath:(NSString *)idxPath error:(NSError **)error;
+{
+    [self doesNotRecognizeSelector: _cmd];
+    [self release];
+    return nil;
+}
+
+- (id)initWithData:(NSData *)packData error:(NSError **)error;
+{
+    [self doesNotRecognizeSelector: _cmd];
+    [self release];
+    return nil;
+}
+
 - (NSData*)dataForObjectWithSha1:(NSString*)sha1
 {
     [self doesNotRecognizeSelector: _cmd];
