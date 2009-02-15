@@ -15,9 +15,11 @@
 
 NSString * const SSHUserDirectory = @".ssh";
 NSString * const SSHUserPublicKeyFileKey = @"SSHUserPublicKeyFile";
-NSString * const SSHUserPublicKeyFile = @"id_rsa.pub";
+NSString * const SSHUserRSAPublicKeyFile = @"id_rsa.pub";
+NSString * const SSHUserDSAPublicKeyFile = @"id_dsa.pub";
 NSString * const SSHUserPrivateKeyFileKey = @"SSHUserPrivateKeyFile";
-NSString * const SSHUserPrivateKeyFile = @"id_rsa";
+NSString * const SSHUserRSAPrivateKeyFile = @"id_rsa";
+NSString * const SSHUserDSAPrivateKeyFile = @"id_dsa";
 
 @implementation SSHSession
 @synthesize config;
@@ -53,13 +55,23 @@ NSString * const SSHUserPrivateKeyFile = @"id_rsa";
     [super finalize];
 }
 
-- (NSDictionary *) defaultConfiguration;
+- (NSDictionary *) configurationWithSshDir:(NSString *)sshDir publicKey:(NSString *)publicKey privateKey:(NSString *)privateKey;
 {
     return [NSDictionary dictionaryWithObjectsAndKeys:
-            [[NSHomeDirectory() stringByAppendingPathComponent:SSHUserDirectory] stringByAppendingPathComponent:SSHUserPublicKeyFile],
+            [sshDir stringByAppendingPathComponent:publicKey],
             SSHUserPublicKeyFileKey,
-            [[NSHomeDirectory() stringByAppendingPathComponent:SSHUserDirectory] stringByAppendingPathComponent:SSHUserPrivateKeyFile],
+            [sshDir stringByAppendingPathComponent:privateKey],
             SSHUserPrivateKeyFileKey, nil];
+}
+
+- (NSDictionary *) configurationWithPublicKey:(NSString *)publicKey privateKey:(NSString *)privateKey;
+{
+    return [self configurationWithSshDir:[NSHomeDirectory() stringByAppendingPathComponent:SSHUserDirectory] publicKey:publicKey privateKey:privateKey];
+}
+
+- (NSDictionary *) defaultConfiguration;
+{
+    return [self configurationWithPublicKey:SSHUserRSAPublicKeyFile privateKey:SSHUserRSAPublicKeyFile];
 }
 
 // connection helper
@@ -107,6 +119,13 @@ NSString * const SSHUserPrivateKeyFile = @"id_rsa";
     return YES;
 }
 
+- (NSString *)authenticationTypesWithUser:(NSString *)username;
+{
+    char *auth_list = libssh2_userauth_list(session, [username UTF8String], [username length]);
+    return [NSString stringWithCString:auth_list length:strlen(auth_list)];
+}
+
+
 - (BOOL) authenticateUser:(NSString *)username password:(NSString *)password;
 {
     // authenticate    
@@ -116,12 +135,18 @@ NSString * const SSHUserPrivateKeyFile = @"id_rsa";
         //return [SSHConnection makeErrorWithCode:SSHCONNECTION_ERROR_AUTH message:@"Authentication failed."];
         return NO;
 	}
-    NSLog(@"user %@ authenticated", username);
+    // NSLog(@"user %@ authenticated", username);
     return YES;
 }
 
 - (BOOL) authenticateUser:(NSString *)username;
 {
+    // try RSA key
+    if ([self authenticateUser:username publicKeyFile:[config valueForKey:SSHUserPublicKeyFileKey] privateKeyFile:[config valueForKey:SSHUserPrivateKeyFileKey] password:nil])
+        return YES;
+    
+    // try DSA key
+    [self setConfig:[self configurationWithPublicKey:SSHUserDSAPublicKeyFile privateKey:SSHUserDSAPrivateKeyFile]];
     return [self authenticateUser:username publicKeyFile:[config valueForKey:SSHUserPublicKeyFileKey] privateKeyFile:[config valueForKey:SSHUserPrivateKeyFileKey] password:nil];
 }
 
@@ -134,12 +159,9 @@ NSString * const SSHUserPrivateKeyFile = @"id_rsa";
     int status = libssh2_userauth_publickey_fromfile(session, [username UTF8String], [publicKeyFile UTF8String], [privateKeyFile UTF8String], passPhrase);
     
     if (status != 0) {
-        // cleanup?
-        [self disconnect];
         return NO;
     }
     
-    NSLog(@"user %@ authenticated", username);
     return YES;
 }
 
@@ -162,7 +184,7 @@ NSString * const SSHUserPrivateKeyFile = @"id_rsa";
     if (session) {
         libssh2_session_disconnect(session, "SSHSession: Normal Shutdown");
         libssh2_session_free(session);
-        session = nil;
+        session = NULL;
     }
 
     if (native != -1) {

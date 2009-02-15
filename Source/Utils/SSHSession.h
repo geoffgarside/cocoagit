@@ -22,14 +22,20 @@ extern NSString * const SSHUserPrivateKeyFile;
     NSDictionary *config;
 }
 @property (readwrite, copy) NSDictionary *config;
-- (NSDictionary *) defaultConfiguration;
 
 + (id) sessionToHost:(NSString *)aHost port:(unsigned short)aPort error:(NSError **)error;
 
 - (id) initWithSocket:(NSSocketNativeHandle)sock;
+- (BOOL) start:(NSError **) error;
 - (BOOL) disconnect;
 
+// configuration - mainly for public-key auth right now
+- (NSDictionary *) configurationWithSshDir:(NSString *)sshDir publicKey:(NSString *)publicKey privateKey:(NSString *)privateKey;
+- (NSDictionary *) configurationWithPublicKey:(NSString *)publicKey privateKey:(NSString *)privateKey;
+- (NSDictionary *) defaultConfiguration;
+
 // authentication
+- (NSString *)authenticationTypesWithUser:(NSString *)username;
 - (BOOL) authenticateUser:(NSString *)username password:(NSString *)password;
 - (BOOL) authenticateUser:(NSString *)username publicKeyFile:(NSString *)publicKeyFile privateKeyFile:(NSString *)privateKeyFile password:(NSString *)password;
 - (BOOL) authenticateUser:(NSString *)username;
