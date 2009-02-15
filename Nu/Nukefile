@@ -30,8 +30,7 @@
 (set @framework_creator_code "????")
 (set @framework_install_path "@loader_path/../Frameworks")
 
-;(set @public_headers (filelist "^Source/Discount.h$"))
-;(@public_headers unionSet:(filelist "^src/#{@framework}.h"))
+(set @public_headers (filelistWithRoot "^Source/GITRepo.h" ".."))
 
 (set source_files ((NSFileManager defaultManager) subpathsAtPath:"./Source"))
 (set source_dirs (NSSet setWithArray:
@@ -48,35 +47,12 @@
             ("-isysroot /Developer/SDKs/MacOSX10.4u.sdk"))
            (else "")))
 
-(set @cflags "-Wall -Wno-pointer-sign -g -O2 -DDARWIN -DMACOSX #{@sdk} -std=gnu99 #{include_dirs}")
+(set @cflags "-Wall -g -O2 -DDARWIN -DMACOSX #{@sdk} -std=gnu99 #{include_dirs}")
 (set @mflags "-fobjc-exceptions -fobjc-gc")
 (set @ldflags "-framework Foundation -lssl -lcrypto -lz")
 
 (compilation-tasks)
 (framework-tasks)
-
-; ;; build 'markdown' command line utility
-; (set discount_binary "markdown")
-; (set discount_thin_binaries (NSMutableArray array))
-; (@arch each:
-;        (do (architecture)
-;            (set discount_thin_binary "build/#{architecture}/#{discount_binary}")
-;            (discount_thin_binaries addObject:discount_thin_binary)
-;            (ifDarwin
-;                     (then
-;                          (file discount_thin_binary => "framework" "build/#{architecture}/discount-main.o" is
-;                                (SH "#{@cc} #{@cflags} #{@mflags} -arch #{architecture} -c -o build/#{architecture}/discount-main.o src/cli/discount-main.m")
-;                                (SH "#{@cc} build/#{architecture}/*.o #{@cflags} #{@mflags} -arch #{architecture} #{@ldflags} -o #{(target name)}")))
-;                     (else
-;                          (file discount_thin_binary => "dylib" (@c_objects objectForKey:architecture) (@m_objects objectForKey:architecture) is
-;                                (SH "#{@cc} #{@cflags} #{@mflags} src/cli/discount-main.m #{@library_executable_name} #{@ldflags} -o #{(target name)}"))))))
-;
-; (file discount_binary => "framework" discount_thin_binaries is
-;       (ifDarwin
-;                (then (SH "lipo -create #{(discount_thin_binaries join)} -output #{(target name)}"))
-;                (else (SH "cp '#{(discount_thin_binaries objectAtIndex:0)}' '#{(target name)}'"))))
-;
-; (task "binary" => discount_binary)
 
 ;; Standard tasks
 (task "clobber" => "clean" is
