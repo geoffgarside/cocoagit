@@ -40,6 +40,7 @@ __git_error(GITErrorObjectStoreNotAccessible);
 __git_error(GITErrorPackIndexUnsupportedVersion);
 __git_error(GITErrorPackIndexCorrupted);
 __git_error(GITErrorPackIndexChecksumMismatch);
+__git_error(GITErrorPackIndexNotAvailable);
 __git_error(GITErrorPackFileInvalid);
 __git_error(GITErrorPackFileNotSupported);
 __git_error(GITErrorPackFileChecksumMismatch);
