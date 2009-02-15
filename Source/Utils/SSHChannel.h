@@ -18,7 +18,7 @@ extern const NSUInteger SSHChannelDefaultReadBufferSize;
     void *readBuffer;
     
     NSMutableData *buffer;
-    NSError **channelError;
+    NSError *channelError;
 }
 
 - (id) initWithSession:(LIBSSH2_SESSION *)sshSession;

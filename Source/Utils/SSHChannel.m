@@ -17,6 +17,8 @@ const NSUInteger SSHChannelDefaultReadBufferSize = 4096;
 @interface SSHChannel ()
 - (CFIndex) _readData:(NSMutableData *)data;
 - (void) allocReadBuffer;
+- (void) deallocReadBuffer;
+- (void) clearChannelError;
 @end
 
 @implementation SSHChannel
@@ -36,9 +38,7 @@ const NSUInteger SSHChannelDefaultReadBufferSize = 4096;
         return nil;
 
     channel = sshChannel;
-    channelError = NULL;
     
-    readBuffer = NULL;
     readBufferSize = SSHChannelDefaultReadBufferSize;
     [self allocReadBuffer];
     
@@ -51,34 +51,31 @@ const NSUInteger SSHChannelDefaultReadBufferSize = 4096;
 {
     [self close];
     [buffer release], buffer = nil;
-    if ( readBuffer ) {
-        free(readBuffer);
-        readBuffer = NULL;
-    }
-    if (channelError)
-        channelError = NULL;
+    [self clearChannelError];
+    [self deallocReadBuffer];
     [super dealloc];
 }
 
 - (void) finalize;
 {
     [self close];
-    if ( readBuffer ) {
-        free(readBuffer);
-        readBuffer = NULL;
-    }
+    [self deallocReadBuffer];
     [super finalize];
 }
 
-- (void)allocReadBuffer;
-//
-// Internal utility function.  You should not call this from client code.
-//
+- (void) allocReadBuffer;
 {
-    // Allocate readBuffer
     if ( readBuffer == NULL ) {
         readBuffer = malloc(readBufferSize);
         NSAssert(readBuffer != NULL, @"Could not allocate internal READ buffer");
+    }
+}
+
+- (void) deallocReadBuffer;
+{
+    if ( readBuffer != NULL ) {
+        free(readBuffer);
+        readBuffer = NULL;
     }
 }
 
@@ -99,11 +96,13 @@ const NSUInteger SSHChannelDefaultReadBufferSize = 4096;
 - (BOOL) execCommand:(NSString *)command;
 {
     int status;
+    [self clearChannelError];
+
     while ((status = libssh2_channel_exec(channel,[command UTF8String])) == LIBSSH2_ERROR_EAGAIN);
     
     if (status < 0) {
         NSString *errorDescription = libssh2ErrorDescription(channel->session, @"Exec Command: '%@' failed.");
-        SSHErrorWithDescription(channelError, SSHErrorChannel, errorDescription, command);
+        SSHErrorWithDescription(&channelError, SSHErrorChannel, errorDescription, command);
         return NO;
     }
     return YES;
@@ -116,6 +115,7 @@ const NSUInteger SSHChannelDefaultReadBufferSize = 4096;
     CFIndex count = 0;
     count = libssh2_channel_read(channel, (char *)readBuffer, readBufferSize);
     
+    [self clearChannelError];
     if (count > 0) {    
         [data appendBytes:readBuffer length:count];
     } else if (count == 0) {
@@ -124,7 +124,7 @@ const NSUInteger SSHChannelDefaultReadBufferSize = 4096;
         if (count == LIBSSH2_ERROR_EAGAIN) {
             count = 0;
         } else {
-            SSHErrorWithDescription(channelError, SSHErrorChannel, libssh2ErrorDescription(channel->session, @"Error reading data."));
+            SSHErrorWithDescription(&channelError, SSHErrorChannel, libssh2ErrorDescription(channel->session, @"Error reading data."));
         }
     }
     
@@ -174,12 +174,13 @@ const NSUInteger SSHChannelDefaultReadBufferSize = 4096;
     const char* buf = [d bytes];    
     CFIndex len = [data length];
     CFIndex sent;
-        
+    
+    [self clearChannelError];
     while (len > 0) {
-        /* write data in a loop until we block */
+        /* write data in a loop until we (would) block */
         while ((sent = libssh2_channel_write(channel, buf, len)) == LIBSSH2_ERROR_EAGAIN);
         if (sent < 0) {
-            SSHErrorWithDescription(channelError, SSHErrorChannel, libssh2ErrorDescription(channel->session, @"Error writing data."));
+            SSHErrorWithDescription(&channelError, SSHErrorChannel, libssh2ErrorDescription(channel->session, @"Error writing data."));
             [d release];
             return;
         }
@@ -194,12 +195,17 @@ const NSUInteger SSHChannelDefaultReadBufferSize = 4096;
     while (libssh2_channel_send_eof(channel) == LIBSSH2_ERROR_EAGAIN);
 }
 
+- (void) clearChannelError;
+{
+    [channelError release], channelError = nil;
+}
+
 - (NSError *) channelError;
 {
     if (! channelError)
         return nil;
     
-    return [[*channelError copy] autorelease];
+    return [[channelError copy] autorelease];
 }
 
 @end
