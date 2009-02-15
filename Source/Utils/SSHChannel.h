@@ -33,6 +33,12 @@ extern const NSUInteger SSHChannelDefaultReadBufferSize;
 - (void) sendEOF; // send channel EOF
 - (void) close;
 
+- (BOOL) isConnected;
+
 // error accessor
 - (NSError *)channelError;
+
+// read-only copy of buffer
+- (NSData *) buffer;
+
 @end

@@ -9,6 +9,7 @@
 #import "SSHChannel.h"
 #import "SSHError.h"
 #import "MutableDataBufferExtension.h"
+#import "NSData+HexDump.h"
 #import "libssh2_priv.h"
 
 const NSUInteger SSHChannelDefaultReadBufferSize = 4096;
@@ -81,6 +82,11 @@ const NSUInteger SSHChannelDefaultReadBufferSize = 4096;
     }
 }
 
+- (BOOL) isConnected;
+{
+    return (channel != NULL && libssh2_channel_eof(channel) == 0);
+}
+
 - (void) close;
 {
     if (channel) {
@@ -125,6 +131,11 @@ const NSUInteger SSHChannelDefaultReadBufferSize = 4096;
     return count;
 }
 
+- (NSData *) buffer;
+{
+    return [[buffer copy] autorelease];
+}
+
 - (NSMutableData *) readData:(CFIndex)n;
 {
     while ([buffer length] < n) {
@@ -163,19 +174,15 @@ const NSUInteger SSHChannelDefaultReadBufferSize = 4096;
     const char* buf = [d bytes];    
     CFIndex len = [data length];
     CFIndex sent;
-    
-    int wc = 0;
-    
+        
     while (len > 0) {
         /* write data in a loop until we block */
         while ((sent = libssh2_channel_write(channel, buf, len)) == LIBSSH2_ERROR_EAGAIN);
         if (sent < 0) {
             SSHErrorWithDescription(channelError, SSHErrorChannel, libssh2ErrorDescription(channel->session, @"Error writing data."));
-            NSLog(@"ERROR %d\n", sent);
             [d release];
             return;
         }
-        NSLog(@"wrote %d bytes\n", wc);
         buf += sent;
         len -= sent;
     }
