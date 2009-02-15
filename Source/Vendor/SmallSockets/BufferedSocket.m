@@ -46,7 +46,6 @@
     return [[[BufferedSocket alloc] init] autorelease];
 }
 
-
 - (id)init
 //
 // Designated initializer
@@ -120,6 +119,10 @@
 					remoteAddress:&acceptAddr] autorelease];
 }
 
+- (NSData *)buffer;
+{
+    return [[buffer copy] autorelease];
+}
 
 - (NSMutableData*)readData:(int)n
 {

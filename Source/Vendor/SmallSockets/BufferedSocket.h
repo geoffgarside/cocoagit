@@ -72,4 +72,8 @@
 - (NSMutableData*)readDataUpToData:(NSData*) d;
 - (NSMutableData*)readDataUpToString:(NSString*) s;
 
+// read-only copy of buffer
+
+- (NSData *) buffer;
+
 @end
