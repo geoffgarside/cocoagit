@@ -27,7 +27,6 @@ NSString * const GITTransportClosed = @"GITTransportClosed";
 - (NSDictionary *) readPackHeader;
 - (NSData *) unpackObjectWithSize:(int)size compressedSize:(int *)cSize compressedData:(NSData **)cData;
 - (NSData *) unpackDeltaObjectWithSize:(NSUInteger)size type:(NSUInteger)type compressedData:(NSData **)cData;
-
 @end
 
 
@@ -86,7 +85,6 @@ NSString * const GITTransportClosed = @"GITTransportClosed";
 
 - (void) disconnect;
 {
-    NSLog(@"GITTransport -dealloc");
     if ([[self connection] isConnected])
         [[self connection] close];
 }
@@ -121,11 +119,6 @@ NSString * const GITTransportClosed = @"GITTransportClosed";
     }
     
     NSMutableData *packetData = [[self connection] readData:(int)len-4];
-    
-    // check for capabilities
-    
-    
-    //NSLog(@"readPacket: len = %d, data:\n%@", len, [packetLen hexdump]);
     return [NSData dataWithData:packetData];
 }
 
@@ -140,9 +133,7 @@ NSString * const GITTransportClosed = @"GITTransportClosed";
 - (NSData *) packetByRemovingCapabilitiesFromPacket:(NSData *)data;
 {
     NSRange refRange = [data rangeOfNullTerminatedBytesFrom:0];
-    
-    // NSLog(@"refRange: %d %d", refRange.location, refRange.length);
-    
+        
     if (refRange.location == NSNotFound)
         return data;
     
@@ -171,7 +162,7 @@ NSString * const GITTransportClosed = @"GITTransportClosed";
     NSString *capabilities = [self capabilitiesWithPacket:packetData];
     if (capabilities) {
         packetData = [packetData subdataToIndex:([packetData length] - [capabilities length] - 1)];
-        NSLog(@"capabilities: %@", capabilities);
+        NSLog(@"remote capabilities: %@", capabilities);
     }
         
     while (packetData && [packetData length] > 0) {
@@ -191,7 +182,6 @@ NSString * const GITTransportClosed = @"GITTransportClosed";
 
 - (void) writePacket:(NSData *)thePacket;
 {
-    NSLog(@"-writePacket:\n%@", [thePacket hexdump]);
     [[self connection] writeData:thePacket];
 }
 
@@ -284,7 +274,6 @@ NSString * const GITTransportClosed = @"GITTransportClosed";
     NSData *checksum = [[self connection] readData:20];
     NSLog(@"checksum:\n%@", [checksum hexdump]);
     [packData appendData:checksum];
-    //[packData appendData:[self readPacket]];
     
     NSData *packfile = [NSData dataWithData:packData];
     [packData release];
