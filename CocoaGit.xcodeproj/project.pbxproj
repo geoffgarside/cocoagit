@@ -128,6 +128,8 @@
 		578097EC0F44AD270027B945 /* sftp.c in Sources */ = {isa = PBXBuildFile; fileRef = 578097D60F44AD270027B945 /* sftp.c */; };
 		578097ED0F44AD270027B945 /* transport.c in Sources */ = {isa = PBXBuildFile; fileRef = 578097D70F44AD270027B945 /* transport.c */; };
 		578097EE0F44AD270027B945 /* userauth.c in Sources */ = {isa = PBXBuildFile; fileRef = 578097D80F44AD270027B945 /* userauth.c */; };
+		578098230F44B6C30027B945 /* GITSshTransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 578098210F44B6C30027B945 /* GITSshTransport.h */; };
+		578098240F44B6C30027B945 /* GITSshTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 578098220F44B6C30027B945 /* GITSshTransport.m */; };
 		57CFF6A50EC772E700BB4B1E /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212770E179A2C005AC693 /* NSData+Compression.m */; };
 		57D81B2A0F419199002A571C /* NSData+HexDump.h in Headers */ = {isa = PBXBuildFile; fileRef = 57D81B280F419199002A571C /* NSData+HexDump.h */; };
 		57D81B2B0F419199002A571C /* NSData+HexDump.m in Sources */ = {isa = PBXBuildFile; fileRef = 57D81B290F419199002A571C /* NSData+HexDump.m */; };
@@ -378,6 +380,8 @@
 		578097D60F44AD270027B945 /* sftp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sftp.c; sourceTree = "<group>"; };
 		578097D70F44AD270027B945 /* transport.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = transport.c; sourceTree = "<group>"; };
 		578097D80F44AD270027B945 /* userauth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = userauth.c; sourceTree = "<group>"; };
+		578098210F44B6C30027B945 /* GITSshTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITSshTransport.h; sourceTree = "<group>"; };
+		578098220F44B6C30027B945 /* GITSshTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITSshTransport.m; sourceTree = "<group>"; };
 		57C17FF50EB01E1C00B7AE7E /* GITTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITTestHelper.h; path = UnitTests/Source/GITTestHelper.h; sourceTree = "<group>"; };
 		57D81B280F419199002A571C /* NSData+HexDump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+HexDump.h"; path = "Source/Categories/NSData+HexDump.h"; sourceTree = "<group>"; };
 		57D81B290F419199002A571C /* NSData+HexDump.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+HexDump.m"; path = "Source/Categories/NSData+HexDump.m"; sourceTree = "<group>"; };
@@ -671,6 +675,8 @@
 				5734D7060F4119690092523C /* GITTransport.m */,
 				57D81BA60F4216BE002A571C /* GITFetchProcess.h */,
 				57D81BA70F4216BE002A571C /* GITFetchProcess.m */,
+				578098210F44B6C30027B945 /* GITSshTransport.h */,
+				578098220F44B6C30027B945 /* GITSshTransport.m */,
 			);
 			name = Network;
 			path = Source/Network;
@@ -1068,6 +1074,7 @@
 				5780978A0F44AC0F0027B945 /* SSHChannel.h in Headers */,
 				5780978C0F44AC0F0027B945 /* SSHError.h in Headers */,
 				5780978E0F44AC0F0027B945 /* SSHSession.h in Headers */,
+				578098230F44B6C30027B945 /* GITSshTransport.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1398,6 +1405,7 @@
 				5780978B0F44AC0F0027B945 /* SSHChannel.m in Sources */,
 				5780978D0F44AC0F0027B945 /* SSHError.m in Sources */,
 				5780978F0F44AC0F0027B945 /* SSHSession.m in Sources */,
+				578098240F44B6C30027B945 /* GITSshTransport.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
