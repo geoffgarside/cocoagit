@@ -308,7 +308,8 @@ NSString * const GITTransportClosed = @"GITTransportClosed";
         shift += 7;
 	}
     
-    //NSLog(@"readObject: type => %d, size => %d", type, size);
+    // NSLog(@"-readObject: type => %d, size => %d", type, size);
+    // NSLog(@"  header: %d bytes", [packData length]);
     
     // In each case, we throw away the unpacked object data
     // and just collect the compressed packdata.
@@ -352,18 +353,20 @@ NSString * const GITTransportClosed = @"GITTransportClosed";
     if (type == kGITPackFileTypeDeltaRefs) {
         [deltaData appendData:[[self connection] readData:20]];
     } else if (type == kGITPackFileTypeDeltaOfs) {        
-        NSUInteger used = 0;
+        // TODO: This is currently broken.  I'm not sure I fully understand Delta Offsets yet
         NSMutableData *buf = [[self connection] readData:1];
         [deltaData appendData:buf];
         uint8_t *data = [buf mutableBytes];
-        uint8_t c = data[used++] & 0xff;
+        uint8_t c = data[0] & 0xff;
         
         // from jgit: IndexPack.java
         while ((c & 128) != 0) {
             buf = [[self connection] readData:1];
+            data = [buf mutableBytes];
             [deltaData appendData:buf];
-            c = data[used++] && 0xff;
+            c = data[0] && 0xff;
         }
+        NSLog(@"  delta object, c = %d, read %d bytes", c, [deltaData length]);
     } else {
         NSAssert(NO, @"Bad Object");
     }
@@ -384,6 +387,7 @@ NSString * const GITTransportClosed = @"GITTransportClosed";
     NSMutableData *compressed;
     NSMutableData *readCompressed = [NSMutableData dataWithCapacity:size];
     NSMutableData *decompressed = [NSMutableData dataWithLength:size];
+    uint8_t *decompressedBytes = [decompressed mutableBytes];
     BOOL done = NO;
 	int zstatus;
 	
@@ -403,16 +407,17 @@ NSString * const GITTransportClosed = @"GITTransportClosed";
 	while (!done)
 	{
 		// Make sure we have enough room and reset the lengths.
-		if (strm.total_out >= [decompressed length])
+		if (strm.total_out >= [decompressed length]) {
 			[decompressed increaseLengthBy:100];
-		strm.next_out = [decompressed mutableBytes] + strm.total_out;
+        }
+		strm.next_out = decompressedBytes + strm.total_out;
 		strm.avail_out = [decompressed length] - strm.total_out;
 		
 		// Inflate another chunk.
 		zstatus = inflate (&strm, Z_SYNC_FLUSH);
 		if (zstatus == Z_STREAM_END) done = YES;
 		else if (zstatus != Z_OK) {
-			NSLog(@"status for break: %d", zstatus);
+			NSLog(@"status for break: %d, next_out = %x, avail_out = %d, total = %d", zstatus, strm.next_out, strm.avail_out, strm.total_out);
 			break;
 		}
 		
@@ -425,13 +430,15 @@ NSString * const GITTransportClosed = @"GITTransportClosed";
 	}
 	if (inflateEnd (&strm) != Z_OK)
 		NSLog(@"Inflate Issue");
-	
+	    
 	// Set real length.
 	if (done)
 		[decompressed setLength: strm.total_out];
 	
     if (cSize != NULL)
         *cSize = [readCompressed length];
+    
+    NSLog(@"  inflated size: %d, compressed size: %d", strm.total_out, [readCompressed length]);
     
     if (cData != NULL)
         *cData = [NSData dataWithData:readCompressed];

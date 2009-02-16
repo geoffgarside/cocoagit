@@ -83,8 +83,10 @@
 (puts "got nak: #{(nak hexdump)}")
 
 (puts "receiving packfile")
-;(set packdata (transport readPackStream))
-(set packdata (transport readPackObjects))
+(set packdata (transport readPackStream))
+
+; readPackObjects is broken from ofs-delta
+;(set packdata (transport readPackObjects))
 
 (packdata writeToFile:"fetched-packfile.pack" atomically:YES)
 ; 
