@@ -11,6 +11,21 @@
 #import "GITErrors.h"
 #import "GITObject.h"
 
+/*! Series of constants to define the different types of GIT objects
+ *  the exist in a PACK file.
+ */
+enum {
+    // Base Types - These mirror those of GITObjectType
+    kGITPackFileTypeCommit = 1,
+    kGITPackFileTypeTree   = 2,
+    kGITPackFileTypeBlob   = 3,
+    kGITPackFileTypeTag    = 4,
+    
+    // Delta Types
+    kGITPackFileTypeDeltaOfs  = 6,
+    kGITPackFileTypeDeltaRefs = 7
+};
+
 /*! GITPackFile is a class which provides access to individual
  * PACK files within a git repository.
  *

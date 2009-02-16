@@ -7,6 +7,7 @@
 //
 
 #import "GITPackFileVersion2.h"
+#import "GITPackFile.h"
 #import "GITPackIndex.h"
 #import "GITUtilityBelt.h"
 #import "NSData+Hashing.h"
@@ -15,17 +16,7 @@
 
 static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
 
-enum {
-    // Base Types - These mirror those of GITObjectType
-    kGITPackFileTypeCommit = 1,
-    kGITPackFileTypeTree   = 2,
-    kGITPackFileTypeBlob   = 3,
-    kGITPackFileTypeTag    = 4,
 
-    // Delta Types
-    kGITPackFileTypeDeltaOfs  = 6,
-    kGITPackFileTypeDeltaRefs = 7
-};
 
 /*! \cond */
 @interface GITPackFileVersion2 ()
