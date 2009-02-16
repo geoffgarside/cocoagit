@@ -16,7 +16,7 @@ extern NSString * const GITTransportOpen;
 extern NSString * const GITTransportClosed;
 
 @interface GITTransport : NSObject {
-    BufferedSocket *connection;
+    id connection;
     GITRepo *localRepo;
     NSURL *remoteURL;
     
@@ -25,7 +25,6 @@ extern NSString * const GITTransportClosed;
 }
 @property (nonatomic, retain) GITRepo *localRepo;
 @property (nonatomic, copy) NSURL *remoteURL;
-@property (nonatomic, retain) BufferedSocket *connection;
 
 + (BOOL) canHandleURL:(NSURL *)url;
 
@@ -36,17 +35,24 @@ extern NSString * const GITTransportClosed;
 // start fetch process
 - (void) startFetch;
 
-// read
+// packed I/O
 - (NSData *) readPacket;
 - (NSString *) readPacketLine;
 - (NSArray *) readPackets;
-
-// write
 - (NSData *) packetWithString:(NSString *)line;
 - (void) writePacket:(NSData *)thePacket;
 - (void) writePacketLine:(NSString *)packetLine;
 
+// pack I/O
+- (NSData *) readPackObject;
+- (NSData *) readPackObjects;
+- (NSData *) readPackStream;
+
 // status
 - (NSString *) transportStatus;
 - (NSError *) transportError;
+
+// connection accessor
+- (void) setConnection:(id)newConnection;
+- (BufferedSocket *)connection;
 @end
