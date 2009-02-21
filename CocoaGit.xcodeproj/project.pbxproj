@@ -65,24 +65,6 @@
 		31AF01CB0F142FCF00F43D38 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 319B45C90F116F8E00336E0A /* libz.dylib */; };
 		31AF01CC0F142FD100F43D38 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 319B45CC0F116FD700336E0A /* libcrypto.dylib */; };
 		31AF01CF0F14302200F43D38 /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 319B46EA0F11CC7600336E0A /* libSystem.dylib */; };
-		31AF02550F14329D00F43D38 /* channel.c in Sources */ = {isa = PBXBuildFile; fileRef = 31AF016C0F142D6C00F43D38 /* channel.c */; };
-		31AF02560F14329D00F43D38 /* comp.c in Sources */ = {isa = PBXBuildFile; fileRef = 31AF016D0F142D6C00F43D38 /* comp.c */; };
-		31AF02570F14329D00F43D38 /* crypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 31AF016E0F142D6C00F43D38 /* crypt.c */; };
-		31AF02580F14329D00F43D38 /* hostkey.c in Sources */ = {isa = PBXBuildFile; fileRef = 31AF016F0F142D6C00F43D38 /* hostkey.c */; };
-		31AF02590F14329D00F43D38 /* kex.c in Sources */ = {isa = PBXBuildFile; fileRef = 31AF01700F142D6C00F43D38 /* kex.c */; };
-		31AF025A0F14329D00F43D38 /* mac.c in Sources */ = {isa = PBXBuildFile; fileRef = 31AF01710F142D6C00F43D38 /* mac.c */; };
-		31AF025B0F14329D00F43D38 /* misc.c in Sources */ = {isa = PBXBuildFile; fileRef = 31AF01720F142D6C00F43D38 /* misc.c */; };
-		31AF025C0F14329D00F43D38 /* packet.c in Sources */ = {isa = PBXBuildFile; fileRef = 31AF01730F142D6C00F43D38 /* packet.c */; };
-		31AF025D0F14329D00F43D38 /* publickey.c in Sources */ = {isa = PBXBuildFile; fileRef = 31AF01740F142D6C00F43D38 /* publickey.c */; };
-		31AF025E0F14329D00F43D38 /* scp.c in Sources */ = {isa = PBXBuildFile; fileRef = 31AF01750F142D6C00F43D38 /* scp.c */; };
-		31AF025F0F14329D00F43D38 /* session.c in Sources */ = {isa = PBXBuildFile; fileRef = 31AF01760F142D6C00F43D38 /* session.c */; };
-		31AF02600F14329D00F43D38 /* sftp.c in Sources */ = {isa = PBXBuildFile; fileRef = 31AF01770F142D6C00F43D38 /* sftp.c */; };
-		31AF02610F14329D00F43D38 /* userauth.c in Sources */ = {isa = PBXBuildFile; fileRef = 31AF01780F142D6C00F43D38 /* userauth.c */; };
-		31AF02620F1432A900F43D38 /* libssh2.h in Headers */ = {isa = PBXBuildFile; fileRef = 31AF01650F142D6C00F43D38 /* libssh2.h */; };
-		31AF02630F1432A900F43D38 /* libssh2_priv.h in Headers */ = {isa = PBXBuildFile; fileRef = 31AF01670F142D6C00F43D38 /* libssh2_priv.h */; };
-		31AF02640F1432A900F43D38 /* libssh2_publickey.h in Headers */ = {isa = PBXBuildFile; fileRef = 31AF01680F142D6C00F43D38 /* libssh2_publickey.h */; };
-		31AF02650F1432A900F43D38 /* libssh2_sftp.h in Headers */ = {isa = PBXBuildFile; fileRef = 31AF01690F142D6C00F43D38 /* libssh2_sftp.h */; };
-		31AF02950F14335200F43D38 /* libssh2_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 31AF02940F14335200F43D38 /* libssh2_config.h */; };
 		31AF02BC0F14376400F43D38 /* libSSH.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31AF01AF0F142F7B00F43D38 /* libSSH.dylib */; };
 		31AF02C40F1437C200F43D38 /* SSHConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 31AF018C0F142D7A00F43D38 /* SSHConnection.h */; };
 		31AF02C50F1437C200F43D38 /* SSHConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AF018D0F142D7A00F43D38 /* SSHConnection.m */; };
@@ -103,6 +85,12 @@
 		31AF05420F157C7500F43D38 /* git-remote.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AF05410F157C7500F43D38 /* git-remote.m */; };
 		38D2628D0F3A23E500683479 /* GITBranch.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F33C9E90E48C5650004CD44 /* GITBranch.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		38D262B00F3A243B00683479 /* GITBranch.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EA0E48C5650004CD44 /* GITBranch.m */; };
+		5734D7290F4148BA0092523C /* BufferedSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 5734D7250F4148BA0092523C /* BufferedSocket.h */; };
+		5734D72A0F4148BA0092523C /* BufferedSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5734D7260F4148BA0092523C /* BufferedSocket.m */; };
+		5734D72B0F4148BA0092523C /* MutableDataBufferExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 5734D7270F4148BA0092523C /* MutableDataBufferExtension.h */; };
+		5734D72C0F4148BA0092523C /* MutableDataBufferExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5734D7280F4148BA0092523C /* MutableDataBufferExtension.m */; };
+		5734D7430F4178390092523C /* GITTransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 5734D7050F4119690092523C /* GITTransport.h */; };
+		5734D7440F4178390092523C /* GITTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5734D7060F4119690092523C /* GITTransport.m */; };
 		573B49C90EF5A1F90020159D /* assertions.h in Headers */ = {isa = PBXBuildFile; fileRef = 573B49C70EF5A1F90020159D /* assertions.h */; };
 		573B49CA0EF5A1F90020159D /* assertions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49C80EF5A1F90020159D /* assertions.m */; };
 		573B49CB0EF5A1F90020159D /* assertions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49C80EF5A1F90020159D /* assertions.m */; };
@@ -114,7 +102,44 @@
 		573B49D50EF5A2090020159D /* NSError-OBExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49D10EF5A2090020159D /* NSError-OBExtensions.m */; };
 		573B49D60EF5A2090020159D /* NSError-OBExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49D10EF5A2090020159D /* NSError-OBExtensions.m */; };
 		577AA5A60EF7794E00A0B12B /* GITTestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 577AA5A50EF7794E00A0B12B /* GITTestHelper.m */; };
+		5780978A0F44AC0F0027B945 /* SSHChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 578097840F44AC0F0027B945 /* SSHChannel.h */; };
+		5780978B0F44AC0F0027B945 /* SSHChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 578097850F44AC0F0027B945 /* SSHChannel.m */; };
+		5780978C0F44AC0F0027B945 /* SSHError.h in Headers */ = {isa = PBXBuildFile; fileRef = 578097860F44AC0F0027B945 /* SSHError.h */; };
+		5780978D0F44AC0F0027B945 /* SSHError.m in Sources */ = {isa = PBXBuildFile; fileRef = 578097870F44AC0F0027B945 /* SSHError.m */; };
+		5780978E0F44AC0F0027B945 /* SSHSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 578097880F44AC0F0027B945 /* SSHSession.h */; };
+		5780978F0F44AC0F0027B945 /* SSHSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 578097890F44AC0F0027B945 /* SSHSession.m */; };
+		578097D90F44AD270027B945 /* libssh2.h in Headers */ = {isa = PBXBuildFile; fileRef = 578097C20F44AD270027B945 /* libssh2.h */; };
+		578097DA0F44AD270027B945 /* libssh2_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 578097C30F44AD270027B945 /* libssh2_config.h */; };
+		578097DB0F44AD270027B945 /* libssh2_priv.h in Headers */ = {isa = PBXBuildFile; fileRef = 578097C40F44AD270027B945 /* libssh2_priv.h */; };
+		578097DC0F44AD270027B945 /* libssh2_publickey.h in Headers */ = {isa = PBXBuildFile; fileRef = 578097C50F44AD270027B945 /* libssh2_publickey.h */; };
+		578097DD0F44AD270027B945 /* libssh2_sftp.h in Headers */ = {isa = PBXBuildFile; fileRef = 578097C60F44AD270027B945 /* libssh2_sftp.h */; };
+		578097DE0F44AD270027B945 /* openssl.h in Headers */ = {isa = PBXBuildFile; fileRef = 578097C70F44AD270027B945 /* openssl.h */; };
+		578097DF0F44AD270027B945 /* channel.c in Sources */ = {isa = PBXBuildFile; fileRef = 578097C90F44AD270027B945 /* channel.c */; };
+		578097E00F44AD270027B945 /* comp.c in Sources */ = {isa = PBXBuildFile; fileRef = 578097CA0F44AD270027B945 /* comp.c */; };
+		578097E10F44AD270027B945 /* crypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 578097CB0F44AD270027B945 /* crypt.c */; };
+		578097E20F44AD270027B945 /* hostkey.c in Sources */ = {isa = PBXBuildFile; fileRef = 578097CC0F44AD270027B945 /* hostkey.c */; };
+		578097E30F44AD270027B945 /* kex.c in Sources */ = {isa = PBXBuildFile; fileRef = 578097CD0F44AD270027B945 /* kex.c */; };
+		578097E40F44AD270027B945 /* mac.c in Sources */ = {isa = PBXBuildFile; fileRef = 578097CE0F44AD270027B945 /* mac.c */; };
+		578097E50F44AD270027B945 /* misc.c in Sources */ = {isa = PBXBuildFile; fileRef = 578097CF0F44AD270027B945 /* misc.c */; };
+		578097E60F44AD270027B945 /* openssl.c in Sources */ = {isa = PBXBuildFile; fileRef = 578097D00F44AD270027B945 /* openssl.c */; };
+		578097E70F44AD270027B945 /* packet.c in Sources */ = {isa = PBXBuildFile; fileRef = 578097D10F44AD270027B945 /* packet.c */; };
+		578097E80F44AD270027B945 /* pem.c in Sources */ = {isa = PBXBuildFile; fileRef = 578097D20F44AD270027B945 /* pem.c */; };
+		578097E90F44AD270027B945 /* publickey.c in Sources */ = {isa = PBXBuildFile; fileRef = 578097D30F44AD270027B945 /* publickey.c */; };
+		578097EA0F44AD270027B945 /* scp.c in Sources */ = {isa = PBXBuildFile; fileRef = 578097D40F44AD270027B945 /* scp.c */; };
+		578097EB0F44AD270027B945 /* session.c in Sources */ = {isa = PBXBuildFile; fileRef = 578097D50F44AD270027B945 /* session.c */; };
+		578097EC0F44AD270027B945 /* sftp.c in Sources */ = {isa = PBXBuildFile; fileRef = 578097D60F44AD270027B945 /* sftp.c */; };
+		578097ED0F44AD270027B945 /* transport.c in Sources */ = {isa = PBXBuildFile; fileRef = 578097D70F44AD270027B945 /* transport.c */; };
+		578097EE0F44AD270027B945 /* userauth.c in Sources */ = {isa = PBXBuildFile; fileRef = 578097D80F44AD270027B945 /* userauth.c */; };
+		578098230F44B6C30027B945 /* GITSshTransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 578098210F44B6C30027B945 /* GITSshTransport.h */; };
+		578098240F44B6C30027B945 /* GITSshTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 578098220F44B6C30027B945 /* GITSshTransport.m */; };
 		57CFF6A50EC772E700BB4B1E /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212770E179A2C005AC693 /* NSData+Compression.m */; };
+		57D81B2A0F419199002A571C /* NSData+HexDump.h in Headers */ = {isa = PBXBuildFile; fileRef = 57D81B280F419199002A571C /* NSData+HexDump.h */; };
+		57D81B2B0F419199002A571C /* NSData+HexDump.m in Sources */ = {isa = PBXBuildFile; fileRef = 57D81B290F419199002A571C /* NSData+HexDump.m */; };
+		57D81B500F41960D002A571C /* libSSH.dylib in Copy libSSH */ = {isa = PBXBuildFile; fileRef = 31AF01AF0F142F7B00F43D38 /* libSSH.dylib */; };
+		57D81BA80F4216BE002A571C /* GITFetchProcess.h in Headers */ = {isa = PBXBuildFile; fileRef = 57D81BA60F4216BE002A571C /* GITFetchProcess.h */; };
+		57D81BA90F4216BE002A571C /* GITFetchProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 57D81BA70F4216BE002A571C /* GITFetchProcess.m */; };
+		57D81BD20F424E53002A571C /* GITRef.h in Headers */ = {isa = PBXBuildFile; fileRef = 57D81BD00F424E53002A571C /* GITRef.h */; };
+		57D81BD30F424E53002A571C /* GITRef.m in Sources */ = {isa = PBXBuildFile; fileRef = 57D81BD10F424E53002A571C /* GITRef.m */; };
 		57E13E790EECF291003A3761 /* GITErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB1F0A60EC6F2DA006C68D0 /* GITErrors.m */; };
 		57E13E7A0EECF2AA003A3761 /* GITPackStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE329AF0E9BA2F8001E37D5 /* GITPackStore.m */; };
 		57E13E7B0EECF2AA003A3761 /* GITCombinedStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F16B9020EDB595A003CFD93 /* GITCombinedStore.m */; };
@@ -275,6 +300,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		57D81B4F0F41960B002A571C /* Copy libSSH */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = lib;
+			dstSubfolderSpec = 6;
+			files = (
+				57D81B500F41960D002A571C /* libSSH.dylib in Copy libSSH */,
+			);
+			name = "Copy libSSH";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -296,28 +332,10 @@
 		319B46710F11AF6B00336E0A /* TCPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TCPServer.m; path = Source/Vendor/TCPServer/TCPServer.m; sourceTree = "<group>"; };
 		319B46740F11AF9000336E0A /* git-server.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "git-server.m"; path = "Source/Tools/git-server.m"; sourceTree = "<group>"; };
 		319B46EA0F11CC7600336E0A /* libSystem.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSystem.dylib; path = usr/lib/libSystem.dylib; sourceTree = SDKROOT; };
-		31AF01650F142D6C00F43D38 /* libssh2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libssh2.h; sourceTree = "<group>"; };
-		31AF01670F142D6C00F43D38 /* libssh2_priv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libssh2_priv.h; sourceTree = "<group>"; };
-		31AF01680F142D6C00F43D38 /* libssh2_publickey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libssh2_publickey.h; sourceTree = "<group>"; };
-		31AF01690F142D6C00F43D38 /* libssh2_sftp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libssh2_sftp.h; sourceTree = "<group>"; };
-		31AF016C0F142D6C00F43D38 /* channel.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = channel.c; sourceTree = "<group>"; };
-		31AF016D0F142D6C00F43D38 /* comp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = comp.c; sourceTree = "<group>"; };
-		31AF016E0F142D6C00F43D38 /* crypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crypt.c; sourceTree = "<group>"; };
-		31AF016F0F142D6C00F43D38 /* hostkey.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hostkey.c; sourceTree = "<group>"; };
-		31AF01700F142D6C00F43D38 /* kex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kex.c; sourceTree = "<group>"; };
-		31AF01710F142D6C00F43D38 /* mac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mac.c; sourceTree = "<group>"; };
-		31AF01720F142D6C00F43D38 /* misc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = misc.c; sourceTree = "<group>"; };
-		31AF01730F142D6C00F43D38 /* packet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = packet.c; sourceTree = "<group>"; };
-		31AF01740F142D6C00F43D38 /* publickey.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = publickey.c; sourceTree = "<group>"; };
-		31AF01750F142D6C00F43D38 /* scp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = scp.c; sourceTree = "<group>"; };
-		31AF01760F142D6C00F43D38 /* session.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = session.c; sourceTree = "<group>"; };
-		31AF01770F142D6C00F43D38 /* sftp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sftp.c; sourceTree = "<group>"; };
-		31AF01780F142D6C00F43D38 /* userauth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = userauth.c; sourceTree = "<group>"; };
 		31AF018C0F142D7A00F43D38 /* SSHConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSHConnection.h; path = Source/Utils/SSHConnection.h; sourceTree = "<group>"; };
 		31AF018D0F142D7A00F43D38 /* SSHConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSHConnection.m; path = Source/Utils/SSHConnection.m; sourceTree = "<group>"; };
 		31AF018E0F142D7A00F43D38 /* SSHConnectionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSHConnectionTest.m; path = Source/Utils/SSHConnectionTest.m; sourceTree = "<group>"; };
 		31AF01AF0F142F7B00F43D38 /* libSSH.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libSSH.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		31AF02940F14335200F43D38 /* libssh2_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libssh2_config.h; sourceTree = "<group>"; };
 		31AF03C50F14770400F43D38 /* git-remote */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "git-remote"; sourceTree = BUILT_PRODUCTS_DIR; };
 		31AF04C10F15710C00F43D38 /* AbstractSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AbstractSocket.h; path = Source/Vendor/SmallSockets/AbstractSocket.h; sourceTree = "<group>"; };
 		31AF04C20F15710C00F43D38 /* AbstractSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AbstractSocket.m; path = Source/Vendor/SmallSockets/AbstractSocket.m; sourceTree = "<group>"; };
@@ -325,12 +343,54 @@
 		31AF04C40F15710C00F43D38 /* Socket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Socket.m; path = Source/Vendor/SmallSockets/Socket.m; sourceTree = "<group>"; };
 		31AF05410F157C7500F43D38 /* git-remote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "git-remote.m"; path = "Source/Tools/git-remote.m"; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Git_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Git_Prefix.pch; sourceTree = "<group>"; };
+		5734D7050F4119690092523C /* GITTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITTransport.h; sourceTree = "<group>"; };
+		5734D7060F4119690092523C /* GITTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITTransport.m; sourceTree = "<group>"; };
+		5734D7250F4148BA0092523C /* BufferedSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BufferedSocket.h; path = Source/Vendor/SmallSockets/BufferedSocket.h; sourceTree = "<group>"; };
+		5734D7260F4148BA0092523C /* BufferedSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BufferedSocket.m; path = Source/Vendor/SmallSockets/BufferedSocket.m; sourceTree = "<group>"; };
+		5734D7270F4148BA0092523C /* MutableDataBufferExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MutableDataBufferExtension.h; path = Source/Vendor/SmallSockets/MutableDataBufferExtension.h; sourceTree = "<group>"; };
+		5734D7280F4148BA0092523C /* MutableDataBufferExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MutableDataBufferExtension.m; path = Source/Vendor/SmallSockets/MutableDataBufferExtension.m; sourceTree = "<group>"; };
 		573B49C70EF5A1F90020159D /* assertions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = assertions.h; path = Source/assertions.h; sourceTree = "<group>"; };
 		573B49C80EF5A1F90020159D /* assertions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = assertions.m; path = Source/assertions.m; sourceTree = "<group>"; };
 		573B49D00EF5A2090020159D /* NSError-OBExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError-OBExtensions.h"; path = "Source/Categories/NSError-OBExtensions.h"; sourceTree = "<group>"; };
 		573B49D10EF5A2090020159D /* NSError-OBExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError-OBExtensions.m"; path = "Source/Categories/NSError-OBExtensions.m"; sourceTree = "<group>"; };
 		577AA5A50EF7794E00A0B12B /* GITTestHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITTestHelper.m; path = UnitTests/Source/GITTestHelper.m; sourceTree = "<group>"; };
+		578097840F44AC0F0027B945 /* SSHChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSHChannel.h; path = Source/Utils/SSHChannel.h; sourceTree = "<group>"; };
+		578097850F44AC0F0027B945 /* SSHChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSHChannel.m; path = Source/Utils/SSHChannel.m; sourceTree = "<group>"; };
+		578097860F44AC0F0027B945 /* SSHError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSHError.h; path = Source/Utils/SSHError.h; sourceTree = "<group>"; };
+		578097870F44AC0F0027B945 /* SSHError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSHError.m; path = Source/Utils/SSHError.m; sourceTree = "<group>"; };
+		578097880F44AC0F0027B945 /* SSHSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSHSession.h; path = Source/Utils/SSHSession.h; sourceTree = "<group>"; };
+		578097890F44AC0F0027B945 /* SSHSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSHSession.m; path = Source/Utils/SSHSession.m; sourceTree = "<group>"; };
+		578097C20F44AD270027B945 /* libssh2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libssh2.h; sourceTree = "<group>"; };
+		578097C30F44AD270027B945 /* libssh2_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libssh2_config.h; sourceTree = "<group>"; };
+		578097C40F44AD270027B945 /* libssh2_priv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libssh2_priv.h; sourceTree = "<group>"; };
+		578097C50F44AD270027B945 /* libssh2_publickey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libssh2_publickey.h; sourceTree = "<group>"; };
+		578097C60F44AD270027B945 /* libssh2_sftp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libssh2_sftp.h; sourceTree = "<group>"; };
+		578097C70F44AD270027B945 /* openssl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = openssl.h; sourceTree = "<group>"; };
+		578097C90F44AD270027B945 /* channel.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = channel.c; sourceTree = "<group>"; };
+		578097CA0F44AD270027B945 /* comp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = comp.c; sourceTree = "<group>"; };
+		578097CB0F44AD270027B945 /* crypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crypt.c; sourceTree = "<group>"; };
+		578097CC0F44AD270027B945 /* hostkey.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hostkey.c; sourceTree = "<group>"; };
+		578097CD0F44AD270027B945 /* kex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kex.c; sourceTree = "<group>"; };
+		578097CE0F44AD270027B945 /* mac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mac.c; sourceTree = "<group>"; };
+		578097CF0F44AD270027B945 /* misc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = misc.c; sourceTree = "<group>"; };
+		578097D00F44AD270027B945 /* openssl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = openssl.c; sourceTree = "<group>"; };
+		578097D10F44AD270027B945 /* packet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = packet.c; sourceTree = "<group>"; };
+		578097D20F44AD270027B945 /* pem.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pem.c; sourceTree = "<group>"; };
+		578097D30F44AD270027B945 /* publickey.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = publickey.c; sourceTree = "<group>"; };
+		578097D40F44AD270027B945 /* scp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = scp.c; sourceTree = "<group>"; };
+		578097D50F44AD270027B945 /* session.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = session.c; sourceTree = "<group>"; };
+		578097D60F44AD270027B945 /* sftp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sftp.c; sourceTree = "<group>"; };
+		578097D70F44AD270027B945 /* transport.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = transport.c; sourceTree = "<group>"; };
+		578097D80F44AD270027B945 /* userauth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = userauth.c; sourceTree = "<group>"; };
+		578098210F44B6C30027B945 /* GITSshTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITSshTransport.h; sourceTree = "<group>"; };
+		578098220F44B6C30027B945 /* GITSshTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITSshTransport.m; sourceTree = "<group>"; };
 		57C17FF50EB01E1C00B7AE7E /* GITTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITTestHelper.h; path = UnitTests/Source/GITTestHelper.h; sourceTree = "<group>"; };
+		57D81B280F419199002A571C /* NSData+HexDump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+HexDump.h"; path = "Source/Categories/NSData+HexDump.h"; sourceTree = "<group>"; };
+		57D81B290F419199002A571C /* NSData+HexDump.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+HexDump.m"; path = "Source/Categories/NSData+HexDump.m"; sourceTree = "<group>"; };
+		57D81BA60F4216BE002A571C /* GITFetchProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITFetchProcess.h; sourceTree = "<group>"; };
+		57D81BA70F4216BE002A571C /* GITFetchProcess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITFetchProcess.m; sourceTree = "<group>"; };
+		57D81BD00F424E53002A571C /* GITRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITRef.h; path = Source/GITRef.h; sourceTree = "<group>"; };
+		57D81BD10F424E53002A571C /* GITRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITRef.m; path = Source/GITRef.m; sourceTree = "<group>"; };
 		9F0104990E9997C700A47227 /* GITUtilityBeltTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITUtilityBeltTests.h; path = UnitTests/Source/GITUtilityBeltTests.h; sourceTree = "<group>"; };
 		9F01049A0E9997C700A47227 /* GITUtilityBeltTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITUtilityBeltTests.m; path = UnitTests/Source/GITUtilityBeltTests.m; sourceTree = "<group>"; };
 		9F0862050E20F02E00FD6CF6 /* GITTreeEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITTreeEntry.h; path = Source/Types/GITTreeEntry.h; sourceTree = "<group>"; };
@@ -509,6 +569,8 @@
 				9F33C9EA0E48C5650004CD44 /* GITBranch.m */,
 				9F33C9EE0E48C5650004CD44 /* GITRepo.h */,
 				9F33C9EF0E48C5650004CD44 /* GITRepo.m */,
+				57D81BD00F424E53002A571C /* GITRef.h */,
+				57D81BD10F424E53002A571C /* GITRef.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -548,7 +610,7 @@
 		29B97314FDCFA39411CA2CEA /* CocoaGit */ = {
 			isa = PBXGroup;
 			children = (
-				31AF01630F142D6C00F43D38 /* libssh2 */,
+				578097BF0F44AD270027B945 /* libssh2 */,
 				9FCF27950E98F67D00665A41 /* Tests */,
 				9F33C9E60E48C4840004CD44 /* Categories */,
 				080E96DDFE201D6D7F000001 /* Classes */,
@@ -563,6 +625,7 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				578097810F44ABEB0027B945 /* SSHSession */,
 				9FCAA5F60F1674180024BEC8 /* Tools & Examples */,
 				9FCAA5E70F1673330024BEC8 /* SmallSockets */,
 				9FCAA5F50F1673FF0024BEC8 /* SSHConnection */,
@@ -610,49 +673,72 @@
 				319B46680F11AF3600336E0A /* GITServer.m */,
 				319B46690F11AF3600336E0A /* GITServerHandler.h */,
 				319B466A0F11AF3600336E0A /* GITServerHandler.m */,
+				5734D7050F4119690092523C /* GITTransport.h */,
+				5734D7060F4119690092523C /* GITTransport.m */,
+				57D81BA60F4216BE002A571C /* GITFetchProcess.h */,
+				57D81BA70F4216BE002A571C /* GITFetchProcess.m */,
+				578098210F44B6C30027B945 /* GITSshTransport.h */,
+				578098220F44B6C30027B945 /* GITSshTransport.m */,
 			);
 			name = Network;
 			path = Source/Network;
 			sourceTree = "<group>";
 		};
-		31AF01630F142D6C00F43D38 /* libssh2 */ = {
+		578097810F44ABEB0027B945 /* SSHSession */ = {
 			isa = PBXGroup;
 			children = (
-				31AF01640F142D6C00F43D38 /* include */,
-				31AF016B0F142D6C00F43D38 /* src */,
+				578097840F44AC0F0027B945 /* SSHChannel.h */,
+				578097850F44AC0F0027B945 /* SSHChannel.m */,
+				578097860F44AC0F0027B945 /* SSHError.h */,
+				578097870F44AC0F0027B945 /* SSHError.m */,
+				578097880F44AC0F0027B945 /* SSHSession.h */,
+				578097890F44AC0F0027B945 /* SSHSession.m */,
+			);
+			name = SSHSession;
+			sourceTree = "<group>";
+		};
+		578097BF0F44AD270027B945 /* libssh2 */ = {
+			isa = PBXGroup;
+			children = (
+				578097C10F44AD270027B945 /* include */,
+				578097C80F44AD270027B945 /* src */,
 			);
 			name = libssh2;
 			path = Source/libssh2;
 			sourceTree = "<group>";
 		};
-		31AF01640F142D6C00F43D38 /* include */ = {
+		578097C10F44AD270027B945 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				31AF02940F14335200F43D38 /* libssh2_config.h */,
-				31AF01650F142D6C00F43D38 /* libssh2.h */,
-				31AF01670F142D6C00F43D38 /* libssh2_priv.h */,
-				31AF01680F142D6C00F43D38 /* libssh2_publickey.h */,
-				31AF01690F142D6C00F43D38 /* libssh2_sftp.h */,
+				578097C20F44AD270027B945 /* libssh2.h */,
+				578097C30F44AD270027B945 /* libssh2_config.h */,
+				578097C40F44AD270027B945 /* libssh2_priv.h */,
+				578097C50F44AD270027B945 /* libssh2_publickey.h */,
+				578097C60F44AD270027B945 /* libssh2_sftp.h */,
+				578097C70F44AD270027B945 /* openssl.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
 		};
-		31AF016B0F142D6C00F43D38 /* src */ = {
+		578097C80F44AD270027B945 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				31AF016C0F142D6C00F43D38 /* channel.c */,
-				31AF016D0F142D6C00F43D38 /* comp.c */,
-				31AF016E0F142D6C00F43D38 /* crypt.c */,
-				31AF016F0F142D6C00F43D38 /* hostkey.c */,
-				31AF01700F142D6C00F43D38 /* kex.c */,
-				31AF01710F142D6C00F43D38 /* mac.c */,
-				31AF01720F142D6C00F43D38 /* misc.c */,
-				31AF01730F142D6C00F43D38 /* packet.c */,
-				31AF01740F142D6C00F43D38 /* publickey.c */,
-				31AF01750F142D6C00F43D38 /* scp.c */,
-				31AF01760F142D6C00F43D38 /* session.c */,
-				31AF01770F142D6C00F43D38 /* sftp.c */,
-				31AF01780F142D6C00F43D38 /* userauth.c */,
+				578097C90F44AD270027B945 /* channel.c */,
+				578097CA0F44AD270027B945 /* comp.c */,
+				578097CB0F44AD270027B945 /* crypt.c */,
+				578097CC0F44AD270027B945 /* hostkey.c */,
+				578097CD0F44AD270027B945 /* kex.c */,
+				578097CE0F44AD270027B945 /* mac.c */,
+				578097CF0F44AD270027B945 /* misc.c */,
+				578097D00F44AD270027B945 /* openssl.c */,
+				578097D10F44AD270027B945 /* packet.c */,
+				578097D20F44AD270027B945 /* pem.c */,
+				578097D30F44AD270027B945 /* publickey.c */,
+				578097D40F44AD270027B945 /* scp.c */,
+				578097D50F44AD270027B945 /* session.c */,
+				578097D60F44AD270027B945 /* sftp.c */,
+				578097D70F44AD270027B945 /* transport.c */,
+				578097D80F44AD270027B945 /* userauth.c */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -673,6 +759,8 @@
 		9F33C9E60E48C4840004CD44 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				57D81B280F419199002A571C /* NSData+HexDump.h */,
+				57D81B290F419199002A571C /* NSData+HexDump.m */,
 				319B466E0F11AF6B00336E0A /* NSFileManager+DirHelper.h */,
 				319B466F0F11AF6B00336E0A /* NSFileManager+DirHelper.m */,
 				573B49D00EF5A2090020159D /* NSError-OBExtensions.h */,
@@ -738,6 +826,10 @@
 		9FCAA5E70F1673330024BEC8 /* SmallSockets */ = {
 			isa = PBXGroup;
 			children = (
+				5734D7250F4148BA0092523C /* BufferedSocket.h */,
+				5734D7260F4148BA0092523C /* BufferedSocket.m */,
+				5734D7270F4148BA0092523C /* MutableDataBufferExtension.h */,
+				5734D7280F4148BA0092523C /* MutableDataBufferExtension.m */,
 				31AF04C10F15710C00F43D38 /* AbstractSocket.h */,
 				31AF04C20F15710C00F43D38 /* AbstractSocket.m */,
 				31AF04C30F15710C00F43D38 /* Socket.h */,
@@ -926,11 +1018,12 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31AF02620F1432A900F43D38 /* libssh2.h in Headers */,
-				31AF02630F1432A900F43D38 /* libssh2_priv.h in Headers */,
-				31AF02640F1432A900F43D38 /* libssh2_publickey.h in Headers */,
-				31AF02650F1432A900F43D38 /* libssh2_sftp.h in Headers */,
-				31AF02950F14335200F43D38 /* libssh2_config.h in Headers */,
+				578097D90F44AD270027B945 /* libssh2.h in Headers */,
+				578097DA0F44AD270027B945 /* libssh2_config.h in Headers */,
+				578097DB0F44AD270027B945 /* libssh2_priv.h in Headers */,
+				578097DC0F44AD270027B945 /* libssh2_publickey.h in Headers */,
+				578097DD0F44AD270027B945 /* libssh2_sftp.h in Headers */,
+				578097DE0F44AD270027B945 /* openssl.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -938,6 +1031,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5734D7430F4178390092523C /* GITTransport.h in Headers */,
 				31AF02C40F1437C200F43D38 /* SSHConnection.h in Headers */,
 				31AF04740F147E2000F43D38 /* GITClient.h in Headers */,
 				31AF04750F147E2000F43D38 /* GITServer.h in Headers */,
@@ -975,6 +1069,15 @@
 				9F37E6A40F1131EA00704E4E /* Git.h in Headers */,
 				31AF04C50F15710C00F43D38 /* AbstractSocket.h in Headers */,
 				31AF04C70F15710C00F43D38 /* Socket.h in Headers */,
+				5734D7290F4148BA0092523C /* BufferedSocket.h in Headers */,
+				5734D72B0F4148BA0092523C /* MutableDataBufferExtension.h in Headers */,
+				57D81B2A0F419199002A571C /* NSData+HexDump.h in Headers */,
+				57D81BA80F4216BE002A571C /* GITFetchProcess.h in Headers */,
+				57D81BD20F424E53002A571C /* GITRef.h in Headers */,
+				5780978A0F44AC0F0027B945 /* SSHChannel.h in Headers */,
+				5780978C0F44AC0F0027B945 /* SSHError.h in Headers */,
+				5780978E0F44AC0F0027B945 /* SSHSession.h in Headers */,
+				578098230F44B6C30027B945 /* GITSshTransport.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1055,6 +1158,7 @@
 				9F3694120EACF05500E6777B /* Headers */,
 				9F3694140EACF05500E6777B /* Sources */,
 				9F3694150EACF05500E6777B /* Frameworks */,
+				57D81B4F0F41960B002A571C /* Copy libSSH */,
 			);
 			buildRules = (
 			);
@@ -1209,19 +1313,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31AF02550F14329D00F43D38 /* channel.c in Sources */,
-				31AF02560F14329D00F43D38 /* comp.c in Sources */,
-				31AF02570F14329D00F43D38 /* crypt.c in Sources */,
-				31AF02580F14329D00F43D38 /* hostkey.c in Sources */,
-				31AF02590F14329D00F43D38 /* kex.c in Sources */,
-				31AF025A0F14329D00F43D38 /* mac.c in Sources */,
-				31AF025B0F14329D00F43D38 /* misc.c in Sources */,
-				31AF025C0F14329D00F43D38 /* packet.c in Sources */,
-				31AF025D0F14329D00F43D38 /* publickey.c in Sources */,
-				31AF025E0F14329D00F43D38 /* scp.c in Sources */,
-				31AF025F0F14329D00F43D38 /* session.c in Sources */,
-				31AF02600F14329D00F43D38 /* sftp.c in Sources */,
-				31AF02610F14329D00F43D38 /* userauth.c in Sources */,
+				578097DF0F44AD270027B945 /* channel.c in Sources */,
+				578097E00F44AD270027B945 /* comp.c in Sources */,
+				578097E10F44AD270027B945 /* crypt.c in Sources */,
+				578097E20F44AD270027B945 /* hostkey.c in Sources */,
+				578097E30F44AD270027B945 /* kex.c in Sources */,
+				578097E40F44AD270027B945 /* mac.c in Sources */,
+				578097E50F44AD270027B945 /* misc.c in Sources */,
+				578097E60F44AD270027B945 /* openssl.c in Sources */,
+				578097E70F44AD270027B945 /* packet.c in Sources */,
+				578097E80F44AD270027B945 /* pem.c in Sources */,
+				578097E90F44AD270027B945 /* publickey.c in Sources */,
+				578097EA0F44AD270027B945 /* scp.c in Sources */,
+				578097EB0F44AD270027B945 /* session.c in Sources */,
+				578097EC0F44AD270027B945 /* sftp.c in Sources */,
+				578097ED0F44AD270027B945 /* transport.c in Sources */,
+				578097EE0F44AD270027B945 /* userauth.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1257,6 +1364,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5734D7440F4178390092523C /* GITTransport.m in Sources */,
 				31AF02C50F1437C200F43D38 /* SSHConnection.m in Sources */,
 				57E13E7F0EECF2D5003A3761 /* GITPackIndex.m in Sources */,
 				57E13E800EECF2D5003A3761 /* GITPlaceholderPackIndex.m in Sources */,
@@ -1293,6 +1401,15 @@
 				573B49D30EF5A2090020159D /* NSError-OBExtensions.m in Sources */,
 				31AF04C60F15710C00F43D38 /* AbstractSocket.m in Sources */,
 				31AF04C80F15710C00F43D38 /* Socket.m in Sources */,
+				5734D72A0F4148BA0092523C /* BufferedSocket.m in Sources */,
+				5734D72C0F4148BA0092523C /* MutableDataBufferExtension.m in Sources */,
+				57D81B2B0F419199002A571C /* NSData+HexDump.m in Sources */,
+				57D81BA90F4216BE002A571C /* GITFetchProcess.m in Sources */,
+				57D81BD30F424E53002A571C /* GITRef.m in Sources */,
+				5780978B0F44AC0F0027B945 /* SSHChannel.m in Sources */,
+				5780978D0F44AC0F0027B945 /* SSHError.m in Sources */,
+				5780978F0F44AC0F0027B945 /* SSHSession.m in Sources */,
+				578098240F44B6C30027B945 /* GITSshTransport.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1507,13 +1624,13 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_PREFIX = "";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				INSTALL_PATH = "@executable_path";
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = YES;
+				INSTALL_PATH = "@loader_path/lib";
 				PREBINDING = NO;
 				PRODUCT_NAME = SSH;
 			};
@@ -1523,10 +1640,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_PREFIX = "";
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
-				INSTALL_PATH = /usr/local/lib;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = YES;
+				INSTALL_PATH = "@loader_path/lib";
 				PREBINDING = NO;
 				PRODUCT_NAME = libSSH;
 			};
@@ -1538,10 +1656,11 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_PREFIX = "";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
-				INSTALL_PATH = /usr/local/lib;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = YES;
+				INSTALL_PATH = "@loader_path/lib";
 				PREBINDING = NO;
 				PRODUCT_NAME = libSSH;
 				ZERO_LINK = NO;
@@ -1552,10 +1671,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_PREFIX = "";
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
-				INSTALL_PATH = /usr/local/lib;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = YES;
+				INSTALL_PATH = "@loader_path/lib";
 				PREBINDING = NO;
 				PRODUCT_NAME = libSSH;
 			};
@@ -1678,7 +1798,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Foundation.framework/Headers/Foundation.h";
 				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "@executable_path";
+				INSTALL_PATH = "@rpath";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/lib @loader_path";
 				OTHER_LDFLAGS = (
 					"-lcrypto",
 					"-lssl",
@@ -1705,7 +1826,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				INSTALL_PATH = "@rpath";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/lib @loader_path";
 				OTHER_LDFLAGS = (
 					"-lcrypto",
 					"-lssl",
@@ -1885,7 +2007,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Foundation.framework/Headers/Foundation.h";
 				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "@executable_path";
+				INSTALL_PATH = "@rpath";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/lib @loader_path";
 				OTHER_LDFLAGS = (
 					"-lcrypto",
 					"-lssl",
@@ -2018,7 +2141,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				INSTALL_PATH = "@rpath";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/lib @loader_path";
 				OTHER_LDFLAGS = (
 					"-lcrypto",
 					"-lssl",

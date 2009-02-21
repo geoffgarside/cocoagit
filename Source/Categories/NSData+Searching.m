@@ -7,19 +7,25 @@
 //
 
 #import "NSData+Searching.h"
+#import <string.h> // memchr
 
 @implementation NSData (Searching)
 
-- (NSRange)rangeOfNullTerminatedBytesFrom:(NSInteger)start
+- (NSRange)rangeFrom:(NSInteger)start toByte:(NSInteger)c;
 {
 	const char *pdata = [self bytes];
 	NSUInteger len = [self length];
-	if (start < len)
-	{
-		const char *end = memchr (pdata + start, 0x00, len - start);
-		if (end != NULL) return NSMakeRange (start, end - (pdata + start));
-	}
-	return NSMakeRange (NSNotFound, 0);
+    if (start < len) {
+        char *end = memchr(pdata + start, c, len - start);
+        if (end != NULL)
+            return NSMakeRange (start, end - (pdata + start));
+    }
+    return NSMakeRange(NSNotFound, 0);
+}
+
+- (NSRange)rangeOfNullTerminatedBytesFrom:(NSInteger)start
+{
+    return [self rangeFrom:start toByte:0x00];
 }
 
 - (NSData*)subdataFromIndex:(NSUInteger)anIndex

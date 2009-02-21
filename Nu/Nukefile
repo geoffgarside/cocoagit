@@ -1,0 +1,71 @@
+;;
+;; Nukefile for Cocoagit
+;;
+;; Commands:
+;;	nuke 		- builds Discount as a framework
+;;   nuke binary    - builds a 'markdown' binary that uses the Discount framework
+;;	nuke test	     - runs all of the test suites in the tests directory
+;;	nuke install	- installs Discount in /Library/Frameworks
+;;	nuke clean	- removes build artifacts
+;;	nuke clobber	- removes all generated files
+;;
+;; The "nuke" build tool is installed with Nu (http://programming.nu)
+;;
+
+;; the @variables below are instance variables of a NukeProject.
+;; for details, see tools/nuke in the Nu source distribution.
+
+;; source files
+(set @m_files     (filelistWithRoot "^Source/.*.m$" ".."))
+(@m_files minusSet:(filelistWithRoot "^Source/Tools/.*.m$" ".."))
+(set @c_files     (filelistWithRoot "^Source/libssh2/src/.*.c$" ".."))
+
+;; arch
+;(set @arch '("i386" "ppc"))
+(set @arch '("i386"))
+
+;; framework description
+(set @framework "Git")
+(set @framework_identifier   "com.manicpanda.Git")
+(set @framework_creator_code "????")
+(set @framework_install_path "@loader_path/../Frameworks")
+
+(set @public_headers (filelistWithRoot "^Source/GITRepo.h" ".."))
+
+(set source_files ((NSFileManager defaultManager) subpathsAtPath:"./Source"))
+(set source_dirs (NSSet setWithArray:
+     (source_files map:
+          (do (f) ("-ISource/#{f}" dirName)))))
+(set include_dirs ((source_dirs allObjects) join))
+
+;; build configuration
+(set @cc "gcc")
+(set @sdk
+     (cond ((NSFileManager directoryExistsNamed:"/Developer/SDKs/MacOSX10.5.sdk")
+            ("-isysroot /Developer/SDKs/MacOSX10.5.sdk"))
+           ((NSFileManager directoryExistsNamed:"/Developer/SDKs/MacOSX10.4u.sdk")
+            ("-isysroot /Developer/SDKs/MacOSX10.4u.sdk"))
+           (else "")))
+
+(set @cflags "-Wall -g -O2 -DDARWIN -DMACOSX #{@sdk} -std=gnu99 #{include_dirs}")
+(set @mflags "-fobjc-exceptions -fobjc-gc")
+(set @ldflags "-framework Foundation -lssl -lcrypto -lz")
+
+(compilation-tasks)
+(framework-tasks)
+
+;; Standard tasks
+(task "clobber" => "clean" is
+      (SH "rm -rf #{@framework_dir}")
+      (SH "rm -rf build")) ;; @framework_dir is defined by the nuke framework-tasks macro
+
+(task "default" => "framework")
+
+(task "install" => "framework" is
+      (SH "sudo rm -rf /Library/Frameworks/#{@framework}.framework")
+      (SH "ditto #{@framework}.framework /Library/Frameworks/#{@framework}.framework"))
+
+(task "test" is
+      (SH "nutest NuTest/test_*.nu"))
+
+(task "test" => )

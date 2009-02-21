@@ -413,7 +413,7 @@
 		[refs addObject:refData];  // save the refs for writing later
 		
 		/* DEBUGGING */
-		NSLog(@"ref: [%@ : %@ : %@]", old, new, refName, cap);
+		NSLog(@"ref: [%@ : %@ : %@ : %@]", old, new, refName, cap);
 		
 		data = [self packetReadLine];
 	}

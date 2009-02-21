@@ -32,6 +32,7 @@
 //
 // $Header: svn+ssh://source.omnigroup.com/Source/svn/Omni/tags/OmniSourceRelease/2008-09-09/OmniGroup/Frameworks/OmniBase/NSError-OBExtensions.h 102857 2008-07-15 04:22:17Z bungi $
 
+#import <Foundation/Foundation.h>
 #import <Foundation/NSError.h>
 
 #if defined(__cplusplus)
@@ -54,7 +55,7 @@ extern NSString * const OBFileNameAndNumberErrorKey;
 
 extern void OBErrorv(NSError **error, NSString *domain, int code, const char *fileName, unsigned int line, NSString *firstKey, va_list args);
 extern void _OBError(NSError **error, NSString *domain, int code, const char *fileName, unsigned int line, NSString *firstKey, ...);
-
+extern void _OBErrorWithDescription(NSError **error, NSString *domain, int code, const char *fileName, unsigned int line, NSString *message, ...);
 #ifdef OMNI_BUNDLE_IDENTIFIER
 // It is expected that -DOMNI_BUNDLE_IDENTIFIER=@"com.foo.bar" will be set when building your code.  Build configurations make this easy since you can set it in the target's configuration and then have your Other C Flags have -DOMNI_BUNDLE_IDENTIFIER=@\"$(OMNI_BUNDLE_IDENTIFIER)\" and also use $(OMNI_BUNDLE_IDENTIFIER) in your Info.plist instead of duplicating it.
 #define OBError(error, code, description) _OBError(error, OMNI_BUNDLE_IDENTIFIER, code, __FILE__, __LINE__, NSLocalizedDescriptionKey, description, nil)

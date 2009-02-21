@@ -10,6 +10,13 @@
 
 @interface NSData (Searching)
 
+/*! Returns the range of bytes up to the first occurrence of byte c from start.
+ * \return Range of bytes up to the first occurrence of c from start. If c
+ * can not be found then the NSRange.location will be set to NSNotFound.
+ * \see memchr
+ */
+- (NSRange)rangeFrom:(NSInteger)start toByte:(NSInteger)c;
+
 /*! Returns the range of bytes up to the first NULL byte from start.
  * \return Range of bytes up to the first NULL from start. If no NULL
  * can be found then the NSRange.location will be set to NSNotFound.

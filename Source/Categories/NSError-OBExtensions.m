@@ -207,6 +207,21 @@ void _OBError(NSError **error, NSString *domain, int code, const char *fileName,
     va_end(args);
 }
 
+void _OBErrorWithDescription(NSError **error, NSString *domain, int code, const char *fileName, unsigned int line, NSString *message, ...)
+{
+    OBPRECONDITION(domain != nil && [domain length] > 0);
+    
+    if (!error)
+        return;
+    
+    va_list args;
+    va_start(args, message);
+    NSString *localizedDescription = [[NSString alloc] initWithFormat:message arguments:args];
+    va_end(args);
+    _OBError(error, domain, code, fileName, line, NSLocalizedDescriptionKey, localizedDescription);
+    [localizedDescription release];
+}
+
 void OBErrorWithErrnoObjectsAndKeys(NSError **error, int errno_value, const char *function, NSString *argument, NSString *localizedDescription, ...)
 {
     if (!error)
