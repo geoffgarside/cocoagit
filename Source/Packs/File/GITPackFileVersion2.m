@@ -25,7 +25,7 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
 @property(readwrite,retain) GITPackIndex * index;
 - (NSUInteger) readHeaderAtOffset:(NSUInteger)offset type:(NSUInteger *)type size:(NSUInteger *)sizep;
 - (NSData *) unpackObjectAtOffset:(NSUInteger)offset type:(GITObjectType*)objectType error:(NSError**)error;
-- (NSData *) unpackDeltifiedObjectAtOffset:(NSUInteger)offset objectOffset:(NSUInteger)objOffset type:(GITObjectType)type error:(NSError**)error;
+- (NSData *)unpackDeltifiedObjectAtOffset:(NSUInteger)offset type:(GITObjectType)deltaType objectOffset:(NSUInteger)objOffset objectType:(GITObjectType *)type error:(NSError**)error;
 - (NSRange)rangeOfPackedObjects;
 - (NSRange)rangeOfChecksum;
 - (NSData*)checksum;
@@ -201,25 +201,26 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
                 GITError(error, GITErrorObjectSizeMismatch, NSLocalizedString(@"Object size mismatch", @"GITErrorObjectSizeMismatch"));
                 return nil;
             }
+            *objectType = type;
 			break;
 		case kGITPackFileTypeDeltaOfs:
         case kGITPackFileTypeDeltaRefs:
-            objData = [self unpackDeltifiedObjectAtOffset:offset objectOffset:objOffset type:type error:error];
+            objData = [self unpackDeltifiedObjectAtOffset:offset type:type objectOffset:objOffset objectType:objectType error:error];
             break;
     }
     
     return objData;
 }
 
-- (NSData *)unpackDeltifiedObjectAtOffset:(NSUInteger)offset objectOffset:(NSUInteger)objOffset type:(GITObjectType)type error:(NSError**)error;
+- (NSData *)unpackDeltifiedObjectAtOffset:(NSUInteger)offset type:(GITObjectType)deltaType objectOffset:(NSUInteger)objOffset objectType:(GITObjectType *)type error:(NSError**)error;
 {
     NSData *packedData = [self.data subdataWithRange:NSMakeRange(offset, 20)];
     
     NSUInteger baseOffset;
-    if (type == kGITPackFileTypeDeltaRefs) {
+    if (deltaType == kGITPackFileTypeDeltaRefs) {
         offset += 20;
         baseOffset = [self.index packOffsetForSha1:unpackSHA1FromData(packedData) error:error];
-    } else if (type == kGITPackFileTypeDeltaOfs) {
+    } else if (deltaType == kGITPackFileTypeDeltaOfs) {
         NSUInteger used = 0;
         const uint8_t *bytes = [packedData bytes];
         uint8_t c = bytes[used++];
@@ -234,8 +235,7 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
         offset += used;        
     }
     
-    GITObjectType baseType;
-    NSData *baseObjectData = [self unpackObjectAtOffset:baseOffset type:&baseType error:error];
+    NSData *baseObjectData = [self unpackObjectAtOffset:baseOffset type:type error:error];
     if (! baseObjectData) {
         GITError(error, GITErrorObjectNotFound, NSLocalizedString(@"Base Object not found for PACK delta", @"GITErrorObjectNotFound (GITPackFile)"));
         return nil;
