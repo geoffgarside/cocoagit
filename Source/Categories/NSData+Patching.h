@@ -6,7 +6,7 @@
 //  Copyright 2009 ManicPanda.com. All rights reserved.
 //
 
-#import <Foundation/NSData.h>
+#import <Foundation/Foundation.h>
 
 
 @interface NSData (Patching)

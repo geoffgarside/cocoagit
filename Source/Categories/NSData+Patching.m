@@ -29,9 +29,7 @@
     unsigned long sourceSize, destSize, position = 0;
     unsigned long cp_off, cp_size;
     unsigned char c, d;
-    
-    int bufLength = 1000;
-    
+        
     [self patchDeltaHeader:deltaData size:&sourceSize position:&position];
     destSize = 0;
     [self patchDeltaHeader:deltaData size:&destSize position:&position];
