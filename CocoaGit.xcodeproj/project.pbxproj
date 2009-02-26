@@ -78,7 +78,7 @@
 		31AF047B0F147E8400F43D38 /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 319B46710F11AF6B00336E0A /* TCPServer.m */; };
 		31AF047C0F147E8E00F43D38 /* TCPServer.h in Headers */ = {isa = PBXBuildFile; fileRef = 319B46700F11AF6B00336E0A /* TCPServer.h */; };
 		31AF04AF0F1566C100F43D38 /* Git.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3694170EACF05500E6777B /* Git.framework */; };
-		31AF04C50F15710C00F43D38 /* AbstractSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 31AF04C10F15710C00F43D38 /* AbstractSocket.h */; };
+		31AF04C50F15710C00F43D38 /* AbstractSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 31AF04C10F15710C00F43D38 /* AbstractSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		31AF04C60F15710C00F43D38 /* AbstractSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AF04C20F15710C00F43D38 /* AbstractSocket.m */; };
 		31AF04C70F15710C00F43D38 /* Socket.h in Headers */ = {isa = PBXBuildFile; fileRef = 31AF04C30F15710C00F43D38 /* Socket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		31AF04C80F15710C00F43D38 /* Socket.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AF04C40F15710C00F43D38 /* Socket.m */; };
@@ -93,7 +93,7 @@
 		573B49CA0EF5A1F90020159D /* assertions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49C80EF5A1F90020159D /* assertions.m */; };
 		573B49CB0EF5A1F90020159D /* assertions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49C80EF5A1F90020159D /* assertions.m */; };
 		573B49CD0EF5A1F90020159D /* assertions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49C80EF5A1F90020159D /* assertions.m */; };
-		573B49D20EF5A2090020159D /* NSError-OBExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 573B49D00EF5A2090020159D /* NSError-OBExtensions.h */; };
+		573B49D20EF5A2090020159D /* NSError-OBExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 573B49D00EF5A2090020159D /* NSError-OBExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		573B49D30EF5A2090020159D /* NSError-OBExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49D10EF5A2090020159D /* NSError-OBExtensions.m */; };
 		573B49D40EF5A2090020159D /* NSError-OBExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49D10EF5A2090020159D /* NSError-OBExtensions.m */; };
 		573B49D60EF5A2090020159D /* NSError-OBExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49D10EF5A2090020159D /* NSError-OBExtensions.m */; };
@@ -216,7 +216,7 @@
 		9F754EFA0EAD225C00788FFF /* GITFileStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE329AC0E9BA2EF001E37D5 /* GITFileStore.m */; };
 		9F754EFB0EAD225D00788FFF /* GITObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F9212B60E179DB6005AC693 /* GITObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9F754EFC0EAD225E00788FFF /* GITObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD240740EA216D5000F7B60 /* GITObject.m */; };
-		9F754EFD0EAD225F00788FFF /* GITObjectStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F96B1BA0E9E334E00AD0A80 /* GITObjectStore.h */; settings = {ATTRIBUTES = (); }; };
+		9F754EFD0EAD225F00788FFF /* GITObjectStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F96B1BA0E9E334E00AD0A80 /* GITObjectStore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9F754EFE0EAD225F00788FFF /* GITObjectStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F96B1BB0E9E334E00AD0A80 /* GITObjectStore.m */; };
 		9F754EFF0EAD226400788FFF /* GITRepo.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F33C9EE0E48C5650004CD44 /* GITRepo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9F754F000EAD226700788FFF /* GITRepo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EF0E48C5650004CD44 /* GITRepo.m */; };
