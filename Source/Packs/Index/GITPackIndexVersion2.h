@@ -7,13 +7,16 @@
 //
 
 #import "GITPackIndex.h"
+#import "GITPackReverseIndex.h"
 
+@class GITPackReverseIndex;
 
 @interface GITPackIndexVersion2 : GITPackIndex
 {
-    NSString * path;
-    NSData   * data;
-    NSArray  * offsets;
+    NSString *path;
+    NSData   *data;
+    NSArray  *offsets;
+    GITPackReverseIndex *revIndex;
 }
 
 @property(readwrite,copy) NSString * path;

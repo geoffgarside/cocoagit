@@ -82,6 +82,13 @@
 - (NSUInteger)packOffsetForSha1:(NSString*)sha1 error:(NSError**)error;
 
 #pragma mark -
+#pragma mark Reverse Index Lookup Methods
+- (NSUInteger)nextOffsetWithOffset:(NSUInteger)offset;
+- (NSString *)sha1WithOffset:(NSUInteger)offset;
+- (NSUInteger)packOffsetWithIndex:(NSUInteger)i;
+
+
+#pragma mark -
 #pragma mark Internal Primitive Methods
 /*! Returns an array of the offsets within the receiver where the offset within
  * the associated PACK file can be found.

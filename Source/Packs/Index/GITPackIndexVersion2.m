@@ -38,6 +38,9 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 - (NSRange)rangeOfPackChecksum;
 - (NSRange)rangeOfChecksum;
 - (NSUInteger)packOffsetWithIndex:(NSUInteger)i;
+- (GITPackReverseIndex *)revIndex;
+- (NSString *)sha1WithOffset:(NSUInteger)offset;
+
 @end
 /*! \endcond */
 
@@ -47,19 +50,20 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 
 - (id)initWithPath:(NSString*)thePath error:(NSError**)outError
 {
-    if (self = [super init])
-    {
-        self.path = thePath;
-        self.data = [NSData dataWithContentsOfFile:thePath
-                                           options:NSUncachedRead
-                                             error:outError];
-        if (! [self verifyChecksum]) {
-            NSString * errDesc = NSLocalizedString(@"PACK Index file checksum failed", @"GITErrorPackIndexChecksumMismatch");
-            GITErrorWithInfo(outError, GITErrorPackIndexChecksumMismatch, errDesc, NSLocalizedDescriptionKey, thePath, NSFilePathErrorKey, nil);
-            [self release];
-            return nil;
-        }
+    if (! [super init])
+        return nil;
+
+    self.path = thePath;
+    self.data = [NSData dataWithContentsOfFile:thePath
+                                       options:NSUncachedRead
+                                         error:outError];
+    if (! [self verifyChecksum]) {
+        NSString * errDesc = NSLocalizedString(@"PACK Index file checksum failed", @"GITErrorPackIndexChecksumMismatch");
+        GITErrorWithInfo(outError, GITErrorPackIndexChecksumMismatch, errDesc, NSLocalizedDescriptionKey, thePath, NSFilePathErrorKey, nil);
+        [self release];
+        return nil;
     }
+        
     return self;
 }
 - (void)dealloc
@@ -67,6 +71,7 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
     self.path = nil;
     self.data = nil;
     [offsets release], offsets = nil;
+    [revIndex release], revIndex = nil;
     [super dealloc];
 }
 - (id)copyWithZone:(NSZone *)zone
@@ -80,6 +85,15 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 {
     return 2;
 }
+
+- (GITPackReverseIndex *)revIndex;
+{
+    if (! revIndex) {
+        revIndex = [[GITPackReverseIndex alloc] initWithPackIndex:self];
+    }
+    return revIndex;
+}
+
 - (NSArray*)offsets
 {
     if (!offsets)
@@ -99,7 +113,7 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
             [self rangeOfFanoutTable].location, kGITPackIndexFanoutSize);
         [self.data getBytes:&value range:range];
         thisCount = CFSwapInt32BigToHost(value);
-
+        
         if (lastCount > thisCount)
         {
             NSString * format = NSLocalizedString(@"Index: %@ : Invalid fanout %lu -> %lu for entry %d", @"GITErrorPackIndexCorrupted");
@@ -121,30 +135,34 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 {
     return [self packOffsetForSha1:sha1 error:NULL];
 }
-- (NSUInteger)packOffsetForSha1:(NSString*)sha1 error:(NSError**)error
+
+- (NSUInteger)packOffsetForSha1:(NSString*)sha1 error:(NSError**)error;
 {
     uint8_t byte;
     NSData * packedSha1 = packSHA1(sha1);
+    NSUInteger packOffset;
     [packedSha1 getBytes:&byte length:1];
-
+    
     NSRange rangeOfShas = [self rangeOfObjectsWithFirstByte:byte];
     if (rangeOfShas.length > 0)
     {
         NSUInteger i;
-        NSUInteger location = [self rangeOfSHATable].location +
-            (kGITPackIndexSHASize * rangeOfShas.location);
-        NSUInteger finish   = location +
-            (kGITPackIndexSHASize * rangeOfShas.length);
-
+        NSUInteger location = [self rangeOfSHATable].location + (kGITPackIndexSHASize * rangeOfShas.location);
+        NSUInteger finish   = location + (kGITPackIndexSHASize * rangeOfShas.length);
+        
         for (i = 0; location < finish; i++, location += kGITPackIndexSHASize)
         {
             NSData * foundSha1 = [self.data subdataWithRange:NSMakeRange(location, 20)];
-
-            if ([foundSha1 isEqualToData:packedSha1])
-                return [self packOffsetWithIndex:i + rangeOfShas.location];
+            
+            if ([foundSha1 isEqualToData:packedSha1]) {
+                packOffset = [self packOffsetWithIndex:i + rangeOfShas.location];
+                break;
+            }            
         }
+        
+        return packOffset;
     }
-
+    
     // If its found the SHA1 then it will have returned by now.
     // Otherwise the SHA1 is not in this PACK file, so we should
     // raise an error.
@@ -153,6 +171,18 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
     GITError(error, GITErrorObjectNotFound, errorDesc);
     return NSNotFound;
 }
+
+- (NSUInteger)nextOffsetWithOffset:(NSUInteger)offset;
+{
+    NSUInteger nextOffset = [[self revIndex] nextOffsetWithOffset:offset];
+    if (nextOffset == -1) {
+        // offset is the last offset in the table
+        NSRange offsetTableRange = [self rangeOfOffsetTable];
+        nextOffset = offsetTableRange.location + offsetTableRange.length;
+    }
+    return nextOffset;
+}
+
 - (NSData*)packChecksum
 {
     return [self.data subdataWithRange:[self rangeOfPackChecksum]];
@@ -196,7 +226,7 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 - (NSRange)rangeOfExtendedOffsetTable
 {
     NSUInteger endOfOffsetTable = [self rangeOfOffsetTable].location + [self rangeOfOffsetTable].length;
-    return NSMakeRange(endOfOffsetTable, endOfOffsetTable - [self.data length] - 40);    //!< Not sure what the length value should be here.
+    return NSMakeRange(endOfOffsetTable, [self.data length] - endOfOffsetTable - 40);    //!< Not sure what the length value should be here.
 }
 - (NSRange)rangeOfPackChecksum
 {
@@ -206,6 +236,25 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 {
     return NSMakeRange([self.data length] - 20, 20);
 }
+
+- (NSData *)packedSha1WithIndex:(NSUInteger)i;
+{
+    NSRange shaRange = [self rangeOfSHATable];
+    NSUInteger positionFromStart = i * kGITPackIndexSHASize;
+    
+    if (positionFromStart < shaRange.length)
+    {
+        return [self.data subdataWithRange:NSMakeRange(shaRange.location + positionFromStart, kGITPackIndexSHASize)];
+    }
+    return nil;
+}
+
+- (NSString *)sha1WithOffset:(NSUInteger)offset;
+{
+    NSUInteger index = [[self revIndex] indexWithOffset:offset];
+    return unpackSHA1FromData([self packedSha1WithIndex:index]);
+}
+
 - (NSUInteger)packOffsetWithIndex:(NSUInteger)i
 {
     NSRange offsetsRange = [self rangeOfOffsetTable];
