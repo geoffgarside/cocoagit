@@ -19,8 +19,6 @@
 @property (nonatomic, copy) NSArray *indexMap;
 
 - (id) initWithPackIndex:(GITPackIndex *)packIndex;
-
 - (NSUInteger) indexWithOffset:(NSUInteger)offset;
 - (NSUInteger) nextOffsetWithOffset:(NSUInteger)thisOffset;
-
 @end

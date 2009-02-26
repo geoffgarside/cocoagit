@@ -145,6 +145,9 @@
     return [[indexMap objectAtIndex:i] unsignedIntValue];
 }
 
+// return the next offset after object at offset: thisOffset
+//   return NSNotFound if thisOffset isn't found
+//   return -1 if thisOffset is the last offset
 - (NSUInteger) nextOffsetWithOffset:(NSUInteger)thisOffset;
 {
     NSUInteger i = [offsets bsIndexOfNumber:[NSNumber numberWithUnsignedInt:thisOffset]];
