@@ -88,10 +88,26 @@
 {
     return [self packOffsetForSha1:sha1 error:NULL];
 }
-- (NSUInteger)packOffsetForSha1:(NSString *)sha1 error:(NSError **)error
+
+- (NSUInteger)packOffsetForSha1:(NSString*)sha1 error:(NSError**)error;
 {
     [self doesNotRecognizeSelector: _cmd];
     return 0;
+}
+- (NSUInteger)nextOffsetWithOffset:(NSUInteger)offset;
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return 0; 
+}
+- (NSUInteger)packOffsetWithIndex:(NSUInteger)i;
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return 0;
+}
+- (NSString *)sha1WithOffset:(NSUInteger)offset;
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return nil;
 }
 #pragma mark -
 #pragma mark Derived Methods
