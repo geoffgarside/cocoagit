@@ -23,7 +23,9 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
 @property(readwrite,copy) NSString * path;
 @property(readwrite,retain) NSData * data;
 @property(readwrite,retain) GITPackIndex * index;
-- (NSData*)objectAtOffset:(NSUInteger)offset;
+- (NSUInteger) readHeaderAtOffset:(NSUInteger)offset type:(NSUInteger *)type size:(NSUInteger *)sizep;
+- (NSData *) unpackObjectAtOffset:(NSUInteger)offset type:(GITObjectType*)objectType error:(NSError**)error;
+- (NSData *) unpackDeltifiedObjectAtOffset:(NSUInteger)offset objectOffset:(NSUInteger)objOffset type:(GITObjectType)type error:(NSError**)error;
 - (NSRange)rangeOfPackedObjects;
 - (NSRange)rangeOfChecksum;
 - (NSData*)checksum;
@@ -122,133 +124,133 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
     if (![self hasObjectWithSha1:sha1]) return nil;
     
     if (! self.index) return nil;
-
-    NSUInteger offset = [self.index packOffsetForSha1:sha1];
-    NSData * raw = [self objectAtOffset:offset];
-    return [raw zlibInflate];
+    
+    NSData *objData;
+    NSUInteger type;
+    if (! [self loadObjectWithSha1:sha1 intoData:&objData type:&type error:NULL])
+        return nil;
+    
+    return objData;
 }
+
 - (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)objectData
                       type:(GITObjectType*)objectType error:(NSError**)error
 {
-    uint8_t buf = 0x0;    // a single byte buffer
-    NSUInteger size, type, shift = 4;
+    NSAssert(objectData != NULL, @"NULL pointer supplied for objectData");
+    NSAssert(objectType != NULL, @"NULL pointer supplied for objectType");
     
     if (! self.index) {
         GITError(error, GITErrorPackIndexNotAvailable, @"This packfile is not indexed");
     }
     
     NSUInteger offset = [self.index packOffsetForSha1:sha1 error:error];
-
     if (offset == NSNotFound)
         return NO;
+
+    NSData *objData = [self unpackObjectAtOffset:offset type:objectType error:error];
+    if (! objData)
+        return NO;
+    
+    *objectData = objData;
+    return YES;
+}
+
+
+#pragma mark -
+#pragma mark Internal Methods
+
+- (NSUInteger) readHeaderAtOffset:(NSUInteger)offset type:(NSUInteger *)type size:(NSUInteger *)sizep;
+{
+    uint8_t buf;
+    NSUInteger size, shift = 4;
+    NSUInteger pos = offset;
+    [self.data getBytes:&buf range:NSMakeRange(pos++, 1)];
+    
+    size = buf & 0xf;
+    *type = (buf >> 4) & 0x7;
 	
-	[self.data getBytes:&buf range:NSMakeRange(offset++, 1)];
-	NSAssert(buf != 0x0, @"buf should not be NULL");
-	
-	size = buf & 0xf;
-	type = (buf >> 4) & 0x7;
-	
-	while ((buf & 0x80) != 0)
-	{
-		[self.data getBytes:&buf range:NSMakeRange(offset++, 1)];
-		NSAssert(buf != 0x0, @"buf should not be NULL");
-		
+	while ((buf & 0x80) != 0) {
+		[self.data getBytes:&buf range:NSMakeRange(pos++, 1)];		
 		size |= ((buf & 0x7f) << shift);
 		shift += 7;
 	}
-	
+    
+    *sizep = size;
+    
+    return pos-offset;
+}
+
+- (NSData *)unpackObjectAtOffset:(NSUInteger)offset type:(GITObjectType*)objectType error:(NSError**)error;
+{
+    NSUInteger objOffset = offset;
+    NSUInteger nextOffset = [self.index nextOffsetWithOffset:offset];
+        
+    NSUInteger size, type;
+    NSUInteger headerLength = [self readHeaderAtOffset:offset type:&type size:&size];
+    NSUInteger packedSize = nextOffset - (objOffset + headerLength);
+    offset += headerLength;
+    
     NSData *objData;
 	switch (type) {
 		case kGITPackFileTypeCommit:
 		case kGITPackFileTypeTree:
 		case kGITPackFileTypeTag:
 		case kGITPackFileTypeBlob:
-			objData = [[self.data subdataWithRange:NSMakeRange(offset, size)] zlibInflate];
+            objData = [[self.data subdataWithRange:NSMakeRange(offset, packedSize)] zlibInflate];
+            if (objData && type && (size != [objData length])) {
+                GITError(error, GITErrorObjectSizeMismatch, NSLocalizedString(@"Object size mismatch", @"GITErrorObjectSizeMismatch"));
+                return nil;
+            }
 			break;
 		case kGITPackFileTypeDeltaOfs:
-			NSAssert(NO, @"Cannot handle Delta-Offset Object types yet");
-			break;
         case kGITPackFileTypeDeltaRefs:
-        {
-            NSData *baseSha1Data = [self.data subdataWithRange:NSMakeRange(offset, 20)];
-            NSData *deltaData = [self.data subdataWithRange:NSMakeRange(offset + 20, size)];
-
-            NSString *baseObjectSha1 = unpackSHA1FromData(baseSha1Data);
-            if (! [self hasObjectWithSha1:baseObjectSha1]) {
-                GITError(error, GITErrorObjectNotFound, NSLocalizedString(@"Object not found for PACK delta", @"GITErrorObjectNotFound (GITPackFile)"));
-                return NO;
-            }
-
-            NSData *baseObjectData;
-
-            if (! [self loadObjectWithSha1:baseObjectSha1 intoData:&baseObjectData type:objectType error:error]) {
-                return NO;
-            }
-
-            [baseObjectData retain];
-            objData = [baseObjectData dataByPatchingWithDelta:deltaData];
-            [baseObjectData release];
+            objData = [self unpackDeltifiedObjectAtOffset:offset objectOffset:objOffset type:type error:error];
             break;
-        }
-		default:
-			NSLog(@"bad object type %d", type);
-			break;
-	}
-	
-	// Similar to situation in GITFileStore: we could create different errors for each of these.
-	if (! (objData && type && size == [objData length])) {
-		GITError(error, GITErrorObjectSizeMismatch, NSLocalizedString(@"Object size mismatch", @"GITErrorObjectSizeMismatch"));
-		return NO;
-	}
-    
-    *objectType = type;
-    *objectData = objData;
-	
-	return YES;
-}
-
-#pragma mark -
-#pragma mark Internal Methods
-- (NSData*)objectAtOffset:(NSUInteger)offset
-{
-    uint8_t buf;    // a single byte buffer
-    NSUInteger size, type, shift = 4;
-    
-    // NOTE: ++ should increment offset after the range has been created
-    [self.data getBytes:&buf range:NSMakeRange(offset++, 1)];
-
-    size = buf & 0xf;
-    type = (buf >> 4) & 0x7;
-    
-    while ((buf & 0x80) != 0)
-    {
-        // NOTE: ++ should increment offset after the range has been created
-        [self.data getBytes:&buf range:NSMakeRange(offset++, 1)];
-        size |= ((buf & 0x7f) << shift);
-        shift += 7;
     }
     
-	//NSLog(@"offset: %d size: %d type: %d", offset, size, type);
-	
-	NSData *objectData = nil;
-	switch (type) {
-		case kGITPackFileTypeCommit:
-		case kGITPackFileTypeTree:
-		case kGITPackFileTypeTag:
-		case kGITPackFileTypeBlob:
-			objectData = [self.data subdataWithRange:NSMakeRange(offset, size)];
-			break;
-		case kGITPackFileTypeDeltaOfs:
-		case kGITPackFileTypeDeltaRefs:
-			NSAssert(NO, @"Cannot handle Delta Object types yet");
-			break;
-		default:
-			NSLog(@"bad object type %d", type);
-			break;
-	}
-	
-    return objectData; 
+    return objData;
 }
+
+- (NSData *)unpackDeltifiedObjectAtOffset:(NSUInteger)offset objectOffset:(NSUInteger)objOffset type:(GITObjectType)type error:(NSError**)error;
+{
+    NSData *packedData = [self.data subdataWithRange:NSMakeRange(offset, 20)];
+    
+    NSUInteger baseOffset;
+    if (type == kGITPackFileTypeDeltaRefs) {
+        offset += 20;
+        baseOffset = [self.index packOffsetForSha1:unpackSHA1FromData(packedData) error:error];
+    } else if (type == kGITPackFileTypeDeltaOfs) {
+        NSUInteger used = 0;
+        const uint8_t *bytes = [packedData bytes];
+        uint8_t c = bytes[used++];
+        baseOffset = c & 127;        
+        while ((c & 128) != 0) {
+            baseOffset++;
+            c = bytes[used++];
+            baseOffset <<= 7;
+            baseOffset += (c & 127);
+        }
+        baseOffset = objOffset - baseOffset;
+        offset += used;        
+    }
+    
+    GITObjectType baseType;
+    NSData *baseObjectData = [self unpackObjectAtOffset:baseOffset type:&baseType error:error];
+    if (! baseObjectData) {
+        GITError(error, GITErrorObjectNotFound, NSLocalizedString(@"Base Object not found for PACK delta", @"GITErrorObjectNotFound (GITPackFile)"));
+        return nil;
+    }
+    
+    [baseObjectData retain];
+    NSUInteger packedSize = [self.index nextOffsetWithOffset:objOffset] - offset;
+    NSData *deltaData = [[self.data subdataWithRange:NSMakeRange(offset, packedSize)] zlibInflate];
+    NSData *objData = [baseObjectData dataByPatchingWithDelta:deltaData];
+    [baseObjectData release];
+    
+    return objData;
+}
+
+
 - (NSRange)rangeOfPackedObjects
 {
     return NSMakeRange(12, [self rangeOfChecksum].location - 12);
