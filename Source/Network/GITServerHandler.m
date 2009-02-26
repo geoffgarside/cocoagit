@@ -140,7 +140,8 @@
 	
 	NSMutableArray *nRefs = [[NSMutableArray alloc] init];
 	
-	while(![(data = [self packetReadLine]) isEqualToString:@"done\n"]) {
+	while ((data = [self packetReadLine]) && (![data isEqualToString:@"done\n"])) {
+    NSLog(@"packet: %@ => %@", data, [data dataUsingEncoding:NSASCIIStringEncoding]);
 		if([data length] > 40) {
 			NSLog(@"data line: %@", data);
 			
