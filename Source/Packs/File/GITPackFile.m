@@ -40,7 +40,7 @@
     return nil;
 }
 
-+ (id)packFileWithPath:(NSString *)thePath;
++ (id)packFileWithPath:(NSString *)thePath
 {
     return [[[self alloc] initWithPath:thePath] autorelease];
 }
@@ -50,7 +50,7 @@
     return [self initWithPath:thePath error:NULL];
 }
 
-+ (id)packFileWithPath:(NSString *)thePath error:(NSError **)error;
++ (id)packFileWithPath:(NSString *)thePath error:(NSError **)error
 {
     return [[[self alloc] initWithPath:thePath error:error] autorelease];
 }
@@ -62,14 +62,14 @@
     return nil;
 }
 
-- (id)initWithPath:(NSString*)path indexPath:(NSString *)idxPath error:(NSError **)error;
+- (id)initWithPath:(NSString*)path indexPath:(NSString *)idxPath error:(NSError **)error
 {
     [self doesNotRecognizeSelector: _cmd];
     [self release];
     return nil;
 }
 
-- (id)initWithData:(NSData *)packData error:(NSError **)error;
+- (id)initWithData:(NSData *)packData error:(NSError **)error
 {
     [self doesNotRecognizeSelector: _cmd];
     [self release];
