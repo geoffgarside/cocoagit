@@ -76,13 +76,15 @@
 		31AF04780F147E3D00F43D38 /* GITServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 319B46680F11AF3600336E0A /* GITServer.m */; };
 		31AF04790F147E3D00F43D38 /* GITServerHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 319B466A0F11AF3600336E0A /* GITServerHandler.m */; };
 		31AF047B0F147E8400F43D38 /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 319B46710F11AF6B00336E0A /* TCPServer.m */; };
-		31AF047C0F147E8E00F43D38 /* TCPServer.h in Headers */ = {isa = PBXBuildFile; fileRef = 319B46700F11AF6B00336E0A /* TCPServer.h */; };
+		31AF047C0F147E8E00F43D38 /* TCPServer.h in Headers */ = {isa = PBXBuildFile; fileRef = 319B46700F11AF6B00336E0A /* TCPServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		31AF04AF0F1566C100F43D38 /* Git.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3694170EACF05500E6777B /* Git.framework */; };
 		31AF04C50F15710C00F43D38 /* AbstractSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 31AF04C10F15710C00F43D38 /* AbstractSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		31AF04C60F15710C00F43D38 /* AbstractSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AF04C20F15710C00F43D38 /* AbstractSocket.m */; };
 		31AF04C70F15710C00F43D38 /* Socket.h in Headers */ = {isa = PBXBuildFile; fileRef = 31AF04C30F15710C00F43D38 /* Socket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		31AF04C80F15710C00F43D38 /* Socket.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AF04C40F15710C00F43D38 /* Socket.m */; };
 		31AF05420F157C7500F43D38 /* git-remote.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AF05410F157C7500F43D38 /* git-remote.m */; };
+		38D2628D0F3A23E500683479 /* GITBranch.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F33C9E90E48C5650004CD44 /* GITBranch.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		38D262B00F3A243B00683479 /* GITBranch.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EA0E48C5650004CD44 /* GITBranch.m */; };
 		5734D7290F4148BA0092523C /* BufferedSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 5734D7250F4148BA0092523C /* BufferedSocket.h */; };
 		5734D72A0F4148BA0092523C /* BufferedSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5734D7260F4148BA0092523C /* BufferedSocket.m */; };
 		5734D72B0F4148BA0092523C /* MutableDataBufferExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 5734D7270F4148BA0092523C /* MutableDataBufferExtension.h */; };
@@ -1039,6 +1041,7 @@
 				31AF04740F147E2000F43D38 /* GITClient.h in Headers */,
 				31AF04750F147E2000F43D38 /* GITServer.h in Headers */,
 				31AF047C0F147E8E00F43D38 /* TCPServer.h in Headers */,
+				38D2628D0F3A23E500683479 /* GITBranch.h in Headers */,
 				31AF04760F147E2000F43D38 /* GITServerHandler.h in Headers */,
 				9F754ECF0EAD21F600788FFF /* GITActor.h in Headers */,
 				9F754ED20EAD220000788FFF /* NSData+Compression.h in Headers */,
@@ -1360,6 +1363,7 @@
 				31AF02C50F1437C200F43D38 /* SSHConnection.m in Sources */,
 				57E13E7F0EECF2D5003A3761 /* GITPackIndex.m in Sources */,
 				57E13E800EECF2D5003A3761 /* GITPlaceholderPackIndex.m in Sources */,
+				38D262B00F3A243B00683479 /* GITBranch.m in Sources */,
 				57E13E810EECF2D5003A3761 /* GITPackIndexVersion1.m in Sources */,
 				57E13E820EECF2D5003A3761 /* GITPackIndexVersion2.m in Sources */,
 				57E13E7C0EECF2C2003A3761 /* GITPackFile.m in Sources */,
