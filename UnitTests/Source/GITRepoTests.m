@@ -41,6 +41,15 @@
     STAssertEqualObjects(data, raw, nil);
 }
 
+- (void)testBranchesInRepo
+{
+    NSArray *branches = [repo branches];
+    STAssertTrue([branches count] == 2, @"Repo should have two branches");
+    NSArray *names = [branches valueForKey:@"name"];
+    STAssertTrue([names containsObject:@"ruby"], @"There should be a 'ruby' branch");
+    STAssertTrue([names containsObject:@"master"], @"There should be a 'master' branch");
+}
+
 - (void)testObjectNotFoundError
 {
     NSError *error = nil;
