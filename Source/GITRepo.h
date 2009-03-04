@@ -208,6 +208,7 @@
 #pragma mark Refs Stuff
 
 - (NSString *) refsPath;
+- (NSString *) packedRefsPath;
 - (NSArray *) refs;
 - (NSUInteger) countOfRefs;
 - (NSDictionary *) dictionaryWithRefName:(NSString *) aName sha:(NSString *) shaString;
