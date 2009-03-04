@@ -140,7 +140,8 @@
 	
 	NSMutableArray *nRefs = [[NSMutableArray alloc] init];
 	
-	while(![(data = [self packetReadLine]) isEqualToString:@"done\n"]) {
+	while ((data = [self packetReadLine]) && (![data isEqualToString:@"done\n"])) {
+    NSLog(@"packet: %@ => %@", data, [data dataUsingEncoding:NSASCIIStringEncoding]);
 		if([data length] > 40) {
 			NSLog(@"data line: %@", data);
 			
@@ -331,7 +332,7 @@
 
 - (void) sendNack
 {
-	[self sendPacket:@"0007NAK"];
+	[self sendString:@"0007NAK"];
 }
 
 
@@ -380,13 +381,25 @@
 }
 
 - (void) sendRef:(NSString *)refName sha:(NSString *)shaString {
-	NSString *sendData;
-	if(capabilitiesSent) 
-		sendData = [[NSString alloc] initWithFormat:@"%@ %@\n", shaString, refName];
-	else
-		// Can '\0' be in a string or does it need to be a real null byte?
-		sendData = [[NSString alloc] initWithFormat:@"%@ %@\0%@\n", shaString, refName, CAPABILITIES];
-	[self writeServer:sendData];
+  NSMutableData *sendData = [[NSMutableData alloc] init];
+  
+  [sendData appendData:[
+    [NSString stringWithFormat:@"%@ %@", shaString, refName]
+  dataUsingEncoding:NSUTF8StringEncoding]];
+  
+	if (!capabilitiesSent) {
+    [sendData appendData:[NSData dataWithBytes:"\0" length:1]];
+    [sendData appendData:[
+      CAPABILITIES
+    dataUsingEncoding:NSUTF8StringEncoding]];
+  }
+  
+  [sendData appendData:[
+    @"\n"
+  dataUsingEncoding:NSUTF8StringEncoding]];
+  
+  [self sendDataWithLengthHeader:sendData];
+  
 	[sendData release];
 	capabilitiesSent = 1;
 }
@@ -717,7 +730,7 @@
 	NSArray *thisRef;
 	NSString *toSha, *refName, *sendOk;
 	
-	[self writeServer:@"unpack ok\n"];
+	[self sendStringWithLengthHeader:@"unpack ok\n"];
 	
 	while ( (thisRef = [e nextObject]) ) {
 		NSLog(@"ref: %@", thisRef);
@@ -725,7 +738,7 @@
 		refName = [thisRef objectAtIndex:2];
 		[gitRepo updateRef:refName toSha:toSha];
 		sendOk = [NSString stringWithFormat:@"ok %@\n", refName];
-		[self writeServer:sendOk];
+		[self sendStringWithLengthHeader:sendOk];
 	}	
 }
 
@@ -733,31 +746,25 @@
 /*** NETWORK FUNCTIONS ***/
 
 - (void) packetFlush {
-	[self sendPacket:@"0000"];
+	[self sendString:@"0000"];
 }
 
-- (void) sendPacket:(NSString *)dataWrite {
-	NSLog(@"send:[%@]", dataWrite);
-	NSUInteger len = [dataWrite length];
-	uint8_t buffer[len];
-	[[dataWrite dataUsingEncoding:NSUTF8StringEncoding] getBytes:buffer];
-	[outStream write:buffer maxLength:len];
+- (void) sendString:(NSString*)string {
+  [self sendData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 }
 
-// FROM GIT : pkt-line.c : Linus //
+- (void) sendStringWithLengthHeader:(NSString*)string {
+  [self sendDataWithLengthHeader:[string dataUsingEncoding:NSUTF8StringEncoding]];
+}
+
+- (void) sendData:(NSData *)data {
+  [outStream write:[data bytes] maxLength:[data length]];
+}
 
 #define hex(a) (hexchar[(a) & 15])
-- (void) writeServer:(NSString *)dataWrite {
-	//NSLog(@"write:[%@]", dataWrite);
-	NSUInteger len = [dataWrite length];
-	len += 4;
-	[self writeServerLength:len];
-	//NSLog(@"write data");
-	[self sendPacket:dataWrite];
-}
-
-- (void) writeServerLength:(NSUInteger)length 
-{
+- (void) sendDataWithLengthHeader:(NSData *)data {
+  // send length header
+  NSUInteger length = [data length] + 4;
 	static char hexchar[] = "0123456789abcdef";
 	uint8_t buffer[5];
 	
@@ -768,7 +775,11 @@
 	
 	NSLog(@"write len [%c %c %c %c]", buffer[0], buffer[1], buffer[2], buffer[3]);
 	[outStream write:buffer maxLength:4];	
+  
+  // send data
+  [self sendData: data];
 }
+
 
 - (NSString *) packetReadLine {
 	uint8_t linelen[4];

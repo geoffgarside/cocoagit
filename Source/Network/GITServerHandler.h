@@ -75,9 +75,11 @@
 
 - (void) longVal:(uint32_t)raw toByteBuffer:(uint8_t *)buffer;
 - (void) packetFlush;
-- (void) writeServer:(NSString *)dataWrite;
-- (void) writeServerLength:(unsigned int)length;
-- (void) sendPacket:(NSString *)dataSend;
 - (NSString *) packetReadLine;
+
+- (void) sendString:(NSString*)string;
+- (void) sendStringWithLengthHeader:(NSString*)string;
+- (void) sendData:(NSData *)data;
+- (void) sendDataWithLengthHeader:(NSData *)data;
 
 @end
