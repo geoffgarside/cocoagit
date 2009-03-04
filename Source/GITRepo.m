@@ -7,6 +7,7 @@
 //
 
 #import "GITRepo.h"
+#import "GITBranch.h"
 #import "GITFileStore.h"
 #import "GITPackStore.h"
 #import "GITCombinedStore.h"
@@ -28,6 +29,11 @@
 @property(readwrite,retain) GITObjectStore * store;
 @end
 /*! \endcond */
+
+@interface GITBranch ()
+@property(readwrite,retain) GITRepo * repo;
+@property(readwrite,copy) NSString * name;
+@end
 
 @implementation GITRepo
 @synthesize root;
@@ -211,29 +217,48 @@
 }
 // end KVC accessors
 
-- (NSString *) refsPath;
+- (NSString *) refsPath
 {
 	return [[self root] stringByAppendingPathComponent:@"refs"];
 }
 
-- (NSString *) packedRefsPath;
+- (NSString *) packedRefsPath
 {
 	return [[self root] stringByAppendingPathComponent:@"packed-refs"];
 }
 
-- (NSString *) headRefPath;
+- (NSString *) headRefPath
 {
 	return [[self root] stringByAppendingPathComponent:@"HEAD"];
 }
 
-- (NSDictionary *) dictionaryWithRefName:(NSString *) aName sha:(NSString *) shaString;
+- (NSArray *) branches {
+    NSArray *refs = [self refs];
+    NSMutableArray *branches = [[NSMutableArray alloc] initWithCapacity:[refs count]];
+    for (NSDictionary *ref in refs) {
+        NSString *refName = [ref objectForKey:@"name"];
+        if (![refName hasPrefix:@"refs/heads"]) {
+            continue;
+        }
+        GITBranch *branch = [[GITBranch alloc] init];
+        branch.name = [refName lastPathComponent]; // probably should explicitly split on slashes
+        branch.repo = self;
+        [branches addObject:branch];
+        [branch release];
+    }
+    NSArray *branchesCopy = [[branches copy] autorelease];
+    [branches release];
+    return branchesCopy;
+}
+
+- (NSDictionary *) dictionaryWithRefName:(NSString *) aName sha:(NSString *) shaString
 {
 	return [NSDictionary dictionaryWithObjectsAndKeys:
 							 aName, @"name",
 							 shaString, @"sha", nil];
 }
 
-- (NSArray *) refs;
+- (NSArray *) refs
 {
 	NSMutableArray *refs = [[NSMutableArray alloc] init];
 	
@@ -307,25 +332,25 @@
 	return refsCopy;
 }
 
-- (BOOL) updateRef:(NSString *)refName toSha:(NSString *)toSha;
+- (BOOL) updateRef:(NSString *)refName toSha:(NSString *)toSha
 {
 	return [self updateRef:refName toSha:toSha error:nil];
 }
 
-- (BOOL) updateRef:(NSString *)refName toSha:(NSString *)toSha error:(NSError **)error;
+- (BOOL) updateRef:(NSString *)refName toSha:(NSString *)toSha error:(NSError **)error
 {
 	NSString *refPath = [[self root] stringByAppendingPathComponent:refName];
 	return [toSha writeToFile:refPath atomically:YES encoding:NSUTF8StringEncoding error:error];
 }
 
 
-+ (BOOL) isShaValid:(NSString *) shaString;
++ (BOOL) isShaValid:(NSString *) shaString
 {
 	// should also check for invalid chars
 	return ([shaString length] == 40);
 }
 
-- (NSString *) pathForLooseObjectWithSha:(NSString *) shaValue;
+- (NSString *) pathForLooseObjectWithSha:(NSString *) shaValue
 {
 	if (! isSha1StringValid(shaValue))
 		return nil;
@@ -343,7 +368,7 @@
 	return [NSString stringWithFormat: @"%@/objects/%@/%@", [self root], looseSubDir, looseFileName];
 }
 
-- (BOOL) writeObject:(NSData *)objectData withType:(NSString *)type size:(NSUInteger)size;
+- (BOOL) writeObject:(NSData *)objectData withType:(NSString *)type size:(NSUInteger)size
 {
 	NSMutableData *object;
 	NSString *header, *objectPath, *shaStr;
@@ -370,7 +395,7 @@
 }
 
 
-- (BOOL) hasObject: (NSString *)sha1;
+- (BOOL) hasObject: (NSString *)sha1
 {
 	return [self.store hasObjectWithSha1:sha1];
 }

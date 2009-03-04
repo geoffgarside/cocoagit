@@ -31,7 +31,7 @@
     [super dealloc];
 }
 
-- (GITCommit*)head
+- (GITCommit*) head
 {
     for (NSDictionary *ref in [self.repo refs]) {
         if ([[ref objectForKey:@"name"] hasSuffix:self.name]) {

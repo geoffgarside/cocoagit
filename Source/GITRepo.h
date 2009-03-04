@@ -82,8 +82,8 @@
  */
 - (id)copyWithZone:(NSZone*)zone;
 
-/*
 - (NSArray*)branches;
+/*
 - (NSArray*)commits;
 - (NSArray*)tags;
 
