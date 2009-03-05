@@ -84,27 +84,27 @@
     [self doesNotRecognizeSelector: _cmd];
     return NO;
 }
-- (NSUInteger)packOffsetForSha1:(NSString *)sha1
+- (off_t)packOffsetForSha1:(NSString *)sha1
 {
     return [self packOffsetForSha1:sha1 error:NULL];
 }
 
-- (NSUInteger)packOffsetForSha1:(NSString*)sha1 error:(NSError**)error;
+- (off_t)packOffsetForSha1:(NSString*)sha1 error:(NSError**)error;
 {
     [self doesNotRecognizeSelector: _cmd];
     return 0;
 }
-- (NSUInteger)nextOffsetWithOffset:(NSUInteger)offset;
+- (off_t)nextOffsetWithOffset:(off_t)offset;
 {
     [self doesNotRecognizeSelector: _cmd];
     return 0; 
 }
-- (NSUInteger)packOffsetWithIndex:(NSUInteger)i;
+- (off_t)packOffsetWithIndex:(NSUInteger)i;
 {
     [self doesNotRecognizeSelector: _cmd];
     return 0;
 }
-- (NSString *)sha1WithOffset:(NSUInteger)offset;
+- (NSString *)sha1WithOffset:(off_t)offset;
 {
     [self doesNotRecognizeSelector: _cmd];
     return nil;

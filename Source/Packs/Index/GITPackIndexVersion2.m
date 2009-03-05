@@ -35,9 +35,9 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 - (NSRange)rangeOfExtendedOffsetTable;
 - (NSRange)rangeOfPackChecksum;
 - (NSRange)rangeOfChecksum;
-- (NSUInteger)packOffsetWithIndex:(NSUInteger)i;
+- (off_t)packOffsetWithIndex:(NSUInteger)i;
 - (GITPackReverseIndex *)revIndex;
-- (NSString *)sha1WithOffset:(NSUInteger)offset;
+- (NSString *)sha1WithOffset:(off_t)offset;
 
 @end
 /*! \endcond */
@@ -129,16 +129,16 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 //  - the fanout table tells you where in the main entry table you can find SHA's with a specific first byte
 //  - the main sha1 list table gives you a sorted list of SHA1's in the Index and Pack file. The array index
 //    of the SHA1 in this table equates to the array index of the pack offset in the offsets table.
-- (NSUInteger)packOffsetForSha1:(NSString*)sha1
+- (off_t)packOffsetForSha1:(NSString*)sha1
 {
     return [self packOffsetForSha1:sha1 error:NULL];
 }
 
-- (NSUInteger)packOffsetForSha1:(NSString*)sha1 error:(NSError**)error;
+- (off_t)packOffsetForSha1:(NSString*)sha1 error:(NSError**)error;
 {
     uint8_t byte;
     NSData * packedSha1 = packSHA1(sha1);
-    NSUInteger packOffset;
+    off_t packOffset;
     [packedSha1 getBytes:&byte length:1];
     
     NSRange rangeOfShas = [self rangeOfObjectsWithFirstByte:byte];
@@ -170,13 +170,13 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
     return NSNotFound;
 }
 
-- (NSUInteger)nextOffsetWithOffset:(NSUInteger)offset;
+- (off_t)nextOffsetWithOffset:(off_t)offset;
 {
-    NSUInteger nextOffset = [[self revIndex] nextOffsetWithOffset:offset];
+    off_t nextOffset = [[self revIndex] nextOffsetWithOffset:offset];
     if (nextOffset == -1) {
         // offset is the last offset in the table
         NSRange offsetTableRange = [self rangeOfOffsetTable];
-        nextOffset = offsetTableRange.location + offsetTableRange.length;
+        nextOffset = (off_t)(offsetTableRange.location + offsetTableRange.length);
     }
     return nextOffset;
 }
@@ -247,13 +247,13 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
     return nil;
 }
 
-- (NSString *)sha1WithOffset:(NSUInteger)offset;
+- (NSString *)sha1WithOffset:(off_t)offset;
 {
     NSUInteger index = [[self revIndex] indexWithOffset:offset];
     return unpackSHA1FromData([self packedSha1WithIndex:index]);
 }
 
-- (NSUInteger)packOffsetWithIndex:(NSUInteger)i
+- (off_t)packOffsetWithIndex:(NSUInteger)i;
 {
     NSRange offsetsRange = [self rangeOfOffsetTable];
     NSUInteger positionFromStart = i * kGITPackIndexOffsetSize;

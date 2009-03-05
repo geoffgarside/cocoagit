@@ -71,7 +71,7 @@
  * \param sha1 The SHA1 of the object to return the pack offset for
  * \return Offset value within the associated PACK file for the SHA1 or NSNotFound if not found
  */
-- (NSUInteger)packOffsetForSha1:(NSString*)sha1;
+- (off_t)packOffsetForSha1:(NSString*)sha1;
 
 /*! Returns the offset within the associated PACK file where the
  * object specified by the given <tt>sha1</tt> can be located.
@@ -79,13 +79,13 @@
  * \param[out] error Error object or NULL if you don't care
  * \return Offset value within the associated PACK file for the SHA1 or NSNotFound if not found
  */
-- (NSUInteger)packOffsetForSha1:(NSString*)sha1 error:(NSError**)error;
+- (off_t)packOffsetForSha1:(NSString*)sha1 error:(NSError**)error;
 
 #pragma mark -
 #pragma mark Reverse Index Lookup Methods
-- (NSUInteger)nextOffsetWithOffset:(NSUInteger)offset;
-- (NSString *)sha1WithOffset:(NSUInteger)offset;
-- (NSUInteger)packOffsetWithIndex:(NSUInteger)i;
+- (off_t)nextOffsetWithOffset:(off_t)offset;
+- (NSString *)sha1WithOffset:(off_t)offset;
+- (off_t)packOffsetWithIndex:(NSUInteger)i;
 
 
 #pragma mark -
