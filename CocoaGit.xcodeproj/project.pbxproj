@@ -133,6 +133,7 @@
 		578097EE0F44AD270027B945 /* userauth.c in Sources */ = {isa = PBXBuildFile; fileRef = 578097D80F44AD270027B945 /* userauth.c */; };
 		578098230F44B6C30027B945 /* GITSshTransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 578098210F44B6C30027B945 /* GITSshTransport.h */; };
 		578098240F44B6C30027B945 /* GITSshTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 578098220F44B6C30027B945 /* GITSshTransport.m */; };
+		57A350BB0F5FCC3000074EE6 /* NSData+Patching.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F57B96D0F35397500101EAC /* NSData+Patching.m */; };
 		57D81B2A0F419199002A571C /* NSData+HexDump.h in Headers */ = {isa = PBXBuildFile; fileRef = 57D81B280F419199002A571C /* NSData+HexDump.h */; };
 		57D81B2B0F419199002A571C /* NSData+HexDump.m in Sources */ = {isa = PBXBuildFile; fileRef = 57D81B290F419199002A571C /* NSData+HexDump.m */; };
 		57D81B500F41960D002A571C /* libSSH.dylib in Copy libSSH */ = {isa = PBXBuildFile; fileRef = 31AF01AF0F142F7B00F43D38 /* libSSH.dylib */; };
@@ -1455,6 +1456,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57A350BB0F5FCC3000074EE6 /* NSData+Patching.m in Sources */,
 				9FCF28040E9902D000665A41 /* GITRepo.m in Sources */,
 				38A504B40F5E54AD0072D8B1 /* GITBranch.m in Sources */,
 				9FCF28070E99031800665A41 /* NSData+Compression.m in Sources */,
