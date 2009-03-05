@@ -138,7 +138,6 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 {
     uint8_t byte;
     NSData * packedSha1 = packSHA1(sha1);
-    off_t packOffset;
     [packedSha1 getBytes:&byte length:1];
     
     NSRange rangeOfShas = [self rangeOfObjectsWithFirstByte:byte];
@@ -150,15 +149,11 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
         
         for (i = 0; location < finish; i++, location += kGITPackIndexSHASize)
         {
-            NSData * foundSha1 = [self.data subdataWithRange:NSMakeRange(location, 20)];
-            
+            NSData *foundSha1 = [self.data subdataWithRange:NSMakeRange(location, 20)];
             if ([foundSha1 isEqualToData:packedSha1]) {
-                packOffset = [self packOffsetWithIndex:i + rangeOfShas.location];
-                break;
+                return [self packOffsetWithIndex:(i + rangeOfShas.location)];
             }            
         }
-        
-        return packOffset;
     }
     
     // If its found the SHA1 then it will have returned by now.
