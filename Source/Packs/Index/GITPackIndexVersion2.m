@@ -11,8 +11,6 @@
 #import "NSData+Hashing.h"
 #import "GITErrors.h"
 
-#define EXTENDED_OFFSET_FLAG (1 << 31)
-
 static const NSRange kGITPackIndexSignature             = {0, 4};
 static const NSRange kGITPackIndexVersion               = {4, 4};
 
