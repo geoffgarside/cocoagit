@@ -15,3 +15,11 @@ for delta-ofs pack files:
 for delta-ref pack files:
 
     git-rev-list --objects 85f6ab303f8f6601377ce2d8ebcf186c4b5d7d68 | git-pack-objects --no-reuse-object --index-version=2,300000 cg-0.2.5-deltaref
+
+## Listing the contents of packfiles
+
+    git-verify-pack -v <packfile>
+
+### Sort by offset
+
+    git-verify-pack -v <packfile> | sort -n -k+5
