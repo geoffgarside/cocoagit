@@ -224,7 +224,7 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 - (NSRange)rangeOfExtendedOffsetTable
 {
     NSUInteger endOfOffsetTable = [self rangeOfOffsetTable].location + [self rangeOfOffsetTable].length;
-    return NSMakeRange(endOfOffsetTable, [self.data length] - endOfOffsetTable - 40);    //!< Not sure what the length value should be here.
+    return NSMakeRange(endOfOffsetTable, ([self.data length] - endOfOffsetTable - 40));
 }
 - (NSRange)rangeOfPackChecksum
 {
@@ -264,16 +264,18 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
         [self.data getBytes:&value range:NSMakeRange(offsetsRange.location + positionFromStart, kGITPackIndexOffsetSize)];
 
         value = CFSwapInt32BigToHost(value);
-        if ((value & EXTENDED_OFFSET_FLAG) == 0)
-            return value;
-        else
-        {
-            value = (value | ~EXTENDED_OFFSET_FLAG);
-            // Now get the correct offset from the extended offset table
-            NSLog(@"Value (%lu) extended offset range { %lu, %lu }", value,
-                  [self rangeOfExtendedOffsetTable].location, [self rangeOfExtendedOffsetTable].length);
+        if ((value & EXTENDED_OFFSET_FLAG) == 0) {
+            return (off_t)value;
+        } else {
+            uint32_t off64 = (value & ~EXTENDED_OFFSET_FLAG) * kGITPackIndexExtendedOffsetSize;
+
+            uint64_t v64;
+            NSRange extendedOffsetRange = [self rangeOfExtendedOffsetTable];
+            [self.data getBytes:&v64 range:NSMakeRange(extendedOffsetRange.location+off64, kGITPackIndexExtendedOffsetSize)];
+            return (off_t)CFSwapInt64BigToHost(v64);
         }
     }
     return 0;
 }
+
 @end
