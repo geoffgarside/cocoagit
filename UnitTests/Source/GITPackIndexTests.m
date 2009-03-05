@@ -7,6 +7,7 @@
 //
 
 #import "GITPackIndexTests.h"
+#import "GITPackFile.h"
 
 @implementation GITPackIndexTests
 @synthesize versionOne;
@@ -16,7 +17,9 @@
 {
     [super setUp];
     // Need to make a version 1 index file
-    self.versionTwo = [[GITPackIndex alloc] initWithPath:DOT_GIT@"objects/pack/pack-709b858145841a007ab0c53e130630fd1eecea6f.idx"];
+    //self.versionTwo = [[GITPackIndex alloc] initWithPath:DOT_GIT@"objects/pack/pack-709b858145841a007ab0c53e130630fd1eecea6f.idx"];
+    GITPackFile *packfile = [GITPackFile packFileWithPath:DELTA_REF_PACK];
+    self.versionTwo = [packfile index];
 }
 - (void)tearDown
 {
@@ -34,27 +37,27 @@
 }
 - (void)testNumberOfObjectsInVersionTwo
 {
-    STAssertEquals([versionTwo numberOfObjects], (NSUInteger)15, nil);
+    STAssertEquals([versionTwo numberOfObjects], (NSUInteger)1797, nil);
 }
 - (void)testOffsetOfObjectInVersionTwo
 {
-    off_t offset = [versionTwo packOffsetForSha1:@"226e91f3b4cca13890325f5d33ec050beca99f89"];
-    STAssertEquals(offset, (off_t)1032, nil);
+    off_t offset = [versionTwo packOffsetForSha1:@"cec49e51b154fbd982c3f023dcbde80c5687ce57"];
+    STAssertEquals(offset, (off_t)146843, nil);
 
     STAssertEquals([versionTwo packOffsetForSha1:@"cafebabe0d485f3cfd5fd9cc62491341067f0c59"], (off_t)NSNotFound, nil);
 }
 - (void)testHasObjectWithSha1InVersionTwo
 {
-    STAssertTrue([versionTwo hasObjectWithSha1:@"226e91f3b4cca13890325f5d33ec050beca99f89"], nil);
+    STAssertTrue([versionTwo hasObjectWithSha1:@"cec49e51b154fbd982c3f023dcbde80c5687ce57"], nil);
     STAssertFalse([versionTwo hasObjectWithSha1:@"cafebabe0d485f3cfd5fd9cc62491341067f0c59"], nil);
 }
 - (void)testChecksumStringInVersionTwo
 {
-    STAssertEqualObjects([versionTwo checksumString], @"d9b99e4efbd35769156692b946511b028b3ede83", nil);
+    STAssertEqualObjects([versionTwo checksumString], @"b6d850ef7f93d134b3b13fab027c2b4a86aa4368", nil);
 }
 - (void)testPackChecksumStringInVersionTwo
 {
-    STAssertEqualObjects([versionTwo packChecksumString], @"ac9654dde94bdb31dd50a50d20fe26c2c5cda925", nil);
+    STAssertEqualObjects([versionTwo packChecksumString], @"30c9a070ff5dcb64b5fd20337e3793407ecbfe66", nil);
 }
 - (void)testChecksumDoesVerify
 {
