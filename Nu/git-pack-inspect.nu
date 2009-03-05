@@ -19,8 +19,13 @@
 
 (puts "pack version: #{(packfile version)}")
 (puts "index version: #{(packidx version)}")
+(puts "pack checksum: #{(packfile checksumString)}")
+(puts " idx checksum: #{(packidx checksumString)}")
 
-(set objOffset (packidx packOffsetForSha1:sha1 error:nil))     
+(set error (NuReference new))
+(set objOffset (packidx packOffsetForSha1:sha1 error:error))     
+(if (error value)
+    (puts ((error value) localizedDescription)))
 (puts "sha1: #{sha1}, offset: #{objOffset}")
 
 (set objData (packfile dataForObjectWithSha1:sha1))
