@@ -23,9 +23,9 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
 @property(readwrite,copy) NSString * path;
 @property(readwrite,retain) NSData * data;
 @property(readwrite,retain) GITPackIndex * index;
-- (NSUInteger) readHeaderAtOffset:(NSUInteger)offset type:(NSUInteger *)type size:(NSUInteger *)sizep;
-- (NSData *) unpackObjectAtOffset:(NSUInteger)offset type:(GITObjectType*)objectType error:(NSError**)error;
-- (NSData *)unpackDeltifiedObjectAtOffset:(NSUInteger)offset type:(GITObjectType)deltaType objectOffset:(NSUInteger)objOffset objectType:(GITObjectType *)type error:(NSError**)error;
+- (NSUInteger) readHeaderAtOffset:(off_t)offset type:(NSUInteger *)type size:(NSUInteger *)sizep;
+- (NSData *) unpackObjectAtOffset:(off_t)offset type:(GITObjectType*)objectType error:(NSError**)error;
+- (NSData *)unpackDeltifiedObjectAtOffset:(off_t)offset type:(GITObjectType)deltaType objectOffset:(off_t)objOffset objectType:(GITObjectType *)type error:(NSError**)error;
 - (NSRange)rangeOfPackedObjects;
 - (NSRange)rangeOfChecksum;
 - (NSData*)checksum;
@@ -159,11 +159,11 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
 #pragma mark -
 #pragma mark Internal Methods
 
-- (NSUInteger) readHeaderAtOffset:(NSUInteger)offset type:(NSUInteger *)type size:(NSUInteger *)sizep;
+- (NSUInteger) readHeaderAtOffset:(off_t)offset type:(NSUInteger *)type size:(NSUInteger *)sizep;
 {
     uint8_t buf;
     NSUInteger size, shift = 4;
-    NSUInteger pos = offset;
+    off_t pos = offset;
     [self.data getBytes:&buf range:NSMakeRange(pos++, 1)];
     
     size = buf & 0xf;
@@ -180,10 +180,10 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
     return pos-offset;
 }
 
-- (NSData *)unpackObjectAtOffset:(NSUInteger)offset type:(GITObjectType*)objectType error:(NSError**)error;
+- (NSData *)unpackObjectAtOffset:(off_t)offset type:(GITObjectType*)objectType error:(NSError**)error;
 {
-    NSUInteger objOffset = offset;
-    NSUInteger nextOffset = [self.index nextOffsetWithOffset:offset];
+    off_t objOffset = offset;
+    off_t nextOffset = [self.index nextOffsetWithOffset:offset];
         
     NSUInteger size, type;
     NSUInteger headerLength = [self readHeaderAtOffset:offset type:&type size:&size];
@@ -212,11 +212,11 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
     return objData;
 }
 
-- (NSData *)unpackDeltifiedObjectAtOffset:(NSUInteger)offset type:(GITObjectType)deltaType objectOffset:(NSUInteger)objOffset objectType:(GITObjectType *)type error:(NSError**)error;
+- (NSData *)unpackDeltifiedObjectAtOffset:(off_t)offset type:(GITObjectType)deltaType objectOffset:(off_t)objOffset objectType:(GITObjectType *)type error:(NSError**)error;
 {
     NSData *packedData = [self.data subdataWithRange:NSMakeRange(offset, 20)];
     
-    NSUInteger baseOffset;
+    off_t baseOffset;
     if (deltaType == kGITPackFileTypeDeltaRefs) {
         offset += 20;
         baseOffset = [self.index packOffsetForSha1:unpackSHA1FromData(packedData) error:error];

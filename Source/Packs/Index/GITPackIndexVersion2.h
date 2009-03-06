@@ -9,6 +9,8 @@
 #import "GITPackIndex.h"
 #import "GITPackReverseIndex.h"
 
+#define EXTENDED_OFFSET_FLAG (1 << 31)
+
 @class GITPackReverseIndex;
 
 @interface GITPackIndexVersion2 : GITPackIndex

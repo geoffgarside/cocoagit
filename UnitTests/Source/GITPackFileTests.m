@@ -14,7 +14,7 @@
 - (void)setUp
 {
     [super setUp];
-    self.versionTwo = [[GITPackFile alloc] initWithPath:DOT_GIT @"objects/pack/pack-709b858145841a007ab0c53e130630fd1eecea6f.pack"];
+    self.versionTwo = [GITPackFile packFileWithPath:DELTA_REF_PACK];
 }
 - (void)tearDown
 {
@@ -31,7 +31,7 @@
 }
 - (void)testChecksumInVersionTwo
 {
-    STAssertEqualObjects([versionTwo checksumString], @"ac9654dde94bdb31dd50a50d20fe26c2c5cda925", nil);
+    STAssertEqualObjects([versionTwo checksumString], @"30c9a070ff5dcb64b5fd20337e3793407ecbfe66", nil);
 }
 - (void)testChecksumVerifiesInVersionTwo
 {
@@ -39,18 +39,19 @@
 }
 - (void)testNumberOfObjectsInVersionTwo
 {
-    STAssertEquals([versionTwo numberOfObjects], (NSUInteger)15, nil);
+    STAssertEquals([versionTwo numberOfObjects], (NSUInteger)1797, nil);
 }
 - (void)testHasObjectWithSha1InVersionTwo
 {
-    STAssertTrue([versionTwo hasObjectWithSha1:@"226e91f3b4cca13890325f5d33ec050beca99f89"], nil);
+    STAssertTrue([versionTwo hasObjectWithSha1:@"cec49e51b154fbd982c3f023dcbde80c5687ce57"], nil);
     STAssertFalse([versionTwo hasObjectWithSha1:@"cafebabe0d485f3cfd5fd9cc62491341067f0c59"], nil);
 }
 - (void)testDataForObjectWithSha1InVersionTwo
 {
-    NSData * data = [versionTwo dataForObjectWithSha1:@"226e91f3b4cca13890325f5d33ec050beca99f89"];
-    NSString * dataStr = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-    STAssertNotNil(dataStr, @"The string contents of the data block should not be nil");
+    NSData * data = [versionTwo dataForObjectWithSha1:@"cec49e51b154fbd982c3f023dcbde80c5687ce57"];
+    STAssertTrue(data && [data length] > 0, @"Object data is not empty");
+    //NSString * dataStr = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+    //STAssertNotNil(dataStr, @"The string contents of the data block should not be nil");
 }
 // TODO: Add more test of the data contents and sizes
 

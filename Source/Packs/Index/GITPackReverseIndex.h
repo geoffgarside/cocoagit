@@ -12,13 +12,17 @@
 @interface GITPackReverseIndex : NSObject {
     GITPackIndex *index;
     NSArray *offsets;
+    NSArray *offsets64;
     NSArray *indexMap;
+    NSArray *indexMap64;
 }
 @property (nonatomic, assign) GITPackIndex *index;
 @property (nonatomic, copy) NSArray *offsets;
 @property (nonatomic, copy) NSArray *indexMap;
+@property (nonatomic, copy) NSArray *offsets64;
+@property (nonatomic, copy) NSArray *indexMap64;
 
 - (id) initWithPackIndex:(GITPackIndex *)packIndex;
-- (NSUInteger) indexWithOffset:(NSUInteger)offset;
-- (NSUInteger) nextOffsetWithOffset:(NSUInteger)thisOffset;
+- (NSUInteger) indexWithOffset:(off_t)offset;
+- (off_t) nextOffsetWithOffset:(off_t)thisOffset;
 @end

@@ -31,12 +31,14 @@
     [super dealloc];
 }
 
-- (GITCommit*)head
+- (GITCommit*) head
 {
-    NSString * heads = [self.repo.root stringByAppendingPathComponent:@"refs/heads"];
-    NSString * file  = [heads stringByAppendingPathComponent:self.name];
-    NSString * ref   = [[NSString stringWithContentsOfFile:file] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    return [self.repo commitWithSha1:ref];
+    for (NSDictionary *ref in [self.repo refs]) {
+        if ([[ref objectForKey:@"name"] hasSuffix:self.name]) {
+            return [self.repo commitWithSha1:[ref objectForKey:@"sha"]];
+        }
+    }
+    return nil;
 }
 
 @end
