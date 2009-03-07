@@ -25,7 +25,7 @@
 
 - (void)testStoreRootIsCorrect
 {
-    STAssertEqualObjects(store.packsDir, DOT_GIT @"objects/pack", nil);
+    GHAssertEqualObjects(store.packsDir, DOT_GIT @"objects/pack", nil);
 }
 - (void)testLoadObjectWithSha1
 {
@@ -36,10 +36,10 @@
     NSData * data  = [str dataUsingEncoding:NSASCIIStringEncoding];
     BOOL result = [store loadObjectWithSha1:sha intoData:&raw type:&type error:NULL];
 
-    STAssertTrue(result, nil);
-    STAssertEquals(type, GITObjectTypeBlob, nil);
-    STAssertEquals([raw length], [data length], nil);
-    STAssertEqualObjects(raw, data, nil);
+    GHAssertTrue(result, nil);
+    GHAssertEquals(type, GITObjectTypeBlob, nil);
+    GHAssertEquals([raw length], [data length], nil);
+    GHAssertEqualObjects(raw, data, nil);
 }
 - (void)testObjectNotFoundError
 {
@@ -47,8 +47,8 @@
     NSData *raw; GITObjectType type;
     BOOL result = [store loadObjectWithSha1:@"cafebabe0d485f3cfd5fd9cc62491341067f0c59" intoData:&raw type:&type error:&error];
 
-    STAssertFalse(result, @"Object should not be found");
-    STAssertNotNil(error, @"Should not be nil");
-    STAssertEquals(GITErrorObjectNotFound, [error code], @"Should have correct error code");
+    GHAssertFalse(result, @"Object should not be found");
+    GHAssertNotNil(error, @"Should not be nil");
+    GHAssertEquals(GITErrorObjectNotFound, [error code], @"Should have correct error code");
 }
 @end

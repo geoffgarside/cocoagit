@@ -9,7 +9,7 @@
 #import "GITTestHelper.h"
 
 @class GITFileStore;
-@interface GITFileStoreTests : SenTestCase {
+@interface GITFileStoreTests : GHTestCase {
     GITFileStore * store;
 }
 

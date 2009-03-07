@@ -9,7 +9,7 @@
 #import "GITTestHelper.h"
 
 @class GITRepo;
-@interface GITRepoTests : SenTestCase {
+@interface GITRepoTests : GHTestCase {
     GITRepo * repo;
 }
 

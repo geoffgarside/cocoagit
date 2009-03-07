@@ -32,11 +32,11 @@
 
 - (void)testShouldNotBeNil
 {
-    STAssertNotNil(blob, @"Blob should be created");
+    GHAssertNotNil(blob, @"Blob should be created");
 }
 - (void)testSha1HashesAreEqual
 {
-    STAssertEqualObjects(blob.sha1, blobSHA1, @"SHA1 hashes should be equal");
+    GHAssertEqualObjects(blob.sha1, blobSHA1, @"SHA1 hashes should be equal");
 }
 
 @end

@@ -9,7 +9,7 @@
 #import "GITTestHelper.h"
 #import "GITPackIndex.h"
 
-@interface GITPackIndexTests : SenTestCase {
+@interface GITPackIndexTests : GHTestCase {
     GITPackIndex * versionOne;
     GITPackIndex * versionTwo;
 }

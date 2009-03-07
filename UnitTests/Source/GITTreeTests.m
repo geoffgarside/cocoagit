@@ -34,16 +34,16 @@
 }
 - (void)testShouldNotBeNil
 {
-    STAssertNotNil(tree, nil);
+    GHAssertNotNil(tree, nil);
 }
 - (void)testShouldHaveCorrectSHA
 {
-    STAssertEqualObjects(tree.sha1, treeSHA1, nil);
+    GHAssertEqualObjects(tree.sha1, treeSHA1, nil);
 }
 - (void)testTreeEntryLoading
 {
-    STAssertNotNil(tree.entries, @"Should not be nil");
-    STAssertEquals([tree.entries count], (NSUInteger)1, @"Should have 1 entry");
+    GHAssertNotNil(tree.entries, @"Should not be nil");
+    GHAssertEquals([tree.entries count], (NSUInteger)1, @"Should have 1 entry");
 }
 
 @end

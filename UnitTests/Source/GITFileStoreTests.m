@@ -24,12 +24,12 @@
 }
 - (void)testStoreRootIsCorrect
 {
-    STAssertEqualObjects(store.objectsDir, DOT_GIT@"objects", nil);
+    GHAssertEqualObjects(store.objectsDir, DOT_GIT@"objects", nil);
 }
 - (void)testExpandHashIntoFilePath
 {
     NSString * path = [store stringWithPathToObject:@"87f974580d485f3cfd5fd9cc62491341067f0c59"];
-    STAssertEqualObjects(path, DOT_GIT@"objects/87/f974580d485f3cfd5fd9cc62491341067f0c59", nil);
+    GHAssertEqualObjects(path, DOT_GIT@"objects/87/f974580d485f3cfd5fd9cc62491341067f0c59", nil);
 }
 - (void)testDataWithContentsOfObject
 {
@@ -39,7 +39,7 @@
 	NSData * data  = [NSData dataWithData:[str dataUsingEncoding:NSASCIIStringEncoding]];
     
     NSData * raw   = [store dataWithContentsOfObject:sha];
-	STAssertEqualObjects(raw, data, nil);
+	GHAssertEqualObjects(raw, data, nil);
 }
 - (void)testLoadObjectWithSha1
 {
@@ -50,10 +50,10 @@
     NSData * data  = [NSData dataWithData:[str dataUsingEncoding:NSASCIIStringEncoding]];
     BOOL result = [store loadObjectWithSha1:sha intoData:&raw type:&type error:NULL];
 
-    STAssertTrue(result, nil);
-    STAssertEquals(type, GITObjectTypeBlob, nil);
-    STAssertEquals([raw length], [data length], nil);
-    STAssertEqualObjects(raw, data, nil);
+    GHAssertTrue(result, nil);
+    GHAssertEquals(type, GITObjectTypeBlob, nil);
+    GHAssertEquals([raw length], [data length], nil);
+    GHAssertEqualObjects(raw, data, nil);
 }
 - (void)testObjectNotFoundError
 {
@@ -61,8 +61,8 @@
     NSData *raw; GITObjectType type;
     BOOL result = [store loadObjectWithSha1:@"cafebabe0d485f3cfd5fd9cc62491341067f0c59" intoData:&raw type:&type error:&error];
     
-    STAssertFalse(result, @"Object should not be found");
-    STAssertNotNil(error, @"Should not be nil");
-    STAssertEquals(GITErrorObjectNotFound, [error code], @"Should have correct error code");
+    GHAssertFalse(result, @"Object should not be found");
+    GHAssertNotNil(error, @"Should not be nil");
+    GHAssertEquals(GITErrorObjectNotFound, [error code], @"Should have correct error code");
 }
 @end

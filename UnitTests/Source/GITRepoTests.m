@@ -24,11 +24,11 @@
 }
 - (void)testIsNotNil
 {
-    STAssertNotNil(repo, nil);
+    GHAssertNotNil(repo, nil);
 }
 - (void)testRepoIsBare
 {
-    STAssertTrue([repo isBare], nil);
+    GHAssertTrue([repo isBare], nil);
 }
 - (void)testShouldLoadDataForHash
 {
@@ -37,17 +37,17 @@
     NSData * data  = [NSData dataWithData:[str dataUsingEncoding:NSASCIIStringEncoding]];
     
     NSData * raw = [repo dataWithContentsOfObject:sha type:@"blob"];
-    STAssertNotNil(raw, nil);
-    STAssertEqualObjects(data, raw, nil);
+    GHAssertNotNil(raw, nil);
+    GHAssertEqualObjects(data, raw, nil);
 }
 
 - (void)testBranchesInRepo
 {
     NSArray *branches = [repo branches];
-    STAssertTrue([branches count] == 2, @"Repo should have two branches");
+    GHAssertTrue([branches count] == 2, @"Repo should have two branches");
     NSArray *names = [branches valueForKey:@"name"];
-    STAssertTrue([names containsObject:@"ruby"], @"There should be a 'ruby' branch");
-    STAssertTrue([names containsObject:@"master"], @"There should be a 'master' branch");
+    GHAssertTrue([names containsObject:@"ruby"], @"There should be a 'ruby' branch");
+    GHAssertTrue([names containsObject:@"master"], @"There should be a 'master' branch");
 }
 
 - (void)testObjectNotFoundError
@@ -55,7 +55,7 @@
     NSError *error = nil;
     GITObject *o = [repo objectWithSha1:@"0123456789012345678901234567890123456789"
                                   error:&error];
-    STAssertNil(o, nil);
-    STAssertEquals(GITErrorObjectNotFound, [error code], nil);
+    GHAssertNil(o, nil);
+    GHAssertEquals(GITErrorObjectNotFound, [error code], nil);
 }
 @end
