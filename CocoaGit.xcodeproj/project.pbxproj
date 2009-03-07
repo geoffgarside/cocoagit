@@ -85,7 +85,6 @@
 		31AF05420F157C7500F43D38 /* git-remote.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AF05410F157C7500F43D38 /* git-remote.m */; };
 		38A504600F5E4DF20072D8B1 /* NSData+Patching.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F57B96D0F35397500101EAC /* NSData+Patching.m */; };
 		38A504610F5E4DFA0072D8B1 /* NSData+Patching.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F57B96C0F35397500101EAC /* NSData+Patching.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		38A504B40F5E54AD0072D8B1 /* GITBranch.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EA0E48C5650004CD44 /* GITBranch.m */; };
 		38D2628D0F3A23E500683479 /* GITBranch.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F33C9E90E48C5650004CD44 /* GITBranch.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		38D262B00F3A243B00683479 /* GITBranch.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EA0E48C5650004CD44 /* GITBranch.m */; };
 		5734D7290F4148BA0092523C /* BufferedSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 5734D7250F4148BA0092523C /* BufferedSocket.h */; };
@@ -97,12 +96,9 @@
 		573B49C90EF5A1F90020159D /* assertions.h in Headers */ = {isa = PBXBuildFile; fileRef = 573B49C70EF5A1F90020159D /* assertions.h */; };
 		573B49CA0EF5A1F90020159D /* assertions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49C80EF5A1F90020159D /* assertions.m */; };
 		573B49CB0EF5A1F90020159D /* assertions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49C80EF5A1F90020159D /* assertions.m */; };
-		573B49CD0EF5A1F90020159D /* assertions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49C80EF5A1F90020159D /* assertions.m */; };
 		573B49D20EF5A2090020159D /* NSError-OBExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 573B49D00EF5A2090020159D /* NSError-OBExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		573B49D30EF5A2090020159D /* NSError-OBExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49D10EF5A2090020159D /* NSError-OBExtensions.m */; };
 		573B49D40EF5A2090020159D /* NSError-OBExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49D10EF5A2090020159D /* NSError-OBExtensions.m */; };
-		573B49D60EF5A2090020159D /* NSError-OBExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49D10EF5A2090020159D /* NSError-OBExtensions.m */; };
-		577AA5A60EF7794E00A0B12B /* GITTestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 577AA5A50EF7794E00A0B12B /* GITTestHelper.m */; };
 		5780978A0F44AC0F0027B945 /* SSHChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 578097840F44AC0F0027B945 /* SSHChannel.h */; };
 		5780978B0F44AC0F0027B945 /* SSHChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 578097850F44AC0F0027B945 /* SSHChannel.m */; };
 		5780978C0F44AC0F0027B945 /* SSHError.h in Headers */ = {isa = PBXBuildFile; fileRef = 578097860F44AC0F0027B945 /* SSHError.h */; };
@@ -133,7 +129,23 @@
 		578097EE0F44AD270027B945 /* userauth.c in Sources */ = {isa = PBXBuildFile; fileRef = 578097D80F44AD270027B945 /* userauth.c */; };
 		578098230F44B6C30027B945 /* GITSshTransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 578098210F44B6C30027B945 /* GITSshTransport.h */; };
 		578098240F44B6C30027B945 /* GITSshTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 578098220F44B6C30027B945 /* GITSshTransport.m */; };
-		57A350BB0F5FCC3000074EE6 /* NSData+Patching.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F57B96D0F35397500101EAC /* NSData+Patching.m */; };
+		57A4311A0F6204E000E6B701 /* Git.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3694170EACF05500E6777B /* Git.framework */; };
+		57A4311F0F6204EC00E6B701 /* GHUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A4308F0F613C1000E6B701 /* GHUnit.framework */; };
+		57A431200F62051600E6B701 /* GITTestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 577AA5A50EF7794E00A0B12B /* GITTestHelper.m */; };
+		57A431210F62051600E6B701 /* GITPackFileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD70AC60EE4C675002B3001 /* GITPackFileTests.m */; };
+		57A431220F62051600E6B701 /* GITPackIndexTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD708910EDDD358002B3001 /* GITPackIndexTests.m */; };
+		57A431230F62051600E6B701 /* GITFileStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F2150FB0EA3D4F8004C6188 /* GITFileStoreTests.m */; };
+		57A431240F62051600E6B701 /* GITPackStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD70B190EE4CD1F002B3001 /* GITPackStoreTests.m */; };
+		57A431250F62051600E6B701 /* GITCombinedStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD0D6AD0F063C3F00813238 /* GITCombinedStoreTests.m */; };
+		57A431260F62051600E6B701 /* GITBlobTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCF27BC0E98FC0F00665A41 /* GITBlobTests.m */; };
+		57A431270F62051600E6B701 /* GITRepoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCF27BF0E98FEF600665A41 /* GITRepoTests.m */; };
+		57A431280F62051600E6B701 /* GITCommitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCF290F0E993E5900665A41 /* GITCommitTests.m */; };
+		57A431290F62051600E6B701 /* GITTreeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F22A0B60E9968CA006C3656 /* GITTreeTests.m */; };
+		57A4312A0F62051600E6B701 /* GITTreeEntryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F22A1050E99855B006C3656 /* GITTreeEntryTests.m */; };
+		57A4312B0F62051600E6B701 /* GITUtilityBeltTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F01049A0E9997C700A47227 /* GITUtilityBeltTests.m */; };
+		57A4312C0F62053500E6B701 /* GITActorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCF28D70E991EB800665A41 /* GITActorTests.m */; };
+		57A4312D0F62053500E6B701 /* GITDateTimeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE328CA0E9B6F2B001E37D5 /* GITDateTimeTests.m */; };
+		57A431380F62058E00E6B701 /* GHUnit.framework in Copy private frameworks */ = {isa = PBXBuildFile; fileRef = 57A4308F0F613C1000E6B701 /* GHUnit.framework */; };
 		57D81B2A0F419199002A571C /* NSData+HexDump.h in Headers */ = {isa = PBXBuildFile; fileRef = 57D81B280F419199002A571C /* NSData+HexDump.h */; };
 		57D81B2B0F419199002A571C /* NSData+HexDump.m in Sources */ = {isa = PBXBuildFile; fileRef = 57D81B290F419199002A571C /* NSData+HexDump.m */; };
 		57D81B500F41960D002A571C /* libSSH.dylib in Copy libSSH */ = {isa = PBXBuildFile; fileRef = 31AF01AF0F142F7B00F43D38 /* libSSH.dylib */; };
@@ -154,28 +166,12 @@
 		57E13E870EECF303003A3761 /* GITErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB1F0A60EC6F2DA006C68D0 /* GITErrors.m */; };
 		57E65C610F4A07AA00EB5DB8 /* GITPackReverseIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 57E65C5F0F4A07A900EB5DB8 /* GITPackReverseIndex.h */; };
 		57E65C620F4A07AA00EB5DB8 /* GITPackReverseIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E65C600F4A07AA00EB5DB8 /* GITPackReverseIndex.m */; };
-		57E65C630F4A07AA00EB5DB8 /* GITPackReverseIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E65C600F4A07AA00EB5DB8 /* GITPackReverseIndex.m */; };
 		57E65C650F4A07AA00EB5DB8 /* GITPackReverseIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E65C600F4A07AA00EB5DB8 /* GITPackReverseIndex.m */; };
 		57E65FE70F4B31CF00EB5DB8 /* Git.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3694170EACF05500E6777B /* Git.framework */; };
-		9F01049B0E9997C700A47227 /* GITUtilityBeltTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F01049A0E9997C700A47227 /* GITUtilityBeltTests.m */; };
-		9F0486FB0EE71068003128C3 /* GITCombinedStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F16B9020EDB595A003CFD93 /* GITCombinedStore.m */; };
-		9F2150FC0EA3D4F8004C6188 /* GITFileStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F2150FB0EA3D4F8004C6188 /* GITFileStoreTests.m */; };
-		9F2151AA0EA43298004C6188 /* GITBlob.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9213850E17F17C005AC693 /* GITBlob.m */; };
-		9F2151AB0EA43299004C6188 /* GITCommit.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC9030E1A7032001668EB /* GITCommit.m */; };
-		9F2151AC0EA4329A004C6188 /* GITObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD240740EA216D5000F7B60 /* GITObject.m */; };
-		9F2151AD0EA4329B004C6188 /* GITTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC9060E1A709D001668EB /* GITTag.m */; };
-		9F2151AE0EA4329C004C6188 /* GITTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9213BE0E1822A1005AC693 /* GITTree.m */; };
-		9F2151F90EA49B57004C6188 /* GITBlobTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCF27BC0E98FC0F00665A41 /* GITBlobTests.m */; };
-		9F2152260EA4CA29004C6188 /* GITTreeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F22A0B60E9968CA006C3656 /* GITTreeTests.m */; };
-		9F21523F0EA4D54C004C6188 /* GITCommitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCF290F0E993E5900665A41 /* GITCommitTests.m */; };
-		9F2152560EA4D72A004C6188 /* GITRepoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCF27BF0E98FEF600665A41 /* GITRepoTests.m */; };
 		9F2152E10EA4FA7B004C6188 /* GITObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD240740EA216D5000F7B60 /* GITObject.m */; };
 		9F2152E20EA4FA80004C6188 /* GITObjectStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F96B1BB0E9E334E00AD0A80 /* GITObjectStore.m */; };
 		9F2152E30EA4FA83004C6188 /* GITFileStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE329AC0E9BA2EF001E37D5 /* GITFileStore.m */; };
 		9F2153030EA68E3D004C6188 /* git-pack-inspect.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F2153020EA68E3D004C6188 /* git-pack-inspect.m */; };
-		9F22A0F30E99744F006C3656 /* GITTreeEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */; };
-		9F22A1010E997938006C3656 /* GITUtilityBelt.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F63998D0E51952F0034F279 /* GITUtilityBelt.m */; };
-		9F22A1060E99855B006C3656 /* GITTreeEntryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F22A1050E99855B006C3656 /* GITTreeEntryTests.m */; };
 		9F33C9F20E48C5650004CD44 /* GITRepo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EF0E48C5650004CD44 /* GITRepo.m */; };
 		9F37E6980F1130F200704E4E /* GITCombinedStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F16B9010EDB595A003CFD93 /* GITCombinedStore.h */; settings = {ATTRIBUTES = (); }; };
 		9F37E6990F1130FB00704E4E /* GITPackFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F33C9EB0E48C5650004CD44 /* GITPackFile.h */; };
@@ -190,7 +186,6 @@
 		9F37E6A40F1131EA00704E4E /* Git.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F37E6A30F1131EA00704E4E /* Git.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9F464D410E3DC3EC00867506 /* NSTimeZone+Offset.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F464D400E3DC3EC00867506 /* NSTimeZone+Offset.m */; };
 		9F63998E0E51952F0034F279 /* GITUtilityBelt.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F63998D0E51952F0034F279 /* GITUtilityBelt.m */; };
-		9F69270F0EEAB0DB007B2D5C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9F69270D0EEAB0DB007B2D5C /* Localizable.strings */; };
 		9F74428A0EDCD09600980E4E /* GITPackStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE329AF0E9BA2F8001E37D5 /* GITPackStore.m */; };
 		9F74428B0EDCD09B00980E4E /* GITCombinedStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F16B9020EDB595A003CFD93 /* GITCombinedStore.m */; };
 		9F7442940EDCD0E900980E4E /* GITPackFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EC0E48C5650004CD44 /* GITPackFile.m */; };
@@ -240,34 +235,9 @@
 		9F96B0F40E9D556900AD0A80 /* GITTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC9060E1A709D001668EB /* GITTag.m */; };
 		9F96B0F50E9D556A00AD0A80 /* GITTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9213BE0E1822A1005AC693 /* GITTree.m */; };
 		9F96B0F60E9D556B00AD0A80 /* GITTreeEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */; };
-		9F96B1BC0E9E334E00AD0A80 /* GITObjectStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F96B1BB0E9E334E00AD0A80 /* GITObjectStore.m */; };
 		9FA4E0840E19A6D400724E6B /* git-inspect.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4E0810E19A62500724E6B /* git-inspect.m */; };
 		9FA4E08A0E19A6E800724E6B /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212770E179A2C005AC693 /* NSData+Compression.m */; };
 		9FA4E08B0E19A6E900724E6B /* NSData+Hashing.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212940E179B4B005AC693 /* NSData+Hashing.m */; };
-		9FC327D90EEC4D840064B823 /* GITErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB1F0A60EC6F2DA006C68D0 /* GITErrors.m */; };
-		9FCF27B70E98F86C00665A41 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FCF27B60E98F86C00665A41 /* SenTestingKit.framework */; };
-		9FCF28040E9902D000665A41 /* GITRepo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EF0E48C5650004CD44 /* GITRepo.m */; };
-		9FCF28070E99031800665A41 /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212770E179A2C005AC693 /* NSData+Compression.m */; };
-		9FCF28080E99031900665A41 /* NSData+Hashing.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212940E179B4B005AC693 /* NSData+Hashing.m */; };
-		9FCF28090E99031A00665A41 /* NSData+Searching.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F8CFFA40E2FFCF200D0E65A /* NSData+Searching.m */; };
-		9FCF280A0E99031B00665A41 /* NSTimeZone+Offset.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F464D400E3DC3EC00867506 /* NSTimeZone+Offset.m */; };
-		9FCF28D80E991EB800665A41 /* GITActorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCF28D70E991EB800665A41 /* GITActorTests.m */; };
-		9FCF28DA0E993A8500665A41 /* GITActor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7EC93D0E1A8917001668EB /* GITActor.m */; };
-		9FD0D6AE0F063C3F00813238 /* GITCombinedStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD0D6AD0F063C3F00813238 /* GITCombinedStoreTests.m */; };
-		9FD708920EDDD358002B3001 /* GITPackIndexTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD708910EDDD358002B3001 /* GITPackIndexTests.m */; };
-		9FD7089F0EDDD73F002B3001 /* GITPackIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F35B9100EBFE1EF00FC0770 /* GITPackIndex.m */; };
-		9FD708A00EDDD740002B3001 /* GITPackIndexVersion1.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F35B9160EBFE44B00FC0770 /* GITPackIndexVersion1.m */; };
-		9FD708A10EDDD742002B3001 /* GITPackIndexVersion2.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F35B9190EBFE45B00FC0770 /* GITPackIndexVersion2.m */; };
-		9FD708A20EDDD743002B3001 /* GITPlaceholderPackIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F35B9130EBFE24000FC0770 /* GITPlaceholderPackIndex.m */; };
-		9FD70AC70EE4C675002B3001 /* GITPackFileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD70AC60EE4C675002B3001 /* GITPackFileTests.m */; };
-		9FD70AE90EE4C911002B3001 /* GITPackFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EC0E48C5650004CD44 /* GITPackFile.m */; };
-		9FD70AEA0EE4C912002B3001 /* GITPackFileVersion2.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCCCF7C0EC0E79700ED3215 /* GITPackFileVersion2.m */; };
-		9FD70AEB0EE4C913002B3001 /* GITPlaceholderPackFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCCCF790EC0E6DD00ED3215 /* GITPlaceholderPackFile.m */; };
-		9FD70B1A0EE4CD1F002B3001 /* GITPackStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD70B190EE4CD1F002B3001 /* GITPackStoreTests.m */; };
-		9FD70B1E0EE4D5E8002B3001 /* GITPackStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE329AF0E9BA2F8001E37D5 /* GITPackStore.m */; };
-		9FE328C60E9B623E001E37D5 /* GITDateTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE328C50E9B623E001E37D5 /* GITDateTime.m */; };
-		9FE328CB0E9B6F2B001E37D5 /* GITDateTimeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE328CA0E9B6F2B001E37D5 /* GITDateTimeTests.m */; };
-		9FE329AD0E9BA2EF001E37D5 /* GITFileStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE329AC0E9BA2EF001E37D5 /* GITFileStore.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -279,6 +249,13 @@
 			remoteInfo = SSH;
 		};
 		31AF04AA0F15666B00F43D38 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9F3694160EACF05500E6777B;
+			remoteInfo = Git;
+		};
+		57A4311D0F6204E400E6B701 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
@@ -302,6 +279,17 @@
 			dstSubfolderSpec = 10;
 			files = (
 			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57A4313D0F6205AC00E6B701 /* Copy private frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				57A431380F62058E00E6B701 /* GHUnit.framework in Copy private frameworks */,
+			);
+			name = "Copy private frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		57D81B4F0F41960B002A571C /* Copy libSSH */ = {
@@ -388,6 +376,9 @@
 		578097D80F44AD270027B945 /* userauth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = userauth.c; sourceTree = "<group>"; };
 		578098210F44B6C30027B945 /* GITSshTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITSshTransport.h; sourceTree = "<group>"; };
 		578098220F44B6C30027B945 /* GITSshTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITSshTransport.m; sourceTree = "<group>"; };
+		57A4308F0F613C1000E6B701 /* GHUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GHUnit.framework; path = Frameworks/GHUnit.framework; sourceTree = "<group>"; };
+		57A431100F6204BD00E6B701 /* UnitTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnitTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		57A431140F6204BE00E6B701 /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
 		57C17FF50EB01E1C00B7AE7E /* GITTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITTestHelper.h; path = UnitTests/Source/GITTestHelper.h; sourceTree = "<group>"; };
 		57D81B280F419199002A571C /* NSData+HexDump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+HexDump.h"; path = "Source/Categories/NSData+HexDump.h"; sourceTree = "<group>"; };
 		57D81B290F419199002A571C /* NSData+HexDump.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+HexDump.m"; path = "Source/Categories/NSData+HexDump.m"; sourceTree = "<group>"; };
@@ -465,7 +456,6 @@
 		9FCCCF790EC0E6DD00ED3215 /* GITPlaceholderPackFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITPlaceholderPackFile.m; path = Source/Packs/File/GITPlaceholderPackFile.m; sourceTree = "<group>"; };
 		9FCCCF7B0EC0E79700ED3215 /* GITPackFileVersion2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITPackFileVersion2.h; path = Source/Packs/File/GITPackFileVersion2.h; sourceTree = "<group>"; };
 		9FCCCF7C0EC0E79700ED3215 /* GITPackFileVersion2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITPackFileVersion2.m; path = Source/Packs/File/GITPackFileVersion2.m; sourceTree = "<group>"; };
-		9FCF27B10E98F7CE00665A41 /* Unit Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Unit Tests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FCF27B20E98F7CE00665A41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = UnitTests/Resources/Info.plist; sourceTree = "<group>"; };
 		9FCF27B60E98F86C00665A41 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		9FCF27BB0E98FC0F00665A41 /* GITBlobTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITBlobTests.h; path = UnitTests/Source/GITBlobTests.h; sourceTree = "<group>"; };
@@ -528,6 +518,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		57A4310E0F6204BD00E6B701 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57A4311F0F6204EC00E6B701 /* GHUnit.framework in Frameworks */,
+				57A4311A0F6204E000E6B701 /* Git.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9F2152FB0EA68DA7004C6188 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -550,14 +549,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9FCF27AE0E98F7CE00665A41 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9FCF27B70E98F86C00665A41 /* SenTestingKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,6 +589,7 @@
 		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				57A4308F0F613C1000E6B701 /* GHUnit.framework */,
 				9FCF27B60E98F86C00665A41 /* SenTestingKit.framework */,
 			);
 			name = "Other Frameworks";
@@ -610,6 +602,7 @@
 				9FCAA3A50F166AA50024BEC8 /* Frameworks */,
 				9FCAA3980F166A980024BEC8 /* Test Suites */,
 				9FCAA3910F166A860024BEC8 /* Tools & Examples */,
+				57A431100F6204BD00E6B701 /* UnitTests.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -652,6 +645,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				57A431140F6204BE00E6B701 /* UnitTests-Info.plist */,
 				9F69270D0EEAB0DB007B2D5C /* Localizable.strings */,
 				9F66F8160EA146C000E7FAA9 /* CocoaGit.dox */,
 				9F66F7C70EA1105500E7FAA9 /* doxygen.config */,
@@ -809,7 +803,6 @@
 		9FCAA3980F166A980024BEC8 /* Test Suites */ = {
 			isa = PBXGroup;
 			children = (
-				9FCF27B10E98F7CE00665A41 /* Unit Tests.octest */,
 			);
 			name = "Test Suites";
 			sourceTree = "<group>";
@@ -1146,6 +1139,26 @@
 			productReference = 31AF03C50F14770400F43D38 /* git-remote */;
 			productType = "com.apple.product-type.tool";
 		};
+		57A4310F0F6204BD00E6B701 /* UnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 57A431190F6204BF00E6B701 /* Build configuration list for PBXNativeTarget "UnitTests" */;
+			buildPhases = (
+				57A4310C0F6204BD00E6B701 /* Resources */,
+				57A4310D0F6204BD00E6B701 /* Sources */,
+				57A4310E0F6204BD00E6B701 /* Frameworks */,
+				57A4313D0F6205AC00E6B701 /* Copy private frameworks */,
+				57A4313F0F6205B800E6B701 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				57A4311E0F6204E400E6B701 /* PBXTargetDependency */,
+			);
+			name = UnitTests;
+			productName = UnitTests;
+			productReference = 57A431100F6204BD00E6B701 /* UnitTests.app */;
+			productType = "com.apple.product-type.application";
+		};
 		9F2152FC0EA68DA7004C6188 /* git-pack-inspect */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9F2153010EA68DC5004C6188 /* Build configuration list for PBXNativeTarget "git-pack-inspect" */;
@@ -1198,24 +1211,6 @@
 			productReference = 9FA4E06F0E19A57600724E6B /* git-inspect */;
 			productType = "com.apple.product-type.tool";
 		};
-		9FCF27B00E98F7CE00665A41 /* Unit Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 9FCF27B50E98F7CF00665A41 /* Build configuration list for PBXNativeTarget "Unit Tests" */;
-			buildPhases = (
-				9FCF27AC0E98F7CE00665A41 /* Resources */,
-				9FCF27AD0E98F7CE00665A41 /* Sources */,
-				9FCF27AE0E98F7CE00665A41 /* Frameworks */,
-				9FCF27AF0E98F7CE00665A41 /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Unit Tests";
-			productName = "Unit Tests";
-			productReference = 9FCF27B10E98F7CE00665A41 /* Unit Tests.octest */;
-			productType = "com.apple.product-type.bundle";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1230,8 +1225,8 @@
 			targets = (
 				9F66F7E70EA112C400E7FAA9 /* Docs */,
 				9F3694160EACF05500E6777B /* Git */,
+				57A4310F0F6204BD00E6B701 /* UnitTests */,
 				31AF01AE0F142F7B00F43D38 /* SSH */,
-				9FCF27B00E98F7CE00665A41 /* Unit Tests */,
 				9FA4E06E0E19A57600724E6B /* git-inspect */,
 				9F2152FC0EA68DA7004C6188 /* git-pack-inspect */,
 				319B42D00F10518C00336E0A /* git-server */,
@@ -1241,17 +1236,29 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		9FCF27AC0E98F7CE00665A41 /* Resources */ = {
+		57A4310C0F6204BD00E6B701 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F69270F0EEAB0DB007B2D5C /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		57A4313F0F6205B800E6B701 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "install_name_tool -change '/Library/Frameworks/GHUnit.framework/Versions/A/GHUnit' '@executable_path/../Frameworks/GHUnit.framework/Versions/A/GHUnit' ${TARGET_BUILD_DIR}/UnitTests.app/Contents/MacOS/UnitTests";
+		};
 		9F66F7E60EA112C400E7FAA9 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1264,19 +1271,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#  Build the doxygen documentation for the project and load the docset into Xcode.\n#  If the DOXYGEN_PATH is not correct for you please check the \"Get Info\" for this\n#  target, the majority of variables for this script have been defined there.\n#\n#  Use the following to adjust the value of the $DOXYGEN_PATH User-Defined Setting:\n#    Binary install location: /Applications/Doxygen.app/Contents/Resources/doxygen\n#    Source build install location: /usr/local/bin/doxygen\n\n#  If the config file doesn't exist, run 'doxygen -g $SOURCE_ROOT/doxygen.config' to \n#   a get default file.\n\nif [ -z $DOXYGEN_PATH ]\nthen\n  echo You must set the DOXYGEN_PATH variable in the Docs target\n  exit 1\nfi\n\nif [ -z $OUTPUT_DIRECTORY ]\nthen\n  echo You must set the OUTPUT_DIRECTORY variable in the Docs target\n  exit 1\nfi\n\nif [ -z $DOXYGEN_CONFIG ]\nthen\n  echo You must set the DOXYGEN_CONFIG variable in the Docs targe\n  exit 1\nfi\n\nif [ -z $DOCSET_BUNDLE_ID ]\nthen\n  echo You must set the DOCSET_BUNDLE_ID variable in the Docs target\n  exit 1\nfi\n\nif [ -z $INTERNAL_DOCS ]\nthen\nINTERNAL_DOCS=\"NO\"\nfi\n\nif ! [ -f $SOURCE_ROOT/$DOXYGEN_CONFIG ] \nthen \n  echo doxygen config file does not exist\n  $DOXYGEN_PATH -g $SOURCE_ROOT/$DOXYGEN_CONFIG\nfi\n\n#  Append the proper input/output directories and docset info to the config file.\n#  This works even though values are assigned higher up in the file. Easier than sed.\n\ncp $SOURCE_ROOT/$DOXYGEN_CONFIG $TEMP_DIR/doxygen.config\n\nif ! [ -d $SOURCE_ROOT/$OUTPUT_DIRECTORY ]\nthen\n  mkdir -p $SOURCE_ROOT/$OUTPUT_DIRECTORY\nfi\n\necho \"INPUT = $SOURCE_ROOT\" >> $TEMP_DIR/doxygen.config\necho \"OUTPUT_DIRECTORY = $SOURCE_ROOT/$OUTPUT_DIRECTORY\" >> $TEMP_DIR/doxygen.config\necho \"GENERATE_DOCSET        = YES\" >> $TEMP_DIR/doxygen.config\necho \"DOCSET_BUNDLE_ID       = $DOCSET_BUNDLE_ID\" >> $TEMP_DIR/doxygen.config\necho \"INTERNAL_DOCS          = $INTERNAL_DOCS\" >> $TEMP_DIR/doxygen.config\n\n#  Run doxygen on the updated config file.\n#  Note: doxygen creates a Makefile that does most of the heavy lifting.\n\n$DOXYGEN_PATH $TEMP_DIR/doxygen.config\n\n#  make will invoke docsetutil. Take a look at the Makefile to see how this is done.\n\nmake -C $SOURCE_ROOT/$OUTPUT_DIRECTORY/html install\n\n#  Construct a temporary applescript file to tell Xcode to load a docset.\n\nrm -f $TEMP_DIR/loadDocSet.scpt\n\necho \"tell application \\\"Xcode\\\"\" >> $TEMP_DIR/loadDocSet.scpt\necho \"load documentation set with path \\\"/Users/$USER/Library/Developer/Shared/Documentation/DocSets/\\\"\" \n     >> $TEMP_DIR/loadDocSet.scpt\necho \"end tell\" >> $TEMP_DIR/loadDocSet.scpt\n\n#  Run the load-docset applescript command.\n\nosascript $TEMP_DIR/loadDocSet.scpt\n\nexit 0";
-		};
-		9FCF27AF0E98F7CE00665A41 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1349,6 +1343,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				31AF05420F157C7500F43D38 /* git-remote.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57A4310D0F6204BD00E6B701 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57A4312C0F62053500E6B701 /* GITActorTests.m in Sources */,
+				57A4312D0F62053500E6B701 /* GITDateTimeTests.m in Sources */,
+				57A431200F62051600E6B701 /* GITTestHelper.m in Sources */,
+				57A431210F62051600E6B701 /* GITPackFileTests.m in Sources */,
+				57A431220F62051600E6B701 /* GITPackIndexTests.m in Sources */,
+				57A431230F62051600E6B701 /* GITFileStoreTests.m in Sources */,
+				57A431240F62051600E6B701 /* GITPackStoreTests.m in Sources */,
+				57A431250F62051600E6B701 /* GITCombinedStoreTests.m in Sources */,
+				57A431260F62051600E6B701 /* GITBlobTests.m in Sources */,
+				57A431270F62051600E6B701 /* GITRepoTests.m in Sources */,
+				57A431280F62051600E6B701 /* GITCommitTests.m in Sources */,
+				57A431290F62051600E6B701 /* GITTreeTests.m in Sources */,
+				57A4312A0F62051600E6B701 /* GITTreeEntryTests.m in Sources */,
+				57A4312B0F62051600E6B701 /* GITUtilityBeltTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1452,58 +1467,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9FCF27AD0E98F7CE00665A41 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				57A350BB0F5FCC3000074EE6 /* NSData+Patching.m in Sources */,
-				9FCF28040E9902D000665A41 /* GITRepo.m in Sources */,
-				38A504B40F5E54AD0072D8B1 /* GITBranch.m in Sources */,
-				9FCF28070E99031800665A41 /* NSData+Compression.m in Sources */,
-				9FCF28080E99031900665A41 /* NSData+Hashing.m in Sources */,
-				9FCF28090E99031A00665A41 /* NSData+Searching.m in Sources */,
-				9FCF280A0E99031B00665A41 /* NSTimeZone+Offset.m in Sources */,
-				9FCF28D80E991EB800665A41 /* GITActorTests.m in Sources */,
-				9FCF28DA0E993A8500665A41 /* GITActor.m in Sources */,
-				9F22A0F30E99744F006C3656 /* GITTreeEntry.m in Sources */,
-				9F22A1010E997938006C3656 /* GITUtilityBelt.m in Sources */,
-				9F22A1060E99855B006C3656 /* GITTreeEntryTests.m in Sources */,
-				9F01049B0E9997C700A47227 /* GITUtilityBeltTests.m in Sources */,
-				9FE328C60E9B623E001E37D5 /* GITDateTime.m in Sources */,
-				9FE328CB0E9B6F2B001E37D5 /* GITDateTimeTests.m in Sources */,
-				9FE329AD0E9BA2EF001E37D5 /* GITFileStore.m in Sources */,
-				9F96B1BC0E9E334E00AD0A80 /* GITObjectStore.m in Sources */,
-				9F2150FC0EA3D4F8004C6188 /* GITFileStoreTests.m in Sources */,
-				9F2151AA0EA43298004C6188 /* GITBlob.m in Sources */,
-				9F2151AB0EA43299004C6188 /* GITCommit.m in Sources */,
-				9F2151AC0EA4329A004C6188 /* GITObject.m in Sources */,
-				9F2151AD0EA4329B004C6188 /* GITTag.m in Sources */,
-				9F2151AE0EA4329C004C6188 /* GITTree.m in Sources */,
-				9F2151F90EA49B57004C6188 /* GITBlobTests.m in Sources */,
-				9F2152260EA4CA29004C6188 /* GITTreeTests.m in Sources */,
-				9F21523F0EA4D54C004C6188 /* GITCommitTests.m in Sources */,
-				9F2152560EA4D72A004C6188 /* GITRepoTests.m in Sources */,
-				9FD708920EDDD358002B3001 /* GITPackIndexTests.m in Sources */,
-				9FD7089F0EDDD73F002B3001 /* GITPackIndex.m in Sources */,
-				9FD708A00EDDD740002B3001 /* GITPackIndexVersion1.m in Sources */,
-				9FD708A10EDDD742002B3001 /* GITPackIndexVersion2.m in Sources */,
-				9FD708A20EDDD743002B3001 /* GITPlaceholderPackIndex.m in Sources */,
-				9FD70AC70EE4C675002B3001 /* GITPackFileTests.m in Sources */,
-				9FD70AE90EE4C911002B3001 /* GITPackFile.m in Sources */,
-				9FD70AEA0EE4C912002B3001 /* GITPackFileVersion2.m in Sources */,
-				9FD70AEB0EE4C913002B3001 /* GITPlaceholderPackFile.m in Sources */,
-				9FD70B1A0EE4CD1F002B3001 /* GITPackStoreTests.m in Sources */,
-				9FD70B1E0EE4D5E8002B3001 /* GITPackStore.m in Sources */,
-				9F0486FB0EE71068003128C3 /* GITCombinedStore.m in Sources */,
-				9FC327D90EEC4D840064B823 /* GITErrors.m in Sources */,
-				573B49CD0EF5A1F90020159D /* assertions.m in Sources */,
-				573B49D60EF5A2090020159D /* NSError-OBExtensions.m in Sources */,
-				577AA5A60EF7794E00A0B12B /* GITTestHelper.m in Sources */,
-				9FD0D6AE0F063C3F00813238 /* GITCombinedStoreTests.m in Sources */,
-				57E65C630F4A07AA00EB5DB8 /* GITPackReverseIndex.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1516,6 +1479,11 @@
 			isa = PBXTargetDependency;
 			target = 9F3694160EACF05500E6777B /* Git */;
 			targetProxy = 31AF04AA0F15666B00F43D38 /* PBXContainerItemProxy */;
+		};
+		57A4311E0F6204E400E6B701 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9F3694160EACF05500E6777B /* Git */;
+			targetProxy = 57A4311D0F6204E400E6B701 /* PBXContainerItemProxy */;
 		};
 		57E65FE60F4B31BE00EB5DB8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1746,6 +1714,112 @@
 			};
 			name = "Release-GC";
 		};
+		57A431150F6204BE00E6B701 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "UnitTests-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = UnitTests;
+			};
+			name = Debug;
+		};
+		57A431160F6204BE00E6B701 /* Debug-GC */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "UnitTests-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = UnitTests;
+			};
+			name = "Debug-GC";
+		};
+		57A431170F6204BE00E6B701 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "UnitTests-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = UnitTests;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		57A431180F6204BE00E6B701 /* Release-GC */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "UnitTests-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = UnitTests;
+			};
+			name = "Release-GC";
+		};
 		9F2152FF0EA68DA7004C6188 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1932,63 +2006,6 @@
 			};
 			name = Release;
 		};
-		9FCF27B30E98F7CF00665A41 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				INFOPLIST_FILE = UnitTests/Resources/Info.plist;
-				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
-				OTHER_LDFLAGS = (
-					"-lcrypto",
-					"-lssl",
-					"-lz",
-					"-framework",
-					Cocoa,
-					"-framework",
-					SenTestingKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = "Unit Tests";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
-		9FCF27B40E98F7CF00665A41 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				INFOPLIST_FILE = UnitTests/Resources/Info.plist;
-				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Cocoa,
-					"-framework",
-					SenTestingKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = "Unit Tests";
-				WRAPPER_EXTENSION = octest;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
 		9FE790310EFCA75B009003C0 /* Debug-GC */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2080,36 +2097,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "git-pack-inspect";
-			};
-			name = "Debug-GC";
-		};
-		9FE790350EFCA75B009003C0 /* Debug-GC */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				INFOPLIST_FILE = UnitTests/Resources/Info.plist;
-				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
-				OTHER_LDFLAGS = (
-					"-lcrypto",
-					"-lssl",
-					"-lz",
-					"-framework",
-					Cocoa,
-					"-framework",
-					SenTestingKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = "Unit Tests";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = "Debug-GC";
 		};
@@ -2217,33 +2204,6 @@
 			};
 			name = "Release-GC";
 		};
-		9FE7903B0EFCA764009003C0 /* Release-GC */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				INFOPLIST_FILE = UnitTests/Resources/Info.plist;
-				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Cocoa,
-					"-framework",
-					SenTestingKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = "Unit Tests";
-				WRAPPER_EXTENSION = octest;
-				ZERO_LINK = NO;
-			};
-			name = "Release-GC";
-		};
 		9FE7903C0EFCA764009003C0 /* Release-GC */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2323,6 +2283,17 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		57A431190F6204BF00E6B701 /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				57A431150F6204BE00E6B701 /* Debug */,
+				57A431160F6204BE00E6B701 /* Debug-GC */,
+				57A431170F6204BE00E6B701 /* Release */,
+				57A431180F6204BE00E6B701 /* Release-GC */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		9F2153010EA68DC5004C6188 /* Build configuration list for PBXNativeTarget "git-pack-inspect" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2363,17 +2334,6 @@
 				9FE790330EFCA75B009003C0 /* Debug-GC */,
 				9FA4E0720E19A57700724E6B /* Release */,
 				9FE790390EFCA764009003C0 /* Release-GC */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		9FCF27B50E98F7CF00665A41 /* Build configuration list for PBXNativeTarget "Unit Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				9FCF27B30E98F7CF00665A41 /* Debug */,
-				9FE790350EFCA75B009003C0 /* Debug-GC */,
-				9FCF27B40E98F7CF00665A41 /* Release */,
-				9FE7903B0EFCA764009003C0 /* Release-GC */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
