@@ -65,7 +65,7 @@
 		31AF01CB0F142FCF00F43D38 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 319B45C90F116F8E00336E0A /* libz.dylib */; };
 		31AF01CC0F142FD100F43D38 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 319B45CC0F116FD700336E0A /* libcrypto.dylib */; };
 		31AF01CF0F14302200F43D38 /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 319B46EA0F11CC7600336E0A /* libSystem.dylib */; };
-		31AF02BC0F14376400F43D38 /* libSSH.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31AF01AF0F142F7B00F43D38 /* libSSH.dylib */; };
+		31AF02BC0F14376400F43D38 /* SSH.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31AF01AF0F142F7B00F43D38 /* SSH.dylib */; };
 		31AF02C40F1437C200F43D38 /* SSHConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 31AF018C0F142D7A00F43D38 /* SSHConnection.h */; };
 		31AF02C50F1437C200F43D38 /* SSHConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AF018D0F142D7A00F43D38 /* SSHConnection.m */; };
 		31AF03E30F14778D00F43D38 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 319B42E00F10526A00336E0A /* Foundation.framework */; };
@@ -148,7 +148,7 @@
 		57A431380F62058E00E6B701 /* GHUnit.framework in Copy private frameworks */ = {isa = PBXBuildFile; fileRef = 57A4308F0F613C1000E6B701 /* GHUnit.framework */; };
 		57D81B2A0F419199002A571C /* NSData+HexDump.h in Headers */ = {isa = PBXBuildFile; fileRef = 57D81B280F419199002A571C /* NSData+HexDump.h */; };
 		57D81B2B0F419199002A571C /* NSData+HexDump.m in Sources */ = {isa = PBXBuildFile; fileRef = 57D81B290F419199002A571C /* NSData+HexDump.m */; };
-		57D81B500F41960D002A571C /* libSSH.dylib in Copy libSSH */ = {isa = PBXBuildFile; fileRef = 31AF01AF0F142F7B00F43D38 /* libSSH.dylib */; };
+		57D81B500F41960D002A571C /* SSH.dylib in Copy libSSH */ = {isa = PBXBuildFile; fileRef = 31AF01AF0F142F7B00F43D38 /* SSH.dylib */; };
 		57D81BA80F4216BE002A571C /* GITFetchProcess.h in Headers */ = {isa = PBXBuildFile; fileRef = 57D81BA60F4216BE002A571C /* GITFetchProcess.h */; };
 		57D81BA90F4216BE002A571C /* GITFetchProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 57D81BA70F4216BE002A571C /* GITFetchProcess.m */; };
 		57D81BD20F424E53002A571C /* GITRef.h in Headers */ = {isa = PBXBuildFile; fileRef = 57D81BD00F424E53002A571C /* GITRef.h */; };
@@ -298,7 +298,7 @@
 			dstPath = lib;
 			dstSubfolderSpec = 6;
 			files = (
-				57D81B500F41960D002A571C /* libSSH.dylib in Copy libSSH */,
+				57D81B500F41960D002A571C /* SSH.dylib in Copy libSSH */,
 			);
 			name = "Copy libSSH";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -327,7 +327,7 @@
 		31AF018C0F142D7A00F43D38 /* SSHConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSHConnection.h; path = Source/Utils/SSHConnection.h; sourceTree = "<group>"; };
 		31AF018D0F142D7A00F43D38 /* SSHConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSHConnection.m; path = Source/Utils/SSHConnection.m; sourceTree = "<group>"; };
 		31AF018E0F142D7A00F43D38 /* SSHConnectionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSHConnectionTest.m; path = Source/Utils/SSHConnectionTest.m; sourceTree = "<group>"; };
-		31AF01AF0F142F7B00F43D38 /* libSSH.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libSSH.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		31AF01AF0F142F7B00F43D38 /* SSH.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = SSH.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		31AF03C50F14770400F43D38 /* git-remote */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "git-remote"; sourceTree = BUILT_PRODUCTS_DIR; };
 		31AF04C10F15710C00F43D38 /* AbstractSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AbstractSocket.h; path = Source/Vendor/SmallSockets/AbstractSocket.h; sourceTree = "<group>"; };
 		31AF04C20F15710C00F43D38 /* AbstractSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AbstractSocket.m; path = Source/Vendor/SmallSockets/AbstractSocket.m; sourceTree = "<group>"; };
@@ -541,7 +541,7 @@
 			files = (
 				319B46F20F11CCCF00336E0A /* libSystem.dylib in Frameworks */,
 				319B46F50F11CD4D00336E0A /* libcrypto.dylib in Frameworks */,
-				31AF02BC0F14376400F43D38 /* libSSH.dylib in Frameworks */,
+				31AF02BC0F14376400F43D38 /* SSH.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -818,7 +818,7 @@
 		9FCAA3B60F166AB00024BEC8 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				31AF01AF0F142F7B00F43D38 /* libSSH.dylib */,
+				31AF01AF0F142F7B00F43D38 /* SSH.dylib */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1118,7 +1118,7 @@
 			);
 			name = SSH;
 			productName = libSSH;
-			productReference = 31AF01AF0F142F7B00F43D38 /* libSSH.dylib */;
+			productReference = 31AF01AF0F142F7B00F43D38 /* SSH.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 		31AF03C40F14770400F43D38 /* git-remote */ = {
