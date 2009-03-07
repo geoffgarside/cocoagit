@@ -14,20 +14,20 @@
 - (void)testShouldInitWithName
 {
     GITActor * actor = [[GITActor alloc] initWithName:@"Enoch Root"];
-    STAssertEqualObjects(actor.name, @"Enoch Root", nil);
+    GHAssertEqualObjects(actor.name, @"Enoch Root", nil);
 }
 - (void)testShouldInitWithNameAndEmail
 {
     GITActor * actor = [[GITActor alloc] initWithName:@"Enoch Root" andEmail:@"root@example.com"];
     
-    STAssertEqualObjects(actor.name, @"Enoch Root", nil);
-    STAssertEqualObjects(actor.email, @"root@example.com", nil);
+    GHAssertEqualObjects(actor.name, @"Enoch Root", nil);
+    GHAssertEqualObjects(actor.email, @"root@example.com", nil);
 }
 - (void)testShouldFormatNameAndEmailInDescription
 {
     GITActor * actor = [[GITActor alloc] initWithName:@"Enoch Root" andEmail:@"root@example.com"];
     
-    STAssertEqualObjects([actor description], @"Enoch Root <root@example.com>", nil);
+    GHAssertEqualObjects([actor description], @"Enoch Root <root@example.com>", nil);
 }
 
 @end

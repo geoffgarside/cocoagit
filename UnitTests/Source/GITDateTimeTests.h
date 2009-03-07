@@ -6,10 +6,9 @@
 //  Copyright 2008 ManicPanda.com. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import "GITTestHelper.h"
 
-
-@interface GITDateTimeTests : SenTestCase {
+@interface GITDateTimeTests : GHTestCase {
 
 }
 

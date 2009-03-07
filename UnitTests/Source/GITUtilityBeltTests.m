@@ -30,34 +30,34 @@
 }
 - (void)testPackedSHA1String
 {
-    STAssertEquals([packedSHA1String length], (NSUInteger)20, nil);
+    GHAssertEquals([packedSHA1String length], (NSUInteger)20, nil);
 }
 - (void)testShouldPackSHA1FromString
 {
     NSData * packed = packSHA1(unpackedSHA1);
-    STAssertEquals([packed length], (NSUInteger)20, nil);
-    STAssertEqualObjects(packed, packedSHA1Data, nil);
+    GHAssertEquals([packed length], (NSUInteger)20, nil);
+    GHAssertEqualObjects(packed, packedSHA1Data, nil);
 }
 - (void)testShouldUnpackSHA1FromString
 {
     NSString * sha1 = unpackSHA1FromString(packedSHA1String);
-    STAssertEqualObjects(sha1, unpackedSHA1, nil);
+    GHAssertEqualObjects(sha1, unpackedSHA1, nil);
 }
 - (void)testShouldUnpackSHA1FromData
 {
     NSString * sha1 = unpackSHA1FromData(packedSHA1Data);
-    STAssertEqualObjects(sha1, unpackedSHA1, nil);
+    GHAssertEqualObjects(sha1, unpackedSHA1, nil);
 }
 - (void)testShouldConvertBinaryToInteger
 {   // Contents similar to PACK File version
     uint8_t bytes[4] = { 0x0, 0x0, 0x0, 0x2 };
     NSUInteger val = integerFromBytes(bytes, 4);
-    STAssertEquals(val, (NSUInteger)2, nil);
+    GHAssertEquals(val, (NSUInteger)2, nil);
 }
 - (void)testShouldConvertBinaryToInteger2
 {
     uint8_t bytes[] = { 0x0, 0x0, 0x0, 0xFE };
     NSUInteger val = integerFromBytes(bytes, 4);
-    STAssertEquals(val, (NSUInteger)254, nil);
+    GHAssertEquals(val, (NSUInteger)254, nil);
 }
 @end

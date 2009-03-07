@@ -29,38 +29,38 @@
 }
 - (void)testVersionOneVersionShouldBe1
 {
-    //STAssertEquals([versionOne version], (NSUInteger)1, nil);
+    //GHAssertEquals([versionOne version], (NSUInteger)1, nil);
 }
 - (void)testVersionTwoVersionShouldBe2
 {
-    STAssertEquals([versionTwo version], (NSUInteger)2, nil);
+    GHAssertEquals([versionTwo version], (NSUInteger)2, nil);
 }
 - (void)testNumberOfObjectsInVersionTwo
 {
-    STAssertEquals([versionTwo numberOfObjects], (NSUInteger)1797, nil);
+    GHAssertEquals([versionTwo numberOfObjects], (NSUInteger)1797, nil);
 }
 - (void)testOffsetOfObjectInVersionTwo
 {
     off_t offset = [versionTwo packOffsetForSha1:@"cec49e51b154fbd982c3f023dcbde80c5687ce57"];
-    STAssertEquals(offset, (off_t)146843, nil);
+    GHAssertEquals(offset, (off_t)146843, nil);
 
-    STAssertEquals([versionTwo packOffsetForSha1:@"cafebabe0d485f3cfd5fd9cc62491341067f0c59"], (off_t)NSNotFound, nil);
+    GHAssertEquals([versionTwo packOffsetForSha1:@"cafebabe0d485f3cfd5fd9cc62491341067f0c59"], (off_t)NSNotFound, nil);
 }
 - (void)testHasObjectWithSha1InVersionTwo
 {
-    STAssertTrue([versionTwo hasObjectWithSha1:@"cec49e51b154fbd982c3f023dcbde80c5687ce57"], nil);
-    STAssertFalse([versionTwo hasObjectWithSha1:@"cafebabe0d485f3cfd5fd9cc62491341067f0c59"], nil);
+    GHAssertTrue([versionTwo hasObjectWithSha1:@"cec49e51b154fbd982c3f023dcbde80c5687ce57"], nil);
+    GHAssertFalse([versionTwo hasObjectWithSha1:@"cafebabe0d485f3cfd5fd9cc62491341067f0c59"], nil);
 }
 - (void)testChecksumStringInVersionTwo
 {
-    STAssertEqualObjects([versionTwo checksumString], @"b6d850ef7f93d134b3b13fab027c2b4a86aa4368", nil);
+    GHAssertEqualObjects([versionTwo checksumString], @"b6d850ef7f93d134b3b13fab027c2b4a86aa4368", nil);
 }
 - (void)testPackChecksumStringInVersionTwo
 {
-    STAssertEqualObjects([versionTwo packChecksumString], @"30c9a070ff5dcb64b5fd20337e3793407ecbfe66", nil);
+    GHAssertEqualObjects([versionTwo packChecksumString], @"30c9a070ff5dcb64b5fd20337e3793407ecbfe66", nil);
 }
 - (void)testChecksumDoesVerify
 {
-    STAssertTrue([versionTwo verifyChecksum], nil);     // We assume the file is well formed so we're checking our verification process here
+    GHAssertTrue([versionTwo verifyChecksum], nil);     // We assume the file is well formed so we're checking our verification process here
 }
 @end

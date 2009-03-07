@@ -51,29 +51,29 @@
 - (void)testShouldParseEntryLine
 {
     GITTreeEntry * entry = [[GITTreeEntry alloc] initWithTreeLine:entryLine parent:tree];
-    STAssertNotNil(entry, @"TreeEntry should not be nil");
-    STAssertEquals(entry.mode, entryMode, @"Mode should be parsed properly");
-    STAssertEqualObjects(entry.name, entryName, @"Name should be parsed properly");
-    STAssertEqualObjects(entry.sha1, entrySHA1, @"SHA1 should be parsed properly");
+    GHAssertNotNil(entry, @"TreeEntry should not be nil");
+    GHAssertEquals(entry.mode, entryMode, @"Mode should be parsed properly");
+    GHAssertEqualObjects(entry.name, entryName, @"Name should be parsed properly");
+    GHAssertEqualObjects(entry.sha1, entrySHA1, @"SHA1 should be parsed properly");
 }
 - (void)testShouldInitWithModeNameAndHash
 {
     GITTreeEntry * entry = [[GITTreeEntry alloc] initWithMode:entryMode name:entryName
                                                          sha1:entrySHA1 parent:tree];
-    STAssertNotNil(entry, @"TreeEntry should not be nil");
-    STAssertEquals(entry.mode, entryMode, @"Mode should be parsed properly");
-    STAssertEqualObjects(entry.name, entryName, @"Name should be parsed properly");
-    STAssertEqualObjects(entry.sha1, entrySHA1, @"SHA1 should be parsed properly");
+    GHAssertNotNil(entry, @"TreeEntry should not be nil");
+    GHAssertEquals(entry.mode, entryMode, @"Mode should be parsed properly");
+    GHAssertEqualObjects(entry.name, entryName, @"Name should be parsed properly");
+    GHAssertEqualObjects(entry.sha1, entrySHA1, @"SHA1 should be parsed properly");
 }
 - (void)testShouldInitWithModeStringNameAndHash
 {
     NSString * entryModeStr = [NSString stringWithFormat:@"%ld", entryMode];
     GITTreeEntry * entry = [[GITTreeEntry alloc] initWithModeString:entryModeStr name:entryName
                                                                sha1:entrySHA1 parent:tree];
-    STAssertNotNil(entry, @"TreeEntry should not be nil");
-    STAssertEquals(entry.mode, entryMode, @"Mode (%@) should be parsed properly", entryModeStr);
-    STAssertEqualObjects(entry.name, entryName, @"Name should be parsed properly");
-    STAssertEqualObjects(entry.sha1, entrySHA1, @"SHA1 should be parsed properly");
+    GHAssertNotNil(entry, @"TreeEntry should not be nil");
+    GHAssertEquals(entry.mode, entryMode, @"Mode (%@) should be parsed properly", entryModeStr);
+    GHAssertEqualObjects(entry.name, entryName, @"Name should be parsed properly");
+    GHAssertEqualObjects(entry.sha1, entrySHA1, @"SHA1 should be parsed properly");
 }
 
 @end

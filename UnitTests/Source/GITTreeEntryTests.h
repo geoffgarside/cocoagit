@@ -9,7 +9,7 @@
 #import <SenTestingKit/SenTestingKit.h>
 
 @class GITRepo, GITTree;
-@interface GITTreeEntryTests : SenTestCase {
+@interface GITTreeEntryTests : GHTestCase {
     GITRepo * repo;
     GITTree * tree;
     NSUInteger entryMode;

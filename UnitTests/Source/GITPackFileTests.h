@@ -9,7 +9,7 @@
 #import "GITTestHelper.h"
 #import "GITPackFile.h"
 
-@interface GITPackFileTests : SenTestCase {
+@interface GITPackFileTests : GHTestCase {
     GITPackFile * versionTwo;
 }
 

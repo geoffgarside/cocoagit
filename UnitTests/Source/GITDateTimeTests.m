@@ -18,9 +18,9 @@
     NSTimeZone * timezone = [NSTimeZone timeZoneWithStringOffset:@"+0100"];
     
     GITDateTime * dateTime = [[GITDateTime alloc] initWithDate:date timeZone:timezone];
-    STAssertNotNil(dateTime, @"Should not be nil");
-    STAssertEqualObjects(dateTime.date, date, @"Should be the same");
-    STAssertEqualObjects(dateTime.timezone, timezone, @"Should be the same");
+    GHAssertNotNil(dateTime, @"Should not be nil");
+    GHAssertEqualObjects(dateTime.date, date, @"Should be the same");
+    GHAssertEqualObjects(dateTime.timezone, timezone, @"Should be the same");
 }
 - (void)testInitWithTimestampAndTimeZoneOffset
 {
@@ -29,13 +29,13 @@
     
     GITDateTime * dateTime = [[GITDateTime alloc] initWithTimestamp:[date timeIntervalSince1970]
                                                      timeZoneOffset:@"+0100"];
-    STAssertNotNil(dateTime, @"Should not be nil");
-    STAssertEqualObjects(dateTime.date, date, @"Should be the same");
-    STAssertEqualObjects(dateTime.timezone, timezone, @"Should be the same");
+    GHAssertNotNil(dateTime, @"Should not be nil");
+    GHAssertEqualObjects(dateTime.date, date, @"Should be the same");
+    GHAssertEqualObjects(dateTime.timezone, timezone, @"Should be the same");
 }
 - (void)testDateTimeDescription
 {
     GITDateTime * dateTime = [[GITDateTime alloc] initWithTimestamp:1214920980 timeZoneOffset:@"+0100"];
-    STAssertEqualObjects([dateTime description], @"1214920980 +0100", @"Should format datetime with timezone correctly");
+    GHAssertEqualObjects([dateTime description], @"1214920980 +0100", @"Should format datetime with timezone correctly");
 }
 @end

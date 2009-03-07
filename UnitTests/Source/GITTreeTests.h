@@ -9,7 +9,7 @@
 #import "GITTestHelper.h"
 
 @class GITRepo, GITTree;
-@interface GITTreeTests : SenTestCase {
+@interface GITTreeTests : GHTestCase {
     GITRepo * repo;
     GITTree * tree;
     NSString * treeSHA1;

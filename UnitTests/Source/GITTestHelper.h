@@ -1,8 +1,9 @@
 #import <Foundation/Foundation.h>
-#import <SenTestingKit/SenTestingKit.h>
+#import <GHUnit/GHUnit.h>
+//#import <SenTestingKit/SenTestingKit.h>
 
 #define COCOAGIT_REPO @"."
-#define TEST_RESOURCES_PATH @"UnitTests/Resources/"
+#define TEST_RESOURCES_PATH @"../../UnitTests/Resources/"
 
 #define DOT_GIT TEST_RESOURCES_PATH @"dot_git/"
 #define DELTA_REF_PACK TEST_RESOURCES_PATH @"packs/cg-0.2.5-deltaref-be5a15ac583f7ed1e431f03bd444bbde6511e57c.pack"

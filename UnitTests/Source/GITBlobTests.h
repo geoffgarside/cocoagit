@@ -9,7 +9,7 @@
 #import "GITTestHelper.h"
 
 @class GITRepo, GITBlob;
-@interface GITBlobTests : SenTestCase {
+@interface GITBlobTests : GHTestCase {
     GITRepo * repo;
     GITBlob * blob;
     NSString * blobSHA1;

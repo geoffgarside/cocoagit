@@ -6,10 +6,10 @@
 //  Copyright 2008 ManicPanda.com. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import "GITTestHelper.h"
 
 
-@interface GITUtilityBeltTests : SenTestCase {
+@interface GITUtilityBeltTests : GHTestCase {
     NSString * unpackedSHA1;
     NSData   * packedSHA1Data;
     NSString * packedSHA1String;

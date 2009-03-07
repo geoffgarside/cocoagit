@@ -5,16 +5,18 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>${EXECUTABLE_NAME}</string>
+	<string>GHUnit</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.manicpanda.${PRODUCT_NAME:identifier}</string>
+	<string>me.rel.GHUnit</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>GHUnit</string>
 	<key>CFBundlePackageType</key>
-	<string>BNDL</string>
+	<string>FMWK</string>
 	<key>CFBundleSignature</key>
-	<string>????</string>
+	<string>GABE</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>0.2.10</string>
 </dict>
 </plist>

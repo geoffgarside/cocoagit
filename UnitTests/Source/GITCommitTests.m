@@ -37,38 +37,38 @@
 }
 - (void)testIsNotNil
 {
-    STAssertNotNil(commit, nil);
-    STAssertNotNil(firstCommit, nil);
+    GHAssertNotNil(commit, nil);
+    GHAssertNotNil(firstCommit, nil);
 }
 - (void)testSha1MatchesInitialSha1
 {
-    STAssertEqualObjects(commit.sha1, commitSHA1, nil);
-    STAssertEqualObjects(firstCommit.sha1, firstCommitSha1, nil);
+    GHAssertEqualObjects(commit.sha1, commitSHA1, nil);
+    GHAssertEqualObjects(firstCommit.sha1, firstCommitSha1, nil);
 }
 - (void)testAuthorIsNotNil
 {
-    STAssertNotNil(commit.author, nil);
-    STAssertNotNil(firstCommit.author, nil);
+    GHAssertNotNil(commit.author, nil);
+    GHAssertNotNil(firstCommit.author, nil);
 }
 - (void)testAuthoredIsNotNil
 {
-    STAssertNotNil(commit.authored, nil);
-    STAssertNotNil(firstCommit.authored, nil);
+    GHAssertNotNil(commit.authored, nil);
+    GHAssertNotNil(firstCommit.authored, nil);
 }
 - (void)testCommitterIsNotNil
 {
-    STAssertNotNil(commit.committer, nil);
-    STAssertNotNil(firstCommit.committer, nil);
+    GHAssertNotNil(commit.committer, nil);
+    GHAssertNotNil(firstCommit.committer, nil);
 }
 - (void)testCommittedIsNotNil
 {
-    STAssertNotNil(commit.committed, nil);
-    STAssertNotNil(firstCommit.committed, nil);
+    GHAssertNotNil(commit.committed, nil);
+    GHAssertNotNil(firstCommit.committed, nil);
 }
 - (void)testIsFirstCommit
 {
-    STAssertFalse([commit isFirstCommit], nil);
-    STAssertTrue([firstCommit isFirstCommit], nil);
+    GHAssertFalse([commit isFirstCommit], nil);
+    GHAssertTrue([firstCommit isFirstCommit], nil);
 }
 
 @end

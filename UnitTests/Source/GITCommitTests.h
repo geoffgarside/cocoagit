@@ -9,7 +9,7 @@
 #import "GITTestHelper.h"
 
 @class GITRepo, GITCommit;
-@interface GITCommitTests : SenTestCase {
+@interface GITCommitTests : GHTestCase {
     GITRepo   * repo;
     GITCommit * commit;
     NSString  * commitSHA1;
