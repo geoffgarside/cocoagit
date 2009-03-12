@@ -158,6 +158,14 @@
     return [[self sha1] isEqual:[otherObject sha1]];
 }
 
+- (NSUInteger) hash
+{
+    unsigned hash;
+    // Based, of course, only the first 32 bits of sha1, which is probably just fine.
+    [[NSScanner scannerWithString:self.sha1] scanHexInt:&hash];
+    return (NSUInteger)hash;
+}
+
 #pragma mark -
 #pragma mark Data Parser
 - (BOOL)parseRawData:(NSData*)data error:(NSError**)error
