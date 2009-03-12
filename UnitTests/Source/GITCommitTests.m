@@ -21,9 +21,9 @@
 {
     [super setUp];
     self.repo = [[GITRepo alloc] initWithRoot:DOT_GIT bare:YES];
-    self.commitSHA1 = @"f7e7e7d240ccdae143b064aa7467eb2fa91aa8a5";
+    self.firstCommitSha1 = @"f7e7e7d240ccdae143b064aa7467eb2fa91aa8a5";
+    self.commitSHA1 = @"2bb318d2c722b344f6fae8ec274d0c7df9020544";
     self.commit = [repo commitWithSha1:commitSHA1 error:NULL];
-    self.firstCommitSha1 = @"2bb318d2c722b344f6fae8ec274d0c7df9020544";
     self.firstCommit = [repo commitWithSha1:firstCommitSha1 error:NULL];
 }
 - (void)tearDown
