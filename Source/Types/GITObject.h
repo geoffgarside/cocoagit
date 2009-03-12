@@ -23,23 +23,23 @@ typedef enum {
  */
 @interface GITObject : NSObject <NSCopying>
 {
-    GITRepo  * repo;    //!< Repository the object belongs to
-    NSString * sha1;    //!< The SHA1 identifier of the object
-    NSString * type;    //!< The blob/commit/tag/tree type
+    GITRepo *repo;      //!< Repository the object belongs to
+    NSString *sha1;     //!< The SHA1 identifier of the object
+    NSString *type;     //!< The blob/commit/tag/tree type
     NSUInteger size;    //!< Size of the content of the object
-    NSData   * cachedRawData;
+    NSData *cachedRawData;
 }
 
-@property(readonly,retain) GITRepo  * repo;
-@property(readonly,copy)   NSString * sha1;
-@property(readonly,copy)   NSString * type;
-@property(readonly,assign) NSUInteger size;
-@property(readwrite,assign) NSData * cachedRawData;
+@property (readonly,retain) GITRepo *repo;
+@property (readonly,copy)   NSString *sha1;
+@property (readonly,copy)   NSString *type;
+@property (readonly,assign) NSUInteger size;
+@property (readwrite,assign) NSData *cachedRawData;
 
 /*! Returns the string name of the type.
  * \deprecated It was a bad idea and it should be removed
  */
-+ (NSString*)typeName;
++ (NSString *)typeName;
 
 #pragma mark -
 #pragma mark GITObjectType Translators
@@ -47,13 +47,13 @@ typedef enum {
  * \param type String to return the corresponding object type for
  * \return Object type which corresponds to the type passed
  */
-+ (GITObjectType)objectTypeForString:(NSString*)type;
++ (GITObjectType)objectTypeForString: (NSString *)type;
 
 /*! Returns the string for the object type.
  * \param type GITObjectType for the string
  * \return String for the object type
  */
-+ (NSString*)stringForObjectType:(GITObjectType)type;
++ (NSString *)stringForObjectType: (GITObjectType)type;
 
 /*! Returns the object type for the receiver
  * \return GITObjectType enum value of the receivers class
@@ -76,7 +76,7 @@ typedef enum {
  * \return A new git object for the given <tt>sha1</tt> in the <tt>repo</tt>
  * \deprecated Use -initWithSha1:repo:error: or -initWithSha1:type:data:error:
  */
-- (id)initWithSha1:(NSString*)sha1 repo:(GITRepo*)repo;
+- (id)initWithSha1: (NSString *)sha1 repo: (GITRepo *)repo;
 
 /*! Creates and returns a new git object with the given <tt>sha1</tt> composed
  * of the given <tt>data</tt> in the <tt>repo</tt>.
@@ -91,11 +91,11 @@ typedef enum {
  * \param sha1 The hash of the object
  * \param data The raw data of the object
  * \param repo The repo the object belongs to
- * \return A new git object with the given <tt>sha1</tt> composed of the given 
+ * \return A new git object with the given <tt>sha1</tt> composed of the given
  * <tt>data</tt> in the <tt>repo</tt>
  * \deprecated Use -initWithSha1:repo:error: or -initWithSha1:type:data:error:
  */
-- (id)initWithSha1:(NSString*)sha1 data:(NSData*)data repo:(GITRepo*)repo;
+- (id)initWithSha1: (NSString *)sha1 data: (NSData *)data repo: (GITRepo *)repo;
 
 /*! Creates and returns a new git object.
  * This method is intended to be called only by children of this
@@ -118,8 +118,8 @@ typedef enum {
  * \return New git object.
  * \deprecated Use -initWithSha1:repo:error: or -initWithSha1:type:data:error:
  */
-- (id)initType:(NSString*)newType sha1:(NSString*)newSha1
-          size:(NSUInteger)newSize repo:(GITRepo*)theRepo;
+- (id)initType: (NSString *)newType sha1: (NSString *)newSha1
+size: (NSUInteger)newSize repo: (GITRepo *)theRepo;
 
 #pragma mark -
 #pragma mark Error Aware Initializers
@@ -132,7 +132,7 @@ typedef enum {
  * \see GITRepo
  * \see GITObjectStore
  */
-- (id)initWithSha1:(NSString*)sha1 repo:(GITRepo*)repo error:(NSError**)error;
+- (id)initWithSha1: (NSString *)sha1 repo: (GITRepo *)repo error: (NSError**)error;
 
 /*! Creates and returns a new GITObject.
  * \param sha1 The SHA1 name of the objects
@@ -142,11 +142,13 @@ typedef enum {
  * \param[out] error The NSError containing the error details
  * \return New GITObject or nil if an error occurred
  * \par Errors:
- * \li \c GITErrorObjectParsingFailed indicates a problem parsing the raw object data
- * \li \c GITErrorObjectTypeMismatch indicates the object identified by \a sha1 is not of type \a type
+ * \li \c GITErrorObjectParsingFailed indicates a problem parsing the raw object
+ *data
+ * \li \c GITErrorObjectTypeMismatch indicates the object identified by \a sha1
+ *is not of type \a type
  */
-- (id)initWithSha1:(NSString*)sha1 type:(GITObjectType)type data:(NSData*)data
-              repo:(GITRepo*)repo error:(NSError**)error;
+- (id)initWithSha1: (NSString *)sha1 type: (GITObjectType)type data: (NSData *)data
+repo: (GITRepo *)repo error: (NSError**)error;
 
 #pragma mark -
 #pragma mark Data Parser
@@ -155,15 +157,18 @@ typedef enum {
  * \param[out] error The NSError containing the error details
  * \return YES if parsed successfully, NO if an error occurred.
  * \par Errors:
- * \li \c GITErrorObjectParsingFailed indicates a problem parsing the raw object data
+ * \li \c GITErrorObjectParsingFailed indicates a problem parsing the raw object
+ *data
  */
-- (BOOL)parseRawData:(NSData*)raw error:(NSError**)error;
+- (BOOL)parseRawData: (NSData *)raw error: (NSError**)error;
 
 #pragma mark -
 #pragma mark NSCopying
 /*! Returns a new instance that's a copy of the receiver.
- * Children should call this implementation first when overriding it as this will init
- * the fields of the base object first. Children can then add to the copied object any
+ * Children should call this implementation first when overriding it as this
+ *will init
+ * the fields of the base object first. Children can then add to the copied
+ *object any
  * further content which is required.
  *
  * Here is an example implementation for a child defining a blob object
@@ -176,22 +181,26 @@ typedef enum {
  * }
  * \endcode
  * \attention This is a concrete method.
- * \param zone The zone identifies an area of memory from which to allocate for the new 
- * instance. If zone is <tt>NULL</tt>, the new instance is allocated from the default 
+ * \param zone The zone identifies an area of memory from which to allocate for
+ *the new
+ * instance. If zone is <tt>NULL</tt>, the new instance is allocated from the
+ *default
  * zone, which is returned from the function NSDefaultMallocZone.
  * \return A new instance that's a copy of the receiver.
  */
-- (id)copyWithZone:(NSZone*)zone;
+- (id)copyWithZone: (NSZone *)zone;
 
 #pragma mark -
 #pragma mark Comparison methods
-/*! Returns a Boolean value that indicates whether the receiver and a given GITObject are equal.
+/*! Returns a Boolean value that indicates whether the receiver and a given
+ * GITObject are equal.
  *
- * Instances of GITObject and GITObject subclasses are equal if their Sha1 values are equal.
+ * Instances of GITObject and GITObject subclasses are equal if their Sha1
+ *values are equal.
  * \otherObject The object to be compared to the receiver.
  * \return YES if the receiver and otherObject are equal, otherwise NO.
  */
-- (BOOL) isEqual:(GITObject *) otherObject;
+- (BOOL)isEqual: (GITObject *)otherObject;
 
 #pragma mark -
 #pragma mark Raw Format methods
@@ -200,12 +209,12 @@ typedef enum {
  * \see rawContent
  * \return Raw data of the object
  */
-- (NSData*)rawData;
+- (NSData *)rawData;
 
 /*! Returns the raw content of the object.
  * \attention This is an abstract method.
  * \see rawData
  * \return Raw content of the object
  */
-- (NSData*)rawContent;
+- (NSData *)rawContent;
 @end

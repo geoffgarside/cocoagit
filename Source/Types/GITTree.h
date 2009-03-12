@@ -10,15 +10,15 @@
 #import "GITObject.h"
 #import "GITTreeEntry.h"
 
-extern NSString * const kGITObjectTreeName;
+extern NSString *const kGITObjectTreeName;
 
 /*! Git object type representing a directory.
  */
 @interface GITTree : GITObject
 {
-    NSArray  * entries; //!< Array of entrys in this tree.
+    NSArray *entries;   //!< Array of entrys in this tree.
 }
 
-@property(readonly,copy) NSArray * entries;
+@property (readonly,copy) NSArray *entries;
 
 @end

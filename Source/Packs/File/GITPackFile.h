@@ -20,7 +20,7 @@ enum {
     kGITPackFileTypeTree   = 2,
     kGITPackFileTypeBlob   = 3,
     kGITPackFileTypeTag    = 4,
-    
+
     // Delta Types
     kGITPackFileTypeDeltaOfs  = 6,
     kGITPackFileTypeDeltaRefs = 7
@@ -54,7 +54,7 @@ enum {
  * \return The index for the receiver
  * \internal Subclasses must override this method
  */
-- (GITPackIndex*)index;
+- (GITPackIndex *)index;
 
 /*! Convenience method to create and returns a new, autoreleased
  * PACK object at the specified <tt>path</tt>.
@@ -63,7 +63,7 @@ enum {
  * \return A new PACK object
  * \internal
  */
-+ (id) packFileWithPath:(NSString *)thePath;
++ (id)packFileWithPath: (NSString *)thePath;
 
 /*! Creates and returns a new PACK object at the specified <tt>path</tt>.
  * This is a convenience method that calls -initWithPath:path error:NULL.
@@ -71,7 +71,7 @@ enum {
  * \return A new PACK object
  * \internal
  */
-- (id)initWithPath:(NSString*)path;
+- (id)initWithPath: (NSString *)path;
 
 /*! Convenience method to create and returns a new, autoreleased
  * PACK object at the specified <tt>path</tt>.
@@ -80,42 +80,45 @@ enum {
  * \return A new PACK object
  * \internal
  */
-+ (id) packFileWithPath:(NSString *)thePath error:(NSError **)error;
++ (id)packFileWithPath: (NSString *)thePath error: (NSError **)error;
 
 /*! Creates and returns a new PACK object at the specified <tt>path</tt>.
  * \param path Path of the PACK file in the repository
- * \param[out] error NSError object containing any errors, pass NULL if you don't care
+ * \param[out] error NSError object containing any errors, pass NULL if you
+ *don't care
  * \return A new PACK object
  * \internal
  * Subclasses must override this method, failure to do so will result in
  * an error. The overriding implementation should not call this implementation
  * as part of itself. Instead it is recommended to use [super init] instead.
  */
-- (id)initWithPath:(NSString*)path error:(NSError **)error;
+- (id)initWithPath: (NSString *)path error: (NSError **)error;
 
 /*! Creates and returns a new PACK object from the specified <tt>data</tt>.
  * \param packData NSData containing packed objects
- * \param[out] error NSError object containing any errors, pass NULL if you don't care
+ * \param[out] error NSError object containing any errors, pass NULL if you
+ *don't care
  * \return A new PACK object
  * \internal
  * Subclasses must override this method, failure to do so will result in
  * an error. The overriding implementation should not call this implementation
  * as part of itself. Instead it is recommended to use [super init] instead.
  */
-- (id)initWithData:(NSData *)packData error:(NSError **)error;
+- (id)initWithData: (NSData *)packData error: (NSError **)error;
 
 /*! Creates and returns a new PACK object at the specified <tt>path</tt>
  *  with a corresponding index file at the specified indexPath.
  * \param path Path of the PACK file in the repository
  * \param idxPath Path of the index file for this PACK file in the repository
- * \param[out] error NSError object containing any errors, pass NULL if you don't care
+ * \param[out] error NSError object containing any errors, pass NULL if you
+ *don't care
  * \return A new PACK object
  * \internal
  * Subclasses must override this method, failure to do so will result in
  * an error. The overriding implementation should not call this implementation
  * as part of itself. Instead it is recommended to use [super init] instead.
  */
-- (id)initWithPath:(NSString*)path indexPath:(NSString *)idxPath error:(NSError **)error;
+- (id)initWithPath: (NSString *)path indexPath: (NSString *)idxPath error: (NSError **)error;
 
 /*! Returns the data for the object specified by the given <tt>sha1</tt>.
  * The <tt>sha1</tt> will first be checked to see if it exists
@@ -124,34 +127,36 @@ enum {
  * the receiver
  * \deprecated use -loadObjectWithSha1:intoData:type:error: instead
  */
-- (NSData*)dataForObjectWithSha1:(NSString*)sha1;
+- (NSData *)dataForObjectWithSha1: (NSString *)sha1;
 
 /*! Loads and returns the contents of an object.
  * \param sha1 The SHA1 name of the object to load
  * \param[out] data Data to load the object contents into
  * \param[out] type The GITObjectType of the object
- * \param[out] error NSError object containing any errors, pass NULL if you don't care
+ * \param[out] error NSError object containing any errors, pass NULL if you
+ *don't care
  * \return YES on successful load, NO if an error occurred
  * \internal
  * We might possibly consider the following extension to this method once Deltas
- * are being parsed. If the type parameter has a non-zero value then this will be
+ * are being parsed. If the type parameter has a non-zero value then this will
+ *be
  * perceived as an expected type setting, an error should be returned if this
  * expected type is not met.
  */
-- (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)data
-                      type:(GITObjectType*)type error:(NSError**)error;
+- (BOOL)loadObjectWithSha1: (NSString *)sha1 intoData: (NSData**)data
+type: (GITObjectType *)type error: (NSError**)error;
 
 #pragma mark -
 #pragma mark Checksum Methods
 /*! Returns checksum data for the receiver
  * \return Checksum data of the receiver
  */
-- (NSData*)checksum;
+- (NSData *)checksum;
 
 /*! Returns checksum string for the receiver
  * \return Checksum string of the receiver
  */
-- (NSString*)checksumString;
+- (NSString *)checksumString;
 
 /*! Verifies if the checksum matches for the contents of the receiver.
  * \return YES if checksum matches, NO if it does not.
@@ -170,7 +175,7 @@ enum {
  * \param sha1 The SHA1 of the object to check the presence of
  * \return BOOL indicating if the receiver contains the object
  */
-- (BOOL)hasObjectWithSha1:(NSString*)sha1;
+- (BOOL)hasObjectWithSha1: (NSString *)sha1;
 
 @end
 

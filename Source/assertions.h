@@ -6,10 +6,10 @@
 // <http://www.omnigroup.com/developer/sourcecode/sourcelicense/>.
 //
 // **OPEN PERMISSION TO USE AND REPRODUCE OMNI SOURCE CODE SOFTWARE**
-// 
+//
 // Omni Source Code software is available from The Omni Group on their
 // web site at [www.omnigroup.com](http://www.omnigroup.com/).
-// 
+//
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
 // files (the "Software"), to deal in the Software without
@@ -17,10 +17,10 @@
 // modify, merge, publish, distribute, sublicense, and/or sell copies
 // of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // Any original copyright notices and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -30,7 +30,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-// $Header: svn+ssh://source.omnigroup.com/Source/svn/Omni/tags/OmniSourceRelease/2008-09-09/OmniGroup/Frameworks/OmniBase/assertions.h 102857 2008-07-15 04:22:17Z bungi $
+// $Header:
+// svn+ssh://source.omnigroup.com/Source/svn/Omni/tags/OmniSourceRelease/2008-09-09/OmniGroup/Frameworks/OmniBase/assertions.h
+// 102857 2008-07-15 04:22:17Z bungi $
 
 #import <objc/objc.h>
 
@@ -52,70 +54,89 @@
 
 #if defined(__cplusplus)
 extern "C" {
-#endif    
+#endif
 
-typedef void (*OBAssertionFailureHandler)(const char *type, const char *expression, const char *file, unsigned int lineNumber);
+typedef void (*OBAssertionFailureHandler
+              )(const char *type, const char *expression, const char *file, unsigned int lineNumber);
 
-extern void OBLogAssertionFailure(const char *type, const char *expression, const char *file, unsigned int lineNumber); // in case you want to integrate the normal behavior with your handler
+extern void
+OBLogAssertionFailure(const char   *type,
+                      const char   *expression,
+                      const char   *file,
+                      unsigned int lineNumber);                                                                         //
+                                                                                                                        // in
+                                                                                                                        // case
+                                                                                                                        // you
+                                                                                                                        // want
+                                                                                                                        // to
+                                                                                                                        // integrate
+                                                                                                                        // the
+                                                                                                                        // normal
+                                                                                                                        // behavior
+                                                                                                                        // with
+                                                                                                                        // your
+                                                                                                                        // handler
 
 #if defined(OMNI_ASSERTIONS_ON)
 
-    extern void OBSetAssertionFailureHandler(OBAssertionFailureHandler handler);
+extern void
+OBSetAssertionFailureHandler(OBAssertionFailureHandler handler);
 
-    extern void OBAssertFailed(const char *type, const char *expression, const char *file, unsigned int lineNumber);
+extern void
+OBAssertFailed(const char *type, const char *expression, const char *file, unsigned int lineNumber);
 
-    extern BOOL OBEnableExpensiveAssertions;
+extern BOOL OBEnableExpensiveAssertions;
 
     #define OBPRECONDITION(expression)                                            \
     do {                                                                        \
-        if (!(expression))                                                      \
-            OBAssertFailed("PRECONDITION", #expression, __FILE__, __LINE__);    \
-    } while (NO)
+        if ( !(expression)) \
+            OBAssertFailed("PRECONDITION", # expression, __FILE__, __LINE__);\
+    } while ( NO )
 
     #define OBPOSTCONDITION(expression)                                           \
     do {                                                                        \
-        if (!(expression))                                                      \
-            OBAssertFailed("POSTCONDITION", #expression, __FILE__, __LINE__);   \
-    } while (NO)
+        if ( !(expression)) \
+            OBAssertFailed("POSTCONDITION", # expression, __FILE__, __LINE__);\
+    } while ( NO )
 
     #define OBINVARIANT(expression)                                               \
     do {                                                                        \
-        if (!(expression))                                                      \
-            OBAssertFailed("INVARIANT", #expression, __FILE__, __LINE__);       \
-    } while (NO)
+        if ( !(expression)) \
+            OBAssertFailed("INVARIANT", # expression, __FILE__, __LINE__);\
+    } while ( NO )
 
     #define OBASSERT(expression)                                                  \
     do {                                                                        \
-        if (!(expression))                                                      \
-            OBAssertFailed("ASSERT", #expression, __FILE__, __LINE__);          \
-    } while (NO)
+        if ( !(expression)) \
+            OBAssertFailed("ASSERT", # expression, __FILE__, __LINE__);\
+    } while ( NO )
 
     #define OBASSERT_NOT_REACHED(reason)                                        \
     do {                                                                        \
         OBAssertFailed("NOTREACHED", reason, __FILE__, __LINE__);              \
-    } while (NO)
+    } while ( NO )
 
     #define OBPRECONDITION_EXPENSIVE(expression) do { \
-        if (OBEnableExpensiveAssertions) \
-            OBPRECONDITION(expression); \
-    } while(NO)
+        if ( OBEnableExpensiveAssertions ) \
+            OBPRECONDITION(expression);\
+} while ( NO )
 
     #define OBPOSTCONDITION_EXPENSIVE(expression) do { \
-        if (OBEnableExpensiveAssertions) \
-            OBPOSTCONDITION(expression); \
-    } while(NO)
+        if ( OBEnableExpensiveAssertions ) \
+            OBPOSTCONDITION(expression);\
+} while ( NO )
 
     #define OBINVARIANT_EXPENSIVE(expression) do { \
-        if (OBEnableExpensiveAssertions) \
-            OBINVARIANT(expression); \
-    } while(NO)
+        if ( OBEnableExpensiveAssertions ) \
+            OBINVARIANT(expression);\
+} while ( NO )
 
     #define OBASSERT_EXPENSIVE(expression) do { \
-        if (OBEnableExpensiveAssertions) \
-            OBASSERT(expression); \
-    } while(NO)
+        if ( OBEnableExpensiveAssertions ) \
+            OBASSERT(expression);\
+} while ( NO )
 
-#else	// else insert blank lines into the code
+#else   // else insert blank lines into the code
 
     #define OBPRECONDITION(expression)
     #define OBPOSTCONDITION(expression)

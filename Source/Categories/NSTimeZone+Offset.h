@@ -18,10 +18,10 @@
  * \return A time zone with the specified offset
  * \see +timeZoneForSecondsFromGMT:
  */
-+ (id)timeZoneWithStringOffset:(NSString*)offset;
++ (id)timeZoneWithStringOffset : (NSString *)offset;
 
 /*! Returns the receivers offset as an HHMM formatted string.
  * \return The receivers offset as a string in HHMM format.
  */
-- (NSString*)offsetString;
+- (NSString *)offsetString;
 @end

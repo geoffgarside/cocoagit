@@ -9,16 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "GITObject.h"
 
-extern NSString * const kGITObjectBlobName;
+extern NSString *const kGITObjectBlobName;
 
 /*! Git object type representing a file.
  */
 @interface GITBlob : GITObject
 {
-    NSData   * data;    //!< The binary data of this blob
+    NSData *data;       //!< The binary data of this blob
 }
 
-@property(readonly,copy) NSData * data;
+@property (readonly,copy) NSData *data;
 
 /*! Returns flag indicating probability that data is textual.
  * It is important to note that this indicates only the probability
@@ -32,6 +32,6 @@ extern NSString * const kGITObjectBlobName;
 /*! Returns string contents of data.
  * \return String contents of data.
  */
-- (NSString*)stringValue;
+- (NSString *)stringValue;
 
 @end

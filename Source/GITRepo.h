@@ -26,37 +26,38 @@
  */
 @interface GITRepo : NSObject <NSCopying>
 {
-    NSString * root;    //!< Path to the repository root
-    NSString * desc;    //!< Description of the repository
+    NSString *root;     //!< Path to the repository root
+    NSString *desc;     //!< Description of the repository
                         // Interesting issue here the function used for
                         // an object to print itself is -description
     BOOL bare;          //!< Flag indicating that is a bare repository
-    GITObjectStore * store;     //!< The store which will be used to find objects
+    GITObjectStore *store;      //!< The store which will be used to find
+                                // objects
 }
 
-@property(readonly,copy) NSString * root;
-@property(readonly,copy) NSString * desc;
-@property(readonly,assign,getter=isBare) BOOL bare;
+@property (readonly,copy) NSString *root;
+@property (readonly,copy) NSString *desc;
+@property (readonly,assign,getter=isBare) BOOL bare;
 
 /*! Creates and returns a repo object with the provided root.
  * \param repoRoot The path, relative or absolute, to the repository root.
  * \return A repo object with the provided root.
  */
-- (id)initWithRoot:(NSString*)repoRoot;
+- (id)initWithRoot: (NSString *)repoRoot;
 
 /*! Creates and returns a repo object with the provided root.
  * \param repoRoot The path, relative or absolute, to the repository root.
  * \param[out] error Object encapsulating the error information
  * \return A repo object with the provided root or nil if an error occurred
  */
-- (id)initWithRoot:(NSString*)repoRoot error:(NSError**)error;
+- (id)initWithRoot: (NSString *)repoRoot error: (NSError**)error;
 
 /*! Creates and returns a repo object with the provided root.
  * \param repoRoot The path, relative or absolute, to the repository root.
  * \param isBare Flag indicating if the repository is bare.
  * \return A repo object with the provided root.
  */
-- (id)initWithRoot:(NSString*)repoRoot bare:(BOOL)isBare;
+- (id)initWithRoot: (NSString *)repoRoot bare: (BOOL)isBare;
 
 /*! Creates and returns a repo object with the provided root.
  * \param repoRoot The path, relative or absolute, to the repository root.
@@ -64,13 +65,14 @@
  * \param[out] error Object encapsulating the error information
  * \return A repo object with the provided root or nil if an error occurred
  */
-- (id)initWithRoot:(NSString*)repoRoot bare:(BOOL)isBare error:(NSError**)error;
+- (id)initWithRoot: (NSString *)repoRoot bare: (BOOL)isBare error: (NSError**)error;
 
-/*! Creates and returns a new repo using the provided store for object retreival.
+/*! Creates and returns a new repo using the provided store for object
+ * retreival.
  * \param store GITObjectStore to use for object retreival
  * \return A new repo object
  */
-- (id)initWithStore:(GITObjectStore*)store;
+- (id)initWithStore: (GITObjectStore *)store;
 
 /*! Returns a new instance that's a copy of the receiver.
  * \internal
@@ -80,19 +82,19 @@
  * is allocated from the default zone, which is returned from the function
  * <tt>NSDefaultMallocZone</tt>.
  */
-- (id)copyWithZone:(NSZone*)zone;
+- (id)copyWithZone: (NSZone *)zone;
 
-- (NSArray*)branches;
+- (NSArray *)branches;
 /*
-- (NSArray*)commits;
-- (NSArray*)tags;
-
-- (GITBranch*)head;
-- (GITBranch*)master;
-- (GITBranch*)branchWithName:(NSString*)name;
-
-- (GITTag*)tagWithName:(NSString*)name;
-*/
+ * - (NSArray*)commits;
+ * - (NSArray*)tags;
+ *
+ * - (GITBranch*)head;
+ * - (GITBranch*)master;
+ * - (GITBranch*)branchWithName:(NSString*)name;
+ *
+ * - (GITTag*)tagWithName:(NSString*)name;
+ */
 
 #pragma mark -
 #pragma mark Internal Methods (Deprecated)
@@ -103,7 +105,7 @@
  * \return Data containing the content of the object
  * \deprecated Superceeded by -objectWithSha1:error:
  */
-- (NSData*)dataWithContentsOfObject:(NSString*)sha1;
+- (NSData *)dataWithContentsOfObject: (NSString *)sha1;
 
 /*! Returns the content data for an object.
  * The <tt>expectedType</tt> is used to check the type identifier in the file
@@ -111,10 +113,11 @@
  * the correct type then <tt>nil</tt> is returned.
  * \param sha1 Name of the objects
  * \param expectedType String used to check the object is of a specific type
- * \return Data containing the content of the object or nil if not of expected type
+ * \return Data containing the content of the object or nil if not of expected
+ *type
  * \deprecated Superceeded by -objectWithSha1:type:error:
  */
-- (NSData*)dataWithContentsOfObject:(NSString*)sha1 type:(NSString*)expectedType;
+- (NSData *)dataWithContentsOfObject: (NSString *)sha1 type: (NSString *)expectedType;
 
 #pragma mark -
 #pragma mark Deprecated Loaders
@@ -123,35 +126,35 @@
  * \return A object with the given sha1 or nil if it cannot be found.
  * \deprecated Use -objectWithSha1:error: instead
  */
-- (GITObject*)objectWithSha1:(NSString*)sha1;
+- (GITObject *)objectWithSha1: (NSString *)sha1;
 
 /*! Returns a commit object identified by the given sha1.
  * \param sha1 The identifier of the commit to load
  * \return A commit object with the given sha1 or nil if it cannot be found.
  * \deprecated Use -commitWithSha1:error: instead
  */
-- (GITCommit*)commitWithSha1:(NSString*)sha1;
+- (GITCommit *)commitWithSha1: (NSString *)sha1;
 
 /*! Returns a blob object identified by the given sha1.
  * \param sha1 The identifier of the blob to load
  * \return A blob object with the given sha1 or nil if it cannot be found.
  * \deprecated Use -blobWithSha1:error: instead
  */
-- (GITBlob*)blobWithSha1:(NSString*)sha1;
+- (GITBlob *)blobWithSha1: (NSString *)sha1;
 
 /*! Returns a tree object identified by the given sha1.
  * \param sha1 The identifier of the tree to load
  * \return A tree object with the given sha1 or nil if it cannot be found.
  * \deprecated Use -treeWithSha1:error: instead
  */
-- (GITTree*)treeWithSha1:(NSString*)sha1;
+- (GITTree *)treeWithSha1: (NSString *)sha1;
 
 /*! Returns a tag object identified by the given sha1.
  * \param sha1 The identifier of the tag to load
  * \return A tag object with the given sha1 or nil if it cannot be found.
  * \deprecated Use -tagWithSha1:error: instead
  */
-- (GITTag*)tagWithSha1:(NSString*)sha1;
+- (GITTag *)tagWithSha1: (NSString *)sha1;
 
 #pragma mark -
 #pragma mark Error Aware Loaders
@@ -160,35 +163,35 @@
  * \param[out] error Contains the error if nil return value
  * \return A commit object with the given sha1 or nil if it cannot be found.
  */
-- (GITCommit*)commitWithSha1:(NSString*)sha1 error:(NSError**)error;
+- (GITCommit *)commitWithSha1: (NSString *)sha1 error: (NSError**)error;
 
 /*! Returns a blob object identified by the given sha1.
  * \param sha1 The identifier of the blob to load
  * \param[out] error Contains the error if nil return value
  * \return A blob object with the given sha1 or nil if it cannot be found.
  */
-- (GITBlob*)blobWithSha1:(NSString*)sha1 error:(NSError**)error;
+- (GITBlob *)blobWithSha1: (NSString *)sha1 error: (NSError**)error;
 
 /*! Returns a tree object identified by the given sha1.
  * \param sha1 The identifier of the tree to load
  * \param[out] error Contains the error if nil return value
  * \return A tree object with the given sha1 or nil if it cannot be found.
  */
-- (GITTree*)treeWithSha1:(NSString*)sha1 error:(NSError**)error;
+- (GITTree *)treeWithSha1: (NSString *)sha1 error: (NSError**)error;
 
 /*! Returns a tag object identified by the given sha1.
  * \param sha1 The identifier of the tag to load
  * \param[out] error Contains the error if nil return value
  * \return A tag object with the given sha1 or nil if it cannot be found.
  */
-- (GITTag*)tagWithSha1:(NSString*)sha1 error:(NSError**)error;
+- (GITTag *)tagWithSha1: (NSString *)sha1 error: (NSError**)error;
 
 /*! Returns an object identified by the given sha1.
  * \param sha1 The identifier of the object to load
  * \param[out] error Contains the error if nil return value
  * \return A object with the given sha1 or nil if it cannot be found.
  */
-- (GITObject*)objectWithSha1:(NSString*)sha1 error:(NSError**)error;
+- (GITObject *)objectWithSha1: (NSString *)sha1 error: (NSError**)error;
 
 /*! Returns an object identified by the given sha1.
  * \param sha1 The identifier of the object to load
@@ -196,30 +199,30 @@
  * \param[out] error Contains the error if nil return value
  * \return A object with the given sha1 or nil if it cannot be found.
  */
-- (GITObject*)objectWithSha1:(NSString*)sha1 type:(GITObjectType)type error:(NSError**)error;
+- (GITObject *)objectWithSha1: (NSString *)sha1 type: (GITObjectType)type error: (NSError**)error;
 
 #pragma mark -
 #pragma mark Low Level Loader
 /*! \see GITObjectStore */
-- (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)data
-                      type:(GITObjectType*)type error:(NSError**)error;
+- (BOOL)loadObjectWithSha1: (NSString *)sha1 intoData: (NSData**)data
+type: (GITObjectType *)type error: (NSError**)error;
 
 #pragma mark -
 #pragma mark Refs Stuff
 
-- (NSString *) refsPath;
-- (NSString *) packedRefsPath;
-- (NSArray *) refs;
-- (NSUInteger) countOfRefs;
-- (NSDictionary *) dictionaryWithRefName:(NSString *) aName sha:(NSString *) shaString;
-- (id) objectInRefsAtIndex:(NSUInteger) i;
+- (NSString *)refsPath;
+- (NSString *)packedRefsPath;
+- (NSArray *)refs;
+- (NSUInteger)countOfRefs;
+- (NSDictionary *)dictionaryWithRefName: (NSString *)aName sha: (NSString *)shaString;
+- (id)objectInRefsAtIndex: (NSUInteger)i;
 
-- (BOOL) updateRef:(NSString *)refName toSha:(NSString *)toSha;
-- (BOOL) updateRef:(NSString *)refName toSha:(NSString *)toSha error:(NSError **)error;
+- (BOOL)updateRef: (NSString *)refName toSha: (NSString *)toSha;
+- (BOOL)updateRef: (NSString *)refName toSha: (NSString *)toSha error: (NSError **)error;
 
 
-- (BOOL) writeObject:(NSData *)objectData withType:(NSString *)type size:(NSUInteger)size;
+- (BOOL)writeObject: (NSData *)objectData withType: (NSString *)type size: (NSUInteger)size;
 
-- (BOOL) hasObject: (NSString *)sha1;
+- (BOOL)hasObject: (NSString *)sha1;
 
 @end

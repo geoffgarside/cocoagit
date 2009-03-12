@@ -10,14 +10,14 @@
 
 
 @interface GITDateTime : NSObject <NSCopying> {
-    NSDate * date;
-    NSTimeZone * timezone;
+    NSDate *date;
+    NSTimeZone *timezone;
 }
 
-@property(readonly,copy) NSDate * date;
-@property(readonly,copy) NSTimeZone * timezone;
+@property (readonly,copy) NSDate *date;
+@property (readonly,copy) NSTimeZone *timezone;
 
-- (id)initWithDate:(NSDate*)theDate timeZone:(NSTimeZone*)theTimeZone;
-- (id)initWithTimestamp:(NSTimeInterval)seconds timeZoneOffset:(NSString*)offset;
+- (id)initWithDate: (NSDate *)theDate timeZone: (NSTimeZone *)theTimeZone;
+- (id)initWithTimestamp: (NSTimeInterval)seconds timeZoneOffset: (NSString *)offset;
 
 @end

@@ -17,14 +17,14 @@
 @property (nonatomic, copy) NSString *sha1;
 @property (nonatomic, copy) NSString *alias;
 
-+ (id) refWithName:(NSString *)refName sha1:(NSString *)sha1String;
-+ (id) refWithName:(NSString *)refName alias:(NSString *)refAlias;
-+ (id) refWithContentsOfFile:(NSString *)aPath;
-+ (id) refWithPacketLine:(NSString *)packetLine;
++ (id)refWithName: (NSString *)refName sha1: (NSString *)sha1String;
++ (id)refWithName: (NSString *)refName alias: (NSString *)refAlias;
++ (id)refWithContentsOfFile: (NSString *)aPath;
++ (id)refWithPacketLine: (NSString *)packetLine;
 
-- (id) initWithName:(NSString *)refName sha1:(NSString *)sha1String alias:(NSString *)refAlias;
+- (id)initWithName: (NSString *)refName sha1: (NSString *)sha1String alias: (NSString *)refAlias;
 
 
-- (BOOL) isAlias;
+- (BOOL)isAlias;
 
 @end

@@ -10,7 +10,6 @@
 
 
 @interface GITFetchProcess : NSObject {
-
 }
 
 @end

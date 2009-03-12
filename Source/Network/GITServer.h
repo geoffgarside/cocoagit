@@ -12,15 +12,15 @@
 @class GITServer;
 
 @interface GITServer : NSObject {
-	TCPServer *tcpServer;
-	NSString *workingDir;
-	
-	unsigned short listen_port;
+    TCPServer *tcpServer;
+    NSString *workingDir;
+
+    unsigned short listen_port;
 }
 
-@property(copy, readwrite) NSString *workingDir;
+@property (copy, readwrite) NSString *workingDir;
 
-- (BOOL) shouldExit;
-- (oneway void) startListening:(NSString *) gitStartDir;
+- (BOOL)shouldExit;
+- (oneway void)startListening: (NSString *)gitStartDir;
 
 @end

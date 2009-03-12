@@ -18,11 +18,11 @@
 /*! Returns the SHA1 digest of the receivers contents.
  * \return SHA1 digest of the receivers contents.
  */
-- (NSData*) sha1Digest;
+- (NSData *)sha1Digest;
 
 /*! Returns a string with the SHA1 digest of the receivers contents.
  * \return String with the SHA1 digest of the receivers contents.
  */
-- (NSString*) sha1DigestString;
+- (NSString *)sha1DigestString;
 
 @end

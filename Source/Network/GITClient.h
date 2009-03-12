@@ -10,14 +10,14 @@
 #import "Socket.h"
 
 @interface GITClient : NSObject {
-	Socket*	 	socket;
+    Socket *socket;
 }
 
-@property(retain, readwrite) Socket *socket;	
+@property (retain, readwrite) Socket *socket;
 
-- (BOOL) clone:(NSString *) url;
-- (void) sendPacket:(NSString *)dataWrite;
-- (void) writeServer:(NSString *)dataWrite;
-- (void) writeServerLength:(NSUInteger)length;
+- (BOOL)clone: (NSString *)url;
+- (void)sendPacket: (NSString *)dataWrite;
+- (void)writeServer: (NSString *)dataWrite;
+- (void)writeServerLength: (NSUInteger)length;
 
 @end

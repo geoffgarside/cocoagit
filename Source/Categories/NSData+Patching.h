@@ -11,8 +11,8 @@
 
 @interface NSData (Patching)
 
-- (void)patchDeltaHeader:(NSData*)deltaData size:(unsigned long*)size
-                position:(unsigned long*)position;
-- (NSData*)dataByPatchingWithDelta:(NSData*)delta;
+- (void)patchDeltaHeader: (NSData *)deltaData size: (unsigned long *)size
+position: (unsigned long *)position;
+- (NSData *)dataByPatchingWithDelta: (NSData *)delta;
 
 @end

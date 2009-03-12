@@ -22,7 +22,7 @@
 @property (nonatomic, copy) NSArray *offsets64;
 @property (nonatomic, copy) NSArray *indexMap64;
 
-- (id) initWithPackIndex:(GITPackIndex *)packIndex;
-- (NSUInteger) indexWithOffset:(off_t)offset;
-- (off_t) nextOffsetWithOffset:(off_t)thisOffset;
+- (id)initWithPackIndex: (GITPackIndex *)packIndex;
+- (NSUInteger)indexWithOffset: (off_t)offset;
+- (off_t)nextOffsetWithOffset: (off_t)thisOffset;
 @end

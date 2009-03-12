@@ -7,9 +7,9 @@
 
 @interface NSFileManager (DirHelpers)
 
-+ (BOOL) directoryExistsAtPath:(NSString *) aPath;
-+ (BOOL) directoryExistsAtURL:(NSURL *) aURL;
-+ (BOOL) fileExistsAtPath:(NSString *) aPath;
-+ (BOOL) fileExistsAtURL:(NSURL *) aURL;
++ (BOOL) directoryExistsAtPath : (NSString *) aPath;
++ (BOOL)directoryExistsAtURL : (NSURL *)aURL;
++ (BOOL)fileExistsAtPath : (NSString *)aPath;
++ (BOOL)fileExistsAtURL : (NSURL *)aURL;
 
 @end

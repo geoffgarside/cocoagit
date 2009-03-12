@@ -11,12 +11,12 @@
 
 @interface GITPackIndexVersion1 : GITPackIndex
 {
-    NSString * path;
-    NSData   * data;
-    NSArray  * offsets;
+    NSString *path;
+    NSData *data;
+    NSArray *offsets;
 }
 
-@property(readwrite,copy) NSString * path;
-@property(readwrite,retain) NSData * data;
+@property (readwrite,copy) NSString *path;
+@property (readwrite,retain) NSData *data;
 
 @end

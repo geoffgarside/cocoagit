@@ -22,24 +22,24 @@
  * Presently only used by Tag and Commit objects.
  */
 @interface GITActor : NSObject <NSCopying> {
-    NSString * name;    //!< Name of the actor
-    NSString * email;   //!< Email address of the actor
+    NSString *name;     //!< Name of the actor
+    NSString *email;    //!< Email address of the actor
 }
 
-@property(readonly,copy) NSString * name;
-@property(readonly,copy) NSString * email;
+@property (readonly,copy) NSString *name;
+@property (readonly,copy) NSString *email;
 
 /*! Creates and returns an actor object with the provided name.
  * The created actor object will have an email address of <tt>nil</tt>.
  * \param theName The name of the actor to create.
  * \return An actor object with the provided name.
  */
-- (id)initWithName:(NSString*)theName;
+- (id)initWithName: (NSString *)theName;
 /*! Creates and returns an actor object with the provided name and email.
  * \param theName The name of the actor.
  * \param theEmail The email address of the actor.
  * \return An actor object with the provided name and email.
  */
-- (id)initWithName:(NSString*)theName andEmail:(NSString*)theEmail;
+- (id)initWithName: (NSString *)theName andEmail: (NSString *)theEmail;
 
 @end

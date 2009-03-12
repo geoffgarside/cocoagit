@@ -11,12 +11,12 @@
 #import "GITCommit.h"
 
 /*! \cond
- Make properties readwrite so we can use
- them within the class.
-*/
+ * Make properties readwrite so we can use
+ * them within the class.
+ */
 @interface GITBranch ()
-@property(readwrite,retain) GITRepo * repo;
-@property(readwrite,copy) NSString * name;
+@property (readwrite,retain) GITRepo *repo;
+@property (readwrite,copy) NSString *name;
 @end
 /*! \endcond */
 
@@ -24,20 +24,17 @@
 @synthesize repo;
 @synthesize name;
 
-- (void) dealloc
-{
+- (void)dealloc {
     [repo release], repo = nil;
     [name release], name = nil;
     [super dealloc];
 }
 
-- (GITCommit*) head
-{
-    for (NSDictionary *ref in [self.repo refs]) {
-        if ([[ref objectForKey:@"name"] hasSuffix:self.name]) {
-            return [self.repo commitWithSha1:[ref objectForKey:@"sha"]];
-        }
-    }
+- (GITCommit *)head {
+    for ( NSDictionary *ref in [self.repo refs] )
+        if ([[ref objectForKey: @"name"] hasSuffix: self.name] )
+            return [self.repo commitWithSha1:[ref objectForKey: @"sha"]];
+
     return nil;
 }
 

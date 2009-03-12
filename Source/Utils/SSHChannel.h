@@ -13,32 +13,32 @@ extern const NSUInteger SSHChannelDefaultReadBufferSize;
 
 @interface SSHChannel : NSObject {
     LIBSSH2_CHANNEL *channel;
-        
+
     CFIndex readBufferSize;
     void *readBuffer;
-    
+
     NSMutableData *buffer;
     NSError *channelError;
 }
 
-- (id) initWithSession:(LIBSSH2_SESSION *)sshSession;
-- (id) initWithChannel:(LIBSSH2_CHANNEL *)sshChannel;
+- (id)initWithSession: (LIBSSH2_SESSION *)sshSession;
+- (id)initWithChannel: (LIBSSH2_CHANNEL *)sshChannel;
 //- (void) openShell;
 
-- (BOOL) execCommand:(NSString *)command;
-- (NSMutableData *) readData:(CFIndex)n;
-- (NSMutableData *) readDataUpToData:(NSData *)d;
-- (NSMutableData *) readDataUpToString:(NSString *)s;
-- (void) writeData:(NSData *)data;
-- (void) sendEOF; // send channel EOF
-- (void) close;
+- (BOOL)execCommand: (NSString *)command;
+- (NSMutableData *)readData: (CFIndex)n;
+- (NSMutableData *)readDataUpToData: (NSData *)d;
+- (NSMutableData *)readDataUpToString: (NSString *)s;
+- (void)writeData: (NSData *)data;
+- (void)sendEOF;  // send channel EOF
+- (void)close;
 
-- (BOOL) isConnected;
+- (BOOL)isConnected;
 
 // error accessor
 - (NSError *)channelError;
 
 // read-only copy of buffer
-- (NSData *) buffer;
+- (NSData *)buffer;
 
 @end

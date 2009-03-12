@@ -13,107 +13,90 @@
 #pragma mark Class Cluster Alloc Methods
 + (id)alloc
 {
-    if ([self isEqual:[GITPackFile class]])
+    if ([self isEqual:[GITPackFile class]] )
         return [GITPlaceholderPackFile alloc];
     else return [super alloc];
 }
-+ (id)allocWithZone:(NSZone*)zone
-{
-    if ([self isEqual:[GITPackFile class]])
-        return [GITPlaceholderPackFile allocWithZone:zone];
-    else return [super allocWithZone:zone];
++ (id)allocWithZone: (NSZone *)zone {
+    if ([self isEqual:[GITPackFile class]] )
+        return [GITPlaceholderPackFile allocWithZone: zone];
+    else return [super allocWithZone: zone];
 }
-- (id)copyWithZone:(NSZone*)zone
-{
+- (id)copyWithZone: (NSZone *)zone {
     return self;
 }
 
 #pragma mark -
 #pragma mark Primitive Methods
-- (NSUInteger)version
-{
+- (NSUInteger)version {
     return 0;
 }
-- (GITPackIndex*)index
-{
+- (GITPackIndex *)index {
     [self doesNotRecognizeSelector: _cmd];
     return nil;
 }
 
-+ (id)packFileWithPath:(NSString *)thePath
-{
-    return [[[self alloc] initWithPath:thePath] autorelease];
++ (id)packFileWithPath: (NSString *)thePath {
+    return [[[self alloc] initWithPath: thePath] autorelease];
 }
 
-- (id)initWithPath:(NSString*)thePath
-{
-    return [self initWithPath:thePath error:NULL];
+- (id)initWithPath: (NSString *)thePath {
+    return [self initWithPath: thePath error: NULL];
 }
 
-+ (id)packFileWithPath:(NSString *)thePath error:(NSError **)error
-{
-    return [[[self alloc] initWithPath:thePath error:error] autorelease];
++ (id)packFileWithPath: (NSString *)thePath error: (NSError **)error {
+    return [[[self alloc] initWithPath: thePath error: error] autorelease];
 }
 
-- (id)initWithPath:(NSString*)thePath error:(NSError **)error
-{
-	[self doesNotRecognizeSelector: _cmd];
-    [self release];
-    return nil;
-}
-
-- (id)initWithPath:(NSString*)path indexPath:(NSString *)idxPath error:(NSError **)error
-{
+- (id)initWithPath: (NSString *)thePath error: (NSError **)error {
     [self doesNotRecognizeSelector: _cmd];
     [self release];
     return nil;
 }
 
-- (id)initWithData:(NSData *)packData error:(NSError **)error
-{
+- (id)initWithPath: (NSString *)path indexPath: (NSString *)idxPath error: (NSError **)error {
     [self doesNotRecognizeSelector: _cmd];
     [self release];
     return nil;
 }
 
-- (NSData*)dataForObjectWithSha1:(NSString*)sha1
-{
+- (id)initWithData: (NSData *)packData error: (NSError **)error {
+    [self doesNotRecognizeSelector: _cmd];
+    [self release];
+    return nil;
+}
+
+- (NSData *)dataForObjectWithSha1: (NSString *)sha1 {
     [self doesNotRecognizeSelector: _cmd];
     return nil;
 }
-- (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)data
-                      type:(GITObjectType*)type error:(NSError**)error
-{
+- (BOOL)loadObjectWithSha1: (NSString *)sha1 intoData: (NSData**)data
+type: (GITObjectType *)type error: (NSError**)error {
     [self doesNotRecognizeSelector: _cmd];
     return NO;
 }
 
 #pragma mark -
 #pragma mark Checksum Methods
-- (NSData*)checksum
-{
+- (NSData *)checksum {
     [self doesNotRecognizeSelector: _cmd];
     return nil;
 }
-- (NSString*)checksumString
-{
+- (NSString *)checksumString {
     [self doesNotRecognizeSelector: _cmd];
     return nil;
 }
-- (BOOL)verifyChecksum
-{
+- (BOOL)verifyChecksum {
     [self doesNotRecognizeSelector: _cmd];
     return NO;
 }
 
 #pragma mark -
 #pragma mark Derived Methods
-- (NSUInteger)numberOfObjects
-{
+- (NSUInteger)numberOfObjects {
     return [[self index] numberOfObjects];
 }
-- (BOOL)hasObjectWithSha1:(NSString*)sha1
-{
-    return [[self index] hasObjectWithSha1:sha1];
+- (BOOL)hasObjectWithSha1: (NSString *)sha1 {
+    return [[self index] hasObjectWithSha1: sha1];
 }
 @end

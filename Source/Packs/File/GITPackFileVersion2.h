@@ -11,15 +11,15 @@
 @class GITPackIndex;
 @interface GITPackFileVersion2 : GITPackFile
 {
-    NSString * path;
-    NSData   * data;
-    GITPackIndex * index;
+    NSString *path;
+    NSData *data;
+    GITPackIndex *index;
     NSUInteger numberOfObjects;
 }
 
 // These may be removed at a later date.
-@property(readonly,copy) NSString * path;
-@property(readonly,retain) NSData * data;
-@property(readonly,retain) GITPackIndex * index;
+@property (readonly,copy) NSString *path;
+@property (readonly,retain) NSData *data;
+@property (readonly,retain) GITPackIndex *index;
 
 @end

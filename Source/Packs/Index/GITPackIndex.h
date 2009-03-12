@@ -16,7 +16,7 @@
 
 /*! \internal
  */
-- (id)copyWithZone:(NSZone*)zone;
+- (id)copyWithZone: (NSZone *)zone;
 
 #pragma mark -
 #pragma mark Primitive Methods
@@ -27,23 +27,23 @@
  */
 - (NSUInteger)version;
 
-/*! Convenience method that creates and returns a new, autoreleased IDX object 
+/*! Convenience method that creates and returns a new, autoreleased IDX object
  * at the specified <tt>path</tt>.
  * \param path Path of the IDX file in the repository
  * \return A new IDX object
  * \internal
  * This method is wrapper that eventually calls -initWithPath:error:
  */
-+ (id)packIndexWithPath:(NSString*)thePath;
++ (id)packIndexWithPath: (NSString *)thePath;
 
-/*! Convenience method that creates and returns a new, autoreleased IDX object 
+/*! Convenience method that creates and returns a new, autoreleased IDX object
  * at the specified <tt>path</tt>.
  * \param path Path of the IDX file in the repository
  * \return A new IDX object
  * \internal
  * This method is wrapper that calls -initWithPath:error:
  */
-+ (id)packIndexWithPath:(NSString*)thePath error:(NSError**)outError;
++ (id)packIndexWithPath: (NSString *)thePath error: (NSError**)outError;
 
 /*! Creates and returns a new IDX object at the specified <tt>path</tt>.
  * \param path Path of the IDX file in the repository
@@ -53,7 +53,7 @@
  * an error. The overriding implementation should not call this implementation
  * as part of itself. Instead it is recommended to use [super init] instead.
  */
-- (id)initWithPath:(NSString*)path;
+- (id)initWithPath: (NSString *)path;
 
 /*! Creates and returns a new IDX object at the specified <tt>path</tt>.
  * \param path Path of the IDX file in the repository
@@ -64,28 +64,30 @@
  * an error. The overriding implementation should not call this implementation
  * as part of itself. Instead it is recommended to use [super init] instead.
  */
-- (id)initWithPath:(NSString*)thePath error:(NSError**)error;
+- (id)initWithPath: (NSString *)thePath error: (NSError**)error;
 
 /*! Returns the offset within the associated PACK file where the
  * object specified by the given <tt>sha1</tt> can be located.
  * \param sha1 The SHA1 of the object to return the pack offset for
- * \return Offset value within the associated PACK file for the SHA1 or NSNotFound if not found
+ * \return Offset value within the associated PACK file for the SHA1 or
+ *NSNotFound if not found
  */
-- (off_t)packOffsetForSha1:(NSString*)sha1;
+- (off_t)packOffsetForSha1: (NSString *)sha1;
 
 /*! Returns the offset within the associated PACK file where the
  * object specified by the given <tt>sha1</tt> can be located.
  * \param sha1 The SHA1 of the object to return the pack offset for
  * \param[out] error Error object or NULL if you don't care
- * \return Offset value within the associated PACK file for the SHA1 or NSNotFound if not found
+ * \return Offset value within the associated PACK file for the SHA1 or
+ *NSNotFound if not found
  */
-- (off_t)packOffsetForSha1:(NSString*)sha1 error:(NSError**)error;
+- (off_t)packOffsetForSha1: (NSString *)sha1 error: (NSError**)error;
 
 #pragma mark -
 #pragma mark Reverse Index Lookup Methods
-- (off_t)nextOffsetWithOffset:(off_t)offset;
-- (NSString *)sha1WithOffset:(off_t)offset;
-- (off_t)packOffsetWithIndex:(NSUInteger)i;
+- (off_t)nextOffsetWithOffset: (off_t)offset;
+- (NSString *)sha1WithOffset: (off_t)offset;
+- (off_t)packOffsetWithIndex: (NSUInteger)i;
 
 
 #pragma mark -
@@ -97,29 +99,29 @@
  * This method is required for some of the derived methods
  * it is much more low level than most code requires.
  */
-- (NSArray*)offsets;
+- (NSArray *)offsets;
 
 #pragma mark -
 #pragma mark Checksum Methods
 /*! Returns checksum data for the receiver
  * \return Checksum data of the receiver
  */
-- (NSData*)checksum;
+- (NSData *)checksum;
 
 /*! Returns checksum data for the pack file of the receiver
  * \return Checksum data for the pack file of the receiver
  */
-- (NSData*)packChecksum;
+- (NSData *)packChecksum;
 
 /*! Returns checksum string for the receiver
  * \return Checksum string of the receiver
  */
-- (NSString*)checksumString;
+- (NSString *)checksumString;
 
 /*! Returns checksum string for the pack file of the receiver
  * \return Checksum string for the pack file of the receiver
  */
-- (NSString*)packChecksumString;
+- (NSString *)packChecksumString;
 
 /*! Verifies if the checksum matches for the contents of the receiver.
  * \return YES if checksum matches, NO if it does not.
@@ -138,7 +140,7 @@
  * \param byte The byte to get the number of objects for
  * \return Number of objects starting with <tt>byte</tt>
  */
-- (NSUInteger)numberOfObjectsWithFirstByte:(uint8_t)byte;
+- (NSUInteger)numberOfObjectsWithFirstByte: (uint8_t)byte;
 
 /*! Returns a range describing the number of objects to the beginning of
  * those starting with <tt>byte</tt> and the number of objects ending
@@ -146,14 +148,14 @@
  * \param byte The byte to get the range of objects for
  * \return Range describing the objects with the first byte
  */
-- (NSRange)rangeOfObjectsWithFirstByte:(uint8_t)byte;
+- (NSRange)rangeOfObjectsWithFirstByte: (uint8_t)byte;
 
 /*! Returns YES if the object identified by <tt>sha1</tt> exists in the
  * receivers PACK file.
  * \param sha1 The name of the object to search for
  * \return YES if the sha1 exists in the receiver, NO if it doesn't.
  */
-- (BOOL)hasObjectWithSha1:(NSString*)sha1;
+- (BOOL)hasObjectWithSha1: (NSString *)sha1;
 
 @end
 

@@ -15,14 +15,14 @@
  */
 @interface GITFileStore : GITObjectStore
 {
-    NSString * objectsDir;  //!< Path to the <tt>.git/objects</tt> directory
+    NSString *objectsDir;   //!< Path to the <tt>.git/objects</tt> directory
 }
 
-@property(readonly,copy) NSString * objectsDir;
+@property (readonly,copy) NSString *objectsDir;
 
 /*! Returns the path to the object in the objects directory.
  * \param sha1 The object reference to generate the path for.
  * \return Path to the object identified by <tt>sha1</tt>
  */
-- (NSString*)stringWithPathToObject:(NSString*)sha1;
+- (NSString *)stringWithPathToObject: (NSString *)sha1;
 @end

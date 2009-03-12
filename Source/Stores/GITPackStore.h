@@ -59,11 +59,11 @@
  */
 @interface GITPackStore : GITObjectStore
 {
-    NSString * packsDir;    //!< Path to <tt>.git/objects/pack</tt> directory.
-    NSArray * packFiles;
-    GITPackFile * lastReadPack;
+    NSString *packsDir;     //!< Path to <tt>.git/objects/pack</tt> directory.
+    NSArray *packFiles;
+    GITPackFile *lastReadPack;
 }
 
-@property(readonly,copy) NSString * packsDir;
+@property (readonly,copy) NSString *packsDir;
 
 @end

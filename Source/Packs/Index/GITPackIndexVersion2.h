@@ -16,12 +16,12 @@
 @interface GITPackIndexVersion2 : GITPackIndex
 {
     NSString *path;
-    NSData   *data;
-    NSArray  *offsets;
+    NSData *data;
+    NSArray *offsets;
     GITPackReverseIndex *revIndex;
 }
 
-@property(readwrite,copy) NSString * path;
-@property(readwrite,retain) NSData * data;
+@property (readwrite,copy) NSString *path;
+@property (readwrite,retain) NSData *data;
 
 @end

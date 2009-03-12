@@ -11,32 +11,29 @@
 
 @implementation NSData (Searching)
 
-- (NSRange)rangeFrom:(NSInteger)start toByte:(NSInteger)c;
+- (NSRange)rangeFrom: (NSInteger)start toByte: (NSInteger)c;
 {
-	const char *pdata = [self bytes];
-	NSUInteger len = [self length];
-    if (start < len) {
+    const char *pdata = [self bytes];
+    NSUInteger len = [self length];
+    if ( start < len ) {
         char *end = memchr(pdata + start, c, len - start);
-        if (end != NULL)
+        if ( end != NULL )
             return NSMakeRange (start, end - (pdata + start));
     }
     return NSMakeRange(NSNotFound, 0);
 }
 
-- (NSRange)rangeOfNullTerminatedBytesFrom:(NSInteger)start
-{
-    return [self rangeFrom:start toByte:0x00];
+- (NSRange)rangeOfNullTerminatedBytesFrom: (NSInteger)start {
+    return [self rangeFrom: start toByte: 0x00];
 }
 
-- (NSData*)subdataFromIndex:(NSUInteger)anIndex
-{
+- (NSData *)subdataFromIndex: (NSUInteger)anIndex {
     NSRange theRange = NSMakeRange(anIndex, [self length] - anIndex);
-    return [self subdataWithRange:theRange];
+    return [self subdataWithRange: theRange];
 }
-- (NSData*)subdataToIndex:(NSUInteger)anIndex
-{
+- (NSData *)subdataToIndex: (NSUInteger)anIndex {
     NSRange theRange = NSMakeRange(0, anIndex);
-    return [self subdataWithRange:theRange];
+    return [self subdataWithRange: theRange];
 }
 
 @end

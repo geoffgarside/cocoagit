@@ -7,34 +7,34 @@
 
 @implementation NSFileManager (DirHelpers)
 
-+ (BOOL) directoryExistsAtPath:(NSString *) aPath;
++ (BOOL) directoryExistsAtPath : (NSString *) aPath;
 {
-	BOOL isDir;
-	return [[self defaultManager] fileExistsAtPath:aPath isDirectory:&isDir] && isDir;
+    BOOL isDir;
+    return [[self defaultManager] fileExistsAtPath: aPath isDirectory: &isDir] && isDir;
 }
 
-+ (BOOL) directoryExistsAtURL:(NSURL *) aURL;
++ (BOOL)directoryExistsAtURL: (NSURL *)aURL;
 {
-	if (![aURL isFileURL])
-		return NO;
-	
-	NSString *aPath = [aURL path];
-	BOOL isDir;
-	return [[self defaultManager] fileExistsAtPath:aPath isDirectory:&isDir] && isDir;
+    if ( ![aURL isFileURL] )
+        return NO;
+
+    NSString *aPath = [aURL path];
+    BOOL isDir;
+    return [[self defaultManager] fileExistsAtPath: aPath isDirectory: &isDir] && isDir;
 }
 
-+ (BOOL) fileExistsAtPath:(NSString *) aPath;
++ (BOOL)fileExistsAtPath: (NSString *)aPath;
 {
-	return [[self defaultManager] fileExistsAtPath:aPath];
+    return [[self defaultManager] fileExistsAtPath: aPath];
 }
 
 
-+ (BOOL) fileExistsAtURL:(NSURL *) aURL;
++ (BOOL)fileExistsAtURL: (NSURL *)aURL;
 {
-	if (![aURL isFileURL])
-		return NO;
-	
-	NSString *aPath = [aURL path];
-	return [[self defaultManager] fileExistsAtPath:aPath];
-}		
+    if ( ![aURL isFileURL] )
+        return NO;
+
+    NSString *aPath = [aURL path];
+    return [[self defaultManager] fileExistsAtPath: aPath];
+}
 @end

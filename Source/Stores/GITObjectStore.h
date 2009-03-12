@@ -18,27 +18,27 @@
 {
 }
 /*! Convenience method that creates and returns a new, autoreleased
- * store object from the provided .git root. 
+ * store object from the provided .git root.
  * \attention This method calls -initWithRoot:error:
  * \param root Path to the .git root directory
  * \return A new store object.
  */
-+ (id) storeWithRoot:(NSString *)root;
++ (id)storeWithRoot: (NSString *)root;
 
 /*! Convenience method that creates and returns a new, autoreleased
- * store object from the provided .git root. 
+ * store object from the provided .git root.
  * \attention This method calls -initWithRoot:error:
  * \param root Path to the .git root directory
  * \return A new store object.
  */
-+ (id) storeWithRoot:(NSString *)root error:(NSError **)error;
++ (id)storeWithRoot: (NSString *)root error: (NSError **)error;
 
 /*! Creates and returns a new store object from the provided .git root
  * \attention This method must be overridden
  * \param root Path to the .git root directory
  * \return A new store object.
  */
-- (id)initWithRoot:(NSString*)root;
+- (id)initWithRoot: (NSString *)root;
 
 /*! Creates and returns a new store object from the provided .git root
  * \attention This method must be overridden
@@ -48,7 +48,7 @@
  * \par Error Codes:
  * \li \c GITErrorObjectStoreNotAccessible store could not be loaded
  */
-- (id)initWithRoot:(NSString*)root error:(NSError**)error;
+- (id)initWithRoot: (NSString *)root error: (NSError**)error;
 
 /*! Returns the contents of an object for the given <tt>sha1</tt>.
  * The data returned should be in a form which is usable to initialise an
@@ -59,7 +59,7 @@
  * \return Contents of an object, nil if the object cannot be found
  * \deprecated use -loadObjectWithSha1:intoData:type:error: instead
  */
-- (NSData*)dataWithContentsOfObject:(NSString*)sha1;
+- (NSData *)dataWithContentsOfObject: (NSString *)sha1;
 
 /*! \internal
  * Returns if the receiver can return the object with the given <tt>sha1</tt>.
@@ -68,7 +68,7 @@
  * \param sha1 Name of the object to check for
  * \return YES if has data for object, NO if not.
  */
-- (BOOL)hasObjectWithSha1:(NSString*)sha1;
+- (BOOL)hasObjectWithSha1: (NSString *)sha1;
 
 /*! Extracts the basic information from a git object file.
  * \param sha1 The object reference to extract the data from
@@ -78,24 +78,28 @@
  * \return Indication that the extraction was successful.
  * \deprecated use -loadObjectWithSha1:intoData:type:error: instead
  */
-- (BOOL)extractFromObject:(NSString*)sha1 type:(NSString**)type
-                     size:(NSUInteger*)size data:(NSData**)data;
+- (BOOL)extractFromObject: (NSString *)sha1 type: (NSString**)type
+size: (NSUInteger *)size data: (NSData**)data;
 
 /*! Loads and returns the contents of an object.
  * \param sha1 The SHA1 name of the object to load
  * \param[out] data Data to load the object contents into
  * \param[out] type The GITObjectType of the object
- * \param[out] error NSError object containing any errors, pass NULL if you don't care
+ * \param[out] error NSError object containing any errors, pass NULL if you
+ *don't care
  * \return YES on successful load, NO if an error occurred
  * \par Errors:
- * \li \c GITErrorObjectNotFound no object with \a sha1 could be found in the receiver
- * \li \c GITErrorObjectSizeMismatch size of object identified by \a sha1 does not match meta data
+ * \li \c GITErrorObjectNotFound no object with \a sha1 could be found in the
+ *receiver
+ * \li \c GITErrorObjectSizeMismatch size of object identified by \a sha1 does
+ *not match meta data
  * \internal
  * We might possibly consider the following extension to this method once Deltas
- * are being parsed. If the type parameter has a non-zero value then this will be
+ * are being parsed. If the type parameter has a non-zero value then this will
+ *be
  * perceived as an expected type setting, an error should be returned if this
  * expected type is not met.
  */
-- (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)data
-                      type:(GITObjectType*)type error:(NSError**)error;
+- (BOOL)loadObjectWithSha1: (NSString *)sha1 intoData: (NSData**)data
+type: (GITObjectType *)type error: (NSError**)error;
 @end

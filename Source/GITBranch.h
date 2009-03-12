@@ -11,12 +11,12 @@
 @class GITRepo, GITCommit;
 @interface GITBranch : NSObject
 {
-    GITRepo  * repo;
-    NSString * name;
+    GITRepo *repo;
+    NSString *name;
 }
 
-@property(readonly,copy) NSString * name;
+@property (readonly,copy) NSString *name;
 
-- (GITCommit*)head;
+- (GITCommit *)head;
 
 @end
