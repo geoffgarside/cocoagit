@@ -11,6 +11,7 @@
 #import "GITObject.h"
 #import "GITCommit.h"
 #import "GITTree.h"
+#import "GITBranch.h"
 #import "GITBlob.h"
 #import "GITTag.h"
 
@@ -86,11 +87,11 @@
 /*
 - (NSArray*)commits;
 - (NSArray*)tags;
-
-- (GITBranch*)head;
+*/
+- (GITCommit*)head;
 - (GITBranch*)master;
 - (GITBranch*)branchWithName:(NSString*)name;
-
+/*
 - (GITTag*)tagWithName:(NSString*)name;
 */
 

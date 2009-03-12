@@ -258,6 +258,31 @@
 							 shaString, @"sha", nil];
 }
 
+- (GITCommit*)head
+{
+    for (NSDictionary *ref in self.refs) {
+        if ([[ref objectForKey:@"name"] isEqualToString:@"HEAD"]) {
+            return [self commitWithSha1:[ref objectForKey:@"sha"]];
+        }
+    }
+    return nil;
+}
+
+- (GITBranch*)master
+{
+	return [self branchWithName:@"master"];
+}
+
+- (GITBranch*)branchWithName:(NSString*)name
+{
+	for (GITBranch *branch in self.branches) {
+        if ([branch.name isEqualToString:name]) {
+            return branch;
+        }
+    }
+    return nil;
+}
+
 - (NSArray *) refs
 {
 	NSMutableArray *refs = [[NSMutableArray alloc] init];
