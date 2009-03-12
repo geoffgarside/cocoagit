@@ -224,7 +224,7 @@ NSString * const kGITObjectCommitName = @"commit";
         return NO;
     }
         
-    self.message = [[scanner string] substringFromIndex:[scanner scanLocation]];
+    self.message = [[[scanner string] substringFromIndex:[scanner scanLocation]] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     if (!self.message)
     {
         errorDescription = NSLocalizedString(@"Failed to parse message for commit", @"GITErrorObjectParsingFailed (GITCommit:message)");
