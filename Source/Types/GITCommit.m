@@ -20,9 +20,8 @@ NSString * const kGITObjectCommitName = @"commit";
 */
 @interface GITCommit ()
 @property(readwrite,copy) NSString * treeSha1;
-@property(readwrite,copy) NSString * parentSha1;
 @property(readwrite,copy) GITTree * tree;
-@property(readwrite,copy) GITCommit * parent;
+@property(readwrite,copy) NSSet * parents;
 @property(readwrite,copy) GITActor * author;
 @property(readwrite,copy) GITActor * committer;
 @property(readwrite,copy) GITDateTime * authored;
@@ -36,10 +35,9 @@ NSString * const kGITObjectCommitName = @"commit";
 
 @implementation GITCommit
 @synthesize treeSha1;
-@synthesize parentSha1;
 @synthesize parentShas;
 @synthesize tree;
-@synthesize parent;
+@synthesize parents;
 @synthesize author;
 @synthesize committer;
 @synthesize authored;
@@ -73,7 +71,7 @@ NSString * const kGITObjectCommitName = @"commit";
 - (void)dealloc
 {
     self.tree = nil;
-    self.parent = nil;
+    self.parents = nil;
     self.author = nil;
     self.committer = nil;
     self.authored = nil;
@@ -85,7 +83,7 @@ NSString * const kGITObjectCommitName = @"commit";
 {
     GITCommit * commit  = (GITCommit*)[super copyWithZone:zone];
     commit.tree         = self.tree;
-    commit.parent       = self.parent;
+    commit.parents      = self.parents;
     commit.author       = self.author;
     commit.committer    = self.committer;
     commit.authored     = self.authored;
@@ -96,7 +94,7 @@ NSString * const kGITObjectCommitName = @"commit";
 
 - (BOOL)isFirstCommit
 {
-    return (self.parentSha1 == nil);
+    return ([self.parents count] > 0);
 }
 
 #pragma mark -
@@ -107,11 +105,29 @@ NSString * const kGITObjectCommitName = @"commit";
         self.tree = [self.repo treeWithSha1:self.treeSha1 error:NULL];  //!< Ideally we'd like to care about the error
     return tree;
 }
+
+- (NSString *)parentSha1
+{
+    return self.parent.sha1;
+}
+
 - (GITCommit*)parent
 {
-    if (!parent && self.parentSha1)
-        self.parent = [self.repo commitWithSha1:self.parentSha1 error:NULL];    //!< Ideally we'd like to care about the error
-    return parent;
+    return [self.parents anyObject];
+}
+
+- (NSSet *)parents
+{
+    if (!parents && self.parentShas) {
+        NSMutableSet *newParents = [[NSMutableSet alloc] initWithCapacity:[self.parentShas count]];
+        for (NSString *parentSha1 in self.parentShas) {
+            GITCommit *parent = [self.repo commitWithSha1:parentSha1 error:NULL];
+            [newParents addObject:parent];
+        }
+        self.parents = newParents;
+        [newParents release];
+    }
+    return parents;
 }
 
 #pragma mark -
@@ -135,7 +151,7 @@ NSString * const kGITObjectCommitName = @"commit";
              * committerEmail,
              * committerTimezone;
 
-	NSMutableArray *parents = [NSMutableArray new];
+	NSMutableArray *newParentShas = [[NSMutableArray alloc] init];
 
     NSTimeInterval authorTimestamp,
                    committerTimestamp;
@@ -158,9 +174,7 @@ NSString * const kGITObjectCommitName = @"commit";
         // If we've got a parent at all then we'll parse the name
         if ([scanner scanUpToString:NewLine intoString:&commitParent])
         {
-            // If parentSha1 is nil then commit is the first commit
-            self.parentSha1 = commitParent;
-			[parents addObject:commitParent];
+			[newParentShas addObject:commitParent];
         }
         else
         {
@@ -170,7 +184,7 @@ NSString * const kGITObjectCommitName = @"commit";
         }
     }
 	
-	[self setParentShas:parents];
+	[self setParentShas:newParentShas];
     
     if ([scanner scanString:@"author" intoString:NULL] &&
         [scanner scanUpToString:@"<" intoString:&authorName] &&
