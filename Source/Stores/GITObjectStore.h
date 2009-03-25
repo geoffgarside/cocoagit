@@ -98,4 +98,12 @@
  */
 - (BOOL)loadObjectWithSha1:(NSString*)sha1 intoData:(NSData**)data
                       type:(GITObjectType*)type error:(NSError**)error;
+
+/*! Writes the object to the store.
+ * \param data The data for the object
+ * \param type The type of object to store
+ * \param[out] error NSError object containing any errors, pass NULL if you don't care
+ * \return YES on successful save, NO on error
+ */
+- (BOOL)writeObject:(NSData*)data type:(GITObjectType)type error:(NSError**)error;
 @end

@@ -141,5 +141,10 @@
 	GITError(error, GITErrorObjectNotFound, errorDescription);
     return NO;
 }
+- (BOOL)writeObject:(NSData*)data type:(GITObjectType)type error:(NSError**)error
+{
+    // NOTE: For now we'll just pass it on to the first store object.
+    return [[self.stores objectAtIndex:0] writeObject:data type:type error:error];
+}
 
 @end

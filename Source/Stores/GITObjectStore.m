@@ -71,4 +71,9 @@
     [self doesNotRecognizeSelector: _cmd];
     return NO;
 }
+- (BOOL)writeObject:(NSData*)data type:(GITObjectType)type error:(NSError**)error
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return NO;
+}
 @end

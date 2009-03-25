@@ -9,6 +9,7 @@
 #import "GITFileStore.h"
 #import "NSData+Compression.h"
 #import "NSData+Searching.h"
+#import "NSData+Hashing.h"
 #import "GITObject.h"
 
 /*! \cond */
@@ -110,5 +111,25 @@
 	}
 
 	return YES;
+}
+- (BOOL)writeObject:(NSData*)data type:(GITObjectType)type error:(NSError**)error
+{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSString *path = [self stringWithPathToObject:[data sha1DigestString]];
+
+    BOOL isDir;
+    if ( !([fm fileExistsAtPath:[path stringByDeletingLastPathComponent] isDirectory:&isDir] && isDir) ) {
+        [fm createDirectoryAtPath:[path stringByDeletingLastPathComponent] attributes:nil];
+    }
+
+    NSString *meta = [NSString stringWithFormat:@"%@ %d", [GITObject stringForObjectType:type], [data length]];
+    NSMutableData *obj = [[meta dataUsingEncoding:NSASCIIStringEncoding] mutableCopy];
+    [obj appendData:data];
+
+    NSData *compressed = [obj zlibDeflate];
+    BOOL result = [compressed writeToFile:path options:NSAtomicWrite error:error];
+
+    [obj release];
+    return result;
 }
 @end
