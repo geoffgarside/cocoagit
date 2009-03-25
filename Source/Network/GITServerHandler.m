@@ -473,7 +473,7 @@
 	
 	if((type == GITObjectTypeCommit) || (type == GITObjectTypeTree) || (type == GITObjectTypeBlob) || (type == GITObjectTypeTag)) {
 		NSData *objectData = [self readData:size];
-		[gitRepo writeObject:objectData withType:[GITObject stringForObjectType:type] size:size];
+		[gitRepo writeObject:objectData withType:[GITObject stringForObjectType:type]];
 		// TODO : check saved delta objects
 	} else if ((type == OBJ_REF_DELTA) || (type == OBJ_OFS_DELTA)) {
 		[self unpackDeltified:type size:size];
@@ -496,7 +496,7 @@
 			object = [gitRepo objectWithSha1:sha1];
 			contents = [self patchDelta:objectData withObject:object];
 			NSLog(@"unpacked delta: %@ : %@", contents, [object type]);
-			[gitRepo writeObject:contents withType:[object type] size:[contents length]];
+			[gitRepo writeObject:contents withType:[object type]];
 			//[object release];
 		} else {
 			// TODO : OBJECT ISN'T HERE YET, SAVE THIS DELTA FOR LATER //

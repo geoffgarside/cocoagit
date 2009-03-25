@@ -14,6 +14,7 @@
 #import "GITUtilityBelt.h"
 #include <CommonCrypto/CommonDigest.h>
 
+#import "NSData+Hashing.h"
 #import "NSData+Searching.h"
 #import "NSData+Compression.h"
 #import "NSFileManager+DirHelper.h"
@@ -397,23 +398,19 @@
 	return [NSString stringWithFormat: @"%@/objects/%@/%@", [self root], looseSubDir, looseFileName];
 }
 
-- (BOOL) writeObject:(NSData *)objectData withType:(NSString *)type size:(NSUInteger)size
+- (BOOL) writeObject:(NSData *)objectData withType:(NSString *)type
 {
 	NSMutableData *object;
-	NSString *header, *objectPath, *shaStr;
-	unsigned char rawsha[20];
-	
-	header = [NSString stringWithFormat:@"%@ %d", type, size];	
+	NSString *header, *objectPath;
+
+    // TODO: This might be an invalid header as doesn't explicitly end with \0
+	header = [NSString stringWithFormat:@"%@ %d", type, [objectData length]];
 	object = [[header dataUsingEncoding:NSASCIIStringEncoding] mutableCopy];
-	
+
 	[object appendData:objectData];
-	
-	CC_SHA1([object bytes], [object length], rawsha);
-	
+
 	// write object to file
-	shaStr = unpackSHA1FromData(bytesToData(rawsha, 20));
-	objectPath = [self pathForLooseObjectWithSha:shaStr];
-	//NSData *compress = [[NSData dataWithBytes:[object bytes] length:[object length]] compressedData];
+	objectPath = [self pathForLooseObjectWithSha:[objectData sha1DigestString]];
 	NSData *compressedData = [object zlibDeflate];
 	
 	BOOL success = [compressedData writeToFile:objectPath atomically:YES];
