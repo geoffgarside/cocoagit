@@ -379,45 +379,9 @@
     NSCharacterSet *cs = [NSCharacterSet characterSetWithCharactersInString:@"0123456789abcdef"];
     return [cs stringIsComposedOfCharactersInSet:shaString];
 }
-
-- (NSString *) pathForLooseObjectWithSha:(NSString *) shaValue
-{
-	if (! isSha1StringValid(shaValue))
-		return nil;
-	
-	NSString *looseSubDir   = [shaValue substringWithRange:NSMakeRange(0, 2)];
-	NSString *looseFileName = [shaValue substringWithRange:NSMakeRange(2, 38)];
-	
-	NSString *dir = [NSString stringWithFormat: @"%@/objects/%@", [self root], looseSubDir];
-	
-	NSFileManager *fm = [NSFileManager defaultManager];
-	if (! [NSFileManager directoryExistsAtPath:dir]) {
-		[fm createDirectoryAtPath:dir attributes:nil];
-	}
-	
-	return [NSString stringWithFormat: @"%@/objects/%@/%@", [self root], looseSubDir, looseFileName];
-}
-
 - (BOOL) writeObject:(NSData *)objectData withType:(NSString *)type
 {
-	NSMutableData *object;
-	NSString *header, *objectPath;
-
-    // TODO: This might be an invalid header as doesn't explicitly end with \0
-	header = [NSString stringWithFormat:@"%@ %d", type, [objectData length]];
-	object = [[header dataUsingEncoding:NSASCIIStringEncoding] mutableCopy];
-
-	[object appendData:objectData];
-
-	// write object to file
-	objectPath = [self pathForLooseObjectWithSha:[objectData sha1DigestString]];
-	NSData *compressedData = [object zlibDeflate];
-	
-	BOOL success = [compressedData writeToFile:objectPath atomically:YES];
-	[object release];
-	
-	// return a string? Should probably return a BOOL to indicate that file has been written...
-	return success;
+    return [self.store writeObject:objectData type:[GITObject objectTypeForString:type] error:NULL];
 }
 
 
