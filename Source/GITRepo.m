@@ -17,6 +17,7 @@
 #import "NSData+Searching.h"
 #import "NSData+Compression.h"
 #import "NSFileManager+DirHelper.h"
+#import "NSCharacterSet+StringComparison.h"
 
 /*! \cond
  Make properties readwrite so we can use
@@ -371,8 +372,11 @@
 
 + (BOOL) isShaValid:(NSString *) shaString
 {
-	// should also check for invalid chars
-	return ([shaString length] == 40);
+    if ( [shaString length] != 40 )
+        return NO;
+
+    NSCharacterSet *cs = [NSCharacterSet characterSetWithCharactersInString:@"0123456789abcdef"];
+    return [cs stringIsComposedOfCharactersInSet:shaString];
 }
 
 - (NSString *) pathForLooseObjectWithSha:(NSString *) shaValue
