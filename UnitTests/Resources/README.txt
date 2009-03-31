@@ -22,4 +22,8 @@ for delta-ref pack files:
 
 ### Sort by offset
 
-    git-verify-pack -v <packfile> | sort -n -k+5
+    git-verify-pack -v <packfile> | grep -v ^chain | sort -n -k+5
+    
+## Generating Property-List Fixtures
+
+Edit the pack-fixtures.nu file and then run it to generate packFixtures.nu
