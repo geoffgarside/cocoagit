@@ -24,6 +24,7 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
 @property(readwrite,retain) NSData * data;
 @property(readwrite,retain) GITPackIndex * index;
 - (NSUInteger) readHeaderAtOffset:(off_t)offset type:(NSUInteger *)type size:(NSUInteger *)sizep;
+- (NSUInteger) sizeOfPackedDataFromOffset:(off_t)currentOffset;
 - (NSData *) unpackObjectAtOffset:(off_t)offset type:(GITObjectType*)objectType error:(NSError**)error;
 - (NSData *)unpackDeltifiedObjectAtOffset:(off_t)offset type:(GITObjectType)deltaType objectOffset:(off_t)objOffset objectType:(GITObjectType *)type error:(NSError**)error;
 - (NSRange)rangeOfPackedObjects;
@@ -159,6 +160,16 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
 #pragma mark -
 #pragma mark Internal Methods
 
+- (NSUInteger) sizeOfPackedDataFromOffset:(off_t)currentOffset;
+{
+    off_t nextOffset = [self.index nextOffsetWithOffset:currentOffset];
+    if ( nextOffset == -1 ) {
+        NSRange checksumRange = [self rangeOfChecksum];
+        nextOffset = (off_t)(checksumRange.location);
+    }
+    return (nextOffset - currentOffset);
+}
+
 - (NSUInteger) readHeaderAtOffset:(off_t)offset type:(NSUInteger *)type size:(NSUInteger *)sizep;
 {
     uint8_t buf;
@@ -183,12 +194,11 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
 - (NSData *)unpackObjectAtOffset:(off_t)offset type:(GITObjectType*)objectType error:(NSError**)error;
 {
     off_t objOffset = offset;
-    off_t nextOffset = [self.index nextOffsetWithOffset:offset];
         
     NSUInteger size, type;
     NSUInteger headerLength = [self readHeaderAtOffset:offset type:&type size:&size];
-    NSUInteger packedSize = nextOffset - (objOffset + headerLength);
     offset += headerLength;
+    NSUInteger packedSize = [self sizeOfPackedDataFromOffset:offset];
     
     NSData *objData;
 	switch (type) {
@@ -242,7 +252,7 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
     }
     
     [baseObjectData retain];
-    NSUInteger packedSize = [self.index nextOffsetWithOffset:objOffset] - offset;
+    NSUInteger packedSize = [self sizeOfPackedDataFromOffset:offset];
     NSData *deltaData = [[self.data subdataWithRange:NSMakeRange(offset, packedSize)] zlibInflate];
     NSData *objData = [baseObjectData dataByPatchingWithDelta:deltaData];
     [baseObjectData release];
@@ -250,23 +260,26 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
     return objData;
 }
 
-
 - (NSRange)rangeOfPackedObjects
 {
     return NSMakeRange(12, [self rangeOfChecksum].location - 12);
 }
+
 - (NSRange)rangeOfChecksum
 {
     return NSMakeRange([self.data length] - 20, 20);
 }
+
 - (NSData*)checksum
 {
     return [self.data subdataWithRange:[self rangeOfChecksum]];
 }
+
 - (NSString*)checksumString
 {
     return unpackSHA1FromData([self checksum]);
 }
+
 - (BOOL)verifyChecksum
 {
     NSData * checkData = [[self.data subdataWithRange:NSMakeRange(0, [self.data length] - 20)] sha1Digest];
