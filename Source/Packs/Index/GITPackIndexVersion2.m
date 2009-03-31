@@ -38,7 +38,7 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 - (off_t)packOffsetWithIndex:(NSUInteger)i;
 - (GITPackReverseIndex *)revIndex;
 - (NSString *)sha1WithOffset:(off_t)offset;
-
+- (NSData *)packedSha1WithIndex:(NSUInteger)i;
 @end
 /*! \endcond */
 
@@ -165,15 +165,14 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
     return NSNotFound;
 }
 
+- (off_t)baseOffsetWithOffset:(off_t)offset;
+{
+    return (off_t)[[self revIndex] baseOffsetWithOffset:offset];
+}
+
 - (off_t)nextOffsetWithOffset:(off_t)offset;
 {
-    off_t nextOffset = [[self revIndex] nextOffsetWithOffset:offset];
-    if (nextOffset == -1) {
-        // offset is the last offset in the table
-        NSRange offsetTableRange = [self rangeOfOffsetTable];
-        nextOffset = (off_t)(offsetTableRange.location + offsetTableRange.length);
-    }
-    return nextOffset;
+    return (off_t)[[self revIndex] nextOffsetWithOffset:offset];
 }
 
 - (NSData*)packChecksum

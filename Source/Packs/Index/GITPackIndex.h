@@ -83,10 +83,36 @@
 
 #pragma mark -
 #pragma mark Reverse Index Lookup Methods
-- (off_t)nextOffsetWithOffset:(off_t)offset;
-- (NSString *)sha1WithOffset:(off_t)offset;
-- (off_t)packOffsetWithIndex:(NSUInteger)i;
+/*! Returns the start(base) offset of the object with the given offset.
+ *  \param offset The offset of an object in the PACK file.
+ *  \return The start offset of the object that contains the given offset.
+ *  Returns the offset of the last object if the given offset is greater than the
+ *  starting range of any of the existing object offsets.
+ *  Returns the offset of the first object if th give offset is less than the
+ *  starting range of any of the existing object offsets.
+ */
+- (off_t)baseOffsetWithOffset:(off_t)offset;
 
+/*! Returns the offset of the next object located after the object with the given offset.
+ *  \param offset The offset of an object in the PACK file.
+ *  \return The offset of the next consecutive object located in the PACK file
+ *  after the object with the given offset. Returns NSNotFound if the given offset
+ *  is not found in the PACK file. Returns -1 if the given offset is the last
+ *  offset in the file.
+ */
+- (off_t)nextOffsetWithOffset:(off_t)offset;
+
+/*! Returns the sha1 of the object with the given offset
+ *  \param offset The offset of an object in the PACK file.
+ *  \return The unpacked sha1 string of the object at offset.
+ */
+- (NSString *)sha1WithOffset:(off_t)offset;
+
+/*! Returns the object offset at the specified index in the PACK index offset table.
+ *  \param i An index in the PACK index offsets table
+ *  \return The object offset at the specified index in the PACK index offset table.
+ */
+- (off_t)packOffsetWithIndex:(NSUInteger)i;
 
 #pragma mark -
 #pragma mark Internal Primitive Methods

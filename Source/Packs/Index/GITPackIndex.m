@@ -94,6 +94,13 @@
     [self doesNotRecognizeSelector: _cmd];
     return 0;
 }
+
+- (off_t)baseOffsetWithOffset:(off_t)offset;
+{
+    [self doesNotRecognizeSelector:_cmd];
+    return 0;
+}
+
 - (off_t)nextOffsetWithOffset:(off_t)offset;
 {
     [self doesNotRecognizeSelector: _cmd];
