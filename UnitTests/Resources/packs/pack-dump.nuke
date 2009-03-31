@@ -1,0 +1,44 @@
+#!/usr/bin/env nush
+
+(load "match")
+
+(set deltaref_packfile "packs/cg-0.2.5-deltaref-be5a15ac583f7ed1e431f03bd444bbde6511e57c.pack")
+(set deltaofs_packfile "packs/cg-0.2.5-deltaofs-be5a15ac583f7ed1e431f03bd444bbde6511e57c.pack")
+
+(file "deltaref-packdump.txt" => deltaref_packfile is
+      (set s (NSString stringWithShellCommand:
+                  "git-verify-pack -v #{deltaref_packfile} | grep -v ^chain | grep -v ^packs"))
+      (s writeToFile:(target name)
+         atomically:NO
+         encoding:NSUTF8StringEncoding
+         error:nil))
+
+(class NSArray
+     (- (id) zip:(id)otherArray is
+          (set a (NSMutableArray arrayWithCapacity:(self count)))
+          (self eachWithIndex:(do (e i)
+               (set d (NSDictionary dictionaryWithObject:(otherArray i) forKey:e))
+               (a addObject:d)))
+          a))
+
+(file "deltaRefDump.plist" => "deltaref-packdump.txt" is
+      (set dumpString (NSString stringWithContentsOfFile:"deltaref-packdump.txt"))
+      (set lines ((dumpString chomp) componentsSeparatedByCharactersInSet:
+                      (NSCharacterSet newlineCharacterSet)))
+      (puts "#{(lines count)} lines")
+      (set normal_headers (array "sha1" "type" "size" "sizeInPackFile" "offsetInPackfile"))
+      (set delta_headers (normal_headers arrayByAddingObjectsFromArray:(array "depth" "baseSha1")))
+      ;(puts (lines list))
+      (set data
+           (lines map:
+                  (do (line)
+                      (set values (/\W+/ splitString:(line chomp)))
+                      (if (eq 5 (values count))
+                          (then
+                               (normal_headers zip:values))
+                          (else
+                               (delta_headers zip:values))))))
+      (data writeToFile:(target name) atomically:NO))
+
+
+(task "default" => "deltaRefDump.plist")
