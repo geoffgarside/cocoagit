@@ -27,6 +27,7 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
 - (NSUInteger) sizeOfPackedDataFromOffset:(off_t)currentOffset;
 - (NSData *) unpackObjectAtOffset:(off_t)offset type:(GITObjectType*)objectType error:(NSError**)error;
 - (NSData *)unpackDeltifiedObjectAtOffset:(off_t)offset type:(GITObjectType)deltaType objectOffset:(off_t)objOffset objectType:(GITObjectType *)type error:(NSError**)error;
+- (NSData *) packedDataForObjectWithSha1:(NSString *)sha1
 - (NSRange)rangeOfPackedObjects;
 - (NSRange)rangeOfChecksum;
 - (NSData*)checksum;
@@ -117,6 +118,17 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
     }
     return numberOfObjects;
 }
+
+- (NSData *) packedDataForObjectWithSha1:(NSString *)sha1
+{
+    if (![self hasObjectWithSha1:sha1]) return nil;
+    if (! self.index) return nil;
+    
+    off_t offset = [[self index] packOffsetForSha1:sha1];
+    NSUInteger size = [self sizeOfPackedDataFromOffset:offset];
+    return [[self data] subdataWithRange:NSMakeRange(offset, size)];
+}
+
 - (NSData*)dataForObjectWithSha1:(NSString*)sha1
 {
     // We've defined it this way so if we can determine a better way
