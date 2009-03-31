@@ -9,6 +9,11 @@
 #import "GITPackIndexTests.h"
 #import "GITPackFile.h"
 
+@interface GITPackIndex (IndexV2PrivateMethods)
+- (NSRange)rangeOfPackChecksum;
+- (NSRange)rangeOfExtendedOffsetTable;
+@end
+
 @implementation GITPackIndexTests
 @synthesize versionOne;
 @synthesize versionTwo;
@@ -63,4 +68,72 @@
 {
     GHAssertTrue([versionTwo verifyChecksum], nil);     // We assume the file is well formed so we're checking our verification process here
 }
+
+- (void) testOffsetForSha1
+{
+    NSDictionary *packInfo = [GITTestHelper packedObjectInfo];
+    NSArray *objectKeys = [NSArray arrayWithObjects:@"firstObject",@"lastNormalObject",@"penultimateObject",@"lastObject",nil];
+    for (NSString *key in objectKeys) {
+        NSDictionary *o = [packInfo valueForKey:key];
+        NSNumber *expectedOffset = [o valueForKey:@"offset"];
+        GHAssertEquals((off_t)[expectedOffset unsignedLongLongValue],
+                       [versionTwo packOffsetForSha1:[o valueForKey:@"sha1"]], nil);
+    }
+}
+
+- (void) testBaseOffsetBeforeFirstObject
+{
+    NSDictionary *packInfo = [GITTestHelper packedObjectInfo];
+    NSDictionary *o = [packInfo valueForKey:@"firstObject"];
+    NSNumber *offset = [o valueForKey:@"offset"];
+    GHAssertEquals((off_t)[offset unsignedLongLongValue],
+                   (off_t)[versionTwo baseOffsetWithOffset:0], nil);
+}
+
+- (void) testBaseOffsetOfFirstObject
+{
+    NSDictionary *packInfo = [GITTestHelper packedObjectInfo];
+    NSDictionary *o = [packInfo valueForKey:@"firstObject"];
+    NSNumber *offset = [o valueForKey:@"offset"];
+    GHAssertEquals((off_t)[offset unsignedLongLongValue],
+                   (off_t)[versionTwo baseOffsetWithOffset:([offset unsignedLongLongValue]+1)], nil); 
+}
+
+- (void) testBaseOffsetOfPenultimateObject
+{
+    NSDictionary *packInfo = [GITTestHelper packedObjectInfo];
+    NSDictionary *o = [packInfo valueForKey:@"penultimateObject"];
+    NSNumber *offset = [o valueForKey:@"offset"];
+    GHAssertEquals((off_t)[offset unsignedLongLongValue],
+                   (off_t)[versionTwo baseOffsetWithOffset:([offset unsignedLongLongValue]+1)], nil); 
+}
+
+- (void) testBaseOffsetOfLastObject
+{
+    NSDictionary *packInfo = [GITTestHelper packedObjectInfo];
+    NSDictionary *o = [packInfo valueForKey:@"lastObject"];
+    NSNumber *offset = [o valueForKey:@"offset"];
+    GHAssertEquals((off_t)[offset unsignedLongLongValue],
+                   (off_t)[versionTwo baseOffsetWithOffset:([offset unsignedLongLongValue]+1)], nil); 
+}
+
+- (void) testNextOffsetOfPenultimateObject
+{
+    NSDictionary *packInfo = [GITTestHelper packedObjectInfo];
+    NSDictionary *o = [packInfo valueForKey:@"penultimateObject"];
+    NSNumber *offset = [o valueForKey:@"offset"];
+    NSNumber *lastOffset = [[packInfo valueForKey:@"lastObject"] valueForKey:@"offset"];
+    GHAssertEquals((off_t)[lastOffset unsignedLongLongValue],
+                   (off_t)[versionTwo nextOffsetWithOffset:[offset unsignedLongLongValue]], nil);       
+}
+
+- (void) testNextOffsetOfLastObject
+{
+    NSDictionary *packInfo = [GITTestHelper packedObjectInfo];
+    NSDictionary *o = [packInfo valueForKey:@"lastObject"];
+    NSNumber *offset = [o valueForKey:@"offset"];
+    GHAssertEquals((off_t)-1,
+                   (off_t)[versionTwo nextOffsetWithOffset:[offset unsignedLongLongValue]], nil);                       
+}
+
 @end
