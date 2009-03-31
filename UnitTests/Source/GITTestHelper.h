@@ -13,5 +13,5 @@
 {}
 + (NSString *) createTempRepoWithDotGitDir:(NSString *)clonePath;
 + (BOOL) removeTempRepoAtPath:(NSString *)aPath;
-+ (NSDictionary *)packedObjects;
++ (NSDictionary *)packedObjectInfo;
 @end
