@@ -49,17 +49,37 @@
 #import "GITPackReverseIndex.h"
 
 @interface NSArray (CFBinarySearch)
+- (NSUInteger) binSearchWithNumber:(NSNumber *)n;
 - (NSUInteger) bsIndexOfNumber:(NSNumber *)n;
 @end
 
 
 @implementation NSArray (CFBinarySearch)
+/* CFArrayBSearchValues does a binary search, and returns the following:
+ * - The index of a value that matched, if the target value matches one or more in the range.
+ * - Greater than or equal to the end point of the range, if the value is greater than all the values in the range.
+ * - The index of the value greater than the target value, if the value lies between two of (or less than all of) the values in the range. 
+ *
+ * This is a specific method for doing a binary search in an NSArray filled with NSNumber values that represent object offsets
+ * The return value is either:
+ * - NSNotFound if n > MaxOffset
+ * - The index of the value greater than the target value, if the value lies between two of (or less than all of) the values in the range.
+ */
 // thanks to quickie from Borkware: http://www.borkware.com/quickies/single?id=372
 - (NSUInteger) binSearchWithNumber:(NSNumber *)n;
 {
-    return (NSUInteger)CFArrayBSearchValues((CFArrayRef)self, CFRangeMake(0, [self count]), (CFNumberRef)n, (CFComparatorFunction)CFNumberCompare, NULL);
+    NSUInteger result = (NSUInteger)CFArrayBSearchValues((CFArrayRef)self, CFRangeMake(0, [self count]), (CFNumberRef)n, (CFComparatorFunction)CFNumberCompare, NULL);
+    if (result >= [self count])
+        return NSNotFound;
+    return result;
 }
 
+/* bsIndexOfNumber works exactly like NSArray#indexOfObject:, expect that:
+ * - It assumes that the NSArray is composed of NSNumber objects, which are compared them using #isEqual:
+ * - It assumes that the array is sorted, and uses a binary search
+ *
+ * returns index or NSNotFound if 'n' is not in the array
+ */
 - (NSUInteger) bsIndexOfNumber:(NSNumber *)n;
 {
     NSUInteger result = [self binSearchWithNumber:n];
@@ -69,8 +89,12 @@
 }
 @end
 
-
 @interface GITPackReverseIndex ()
+@property (nonatomic, assign) GITPackIndex *index;
+@property (nonatomic, copy) NSArray *offsets;
+@property (nonatomic, copy) NSArray *indexMap;
+@property (nonatomic, copy) NSArray *offsets64;
+@property (nonatomic, copy) NSArray *indexMap64;
 - (BOOL) buildReverseIndex;
 @end
 
@@ -82,12 +106,10 @@
 @synthesize offsets64;
 @synthesize indexMap64;
 
-/*
 + (id) reverseIndexWithIndex:(GITPackIndex *)packIndex;
 {
-    return [[[self alloc] initWithIndex:packIndex] autorelease];
+    return [[[self alloc] initWithPackIndex:packIndex] autorelease];
 }
-*/
 
 - (id) initWithPackIndex:(GITPackIndex *) packIndex;
 {
@@ -96,8 +118,10 @@
     
     [self setIndex:packIndex];
     
-    if (! [self buildReverseIndex])
+    if (! [self buildReverseIndex]) {
+        [self release];
         return nil;
+    }
     
     return self;
 }
@@ -109,7 +133,6 @@
     index = nil;
     [super dealloc];
 }
-
 
 - (BOOL) buildReverseIndex;
 {
@@ -156,34 +179,20 @@
     return YES;
 }
 
-- (NSUInteger) indexWithOffset64:(off_t)offset;
-{
-    NSUInteger i = [offsets64 bsIndexOfNumber:[NSNumber numberWithUnsignedLongLong:offset]];
-    if (i == NSNotFound)
-        return NSNotFound;
-    return [[indexMap64 objectAtIndex:i] unsignedIntValue];
-}
-
 - (NSUInteger) indexWithOffset:(off_t)offset;
 {
-    if (offset > UINT32_MAX)
-        return [self indexWithOffset64:offset];
-    NSUInteger i = [offsets bsIndexOfNumber:[NSNumber numberWithUnsignedLong:offset]];
+    NSArray *searchOffsets = offsets;
+    NSArray *searchIndexMap = indexMap;
+    NSNumber *offsetNumber = [NSNumber numberWithUnsignedLong:offset];
+    if (offset > UINT32_MAX) {
+        searchOffsets = offsets64;
+        searchIndexMap = indexMap64;
+        offsetNumber = [NSNumber numberWithUnsignedLongLong:offset];
+    }
+    NSUInteger i = [searchOffsets bsIndexOfNumber:[NSNumber numberWithUnsignedLong:offset]];
     if (i == NSNotFound)
         return NSNotFound;
-    return [[indexMap objectAtIndex:i] unsignedIntValue];
-}
-
-- (off_t) nextOffsetWithOffset64:(off_t)thisOffset;
-{
-    NSNumber *offsetNumber = [NSNumber numberWithUnsignedLongLong:thisOffset];
-    NSUInteger i = [offsets64 bsIndexOfNumber:offsetNumber];
-    if (i == NSNotFound)
-        return NSNotFound;
-    if (i+1 == [offsets64 count])
-        return -1;
-    NSNumber *nextOffset = [offsets64 objectAtIndex:i+1];
-    return (off_t)[nextOffset unsignedLongLongValue];
+    return [[searchIndexMap objectAtIndex:i] unsignedIntValue];
 }
 
 // return the next offset after object at offset: thisOffset
@@ -191,15 +200,41 @@
 //   return -1 if thisOffset is the last offset
 - (off_t) nextOffsetWithOffset:(off_t)thisOffset;
 {
-    if (thisOffset > UINT32_MAX)
-        return [self nextOffsetWithOffset64:thisOffset];
-    NSUInteger i = [offsets bsIndexOfNumber:[NSNumber numberWithUnsignedLong:thisOffset]];
+    NSArray *searchOffsets = offsets;
+    NSNumber *offsetNumber = [NSNumber numberWithUnsignedLongLong:thisOffset];
+    if (thisOffset > UINT32_MAX) {
+        searchOffsets = offsets64;
+        offsetNumber = [NSNumber numberWithUnsignedLongLong:thisOffset];
+    }
+    NSUInteger i = [searchOffsets binSearchWithNumber:[NSNumber numberWithUnsignedLong:thisOffset]];
     if (i == NSNotFound)
         return NSNotFound;
-    if (i+1 == [offsets count])
+    if (i+1 == [searchOffsets count])
         return -1;
-    NSNumber *nextOffset = [offsets objectAtIndex:i+1];
+    NSNumber *nextOffset = [searchOffsets objectAtIndex:i+1];
     return (off_t)[nextOffset unsignedLongValue];
 }
 
+// return the start offset of the object containing for current offset
+//  return offsetOfLastObject if 'theOffset' > offsetOfLastObject
+//  return offsetOfFirstObject if 'theOffset' < offsetOfFirstObject
+// NOTE: these return values are mostly a feature of the binSearchWithNumber
+// wrapper around CFArrayBSearchValues
+- (off_t) baseOffsetWithOffset:(off_t)theOffset;
+{
+    NSArray *searchOffsets = offsets;
+    NSNumber *offsetNumber = [NSNumber numberWithUnsignedLong:theOffset];
+    if (theOffset > UINT32_MAX) {
+        offsetNumber = [NSNumber numberWithUnsignedLongLong:theOffset];
+        searchOffsets = offsets64;
+    }
+    NSUInteger i = [searchOffsets binSearchWithNumber:offsetNumber];
+    if (i == NSNotFound) {
+        i = [searchOffsets count] - 1;
+    } else {
+        if ( i > 0 ) i--;
+    }
+    NSNumber *result = [searchOffsets objectAtIndex:i];
+    return (off_t)[result unsignedLongValue];
+}
 @end

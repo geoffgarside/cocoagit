@@ -16,13 +16,10 @@
     NSArray *indexMap;
     NSArray *indexMap64;
 }
-@property (nonatomic, assign) GITPackIndex *index;
-@property (nonatomic, copy) NSArray *offsets;
-@property (nonatomic, copy) NSArray *indexMap;
-@property (nonatomic, copy) NSArray *offsets64;
-@property (nonatomic, copy) NSArray *indexMap64;
+@property (nonatomic, readonly, assign) GITPackIndex *index;
 
 - (id) initWithPackIndex:(GITPackIndex *)packIndex;
 - (NSUInteger) indexWithOffset:(off_t)offset;
 - (off_t) nextOffsetWithOffset:(off_t)thisOffset;
+- (off_t) baseOffsetWithOffset:(off_t)theOffset;
 @end
