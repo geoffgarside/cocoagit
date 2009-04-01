@@ -17,15 +17,17 @@ static const char hexchars[] = "0123456789abcdef";
 NSData *
 packSHA1(NSString * unpackedSHA1)
 {
-    unsigned int highBits, lowBits, bits;
+    NSData *unpackedSHA1Data = [unpackedSHA1 dataUsingEncoding:NSASCIIStringEncoding];
+    const uint8_t *unpackedSHA1CString = (const uint8_t *)[unpackedSHA1Data bytes];
+    uint8_t highBits, lowBits, bits;
     NSMutableData *packedSHA1 = [NSMutableData dataWithCapacity:kGITPackedSha1Length];
     int i;
     for (i = 0; i < [unpackedSHA1 length]; i++)
     {
         if (i % 2 == 0) {
-            highBits = (strchr(hexchars, [unpackedSHA1 characterAtIndex:i]) - hexchars) << 4;
+            highBits = (strchr(hexchars, unpackedSHA1CString[i]) - hexchars) << 4;
         } else {
-            lowBits = strchr(hexchars, [unpackedSHA1 characterAtIndex:i]) - hexchars;
+            lowBits = strchr(hexchars, unpackedSHA1CString[i]) - hexchars;
             bits = (highBits | lowBits);
             [packedSHA1 appendBytes:&bits length:1];
         }
@@ -36,7 +38,7 @@ packSHA1(NSString * unpackedSHA1)
 NSString *
 unpackSHA1FromString(NSString * packedSHA1)
 {
-    unsigned int bits;
+    uint8_t bits;
     NSMutableString *unpackedSHA1 = [NSMutableString stringWithCapacity:kGITUnpackedSha1Length];
     int i;
     for(i = 0; i < kGITPackedSha1Length; i++)
@@ -51,26 +53,21 @@ unpackSHA1FromString(NSString * packedSHA1)
 NSString *
 unpackSHA1FromData(NSData * packedSHA1)
 {
-    uint8_t bits;
-    NSMutableString *unpackedSHA1 = [NSMutableString stringWithCapacity:kGITUnpackedSha1Length];
-    int i;
-    for(i = 0; i < kGITPackedSha1Length; i++)
-    {
-        [packedSHA1 getBytes:&bits range:NSMakeRange(i, 1)];
-        [unpackedSHA1 appendFormat:@"%c", hexchars[bits >> 4]];
-        [unpackedSHA1 appendFormat:@"%c", hexchars[bits & 0xf]];
-    }
-    return [NSString stringWithString:unpackedSHA1];
+    return unpackSHA1FromBytes((const uint8_t *)[packedSHA1 bytes], [packedSHA1 length]);
 }
 
 NSString *
 unpackSHA1FromBytes(const uint8_t * bytes, unsigned int length)
 {
-    NSData * data;
-    if (length < 0)
-        return nil;
-    data = [NSData dataWithBytes:bytes length:length];
-    return unpackSHA1FromData(data);
+    NSMutableData *unpackedSHA1 = [NSMutableData dataWithLength:kGITUnpackedSha1Length];
+    uint8_t *unpackedBytes = [unpackedSHA1 mutableBytes];
+    int i;
+    for(i = 0; i < length; i++)
+    {
+        *unpackedBytes++ = hexchars[bytes[i] >> 4];
+        *unpackedBytes++ = hexchars[bytes[i] & 0xf];
+    }
+    return [[[NSString alloc] initWithData:unpackedSHA1 encoding:NSASCIIStringEncoding] autorelease];
 }
 
 BOOL

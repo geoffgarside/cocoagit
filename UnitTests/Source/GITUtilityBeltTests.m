@@ -19,7 +19,7 @@
     [super setUp];
     self.unpackedSHA1 = @"bed4001738fa8dad666d669867afaf9f2c2b8c6a";
     self.packedSHA1Data = [NSData dataWithBytes:"\276\324\000\0278\372\215\255fmf\230g\257\257\237,+\214j" length:20];
-    self.packedSHA1String = [[NSString alloc] initWithData:self.packedSHA1Data encoding:NSASCIIStringEncoding];
+    self.packedSHA1String = [[[NSString alloc] initWithData:self.packedSHA1Data encoding:NSASCIIStringEncoding] autorelease];
 }
 - (void)tearDown
 {
@@ -38,6 +38,53 @@
     GHAssertEquals([packed length], (NSUInteger)20, nil);
     GHAssertEqualObjects(packed, packedSHA1Data, nil);
 }
+
+- (void)testUnpackedSHA1StringEncoding
+{
+    NSString *unpackedCString = [[[NSString alloc] initWithCString:"bed4001738fa8dad666d669867afaf9f2c2b8c6a" encoding:NSASCIIStringEncoding] autorelease];
+    GHAssertEqualObjects(self.unpackedSHA1,
+                         unpackedCString, nil);
+    GHAssertEqualObjects([self.unpackedSHA1 dataUsingEncoding:NSASCIIStringEncoding],
+                         [unpackedCString dataUsingEncoding:NSASCIIStringEncoding], nil);
+}
+
+- (void)testStringEncodingSanityCheck
+{
+    NSString *test = @"test";
+    NSData *testData = [test dataUsingEncoding:NSASCIIStringEncoding];
+    NSString *testWithData = [[[NSString alloc] initWithData:testData encoding:NSASCIIStringEncoding] autorelease];
+    GHAssertEqualObjects(test, testWithData, nil);
+}
+
+- (void)testPackedSHA1StringLatin1Encoding
+{
+    NSString *sha1 = @"0123456789abcdef0123456789abcdef01234567";
+    NSData *packedData = packSHA1(sha1);
+    NSString *packedString = [[[NSString alloc] initWithData:packedData encoding:NSASCIIStringEncoding] autorelease];
+    NSData *packedStringData = [packedString dataUsingEncoding:NSISOLatin1StringEncoding];
+    NSData *packedStringAsciiData = [packedString dataUsingEncoding:NSASCIIStringEncoding];
+    GHAssertEqualObjects(packedData, packedStringData, nil);
+    GHAssertNotEqualObjects(packedData, packedStringAsciiData, nil);
+}
+
+- (NSString *)packedStringEncoding
+{
+    NSData *packed = packSHA1(self.unpackedSHA1);
+    NSString *asciiPacked = [[NSString alloc] initWithData:packed encoding:NSASCIIStringEncoding];
+    NSStringEncoding *encodings = (NSStringEncoding *)[NSString availableStringEncodings];
+    NSString *packedStringEncoding = nil;
+    NSData *data;
+    while (*encodings) {
+        data = [asciiPacked dataUsingEncoding:*encodings];
+        if ([data isEqual:packed]) {
+            packedStringEncoding = [NSString localizedNameOfStringEncoding:*encodings];
+            break;
+        }
+        encodings++;
+    }
+    return packedStringEncoding;
+}
+
 - (void)testShouldUnpackSHA1FromString
 {
     NSString * sha1 = unpackSHA1FromString(packedSHA1String);
