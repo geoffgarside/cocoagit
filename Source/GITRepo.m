@@ -318,9 +318,9 @@
         NSString *packedRefs = [[NSString alloc] initWithContentsOfFile:packedRefsPath
                                                                encoding:NSASCIIStringEncoding 
                                                                   error:nil];
-        NSArray *packedRefLines = [packedRefs componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+        NSArray *packedRefLines = [packedRefs componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];        
         for (NSString *line in packedRefLines) {
-            if ([line length] < 1 || [line hasPrefix:@"#"]) {
+            if ([line length] < 1 || [line hasPrefix:@"#"] || [line hasPrefix:@"^"]) {
                 continue;
             }
             NSArray *parts = [line componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
