@@ -129,8 +129,10 @@
 		578097EE0F44AD270027B945 /* userauth.c in Sources */ = {isa = PBXBuildFile; fileRef = 578097D80F44AD270027B945 /* userauth.c */; };
 		578098230F44B6C30027B945 /* GITSshTransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 578098210F44B6C30027B945 /* GITSshTransport.h */; };
 		578098240F44B6C30027B945 /* GITSshTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 578098220F44B6C30027B945 /* GITSshTransport.m */; };
+		578345970F83219F00ADC1E3 /* GHUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 578345960F83219F00ADC1E3 /* GHUnit.framework */; };
+		578345AA0F8321AE00ADC1E3 /* GHUnit.framework in Copy private frameworks */ = {isa = PBXBuildFile; fileRef = 578345960F83219F00ADC1E3 /* GHUnit.framework */; };
+		578345B60F83220300ADC1E3 /* GHUnitTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 578345B50F83220300ADC1E3 /* GHUnitTestMain.m */; };
 		57A4311A0F6204E000E6B701 /* Git.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3694170EACF05500E6777B /* Git.framework */; };
-		57A4311F0F6204EC00E6B701 /* GHUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A4308F0F613C1000E6B701 /* GHUnit.framework */; };
 		57A431200F62051600E6B701 /* GITTestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 577AA5A50EF7794E00A0B12B /* GITTestHelper.m */; };
 		57A431210F62051600E6B701 /* GITPackFileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD70AC60EE4C675002B3001 /* GITPackFileTests.m */; };
 		57A431220F62051600E6B701 /* GITPackIndexTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD708910EDDD358002B3001 /* GITPackIndexTests.m */; };
@@ -145,7 +147,6 @@
 		57A4312B0F62051600E6B701 /* GITUtilityBeltTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F01049A0E9997C700A47227 /* GITUtilityBeltTests.m */; };
 		57A4312C0F62053500E6B701 /* GITActorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCF28D70E991EB800665A41 /* GITActorTests.m */; };
 		57A4312D0F62053500E6B701 /* GITDateTimeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE328CA0E9B6F2B001E37D5 /* GITDateTimeTests.m */; };
-		57A431380F62058E00E6B701 /* GHUnit.framework in Copy private frameworks */ = {isa = PBXBuildFile; fileRef = 57A4308F0F613C1000E6B701 /* GHUnit.framework */; };
 		57D81B2A0F419199002A571C /* NSData+HexDump.h in Headers */ = {isa = PBXBuildFile; fileRef = 57D81B280F419199002A571C /* NSData+HexDump.h */; };
 		57D81B2B0F419199002A571C /* NSData+HexDump.m in Sources */ = {isa = PBXBuildFile; fileRef = 57D81B290F419199002A571C /* NSData+HexDump.m */; };
 		57D81B500F41960D002A571C /* libSSH.dylib in Copy libSSH */ = {isa = PBXBuildFile; fileRef = 31AF01AF0F142F7B00F43D38 /* libSSH.dylib */; };
@@ -290,7 +291,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				57A431380F62058E00E6B701 /* GHUnit.framework in Copy private frameworks */,
+				578345AA0F8321AE00ADC1E3 /* GHUnit.framework in Copy private frameworks */,
 			);
 			name = "Copy private frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -379,7 +380,8 @@
 		578097D80F44AD270027B945 /* userauth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = userauth.c; sourceTree = "<group>"; };
 		578098210F44B6C30027B945 /* GITSshTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITSshTransport.h; sourceTree = "<group>"; };
 		578098220F44B6C30027B945 /* GITSshTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITSshTransport.m; sourceTree = "<group>"; };
-		57A4308F0F613C1000E6B701 /* GHUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GHUnit.framework; path = Frameworks/GHUnit.framework; sourceTree = "<group>"; };
+		578345960F83219F00ADC1E3 /* GHUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GHUnit.framework; path = Frameworks/GHUnit.framework; sourceTree = "<group>"; };
+		578345B50F83220300ADC1E3 /* GHUnitTestMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHUnitTestMain.m; path = UnitTests/Source/GHUnitTestMain.m; sourceTree = "<group>"; };
 		57A431100F6204BD00E6B701 /* UnitTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnitTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57A431140F6204BE00E6B701 /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
 		57C17FF50EB01E1C00B7AE7E /* GITTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITTestHelper.h; path = UnitTests/Source/GITTestHelper.h; sourceTree = "<group>"; };
@@ -527,8 +529,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57A4311F0F6204EC00E6B701 /* GHUnit.framework in Frameworks */,
 				57A4311A0F6204E000E6B701 /* Git.framework in Frameworks */,
+				578345970F83219F00ADC1E3 /* GHUnit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,7 +596,7 @@
 		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				57A4308F0F613C1000E6B701 /* GHUnit.framework */,
+				578345960F83219F00ADC1E3 /* GHUnit.framework */,
 				9FCF27B60E98F86C00665A41 /* SenTestingKit.framework */,
 			);
 			name = "Other Frameworks";
@@ -908,6 +910,7 @@
 		9FCF27950E98F67D00665A41 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				578345B50F83220300ADC1E3 /* GHUnitTestMain.m */,
 				577AA5A50EF7794E00A0B12B /* GITTestHelper.m */,
 				57C17FF50EB01E1C00B7AE7E /* GITTestHelper.h */,
 				9FD708930EDDD35D002B3001 /* Packs */,
@@ -1373,6 +1376,7 @@
 				57A4312A0F62051600E6B701 /* GITTreeEntryTests.m in Sources */,
 				57A4312B0F62051600E6B701 /* GITUtilityBeltTests.m in Sources */,
 				9F7171660F7A4D8E00A7DFF9 /* NSCharacterSet+StringComparison.m in Sources */,
+				578345B60F83220300ADC1E3 /* GHUnitTestMain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1621,7 +1625,7 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = YES;
 				INSTALL_PATH = "@loader_path/lib";
 				PREBINDING = NO;
-				PRODUCT_NAME = SSH;
+				PRODUCT_NAME = libSSH;
 			};
 			name = Debug;
 		};
