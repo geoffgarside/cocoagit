@@ -92,6 +92,62 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
     return revIndex;
 }
 
+#pragma mark -
+#pragma mark KVC/KVO array accessor methods
+- (NSUInteger) countOfSha1s;
+{
+    return [self numberOfObjects];
+}
+
+- (NSString *) objectInSha1sAtIndex:(NSUInteger)i;
+{
+    NSData *packedSha1 = [self packedSha1WithIndex:i];
+    if ( !packedSha1 )
+        return nil;
+    return unpackSHA1FromData(packedSha1);
+}
+
+- (NSArray *) sha1s;
+{
+    NSUInteger count = [self countOfSha1s];
+    NSMutableArray *sha1s = [NSMutableArray arrayWithCapacity:count];
+
+    NSUInteger i;
+    for (i = 0; i < count; i++) {
+        [sha1s addObject:[self objectInSha1sAtIndex:i]];
+    }
+    return [NSArray arrayWithArray:sha1s];
+}
+
+- (NSUInteger) countOfCRCs;
+{
+    return [self numberOfObjects];
+}
+
+- (NSData *) objectInCRCsAtIndex:(NSUInteger)i;
+{
+    NSRange crcRange = [self rangeOfCRCTable];
+    NSUInteger positionFromStart = i * kGITPackIndexCRCSize;
+    
+    if (positionFromStart < crcRange.length)
+    {
+        return [self.data subdataWithRange:NSMakeRange(crcRange.location + positionFromStart, kGITPackIndexCRCSize)];
+    }
+    return nil;
+}
+
+- (NSArray *) CRCs;
+{
+    NSUInteger count = [self countOfCRCs];
+    NSMutableArray *CRCs = [NSMutableArray arrayWithCapacity:count];
+    
+    NSUInteger i;
+    for (i = 0; i < count; i++) {
+        [CRCs addObject:[self objectInCRCsAtIndex:i]];
+    }
+    return [NSArray arrayWithArray:CRCs];
+}
+
 - (NSArray*)offsets
 {
     if (!offsets)

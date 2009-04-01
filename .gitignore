@@ -2,6 +2,7 @@
 *.xcodeproj/*.pbxuser
 *.xcodeproj/*.mode1v3
 *.xcodeproj/*.perspectivev3
+._*
 Git.framework
 build
 Docs

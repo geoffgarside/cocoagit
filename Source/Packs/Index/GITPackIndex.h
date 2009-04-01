@@ -181,6 +181,14 @@
  */
 - (BOOL)hasObjectWithSha1:(NSString*)sha1;
 
+# pragma mark KVC/KVO methods
+- (NSArray *) sha1s;
+- (NSUInteger) countOfSha1s;
+- (NSString *) objectInSha1sAtIndex:(NSUInteger)i;
+- (NSArray *) CRCs;
+- (NSUInteger) countOfCRCs;
+- (NSData *) objectInCRCsAtIndex:(NSUInteger)i;
+
 @end
 
 #import "GITPlaceholderPackIndex.h"

@@ -26,8 +26,8 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
 - (NSUInteger) readHeaderAtOffset:(off_t)offset type:(NSUInteger *)type size:(NSUInteger *)sizep;
 - (NSUInteger) sizeOfPackedDataFromOffset:(off_t)currentOffset;
 - (NSData *) unpackObjectAtOffset:(off_t)offset type:(GITObjectType*)objectType error:(NSError**)error;
-- (NSData *)unpackDeltifiedObjectAtOffset:(off_t)offset type:(GITObjectType)deltaType objectOffset:(off_t)objOffset objectType:(GITObjectType *)type error:(NSError**)error;
-- (NSData *) packedDataForObjectWithSha1:(NSString *)sha1
+- (NSData *) unpackDeltifiedObjectAtOffset:(off_t)offset type:(GITObjectType)deltaType objectOffset:(off_t)objOffset objectType:(GITObjectType *)type error:(NSError**)error;
+- (NSData *) packedDataForObjectWithSha1:(NSString *)sha1;
 - (NSRange)rangeOfPackedObjects;
 - (NSRange)rangeOfChecksum;
 - (NSData*)checksum;

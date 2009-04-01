@@ -141,4 +141,37 @@
     return YES;
 }
 
+# pragma mark KVC/KVO methods
+- (NSArray *) sha1s
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return NO;
+}
+
+- (NSUInteger) countOfSha1s { return [self numberOfObjects]; }
+
+- (NSString *) objectInSha1sAtIndex:(NSUInteger)i
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return NO;
+}
+
+- (NSArray *) CRCs
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return NO;
+}
+
+- (NSUInteger) countOfCRCs
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return NO;
+}
+
+- (NSData *) objectInCRCsAtIndex:(NSUInteger)i;
+{
+    [self doesNotRecognizeSelector: _cmd];
+    return NO;
+}
+
 @end
