@@ -64,23 +64,13 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
     }
     
     [self setData:packData];
-    
-    // Verify the data checksum
-    if (! [self verifyChecksum]) {
-        NSString * errDesc = NSLocalizedString(@"PACK file checksum failed", @"GITErrorPackFileChecksumMismatch");
-        GITErrorWithInfo(error, GITErrorPackFileChecksumMismatch, errDesc, NSLocalizedDescriptionKey, nil);
-        [self release];
-        return nil;
-    }
         
     return self;
 }
 
 - (id)initWithPath:(NSString*)thePath indexPath:(NSString *)idxPath error:(NSError **)error;
 {
-    NSData *packData = [NSData dataWithContentsOfFile:thePath
-                                              options:NSUncachedRead
-                                                error:error];
+    NSData *packData = [NSData dataWithContentsOfMappedFile:thePath];
     
     if (! packData)
         return nil;
