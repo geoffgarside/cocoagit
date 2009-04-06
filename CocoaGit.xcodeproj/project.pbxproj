@@ -241,6 +241,7 @@
 		9FA4E0840E19A6D400724E6B /* git-inspect.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4E0810E19A62500724E6B /* git-inspect.m */; };
 		9FA4E08A0E19A6E800724E6B /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212770E179A2C005AC693 /* NSData+Compression.m */; };
 		9FA4E08B0E19A6E900724E6B /* NSData+Hashing.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9212940E179B4B005AC693 /* NSData+Hashing.m */; };
+		FEAF24D40F8A9362006C2495 /* GITBranch.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EA0E48C5650004CD44 /* GITBranch.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1474,6 +1475,7 @@
 				573B49CB0EF5A1F90020159D /* assertions.m in Sources */,
 				573B49D40EF5A2090020159D /* NSError-OBExtensions.m in Sources */,
 				57E65C650F4A07AA00EB5DB8 /* GITPackReverseIndex.m in Sources */,
+				FEAF24D40F8A9362006C2495 /* GITBranch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
