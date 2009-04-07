@@ -109,10 +109,9 @@
 #pragma mark Internal Methods
 - (NSData*)dataWithContentsOfObject:(NSString*)sha1
 {
-    NSData * data = [self.store dataWithContentsOfObject:sha1];
-    NSRange range = [data rangeOfNullTerminatedBytesFrom:0];
-    return [data subdataFromIndex:range.length + 1];
+    return [[self store] dataWithContentsOfObject:sha1];
 }
+
 - (NSData*)dataWithContentsOfObject:(NSString*)sha1 type:(NSString*)expectedType
 {
     NSString * type; NSUInteger size; NSData * data;
@@ -180,23 +179,29 @@
 		GITError(error, GITErrorObjectTypeMismatch, NSLocalizedString(@"Object type mismatch", @"GITErrorObjectTypeMismatch")); 
 		return nil;
 	}
-		
-	switch (type)
-	{
+	
+	Class klass;
+    switch (type) {
 		case GITObjectTypeCommit:
-			return [[[GITCommit alloc] initWithSha1:sha1 data:data repo:self] autorelease];
+            klass = [GITCommit class]; 
+            break;
 		case GITObjectTypeTree:
-			return [[[GITTree alloc] initWithSha1:sha1 data:data repo:self] autorelease];
+            klass = [GITTree class];
+            break;
 		case GITObjectTypeBlob:
-			return [[[GITBlob alloc] initWithSha1:sha1 data:data repo:self] autorelease];
+            klass = [GITBlob class];
+            break;
 		case GITObjectTypeTag:
-			return [[[GITTag alloc] initWithSha1:sha1 data:data repo:self] autorelease];
+            klass = [GITTag class];
+            break;
 	}
-
-	// If we get here, then we've got a type that we don't understand. If the only way this could happen is a programming error, then it should be an exception.  For now, just create an error.
-	GITError(error, GITErrorObjectTypeMismatch, NSLocalizedString(@"Object type mismatch", @"GITErrorObjectTypeMismatch"));
-
-    return nil;
+    
+    if ( !klass ) {
+        // If we get here, then we've got a type that we don't understand. If the only way this could happen is a programming error, then it should be an exception.  For now, just create an error.
+        GITError(error, GITErrorObjectTypeMismatch, NSLocalizedString(@"Object type mismatch", @"GITErrorObjectTypeMismatch"));
+    }
+    
+    return [[[klass alloc] initWithSha1:sha1 type:type data:data repo:self error:error] autorelease];
 }
 
 #pragma mark -
@@ -370,7 +375,6 @@
 	return [toSha writeToFile:refPath atomically:YES encoding:NSUTF8StringEncoding error:error];
 }
 
-
 + (BOOL) isShaValid:(NSString *) shaString
 {
     if ( [shaString length] != 40 )
@@ -379,16 +383,14 @@
     NSCharacterSet *cs = [NSCharacterSet characterSetWithCharactersInString:@"0123456789abcdef"];
     return [cs stringIsComposedOfCharactersInSet:shaString];
 }
+
 - (BOOL) writeObject:(NSData *)objectData withType:(NSString *)type
 {
     return [self.store writeObject:objectData type:[GITObject objectTypeForString:type] error:NULL];
 }
 
-
 - (BOOL) hasObject: (NSString *)sha1
 {
 	return [self.store hasObjectWithSha1:sha1];
 }
-
-
 @end

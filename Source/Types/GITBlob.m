@@ -38,7 +38,6 @@ NSString * const kGITObjectBlobName = @"blob";
 #pragma mark Deprecated Initialisers
 - (id)initWithSha1:(NSString*)newSha1 data:(NSData*)raw repo:(GITRepo*)theRepo
 {
-	self.cachedRawData = raw;
     if (self = [super initType:kGITObjectBlobName sha1:newSha1
                           size:[raw length] repo:theRepo])
     {
@@ -89,5 +88,4 @@ NSString * const kGITObjectBlobName = @"blob";
 {
     return self.data;
 }
-
 @end

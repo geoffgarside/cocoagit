@@ -25,9 +25,6 @@ NSString * const kGITObjectTagName = @"tag";
 @property(readwrite,copy) GITActor * tagger;
 @property(readwrite,copy) GITDateTime * tagged;
 @property(readwrite,copy) NSString * message;
-
-- (void)extractFieldsFromData:(NSData*)data;
-
 @end
 /*! \endcond */
 
@@ -46,19 +43,6 @@ NSString * const kGITObjectTagName = @"tag";
 - (GITObjectType)objectType
 {
     return GITObjectTypeTag;
-}
-
-#pragma mark -
-#pragma mark Deprecated Initialisers
-- (id)initWithSha1:(NSString*)newSha1 data:(NSData*)raw repo:(GITRepo*)theRepo
-{
-	self.cachedRawData = raw;
-    if (self = [super initType:kGITObjectTagName sha1:newSha1
-                          size:[raw length] repo:theRepo])
-    {
-        [self extractFieldsFromData:raw];
-    }
-    return self;
 }
 
 #pragma mark -
@@ -174,10 +158,7 @@ NSString * const kGITObjectTagName = @"tag";
 
     return YES;
 }
-- (void)extractFieldsFromData:(NSData*)data
-{
-    [self parseRawData:data error:NULL];
-}
+
 - (NSString*)description
 {
     return [NSString stringWithFormat:@"Tag: %@ <%@>",

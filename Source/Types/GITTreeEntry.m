@@ -43,35 +43,19 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
 #pragma mark Deprecated Initialisers
 - (id)initWithTreeLine:(NSString*)line parent:(GITTree*)parentTree
 {
-    NSScanner * scanner = [NSScanner scannerWithString:line];
-    NSString  * entryMode, * entryName, * entrySha1;
-    
-    while ([scanner isAtEnd] == NO)
-    {
-        if ([scanner scanUpToString:@" " intoString:&entryMode] &&
-            [scanner scanUpToString:@"\0" intoString:&entryName])
-        {
-            entrySha1 = [[scanner string] substringFromIndex:[scanner scanLocation] + 1];
-            [scanner setScanLocation:[scanner scanLocation] + 1 + kGITPackedSha1Length];
-        }
-    }
-
-    return [self initWithModeString:entryMode name:entryName
-                               sha1:unpackSHA1FromString(entrySha1)
-                             parent:parentTree];
+    return [self initWithRawString:line parent:parentTree error:NULL];
 }
+
 - (id)initWithMode:(NSUInteger)theMode name:(NSString*)theName
               sha1:(NSString*)theHash parent:(GITTree*)parentTree
 {
-    if (self = [super init])
-    {
-        self.mode = theMode;
-        self.name = theName;
-        self.sha1 = theHash;
-        self.parent = parentTree;
-    }
-    return self;
+    return [self initWithFileMode:theMode
+                             name:theName
+                             sha1:theHash
+                           parent:parentTree
+                            error:NULL];
 }
+
 - (id)initWithModeString:(NSString*)str name:(NSString*)theName
                     sha1:(NSString*)hash parent:(GITTree*)parentTree
 {
@@ -114,6 +98,7 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
     return [self initWithFileMode:[entryMode integerValue] name:entryName
                              sha1:unpackSHA1FromString(entrySha1) parent:parentTree error:error];
 }
+
 - (id)initWithFileMode:(NSUInteger)theMode name:(NSString*)theName
                   sha1:(NSString*)theSha1 parent:(GITTree*)parentTree error:(NSError**)error
 {
@@ -136,14 +121,16 @@ const NSUInteger GITTreeEntryModMask    =  0160000;
     [object release], object = nil;
     [super dealloc];
 }
-- (GITObject*)object    //!< Lazily loads the target object
+
+- (GITObject *) object    //!< Lazily loads the target object
 {
     // How should we make this error aware as its doing object loading?
     if (!object && self.sha1)
         self.object = [self.parent.repo objectWithSha1:self.sha1];
     return object;
 }
-- (NSData*)raw
+
+- (NSData *) raw
 {
     NSString * meta = [NSString stringWithFormat:@"%lu %@\0",
                        (unsigned long)self.mode, self.name];

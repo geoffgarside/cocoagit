@@ -27,9 +27,6 @@ NSString * const kGITObjectCommitName = @"commit";
 @property(readwrite,copy) GITDateTime * authored;
 @property(readwrite,copy) GITDateTime * committed;
 @property(readwrite,copy) NSString * message;
-
-- (void)extractFieldsFromData:(NSData*)data;
-
 @end
 /*! \endcond */
 
@@ -54,19 +51,6 @@ NSString * const kGITObjectCommitName = @"commit";
 }
 
 #pragma mark -
-#pragma mark Deprecated Initialisers
-- (id)initWithSha1:(NSString*)newSha1 data:(NSData*)raw repo:(GITRepo*)theRepo
-{
-	self.cachedRawData = raw;
-    if (self = [super initType:kGITObjectCommitName sha1:newSha1
-                          size:[raw length] repo:theRepo])
-    {
-        [self extractFieldsFromData:raw];
-    }
-    return self;
-}
-
-#pragma mark -
 #pragma mark Mem overrides
 - (void)dealloc
 {
@@ -79,6 +63,7 @@ NSString * const kGITObjectCommitName = @"commit";
     
     [super dealloc];
 }
+
 - (id)copyWithZone:(NSZone*)zone
 {
     GITCommit * commit  = (GITCommit*)[super copyWithZone:zone];
@@ -234,10 +219,7 @@ NSString * const kGITObjectCommitName = @"commit";
 
     return YES;
 }
-- (void)extractFieldsFromData:(NSData*)data
-{
-    [self parseRawData:data error:NULL];
-}
+
 - (NSString*)description
 {
     return [NSString stringWithFormat:@"Commit <%@>", self.sha1];

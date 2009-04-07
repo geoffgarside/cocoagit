@@ -27,14 +27,12 @@ typedef enum {
     NSString * sha1;    //!< The SHA1 identifier of the object
     NSString * type;    //!< The blob/commit/tag/tree type
     NSUInteger size;    //!< Size of the content of the object
-    NSData   * cachedRawData;
 }
 
 @property(readonly,retain) GITRepo  * repo;
 @property(readonly,copy)   NSString * sha1;
 @property(readonly,copy)   NSString * type;
 @property(readonly,assign) NSUInteger size;
-@property(readwrite,assign) NSData * cachedRawData;
 
 /*! Returns the string name of the type.
  * \deprecated It was a bad idea and it should be removed
@@ -77,25 +75,6 @@ typedef enum {
  * \deprecated Use -initWithSha1:repo:error: or -initWithSha1:type:data:error:
  */
 - (id)initWithSha1:(NSString*)sha1 repo:(GITRepo*)repo;
-
-/*! Creates and returns a new git object with the given <tt>sha1</tt> composed
- * of the given <tt>data</tt> in the <tt>repo</tt>.
- *
- * This initialiser is usually called from <tt>-initWithSha1:repo:</tt> once it
- * has obtained the raw data for the object.
- *
- * This initialiser does most of the heavy-lifting for the individual child
- * object types.
- *
- * \attention This is an abstract method.
- * \param sha1 The hash of the object
- * \param data The raw data of the object
- * \param repo The repo the object belongs to
- * \return A new git object with the given <tt>sha1</tt> composed of the given 
- * <tt>data</tt> in the <tt>repo</tt>
- * \deprecated Use -initWithSha1:repo:error: or -initWithSha1:type:data:error:
- */
-- (id)initWithSha1:(NSString*)sha1 data:(NSData*)data repo:(GITRepo*)repo;
 
 /*! Creates and returns a new git object.
  * This method is intended to be called only by children of this
@@ -191,21 +170,23 @@ typedef enum {
  * \otherObject The object to be compared to the receiver.
  * \return YES if the receiver and otherObject are equal, otherwise NO.
  */
-- (BOOL) isEqual:(GITObject *) otherObject;
+- (BOOL) isEqual:(GITObject *)otherObject;
 
 #pragma mark -
 #pragma mark Raw Format methods
-/*! Returns the raw data of the object.
+/*! Returns the raw data representations of the object. Raw Data is the 
+ *  git-format data for an object including the header (type + size) information.
  * \attention This is a concrete method.
  * \see rawContent
  * \return Raw data of the object
  */
-- (NSData*)rawData;
+- (NSData *) rawData;
 
-/*! Returns the raw content of the object.
+/*! Returns the raw content of the object. Raw content is the git-format data
+ *  for an object without the header (type + size) information.
  * \attention This is an abstract method.
  * \see rawData
  * \return Raw content of the object
  */
-- (NSData*)rawContent;
+- (NSData *) rawContent;
 @end

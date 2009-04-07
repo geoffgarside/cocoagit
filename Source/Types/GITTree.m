@@ -18,9 +18,6 @@ NSString * const kGITObjectTreeName = @"tree";
 */
 @interface GITTree ()
 @property(readwrite,copy) NSArray * entries;
-
-- (void)extractEntriesFromData:(NSData*)data;
-
 @end
 /*! \endcond */
 
@@ -34,19 +31,6 @@ NSString * const kGITObjectTreeName = @"tree";
 - (GITObjectType)objectType
 {
     return GITObjectTypeTree;
-}
-
-#pragma mark -
-#pragma mark Deprecated Initialisers
-- (id)initWithSha1:(NSString*)newSha1 data:(NSData*)raw repo:(GITRepo*)theRepo
-{
-	self.cachedRawData = raw;
-    if (self = [super initType:kGITObjectTreeName sha1:newSha1
-                          size:[raw length] repo:theRepo])
-    {
-        [self extractEntriesFromData:raw];
-    }
-    return self;
 }
 
 #pragma mark -
@@ -104,10 +88,6 @@ NSString * const kGITObjectTreeName = @"tree";
     self.entries = treeEntries;
 
     return YES;
-}
-- (void)extractEntriesFromData:(NSData*)data
-{
-    [self parseRawData:data error:NULL];
 }
 
 #pragma mark -

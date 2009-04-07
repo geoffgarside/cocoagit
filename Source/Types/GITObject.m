@@ -23,7 +23,6 @@
 @synthesize sha1;
 @synthesize type;
 @synthesize size;
-@synthesize cachedRawData;
 
 + (NSString*)typeName
 {
@@ -45,6 +44,7 @@
         return GITObjectTypeTag;
     return 0;
 }
+
 + (NSString*)stringForObjectType:(GITObjectType)type
 {
     switch (type)
@@ -76,17 +76,9 @@
 }
 - (id)initWithSha1:(NSString*)newSha1 repo:(GITRepo*)theRepo
 {
-    NSData * data = [theRepo dataWithContentsOfObject:newSha1 type:[[self class] typeName]];
-    if (data)
-        return [self initWithSha1:newSha1 data:data repo:theRepo];
-    return nil;
+    return [self initWithSha1:newSha1 repo:theRepo error:NULL];
 }
-- (id)initWithSha1:(NSString*)sha1 data:(NSData*)raw repo:(GITRepo*)theRepo
-{
-    [self doesNotRecognizeSelector:_cmd];
-    [self release];
-    return nil;
-}
+
 - (id)initType:(NSString*)newType sha1:(NSString*)newSha1
           size:(NSUInteger)newSize repo:(GITRepo*)theRepo
 {
@@ -130,8 +122,6 @@
     if (! [self parseRawData:theData error:error])
         return nil;
 
-	self.cachedRawData = theData;
-
     self.sha1 = theSha1;
     // Remove when type is changed to a GITObjectType instead of a string
     self.type = [[self class] stringForObjectType:theType];
@@ -142,7 +132,6 @@
 }
 - (void)dealloc
 {
-	self.cachedRawData = nil;
     self.repo = nil;
     self.sha1 = nil;
     self.type = nil;
