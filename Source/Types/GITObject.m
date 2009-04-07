@@ -166,26 +166,25 @@
 #pragma mark NSCopying
 - (id)copyWithZone:(NSZone*)zone
 {
-    GITObject * obj = [[[self class] allocWithZone:zone] initType:self.type sha1:self.sha1
+    id obj = [[[self class] allocWithZone:zone] initType:self.type sha1:self.sha1
                                                              size:self.size repo:self.repo];
     return obj;
 }
 
 #pragma mark -
 #pragma mark Raw Format methods
+
 - (NSData*)rawData
 {
-	if(cachedRawData) {
-		return cachedRawData;
-	} else {
-		NSString * head = [NSString stringWithFormat:@"%@ %lu\0",
-						   self.type, (unsigned long)self.size];
-		NSMutableData * raw = [NSMutableData dataWithData:[head dataUsingEncoding:NSASCIIStringEncoding]];
-		[raw appendData:[self rawContent]];
-
-		return raw;
-	}
+    NSString * head = [NSString stringWithFormat:@"%@ %lu\0",
+                       self.type, (unsigned long)self.size];
+    
+    NSMutableData * raw = [NSMutableData dataWithData:[head dataUsingEncoding:NSASCIIStringEncoding]];
+    [raw appendData:[self rawContent]];
+    
+    return [NSData dataWithData:raw];
 }
+
 - (NSData*)rawContent
 {
     [self doesNotRecognizeSelector:_cmd];

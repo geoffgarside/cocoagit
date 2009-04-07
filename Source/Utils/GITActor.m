@@ -31,8 +31,8 @@
 {
     if (self = [super init])
     {
-        self.name = theName;
-        self.email = theEmail;
+        self.name = [theName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        self.email = [theEmail stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     }
     return self;
 }

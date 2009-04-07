@@ -71,4 +71,17 @@
     GHAssertTrue([firstCommit isFirstCommit], nil);
 }
 
+- (void)testRawContent
+{
+    NSData *theData;
+    GITObjectType theType;
+    [self.repo loadObjectWithSha1:self.commitSHA1 intoData:&theData type:&theType error:NULL];
+    GHAssertEqualObjects([self.commit rawContent], theData, nil);
+}
+
+- (void)testRawData
+{
+    NSData *rawData = [self.repo dataWithContentsOfObject:self.commitSHA1];
+    GHAssertEqualObjects([self.commit rawData], rawData, nil);
+}
 @end

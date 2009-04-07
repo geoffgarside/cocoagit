@@ -46,4 +46,17 @@
     GHAssertEquals([tree.entries count], (NSUInteger)1, @"Should have 1 entry");
 }
 
+- (void)testRawContent
+{
+    NSData *theData;
+    GITObjectType theType;
+    [self.repo loadObjectWithSha1:self.treeSHA1 intoData:&theData type:&theType error:NULL];
+    GHAssertEqualObjects([self.tree rawContent], theData, nil);
+}
+
+- (void)testRawData
+{
+    NSData *rawData = [self.repo dataWithContentsOfObject:self.treeSHA1];
+    GHAssertEqualObjects([self.tree rawData], rawData, nil);
+}
 @end

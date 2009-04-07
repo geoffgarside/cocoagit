@@ -229,9 +229,14 @@ NSString * const kGITObjectCommitName = @"commit";
 #pragma mark Output Methods
 - (NSData*)rawContent
 {
-    return [[NSString stringWithFormat:@"tree %@\nparent %@\nauthor %@ %@\ncommitter %@ %@\n%@",
-             self.tree.sha1, self.parent.sha1, self.author, self.authored,
-             self.committer, self.committed, self.message] dataUsingEncoding:NSASCIIStringEncoding];
+    NSMutableString *treeString = [NSMutableString stringWithFormat:@"tree %@\n", self.tree.sha1];                                   
+    for (GITCommit *parent in [self parents]) {
+        [treeString appendFormat:@"parent %@\n", [parent sha1]];
+    }
+    return [[NSString stringWithFormat:@"%@author %@ %@\ncommitter %@ %@\n\n%@\n",
+                        treeString, self.author, self.authored,
+                        self.committer, self.committed, self.message]
+                            dataUsingEncoding:NSASCIIStringEncoding];
 }
 
 @end

@@ -34,9 +34,24 @@
 {
     GHAssertNotNil(blob, @"Blob should be created");
 }
+
 - (void)testSha1HashesAreEqual
 {
     GHAssertEqualObjects(blob.sha1, blobSHA1, @"SHA1 hashes should be equal");
+}
+
+- (void)testRawContent
+{
+    NSData *theData;
+    GITObjectType theType;
+    [self.repo loadObjectWithSha1:self.blobSHA1 intoData:&theData type:&theType error:NULL];
+    GHAssertEqualObjects([self.blob rawContent], theData, nil);
+}
+
+- (void)testRawData
+{
+    NSData *rawData = [self.repo dataWithContentsOfObject:self.blobSHA1];
+    GHAssertEqualObjects([self.blob rawData], rawData, nil);
 }
 
 @end
