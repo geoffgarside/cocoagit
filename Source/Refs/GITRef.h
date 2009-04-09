@@ -14,19 +14,27 @@
 
 @interface GITRef : NSObject {
     NSString *name;
+    NSString *linkName;
     NSString *sha1;
+    BOOL isLink;
+    BOOL isPacked;
 }
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *sha1;
+@property (nonatomic, copy) NSString *linkName;
+@property (nonatomic, assign) BOOL isLink;
+@property (nonatomic, assign) BOOL isPacked;
 
-+ (id) looseRefWithName:(NSString *)refName repo:(GITRepo *)repo;
 + (id) refWithName:(NSString *)refName sha1:(NSString *)sha1String;
++ (id) refWithName:(NSString *)refName sha1:(NSString *)sha1String packed:(BOOL)refIsPacked;
++ (id) refWithContentsOfFile:(NSString *)aPath name:(NSString *)refName;
 + (id) refWithContentsOfFile:(NSString *)aPath;
 + (id) refWithPacketLine:(NSString *)packetLine;
 
-- (id) initWithName:(NSString *)refName sha1:(NSString *)sha1String;
-
-+ (NSArray *) findAllInRepo:(GITRepo *)repo;
+- (id) initWithName:(NSString *)refName sha1:(NSString *)refSha1;
+- (id) initWithName:(NSString *)refName sha1:(NSString *)refSha1 packed:(BOOL)refIsPacked;
+- (id) initWithName:(NSString *)refName sha1:(NSString *)refSha1 
+           linkName:(NSString *)refLink packed:(BOOL)refIsPacked;
 
 - (GITCommit *) commitWithRepo:(GITRepo *)repo;
 @end

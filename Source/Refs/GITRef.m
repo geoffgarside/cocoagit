@@ -7,72 +7,121 @@
 //
 
 #import "GITRef.h"
+#import "GITRefStore.h"
 #import "GITUtilityBelt.h"
 #import "NSFileManager+DirHelper.h"
 
 @implementation GITRef
 @synthesize name;
+@synthesize linkName;
 @synthesize sha1;
+@synthesize isLink;
+@synthesize isPacked;
 
-- (id) init { return [self initWithName:nil sha1:nil]; }
++ (id) refWithName:(NSString *)refName sha1:(NSString *)sha1String;
+{
+    return [[[self alloc] initWithName:refName sha1:sha1String packed:NO] autorelease];
+}
 
-// designated initializer
-- (id) initWithName:(NSString *)refName sha1:(NSString *)sha1String;
++ (id) refWithName:(NSString *)refName sha1:(NSString *)sha1String packed:(BOOL)refIsPacked;
+{
+    return [[[self alloc] initWithName:refName sha1:sha1String packed:refIsPacked] autorelease];
+}
+
+- (id) initWithName:(NSString *)refName sha1:(NSString *)refSha1;
+{
+    return [self initWithName:refName sha1:refSha1 packed:NO];
+}
+
+- (id) initWithName:(NSString *)refName sha1:(NSString *)refSha1 packed:(BOOL)refIsPacked;
+{
+    NSString *refLink = nil;
+    if ( [refSha1 hasPrefix:@"ref: "] ) {
+        refLink = refSha1;
+        refSha1 = nil;
+    }
+    return [self initWithName:refName sha1:refSha1 linkName:refLink packed:refIsPacked];
+}
+
+- (id) initWithName:(NSString *)refName sha1:(NSString *)refSha1 
+           linkName:(NSString *)refLink packed:(BOOL)refIsPacked;
 {
     if (! [super init])
         return nil;
+    
+    if ( refLink ) {
+        [self setLinkName:[refLink substringFromIndex:5]];
+        isLink = YES;
+    }
+    
+    if ( !(isLink || isSha1StringValid(refSha1)) ) {
+        [self release];
+        return nil;
+    }
+    
+    [self setSha1:refSha1];
     [self setName:refName];
-    [self setSha1:sha1String];
+    [self setIsPacked:refIsPacked];
     return self;
 }
 
 - (void) dealloc;
 {
-    [name release], name = nil;
-    [sha1 release], sha1 = nil;
+    [name release];
+    [sha1 release];
+    [linkName release];
     [super dealloc];
 }
 
-+ (NSString *) prefix
+- (id)copyWithZone:(NSZone*)zone
 {
-    NSString *klassName = NSStringFromClass([self class]);
-    return [NSString stringWithFormat:@"refs/%@s", [[klassName substringFromIndex:3] lowercaseString]];
+    id obj = [[[self class] allocWithZone:zone] initWithName:[self name] sha1:[self sha1]
+                            linkName:[self linkName] packed:[self isPacked]];
+    [obj setLinkName:[self linkName]];
+    [obj setIsLink:[self isLink]];
+    return obj;
+}
+
+- (BOOL) resolveWithStore:(GITRefStore *)store error:(NSError **)error
+{
+    if ( ![self isLink] )
+        return YES;
+    NSString *refSha1 = [store sha1WithSymbolicRef:self];
+    if ( !isSha1StringValid(refSha1) )
+        return NO;
+    [self setSha1:refSha1];
+    return YES;
+}
+
+- (BOOL) isResolved
+{
+    return isSha1StringValid([self sha1]);
 }
 
 // convenience initializers - return autoreleased objects
-+ (id) refWithName:(NSString *)refName sha1:(NSString *)sha1String;
++ (id) refWithContentsOfFile:(NSString *)aPath
 {
-    return [[[self alloc] initWithName:refName sha1:sha1String] autorelease];
+    NSRange nameRange = [aPath rangeOfString:@"/refs/"];
+    NSString *refName;
+    if ( nameRange.location == NSNotFound ) {
+        refName = [aPath lastPathComponent];
+    } else {
+        refName = [aPath substringFromIndex:(nameRange.location + 1)];
+    }
+    return [self refWithContentsOfFile:aPath name:refName];
 }
 
-+ (id) refWithContentsOfFile:(NSString *)aPath;
++ (id) refWithContentsOfFile:(NSString *)aPath name:(NSString *)refName
 {
+    if ( ![[NSFileManager defaultManager] fileExistsAtPath:aPath] )
+        return nil;
+    
     NSString *contents = [NSString stringWithContentsOfFile:aPath];
     if (! contents)
         return nil;
     
     NSString *trimmed = [contents stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-    if ( [trimmed hasPrefix:@"ref: "] ) {
-        NSRange pathRange = [aPath rangeOfString:@"/refs/"];
-        NSString *pathPrefix = [aPath substringToIndex:pathRange.location];
-        NSString *refLink = [pathPrefix stringByAppendingFormat:@"/%@", [trimmed substringFromIndex:5]];
-        NSLog(@"trimmed = %@\nrefLink for %@ = %@", trimmed, aPath, refLink);
-        return [self refWithContentsOfFile:refLink];
-    }
-    
-    NSRange prefixRange = [aPath rangeOfString:[self prefix]];
-    NSString *refName = [aPath substringFromIndex:
-                         (prefixRange.location + prefixRange.length + 1)]; // +1 removes the starting '/'
-    
-    // Not sure what this case should be, maybe a "ref: <ref>" - ref to a ref
-    // just die immediately so we can debug
-    NSString *exception = [NSString stringWithFormat:
-                           @"GITRef#refWithContentsOfFile: invalid sha1\n"
-                           @"path=%@\nname=%@\nsha1=%@\n", aPath, refName, trimmed];
-    //NSAssert(isSha1StringValid(trimmed), @"GITRef#refWithContentsOfFile: invalid sha1");
-    NSAssert(isSha1StringValid(trimmed), exception);
-
-    return [[[self alloc] initWithName:refName sha1:trimmed] autorelease];
+    return [self refWithName:refName sha1:trimmed];
 }
 
 + (id) refWithPacketLine:(NSString *)packetLine;
@@ -84,8 +133,7 @@
     
     if (! (refName && refSha1))
         return nil;
-    
-    return [[[self alloc] initWithName:refName sha1:refSha1] autorelease];
+    return [self refWithName:refName sha1:refSha1];
 }
 
 - (GITCommit *) commitWithRepo:(GITRepo *)repo;
@@ -93,63 +141,13 @@
     return [repo commitWithSha1:[self sha1] error:NULL];
 }
 
-+ (id) looseRefWithName:(NSString *)refName repo:(GITRepo *)repo;
+- (NSString *) description
 {
-    NSString *refPath = [[repo root] stringByAppendingFormat:@"%@/%@", [self prefix], refName];
-    if ( ![[NSFileManager defaultManager] fileExistsAtPath:refPath] )
-        return nil;
-    return [self refWithContentsOfFile:refPath];
+    return [NSString stringWithFormat:@"<%@:%x name:%@\n"
+                                      @"       sha1:%@\n"
+                                      @"   linkName:%@\n"
+                                      @"    packed?:%@>",
+            [self className], self, [self name],
+            [self sha1], [self linkName], ([self isPacked] ? @"YES" : @"NO")];
 }
-
-+ (NSArray *) findAllInRepo:(GITRepo *)repo;
-{
-	NSMutableArray *refs = [NSMutableArray array];
-	NSString *tempRef, *thisSha, *thisRef;
-    
-    NSString *refPrefix = [self prefix];
-	NSString *refsPath = [[repo root] stringByAppendingPathComponent:refPrefix];
-	id theRef;
-    
-	NSFileManager *fm = [NSFileManager defaultManager];
-	BOOL isDir;
-    if ([fm fileExistsAtPath:refsPath isDirectory:&isDir] && isDir) {
-		NSEnumerator *e = [fm enumeratorAtPath:refsPath];
-		while ( (thisRef = [e nextObject]) ) {
-			tempRef = [refsPath stringByAppendingPathComponent:thisRef];
-			//thisRef = [refPrefix stringByAppendingPathComponent:thisRef];
-			BOOL isDir;
-			if ([fm fileExistsAtPath:tempRef isDirectory:&isDir] && !isDir) {
-                theRef = [self looseRefWithName:thisRef repo:repo];
-                if ( ![refs containsObject:theRef] )
-                    [refs addObject:theRef];
-			}
-		}
-	}
-    
-    NSString *searchPrefix = refPrefix;
-    NSString *packedRefsPath = [repo packedRefsPath];
-    if ([fm fileExistsAtPath:packedRefsPath]) {
-        NSString *packedRefs = [[NSString alloc] initWithContentsOfFile:packedRefsPath
-                                                               encoding:NSASCIIStringEncoding 
-                                                                  error:nil];
-        NSArray *packedRefLines = [packedRefs componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-        for (NSString *line in packedRefLines) {
-            if ([line length] < 1 || [line hasPrefix:@"#"] || [line hasPrefix:@"^"]) {
-                continue;
-            }
-            NSArray *parts = [line componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-            thisSha = [parts objectAtIndex:0];
-            thisRef = [parts objectAtIndex:1];
-            if ( ![thisRef hasPrefix:searchPrefix] )
-                continue;
-            NSString *refName = [thisRef stringByReplacingOccurrencesOfString:searchPrefix withString:@""];
-            theRef = [self refWithName:refName sha1:thisSha];
-            if ( ![refs containsObject:theRef] )
-                [refs addObject:theRef];
-        }
-        [packedRefs release];
-    }
-	return [NSArray arrayWithArray:refs];
-}
-
 @end
