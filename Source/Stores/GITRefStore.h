@@ -29,6 +29,7 @@
 
 - (GITRef *) refWithName:(NSString *)refName;
 - (GITRef *) refByResolvingSymbolicRef:(GITRef *)symRef;
+- (NSString *) sha1WithSymbolicRef:(GITRef *)symRef;
 
 - (NSArray *) refsWithPrefix:(NSString *)refPrefix;
 - (NSArray *) branches;

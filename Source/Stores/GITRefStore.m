@@ -13,7 +13,7 @@
 #import "GITUtilityBelt.h"
 
 @interface GITRefStore ()
-- (NSString *) sha1ByResolvingSymbolicRef:(GITRef *)symRef;
+- (NSString *) sha1ByRecursivelyResolvingSymbolicRef:(GITRef *)symRef;
 - (void) resolveSymbolicRefs;
 - (NSDictionary *) cachedRefs;
 - (void) fetchRefs;
@@ -66,6 +66,8 @@
     [super dealloc];
 }
 
+#pragma mark Public Methods
+
 - (NSArray *) refsWithPrefix:(NSString *)refPrefix
 {
     [self fetchRefs];
@@ -77,7 +79,9 @@
     for (NSString *key in cachedRefs) {
         if ( ![key hasPrefix:refPrefix] )
             continue;
-        [matchingRefs addObject:[cachedRefs objectForKey:key]];
+        GITRef *ref = [[cachedRefs objectForKey:key] copy];
+        [matchingRefs addObject:ref];
+        [ref release];
     }
     return [NSArray arrayWithArray:matchingRefs];
 }
@@ -119,19 +123,26 @@
 
 - (GITRef *) refByResolvingSymbolicRef:(GITRef *)symRef
 {
-    [self fetchRefs];
     if ( ![symRef isLink] )
         return symRef;
-    NSString *sha1 = [self sha1ByResolvingSymbolicRef:symRef];
+    NSString *sha1 = [self sha1WithSymbolicRef:symRef];
     [symRef setSha1:sha1];
     return [[symRef copy] autorelease];
 }
 
-- (NSString *) sha1ByResolvingSymbolicRef:(GITRef *)symRef
+- (NSString *) sha1WithSymbolicRef:(GITRef *)symRef
+{
+    GITRef *targetRef = [[self cachedRefs] objectForKey:[symRef linkName]];
+    return [[[targetRef sha1] copy] autorelease];
+}
+
+#pragma mark Internal Ref Parsing and Caching
+
+- (NSString *) sha1ByRecursivelyResolvingSymbolicRef:(GITRef *)symRef
 {
     GITRef *targetRef = [cachedRefs objectForKey:[symRef linkName]];
     if ( [targetRef isLink] )
-        return [self sha1ByResolvingSymbolicRef:targetRef];
+        return [self sha1ByRecursivelyResolvingSymbolicRef:targetRef];
     return [[[targetRef sha1] copy] autorelease];
 }
 
@@ -139,7 +150,7 @@
 {
     while ([symbolicRefs count] > 0) {
         GITRef *symRef = [[symbolicRefs lastObject] retain];
-        NSString *sha1 = [self sha1ByResolvingSymbolicRef:symRef];
+        NSString *sha1 = [self sha1ByRecursivelyResolvingSymbolicRef:symRef];
         NSAssert(isSha1StringValid(sha1), @"linked ref has invalid sha1");
         [symRef setSha1:sha1];
         [symbolicRefs removeLastObject];
@@ -154,9 +165,11 @@
 
 - (void) fetchRefs
 {
+    if ( fetchedLoose && ( fetchedPacked || !packFile ) )
+        return;
     if ( !fetchedLoose )
         [self fetchLooseRefs];
-    if ( !fetchedPacked )
+    if ( !(packFile && fetchedPacked) )
         [self fetchPackedRefs];
     [self resolveSymbolicRefs];
 }
@@ -170,7 +183,6 @@
         NSString *tempRef = [[self refsDir] stringByAppendingPathComponent:thisRef];
         BOOL isDir;
         if ( [fm fileExistsAtPath:tempRef isDirectory:&isDir] && !isDir ) {
-            // TODO: extract name, lookup in cache
             NSString *refName = [NSString stringWithFormat:@"refs/%@", thisRef];
             if ( ![cachedRefs objectForKey:refName] ) {
                 id theRef = [GITRef refWithContentsOfFile:tempRef];
