@@ -50,6 +50,18 @@
  */
 - (id)initWithRoot:(NSString*)root error:(NSError**)error;
 
+/*! Creates and returns a new store object from the provided path. This path
+ *  is typically the "objects" directory in the root of a git repo, but it
+ *  can be located anywhere. 
+ * \attention This method must be overridden
+ * \param path Path to the objects store directory
+ * \param[out] error Object encapsulating any errors which occur
+ * \return A new store object or nil on error
+ * \par Error Codes:
+ * \li \c GITErrorObjectStoreNotAccessible store could not be loaded
+ */
+- (id)initWithPath:(NSString*)aPath error:(NSError**)error;
+
 /*! Returns the contents of an object for the given <tt>sha1</tt>.
  * The data returned should be in a form which is usable to initialise an
  * object. If the data is stored compressed or encrypted it should be

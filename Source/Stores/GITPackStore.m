@@ -36,24 +36,31 @@
 {
     return [self initWithRoot:root error:NULL];
 }
+
 - (id)initWithRoot:(NSString*)root error:(NSError**)error
+{
+    return [self initWithPath:[root stringByAppendingPathComponent:@"objects/pack"]
+                        error:error];
+}
+
+- (id)initWithPath:(NSString*)aPath error:(NSError**)error
 {
     if(! [super init])
         return nil;
-    
-    self.lastReadPack = nil;
-    self.packsDir = [root stringByAppendingPathComponent:@"objects/pack"];
 
     BOOL aDirectory;
     NSFileManager * fm = [NSFileManager defaultManager];
-    if (! [fm fileExistsAtPath:self.packsDir isDirectory:&aDirectory] || !aDirectory) {
+    if (! [fm fileExistsAtPath:aPath isDirectory:&aDirectory] || !aDirectory) {
         NSString * errFmt = NSLocalizedString(@"PACK store not accessible %@ does not exist or is not a directory", @"GITErrorObjectStoreNotAccessible (GITPackStore:init)");
-        NSString * errDesc = [NSString stringWithFormat:errFmt, self.packsDir];
+        NSString * errDesc = [NSString stringWithFormat:errFmt, aPath];
         GITError(error, GITErrorObjectStoreNotAccessible, errDesc);
         [self release];
         return nil;
     }
-
+    
+    self.lastReadPack = nil;
+    self.packsDir = aPath;
+    
     self.packFiles = [self loadPackFilesWithError:error];
     if (! self.packFiles) {
         [self release];

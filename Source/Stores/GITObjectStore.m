@@ -32,6 +32,14 @@
     [self release];
     return nil;
 }
+
+- (id)initWithPath:(NSString*)aPath error:(NSError**)error
+{
+    [self doesNotRecognizeSelector:_cmd];
+    [self release];
+    return nil;
+}
+
 - (NSData*)dataWithContentsOfObject:(NSString*)sha1
 {
     [self doesNotRecognizeSelector:_cmd];
