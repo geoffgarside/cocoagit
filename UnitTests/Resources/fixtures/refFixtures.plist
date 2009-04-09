@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>heads</key>
+	<dict>
+		<key>refs/heads/facepalm</key>
+		<string>fdb9468ea860f43bf1808b3f1e950ac3b53bc3c4</string>
+		<key>refs/heads/geoffgarside/master</key>
+		<string>bdfe90051aa8334cb69bb763fd0cb0796150510c</string>
+		<key>refs/heads/geoffgarside/nserror</key>
+		<string>9bcacde3ebb46908cbee5ccdbfd03bcf3dadb6f5</string>
+		<key>refs/heads/ghunit</key>
+		<string>2755fbad95adf007af7bb41a8bdaa8bcf538d0b5</string>
+		<key>refs/heads/master</key>
+		<string>a5070c0f18c3ed4d42d3d4d807220cfcb1d4e30b</string>
+		<key>refs/heads/nu</key>
+		<string>b4783699e4fc54d98053f41404a0649ef17b4de2</string>
+		<key>refs/heads/oberror</key>
+		<string>bc66bd7190cb032b47945c525b33ba52911b100d</string>
+		<key>refs/heads/sshchannel</key>
+		<string>91113f632534a201e7ccda8b0a3293024e07bbe7</string>
+	</dict>
+	<key>remotes</key>
+	<dict>
+		<key>refs/remotes/geoffgarside/bottomup</key>
+		<string>b0c387cbb13ea1bf293eceaa58bb9c8a0629a2aa</string>
+		<key>refs/remotes/geoffgarside/git-server</key>
+		<string>05c33f5a5feda92582ca0d0e191974dd106d29f3</string>
+		<key>refs/remotes/geoffgarside/macruby</key>
+		<string>f008a799de9023c710fb94030e41587018fc2c65</string>
+		<key>refs/remotes/geoffgarside/master</key>
+		<string>bdfe90051aa8334cb69bb763fd0cb0796150510c</string>
+		<key>refs/remotes/geoffgarside/nserror</key>
+		<string>9bcacde3ebb46908cbee5ccdbfd03bcf3dadb6f5</string>
+		<key>refs/remotes/geoffgarside/oberror</key>
+		<string>b13ebeba8d2290cf9b3c951bb90726e66932234d</string>
+		<key>refs/remotes/geoffgarside/uncrustify</key>
+		<string>7f81cc09fffd391db398a264f897bde559499af5</string>
+		<key>refs/remotes/github/HEAD</key>
+		<string>a5070c0f18c3ed4d42d3d4d807220cfcb1d4e30b</string>
+		<key>refs/remotes/github/master</key>
+		<string>a5070c0f18c3ed4d42d3d4d807220cfcb1d4e30b</string>
+	</dict>
+	<key>tags</key>
+	<dict>
+		<key>refs/tags/10</key>
+		<string>a5070c0f18c3ed4d42d3d4d807220cfcb1d4e30b</string>
+		<key>refs/tags/annotated</key>
+		<string>41dc73228d8fd2598477b1d88a5b9efa35ae0719</string>
+		<key>refs/tags/facepalm</key>
+		<string>7ba7b3f03f769cbf2ae6a7e474c52b2d886e7b75</string>
+		<key>refs/tags/not_annotated</key>
+		<string>9202be1c77ff3e64bf9cec56bef11a9765e8c95b</string>
+		<key>refs/tags/v0.1.0</key>
+		<string>37d9cba7a9d62a37f45678bd31442076d072adfe</string>
+		<key>refs/tags/v0.2.0</key>
+		<string>213dd8a011f09b66aa3d08387a691d02bb631933</string>
+		<key>refs/tags/v0.2.5</key>
+		<string>b1073e4a84ec060e64b3e87fa97c769a18ba443f</string>
+	</dict>
+</dict>
+</plist>

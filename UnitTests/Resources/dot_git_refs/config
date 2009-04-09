@@ -1,0 +1,15 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "github"]
+	url = git://github.com/chapados/cocoagit.git/
+	fetch = +refs/heads/master:refs/remotes/github/master
+[remote "geoffgarside"]
+        url = git://github.com/geoffgarside/cocoagit.git
+        fetch = +refs/heads/*:refs/remotes/geoffgarside/*
+[branch "geoffgarside/master"]
+        remote = geoffgarside
+        merge = refs/heads/master
+
