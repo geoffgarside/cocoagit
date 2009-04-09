@@ -9,9 +9,28 @@
 #import "GITRefStore.h"
 #import "GITErrors.h"
 #import "GITRef.h"
+#import "GITRepo.h"
+#import "GITUtilityBelt.h"
+
+@interface GITRefStore ()
+- (NSString *) sha1ByResolvingSymbolicRef:(GITRef *)symRef;
+- (void) resolveSymbolicRefs;
+- (NSDictionary *) cachedRefs;
+- (void) fetchRefs;
+- (void) fetchLooseRefs;
+- (void) fetchPackedRefs;
+@end
+
 
 @implementation GITRefStore
 @synthesize refsDir;
+@synthesize packFile;
+
+- (id) initWithRepo:(GITRepo *)repo error:(NSError **)error;
+{
+    NSString *packedRefsFile = [[repo root] stringByAppendingPathComponent:@"packed-refs"];
+    return [self initWithPath:[repo refsPath] packFile:packedRefsFile error:error];
+}
 
 - (id) initWithPath:(NSString *)aPath packFile:(NSString *)packedRefsFile error:(NSError **)error;
 {
@@ -32,7 +51,7 @@
     if ( [fm fileExistsAtPath:packedRefsFile] ) {
         [self setPackFile:packedRefsFile];
     }
-    cachedRefs = [NSMutableArray new];
+    cachedRefs = [NSMutableDictionary new];
     symbolicRefs = [NSMutableArray new];
     
     return self;
@@ -47,95 +66,152 @@
     [super dealloc];
 }
 
+- (NSArray *) refsWithPrefix:(NSString *)refPrefix
+{
+    [self fetchRefs];
+    
+    if ( ![refPrefix hasPrefix:@"refs/"] )
+        refPrefix = [NSString stringWithFormat:@"refs/%@"];
+    
+    NSMutableArray *matchingRefs = [NSMutableArray arrayWithCapacity:[cachedRefs count]/2];
+    for (NSString *key in cachedRefs) {
+        if ( ![key hasPrefix:refPrefix] )
+            continue;
+        [matchingRefs addObject:[cachedRefs objectForKey:key]];
+    }
+    return [NSArray arrayWithArray:matchingRefs];
+}
 
-- (void) fetchLooseRefs;
-{}
+- (NSArray *) branches
+{
+    return [self refsWithPrefix:@"refs/heads"];
+}
 
-- (void) fetchPackedRefs;
-{}
+- (NSArray *) heads
+{
+    return [self refsWithPrefix:@"refs/heads"];
+}
+
+- (NSArray *) tags
+{
+    return [self refsWithPrefix:@"refs/tags"];
+}
+
+- (NSArray *) remotes
+{
+    return [self refsWithPrefix:@"refs/remotes"];
+}
 
 - (void) invalidateCachedRefs
 {
     [cachedRefs release];
-    cachedRefs = [NSMutableArray new]
+    cachedRefs = [NSMutableDictionary new];
+    fetchedLoose = NO;
+    fetchedPacked = NO;
+    [symbolicRefs release];
+    symbolicRefs = [NSMutableArray new];
 }
 
-- (NSArray *) looseRefsAtPath:(NSString *)refsPath prefix:(NSString *)refPrefix
+- (GITRef *) refWithName:(NSString *)refName
 {
-	NSMutableArray *refs = [NSMutableArray array];
-	NSString *tempRef, *thisSha, *thisRef;
+    return [[[[self cachedRefs] objectForKey:refName] copy] autorelease];
+}
 
-    NSString *searchPath = [refsPath stringByAppendingPathComponent:refPrefix];
-	id theRef;
-    
-	NSFileManager *fm = [NSFileManager defaultManager];
-	BOOL isDir;
-    if ( !([fm fileExistsAtPath:searchPath isDirectory:&isDir] && isDir) )
-        return nil;
+- (GITRef *) refByResolvingSymbolicRef:(GITRef *)symRef
+{
+    [self fetchRefs];
+    if ( ![symRef isLink] )
+        return symRef;
+    NSString *sha1 = [self sha1ByResolvingSymbolicRef:symRef];
+    [symRef setSha1:sha1];
+    return [[symRef copy] autorelease];
+}
 
-    NSEnumerator *e = [fm enumeratorAtPath:searchPath];
+- (NSString *) sha1ByResolvingSymbolicRef:(GITRef *)symRef
+{
+    GITRef *targetRef = [cachedRefs objectForKey:[symRef linkName]];
+    if ( [targetRef isLink] )
+        return [self sha1ByResolvingSymbolicRef:targetRef];
+    return [[[targetRef sha1] copy] autorelease];
+}
+
+- (void) resolveSymbolicRefs
+{
+    while ([symbolicRefs count] > 0) {
+        GITRef *symRef = [[symbolicRefs lastObject] retain];
+        NSString *sha1 = [self sha1ByResolvingSymbolicRef:symRef];
+        NSAssert(isSha1StringValid(sha1), @"linked ref has invalid sha1");
+        [symRef setSha1:sha1];
+        [symbolicRefs removeLastObject];
+    }
+}
+
+- (NSDictionary *) cachedRefs
+{
+    [self fetchRefs];
+    return cachedRefs;
+}
+
+- (void) fetchRefs
+{
+    if ( !fetchedLoose )
+        [self fetchLooseRefs];
+    if ( !fetchedPacked )
+        [self fetchPackedRefs];
+    [self resolveSymbolicRefs];
+}
+
+- (void) fetchLooseRefs
+{
+    NSString *thisRef;
+    NSFileManager *fm =  [NSFileManager defaultManager];
+    NSEnumerator *e = [fm enumeratorAtPath:[self refsDir]];
     while ( (thisRef = [e nextObject]) ) {
-        tempRef = [searchPath stringByAppendingPathComponent:thisRef];
-        //thisRef = [refPrefix stringByAppendingPathComponent:thisRef];
+        NSString *tempRef = [[self refsDir] stringByAppendingPathComponent:thisRef];
         BOOL isDir;
         if ( [fm fileExistsAtPath:tempRef isDirectory:&isDir] && !isDir ) {
             // TODO: extract name, lookup in cache
-            theRef = [GITRef refWithContentsOfFile:tempRef];
-            //theRef = [self looseRefWithName:thisRef repo:repo];
-            if ( ![refs containsObject:theRef] ) {
-                [refs addObject:theRef];
-                if ([theRef isLink])
+            NSString *refName = [NSString stringWithFormat:@"refs/%@", thisRef];
+            if ( ![cachedRefs objectForKey:refName] ) {
+                id theRef = [GITRef refWithContentsOfFile:tempRef];
+                [cachedRefs setObject:theRef forKey:refName];
+                if ( [theRef isLink] )
                     [symbolicRefs addObject:theRef];
-                if ( ![cachedRefs containsObject:theRef] )
-                    [cachedRefs addObject:theRef];
             }
         }
     }
-    return [NSArray arrayWithArray:refs];
+    fetchedLoose = YES;
 }
 
-- (NSArray *) packedRefsWithContentsOfFile:(NSString *)packedRefsFile prefix:(NSString *)refPrefix
+- (void) fetchPackedRefs
 {
-    if ( ![[NSFileManager defaultManager] fileExistsAtPath:packedRefsFile] )
-        return nil;
+    if ( ![self packFile] )
+        return;
+    if ( ![[NSFileManager defaultManager] fileExistsAtPath:[self packFile]] )
+        return;    
     
     NSAutoreleasePool *pool = [NSAutoreleasePool new];
-    
-    if ( refPrefix && ! [refPrefix hasPrefix:@"refs/"] ) {
-        refPrefix = [NSString stringWithFormat:@"refs/%@/", refPrefix];
-    }
-    
     NSString *packedRefs = [[NSString alloc]
-                            initWithContentsOfFile:packedRefsPath
+                            initWithContentsOfFile:[self packFile]
                                           encoding:NSASCIIStringEncoding 
                                              error:NULL];
     NSArray *packedRefLines = [packedRefs componentsSeparatedByCharactersInSet:
                                [NSCharacterSet newlineCharacterSet]];
-
-    NSMutableArray *refs = [[NSMutableArray alloc] initWithCapacity:[packedRefLines count]];
     for (NSString *line in packedRefLines) {
         if ([line length] < 1 || [line hasPrefix:@"#"] || [line hasPrefix:@"^"])
             continue;
-        // line = @"<40-char sha1> <refName>"
+        // line with ref = @"<40-char sha1> <refName>"
         NSString *thisSha = [line substringWithRange:NSMakeRange(0,40)];
         NSString *thisRef = [line substringFromIndex:41];
-        if ( refPrefix && ![thisRef hasPrefix:refPrefix] ) {
-            continue;
-        }
-        id theRef = [GITRef refWithName:thisRef value:thisSha packed:YES];
-        if ( ![refs containsObject:theRef] ) {
-            [refs addObject:theRef];
-            if ([theRef isLink])
+        if ( ![cachedRefs objectForKey:thisRef] ) {
+            id theRef = [GITRef refWithName:thisRef sha1:thisSha packed:YES];
+            [cachedRefs setObject:theRef forKey:thisRef];
+            if ( [theRef isLink] )
                 [symbolicRefs addObject:theRef];
-            if ( ![cachedRefs containsObject:theRef] )
-                [cachedRefs addObject:theRef];
         }
     }
     [packedRefs release];
     [pool release];
-    
-    NSArray *refsCopy = [refs copy];
-    [refs release];
-    return [refsCopy autorelease];
+    fetchedPacked = YES;
 }
 @end
