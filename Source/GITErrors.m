@@ -23,6 +23,7 @@ __git_error(GITErrorFileNotFound,                   -100);
 
 #pragma mark Store Error Codes
 __git_error(GITErrorObjectStoreNotAccessible,       -200);
+__git_error(GITErrorRefStoreNotAccessible,          -201);
 
 #pragma mark PACK and Index Error Codes
 __git_error(GITErrorPackIndexUnsupportedVersion,    -300);
