@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "GITObject.h"
 
-@class GITObjectStore;
+@class GITObjectStore, GITRefStore;
 @class GITObject, GITCommit, GITTree, GITTag, GITBlob;
 @class GITRef, GITBranch;
 
@@ -31,6 +31,7 @@
                         // an object to print itself is -description
     BOOL bare;          //!< Flag indicating that is a bare repository
     GITObjectStore * store;     //!< The store which will be used to find objects
+    GITRefStore *refStore;  //!< Store that handles reading/writing Git References
 }
 
 @property(readonly,copy) NSString * root;
@@ -66,10 +67,11 @@
 - (id)initWithRoot:(NSString*)repoRoot bare:(BOOL)isBare error:(NSError**)error;
 
 /*! Creates and returns a new repo using the provided store for object retreival.
- * \param store GITObjectStore to use for object retreival
+ * \param objStore GITObjectStore to use for object retreival
+ * \param referenceStore GITRefStore to use for handling references to objects
  * \return A new repo object
  */
-- (id)initWithStore:(GITObjectStore*)store;
+- (id) initWithObjectStore:(GITObjectStore *)objStore refStore:(GITRefStore *)referenceStore;
 
 /*! Returns a new instance that's a copy of the receiver.
  * \internal

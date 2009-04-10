@@ -7,7 +7,6 @@
 //
 
 #import "GITRepo.h"
-#import "GITObjectStore.h"
 #import "GITObject.h"
 #import "GITCommit.h"
 #import "GITTree.h"
@@ -15,18 +14,20 @@
 #import "GITBlob.h"
 #import "GITTag.h"
 
+#import "GITObjectStore.h"
+#import "GITRefStore.h"
 #import "GITFileStore.h"
 #import "GITPackStore.h"
 #import "GITCombinedStore.h"
-#import "GITUtilityBelt.h"
-#include <CommonCrypto/CommonDigest.h>
 
+#import <CommonCrypto/CommonDigest.h>
 #import "NSData+Hashing.h"
 #import "NSData+Searching.h"
 #import "NSData+Compression.h"
 #import "NSFileManager+DirHelper.h"
 #import "NSCharacterSet+StringComparison.h"
 
+#import "GITUtilityBelt.h"
 #import "GITErrors.h"
 
 /*! \cond
@@ -38,6 +39,7 @@
 @property(readwrite,copy) NSString * desc;
 @property(readwrite,assign) BOOL bare;
 @property(readwrite,retain) GITObjectStore * store;
+@property(readwrite,retain) GITRefStore *refStore;
 @end
 /*! \endcond */
 
@@ -51,6 +53,7 @@
 @synthesize desc;
 @synthesize bare;
 @synthesize store;
+@synthesize refStore;
 
 - (void) dealloc
 {
@@ -86,18 +89,26 @@
     GITPackStore * packStore = [GITPackStore storeWithRoot:rootPath error:error];
     if (!packStore)
         return nil;
-
+    
+    GITRefStore *rStore = [[[GITRefStore alloc] 
+                            initWithPath:[rootPath stringByAppendingPathComponent:@"refs"]
+                            packFile:[rootPath stringByAppendingPathComponent:@"packed-refs"]
+                            error:error] autorelease];
+    if ( !rStore )
+        return nil;
+    
     objectStore = [[[GITCombinedStore alloc] initWithStores: fileStore, packStore, nil] autorelease];
-    if ([self initWithStore:objectStore])
-    {
+    if ( [self initWithObjectStore:objectStore refStore:nil] ) {
         self.root = rootPath;
         NSString * descFile = [self.root stringByAppendingPathComponent:@"description"];
         self.desc = [NSString stringWithContentsOfFile:descFile];
         self.bare = isBare;
+        self.refStore = rStore;
     }
     return self;
 }
-- (id)initWithStore:(GITObjectStore*)objectStore
+
+- (id) initWithObjectStore:(GITObjectStore *)objectStore refStore:(GITRefStore *)referenceStore
 {
     if (! [super init])
         return nil;
@@ -106,6 +117,7 @@
     self.desc = nil;
     self.bare = NO;
     self.store = objectStore;
+    self.refStore = referenceStore;
     
     return self;
 }
