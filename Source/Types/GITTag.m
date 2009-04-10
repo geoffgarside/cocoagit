@@ -11,6 +11,7 @@
 #import "GITActor.h"
 #import "GITCommit.h"
 #import "GITDateTime.h"
+#import "GITErrors.h"
 
 NSString * const kGITObjectTagName = @"tag";
 

@@ -11,6 +11,7 @@
 #import "GITTree.h"
 #import "GITActor.h"
 #import "GITDateTime.h"
+#import "GITErrors.h"
 
 NSString * const kGITObjectCommitName = @"commit";
 

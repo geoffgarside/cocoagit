@@ -7,7 +7,14 @@
 //
 
 #import "GITRepo.h"
+#import "GITObjectStore.h"
+#import "GITObject.h"
+#import "GITCommit.h"
+#import "GITTree.h"
 #import "GITBranch.h"
+#import "GITBlob.h"
+#import "GITTag.h"
+
 #import "GITFileStore.h"
 #import "GITPackStore.h"
 #import "GITCombinedStore.h"
@@ -19,6 +26,8 @@
 #import "NSData+Compression.h"
 #import "NSFileManager+DirHelper.h"
 #import "NSCharacterSet+StringComparison.h"
+
+#import "GITErrors.h"
 
 /*! \cond
  Make properties readwrite so we can use

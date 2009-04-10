@@ -8,6 +8,7 @@
 
 #import "GITRepoTests.h"
 #import "GITRepo.h"
+#import "GITErrors.h"
 
 @implementation GITRepoTests
 @synthesize repo;

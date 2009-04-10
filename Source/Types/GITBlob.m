@@ -8,6 +8,7 @@
 
 #import "GITBlob.h"
 #import "GITRepo.h"
+#import "GITErrors.h"
 
 #import "NSData+Searching.h"
 

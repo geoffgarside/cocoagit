@@ -9,6 +9,7 @@
 #import "GITTree.h"
 #import "GITRepo.h"
 #import "GITTreeEntry.h"
+#import "GITErrors.h"
 
 NSString * const kGITObjectTreeName = @"tree";
 

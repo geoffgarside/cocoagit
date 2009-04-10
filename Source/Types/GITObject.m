@@ -8,6 +8,7 @@
 
 #import "GITObject.h"
 #import "GITRepo.h"
+#import "GITErrors.h"
 
 /*! \cond */
 @interface GITObject ()
