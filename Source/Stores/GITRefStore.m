@@ -67,13 +67,15 @@
 }
 
 #pragma mark Public Methods
-
 - (NSArray *) refsWithPrefix:(NSString *)refPrefix
 {
     [self fetchRefs];
     
+    if ( refPrefix == nil )
+        refPrefix = @"";
+    
     if ( ![refPrefix hasPrefix:@"refs/"] )
-        refPrefix = [NSString stringWithFormat:@"refs/%@"];
+        refPrefix = [NSString stringWithFormat:@"refs/%@", refPrefix];
     
     NSMutableArray *matchingRefs = [NSMutableArray arrayWithCapacity:[cachedRefs count]/2];
     for (NSString *key in cachedRefs) {
@@ -84,6 +86,11 @@
         [ref release];
     }
     return [NSArray arrayWithArray:matchingRefs];
+}
+
+- (NSArray *) allRefs
+{
+    return [self refsWithPrefix:@""];
 }
 
 - (NSArray *) branches

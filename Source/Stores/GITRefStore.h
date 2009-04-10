@@ -32,6 +32,7 @@
 - (NSString *) sha1WithSymbolicRef:(GITRef *)symRef;
 
 - (NSArray *) refsWithPrefix:(NSString *)refPrefix;
+- (NSArray *) allRefs;
 - (NSArray *) branches;
 - (NSArray *) heads;
 - (NSArray *) tags;

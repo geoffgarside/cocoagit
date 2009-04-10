@@ -111,4 +111,16 @@ static NSDictionary *fixtures;
     NSDictionary *expectedTags = [self tags];
     GHAssertEqualObjects(tags, expectedTags, nil);
 }
+
+- (void) testAllRefs
+{
+    NSMutableDictionary *refs = [NSMutableDictionary dictionary];
+    for (GITRef *r in [store allRefs]) {
+        [refs setValue:[r sha1] forKey:[r name]];
+    }
+    NSMutableDictionary *expectedRefs = [[[self heads] mutableCopy] autorelease];
+    [expectedRefs addEntriesFromDictionary:[self remotes]];
+    [expectedRefs addEntriesFromDictionary:[self tags]];
+    GHAssertEqualObjects(refs, expectedRefs, nil);\
+}
 @end
