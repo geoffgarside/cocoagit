@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "GITRepo.h"
+#import <Git/Git.h>
 
 void pp(NSString *fmt, ...);
 void printObject(GITObject * object);
