@@ -17,7 +17,7 @@
     NSDate * date = [NSDate date];
     NSTimeZone * timezone = [NSTimeZone timeZoneWithStringOffset:@"+0100"];
     
-    GITDateTime * dateTime = [[GITDateTime alloc] initWithDate:date timeZone:timezone];
+    GITDateTime * dateTime = [[[GITDateTime alloc] initWithDate:date timeZone:timezone] autorelease];
     GHAssertNotNil(dateTime, @"Should not be nil");
     GHAssertEqualObjects(dateTime.date, date, @"Should be the same");
     GHAssertEqualObjects(dateTime.timezone, timezone, @"Should be the same");
@@ -27,15 +27,15 @@
     NSDate * date = [NSDate dateWithTimeIntervalSince1970:1214920980];
     NSTimeZone * timezone = [NSTimeZone timeZoneWithStringOffset:@"+0100"];
     
-    GITDateTime * dateTime = [[GITDateTime alloc] initWithTimestamp:[date timeIntervalSince1970]
-                                                     timeZoneOffset:@"+0100"];
+    GITDateTime * dateTime = [[[GITDateTime alloc] initWithTimestamp:[date timeIntervalSince1970]
+                                                     timeZoneOffset:@"+0100"] autorelease];
     GHAssertNotNil(dateTime, @"Should not be nil");
     GHAssertEqualObjects(dateTime.date, date, @"Should be the same");
     GHAssertEqualObjects(dateTime.timezone, timezone, @"Should be the same");
 }
 - (void)testDateTimeDescription
 {
-    GITDateTime * dateTime = [[GITDateTime alloc] initWithTimestamp:1214920980 timeZoneOffset:@"+0100"];
+    GITDateTime * dateTime = [[[GITDateTime alloc] initWithTimestamp:1214920980 timeZoneOffset:@"+0100"] autorelease];
     GHAssertEqualObjects([dateTime description], @"1214920980 +0100", @"Should format datetime with timezone correctly");
 }
 @end

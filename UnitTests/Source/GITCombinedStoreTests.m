@@ -17,7 +17,7 @@
 - (void)setUp
 {
     [super setUp];
-    self.store = [[GITCombinedStore alloc] init];
+    self.store = [[[GITCombinedStore alloc] init] autorelease];
 }
 - (void)tearDown
 {
@@ -27,7 +27,7 @@
 - (void)testAddStore
 {
     NSError * error = nil;
-    GITFileStore * fileStore = [[GITFileStore alloc] initWithRoot:DOT_GIT error:&error];
+    GITFileStore * fileStore = [GITFileStore storeWithRoot:DOT_GIT error:&error];
     GHAssertNotNil(fileStore, nil); GHAssertNil(error, nil);
 
     GHAssertEquals([store.stores count], (NSUInteger)0, @"Should have no stores");
@@ -38,10 +38,10 @@
 {
     NSError * error = nil;
 
-    GITFileStore * fileStore = [[GITFileStore alloc] initWithRoot:DOT_GIT error:&error];
+    GITFileStore * fileStore = [GITFileStore storeWithRoot:DOT_GIT error:&error];
     GHAssertNotNil(fileStore, nil); GHAssertNil(error, nil);
 
-    GITPackStore * packStore = [[GITPackStore alloc] initWithRoot:DOT_GIT error:&error];
+    GITPackStore * packStore = [GITPackStore storeWithRoot:DOT_GIT error:&error];
     GHAssertNotNil(packStore, nil); GHAssertNil(error, nil);
 
     GHAssertEquals([store.stores count], (NSUInteger)0, @"Should have no stores");
@@ -58,10 +58,10 @@
 {
     NSError * error = nil;
     
-    GITFileStore * fileStore = [[GITFileStore alloc] initWithRoot:DOT_GIT error:&error];
+    GITFileStore * fileStore = [GITFileStore storeWithRoot:DOT_GIT error:&error];
     GHAssertNotNil(fileStore, nil); GHAssertNil(error, nil);
     
-    GITPackStore * packStore = [[GITPackStore alloc] initWithRoot:DOT_GIT error:&error];
+    GITPackStore * packStore = [GITPackStore storeWithRoot:DOT_GIT error:&error];
     GHAssertNotNil(packStore, nil); GHAssertNil(error, nil);
 
     GHAssertEquals([store.stores count], (NSUInteger)0, @"Should have no stores");
@@ -77,7 +77,7 @@
     NSData * raw; GITObjectType type;
     NSString * sha1 = @"87f974580d485f3cfd5fd9cc62491341067f0c59";
 
-    [store addStore:[[GITFileStore alloc] initWithRoot:DOT_GIT error:&error] priority:GITHighPriority];
+    [store addStore:[GITFileStore storeWithRoot:DOT_GIT error:&error] priority:GITHighPriority];
     GHAssertNil(error, @"Should be nil after initializing GITFileStore");
 
     BOOL result = [store loadObjectWithSha1:sha1 intoData:&raw type:&type error:&error];
@@ -91,7 +91,7 @@
     NSData * raw; GITObjectType type;
     NSString * sha1 = @"226e91f3b4cca13890325f5d33ec050beca99f89";
     
-    [store addStore:[[GITPackStore alloc] initWithRoot:DOT_GIT error:&error] priority:GITHighPriority];
+    [store addStore:[GITPackStore storeWithRoot:DOT_GIT error:&error] priority:GITHighPriority];
     GHAssertNil(error, @"Should be nil after initializing GITPackStore");
     
     BOOL result = [store loadObjectWithSha1:sha1 intoData:&raw type:&type error:&error];
@@ -103,10 +103,10 @@
 {
     NSError * error = nil;
 
-    GITFileStore * fileStore = [[GITFileStore alloc] initWithRoot:DOT_GIT error:&error];
+    GITFileStore * fileStore = [GITFileStore storeWithRoot:DOT_GIT error:&error];
     GHAssertNotNil(fileStore, nil); GHAssertNil(error, nil);
 
-    GITPackStore * packStore = [[GITPackStore alloc] initWithRoot:DOT_GIT error:&error];
+    GITPackStore * packStore = [GITPackStore storeWithRoot:DOT_GIT error:&error];
     GHAssertNotNil(packStore, nil); GHAssertNil(error, nil);
 
     [store addStores:fileStore, packStore, nil];
@@ -120,9 +120,7 @@
     GHAssertNil(error, @"No Error Occurred");
     GHAssertNotNil(raw, @"Data was retrieved");
 
-    // I'd like to release here, but I get a segfault...
-    //[raw release]; raw = nil;
-
+    raw = nil;
     result = [store loadObjectWithSha1:sha1Pack intoData:&raw type:&type error:&error];
     GHAssertTrue(result, @"No Error Occurred");
     GHAssertNil(error, @"No Error Occurred");

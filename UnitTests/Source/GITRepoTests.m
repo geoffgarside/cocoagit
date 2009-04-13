@@ -16,7 +16,7 @@
 - (void)setUp
 {
     [super setUp];
-    self.repo = [[GITRepo alloc] initWithRoot:DOT_GIT bare:YES];
+    self.repo = [[[GITRepo alloc] initWithRoot:DOT_GIT bare:YES] autorelease];
 }
 - (void)tearDown
 {

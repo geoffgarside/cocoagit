@@ -15,7 +15,7 @@
 - (void)setUp
 {
     [super setUp];
-    self.store = [[GITPackStore alloc] initWithRoot:DOT_GIT];
+    self.store = [GITPackStore storeWithRoot:DOT_GIT];
 }
 - (void)tearDown
 {

@@ -20,7 +20,7 @@
 - (void)setUp
 {
     [super setUp];
-    self.repo = [[GITRepo alloc] initWithRoot:DOT_GIT bare:YES];
+    self.repo = [[[GITRepo alloc] initWithRoot:DOT_GIT bare:YES] autorelease];
     self.firstCommitSha1 = @"f7e7e7d240ccdae143b064aa7467eb2fa91aa8a5";
     self.commitSHA1 = @"2bb318d2c722b344f6fae8ec274d0c7df9020544";
     self.commit = [repo commitWithSha1:commitSHA1 error:NULL];

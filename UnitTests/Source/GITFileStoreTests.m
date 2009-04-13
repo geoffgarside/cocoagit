@@ -15,7 +15,7 @@
 - (void)setUp
 {
     [super setUp];
-    self.store = [[GITFileStore alloc] initWithRoot:DOT_GIT];
+    self.store = [GITFileStore storeWithRoot:DOT_GIT];
 }
 - (void)tearDown
 {

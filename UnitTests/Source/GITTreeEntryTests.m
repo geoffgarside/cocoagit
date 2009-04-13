@@ -23,7 +23,7 @@
 - (void)setUp
 {
     [super setUp];
-	self.repo = [[GITRepo alloc] initWithRoot:DOT_GIT bare:YES];
+	self.repo = [[[GITRepo alloc] initWithRoot:DOT_GIT bare:YES] autorelease];
     self.tree = [repo treeWithSha1:@"a9ecfd8989d7c427c5564cf918b264261866ce01"];
 	    
     self.entryMode = 100644;
@@ -36,7 +36,7 @@
 	NSMutableData *entryData = [[[entryHeader dataUsingEncoding:NSASCIIStringEncoding] mutableCopy] autorelease];
 	[entryData appendData:packedEntrySha1];
 
-    self.entryLine = [[NSString alloc] initWithData:entryData encoding:NSASCIIStringEncoding];
+    self.entryLine = [[[NSString alloc] initWithData:entryData encoding:NSASCIIStringEncoding] autorelease];
 }
 - (void)tearDown
 {
@@ -55,6 +55,7 @@
     GHAssertEquals(entry.mode, entryMode, @"Mode should be parsed properly");
     GHAssertEqualObjects(entry.name, entryName, @"Name should be parsed properly");
     GHAssertEqualObjects(entry.sha1, entrySHA1, @"SHA1 should be parsed properly");
+    [entry release];
 }
 - (void)testShouldInitWithModeNameAndHash
 {
@@ -64,6 +65,7 @@
     GHAssertEquals(entry.mode, entryMode, @"Mode should be parsed properly");
     GHAssertEqualObjects(entry.name, entryName, @"Name should be parsed properly");
     GHAssertEqualObjects(entry.sha1, entrySHA1, @"SHA1 should be parsed properly");
+    [entry release];
 }
 - (void)testShouldInitWithModeStringNameAndHash
 {
@@ -74,6 +76,7 @@
     GHAssertEquals(entry.mode, entryMode, @"Mode (%@) should be parsed properly", entryModeStr);
     GHAssertEqualObjects(entry.name, entryName, @"Name should be parsed properly");
     GHAssertEqualObjects(entry.sha1, entrySHA1, @"SHA1 should be parsed properly");
+    [entry release];
 }
 
 @end
