@@ -83,17 +83,15 @@
  */
 - (id)copyWithZone:(NSZone*)zone;
 
-- (NSArray*)branches;
-/*
-- (NSArray*)commits;
-- (NSArray*)tags;
-*/
-- (GITCommit*)head;
-- (GITBranch*)master;
-- (GITBranch*)branchWithName:(NSString*)name;
-/*
-- (GITTag*)tagWithName:(NSString*)name;
-*/
+- (NSArray *) branches;
+- (NSArray *) remotes;
+- (NSArray *) tags;
+
+- (GITCommit *) head;
+- (GITRef *) master;
+- (GITRef *) branchWithName:(NSString*)name;
+- (GITRef *) tagWithName:(NSString*)name;
+- (GITRef *) remoteWithName:(NSString*)name;
 
 #pragma mark -
 #pragma mark Internal Methods (Deprecated)
@@ -212,8 +210,9 @@
 - (NSString *) packedRefsPath;
 - (NSArray *) refs;
 - (NSUInteger) countOfRefs;
-- (NSDictionary *) dictionaryWithRefName:(NSString *) aName sha:(NSString *) shaString;
 - (id) objectInRefsAtIndex:(NSUInteger) i;
+
+- (NSDictionary *) dictionaryWithRefName:(NSString *) aName sha:(NSString *) shaString;
 
 - (BOOL) updateRef:(NSString *)refName toSha:(NSString *)toSha;
 - (BOOL) updateRef:(NSString *)refName toSha:(NSString *)toSha error:(NSError **)error;

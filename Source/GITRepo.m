@@ -13,6 +13,7 @@
 #import "GITBranch.h"
 #import "GITBlob.h"
 #import "GITTag.h"
+#import "GITRef.h"
 
 #import "GITObjectStore.h"
 #import "GITRefStore.h"
@@ -90,20 +91,16 @@
     if (!packStore)
         return nil;
     
-    GITRefStore *rStore = [[[GITRefStore alloc] 
-                            initWithPath:[rootPath stringByAppendingPathComponent:@"refs"]
-                            packFile:[rootPath stringByAppendingPathComponent:@"packed-refs"]
-                            error:error] autorelease];
+    GITRefStore *rStore = [[[GITRefStore alloc] initWithRoot:repoRoot error:error] autorelease];
     if ( !rStore )
         return nil;
     
     objectStore = [[[GITCombinedStore alloc] initWithStores: fileStore, packStore, nil] autorelease];
-    if ( [self initWithObjectStore:objectStore refStore:nil] ) {
+    if ( [self initWithObjectStore:objectStore refStore:rStore] ) {
         self.root = rootPath;
         NSString * descFile = [self.root stringByAppendingPathComponent:@"description"];
         self.desc = [NSString stringWithContentsOfFile:descFile];
         self.bare = isBare;
-        self.refStore = rStore;
     }
     return self;
 }
@@ -237,6 +234,11 @@
 #pragma mark Refs Stuff
 
 // KVC accessors for refs
+- (NSArray *) refs
+{
+    return [[self refStore] allRefs];
+}
+
 - (NSUInteger) countOfRefs { return [[self refs] count]; }
 
 - (id) objectInRefsAtIndex:(NSUInteger) i;
@@ -260,129 +262,56 @@
 	return [[self root] stringByAppendingPathComponent:@"HEAD"];
 }
 
-- (NSArray *) branches {
-    NSArray *refs = [self refs];
-    NSMutableArray *branches = [[NSMutableArray alloc] initWithCapacity:[refs count]];
-    for (NSDictionary *ref in refs) {
-        NSString *refName = [ref objectForKey:@"name"];
-        if (![refName hasPrefix:@"refs/heads"]) {
-            continue;
-        }
-        GITBranch *branch = [[GITBranch alloc] init];
-        branch.name = [refName lastPathComponent]; // probably should explicitly split on slashes
-        branch.repo = self;
-        [branches addObject:branch];
-        [branch release];
-    }
-    NSArray *branchesCopy = [[branches copy] autorelease];
-    [branches release];
-    return branchesCopy;
+#pragma mark RefStore accessors
+- (NSArray *) branches
+{
+    return [[self refStore] branches];
 }
 
+- (NSArray *) tags
+{
+    return [[self refStore] tags];
+}
+
+- (NSArray *) remotes
+{
+    return [[self refStore] remotes];
+}
+
+- (GITRef *) master
+{
+    return [[self refStore] refWithName:@"refs/heads/master"];
+}
+
+- (GITRef *) branchWithName:(NSString *)name
+{
+    NSString *branchRefName = [NSString stringWithFormat:@"refs/heads/%@", name];
+    return [[self refStore] refWithName:branchRefName];
+}
+
+- (GITRef *) tagWithName:(NSString *)name
+{
+    NSString *tagRefName = [NSString stringWithFormat:@"refs/tags/%@", name];
+    return [[self refStore] refWithName:tagRefName];
+}
+
+- (GITRef *) remoteWithName:(NSString *)name
+{
+    NSString *remoteRefName = [NSString stringWithFormat:@"refs/remotes/%@", name];
+    return [[self refStore] refWithName:remoteRefName];
+}
+
+- (GITCommit *) head
+{
+    return [self commitWithSha1:[[[self refStore] head] sha1]];
+}
+
+// Deprecated
 - (NSDictionary *) dictionaryWithRefName:(NSString *) aName sha:(NSString *) shaString
 {
 	return [NSDictionary dictionaryWithObjectsAndKeys:
 							 aName, @"name",
 							 shaString, @"sha", nil];
-}
-
-- (GITCommit*)head
-{
-    for (NSDictionary *ref in self.refs) {
-        if ([[ref objectForKey:@"name"] isEqualToString:@"HEAD"]) {
-            return [self commitWithSha1:[ref objectForKey:@"sha"]];
-        }
-    }
-    return nil;
-}
-
-- (GITBranch*)master
-{
-	return [self branchWithName:@"master"];
-}
-
-- (GITBranch*)branchWithName:(NSString*)name
-{
-	for (GITBranch *branch in self.branches) {
-        if ([branch.name isEqualToString:name]) {
-            return branch;
-        }
-    }
-    return nil;
-}
-
-- (NSArray *) refs
-{
-	NSMutableArray *refs = [[NSMutableArray alloc] init];
-	
-	NSString *tempRef, *thisSha, *thisRef;
-	NSString *refsPath = [self refsPath];
-	
-	NSFileManager *fm = [NSFileManager defaultManager];
-	BOOL isDir;
-    if ([fm fileExistsAtPath:refsPath isDirectory:&isDir] && isDir) {
-		NSEnumerator *e = [fm enumeratorAtPath:refsPath];
-		while ( (thisRef = [e nextObject]) ) {
-			tempRef = [refsPath stringByAppendingPathComponent:thisRef];
-			thisRef = [@"refs" stringByAppendingPathComponent:thisRef];
-			
-			BOOL isDir;
-			if ([fm fileExistsAtPath:tempRef isDirectory:&isDir] && !isDir) {
-				NSString *shaString = [[NSString alloc] initWithContentsOfFile:tempRef
-																	  encoding:NSASCIIStringEncoding 
-																		 error:nil];
-				thisSha = [shaString stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-				[shaString release];
-				
-				[refs addObject:[self dictionaryWithRefName:thisRef sha:thisSha]];
-			}
-		}
-	}
-    
-    NSString *packedRefsPath = [self packedRefsPath];
-    if ([fm fileExistsAtPath:packedRefsPath]) {
-        NSString *packedRefs = [[NSString alloc] initWithContentsOfFile:packedRefsPath
-                                                               encoding:NSASCIIStringEncoding 
-                                                                  error:nil];
-        NSArray *packedRefLines = [packedRefs componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];        
-        for (NSString *line in packedRefLines) {
-            if ([line length] < 1 || [line hasPrefix:@"#"] || [line hasPrefix:@"^"]) {
-                continue;
-            }
-            NSArray *parts = [line componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-            thisSha = [parts objectAtIndex:0];
-            thisRef = [parts objectAtIndex:1];
-            [refs addObject:[self dictionaryWithRefName:thisRef sha:thisSha]];
-        }
-        [packedRefs release];
-    }
-    
-    NSString *headRefContents = [[NSString alloc] initWithContentsOfFile:[self headRefPath]
-                                                        encoding:NSASCIIStringEncoding 
-                                                           error:nil];
-    NSString *headRefTemp = [headRefContents stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-    [headRefContents release];
-    NSDictionary *headRef = nil;
-    
-    if ([headRefTemp hasPrefix:@"ref:"]) {
-        for (NSDictionary *ref in refs) {
-            if ([headRefTemp hasSuffix:[ref objectForKey:@"name"]]) {
-                headRef = [self dictionaryWithRefName:@"HEAD" sha:[ref objectForKey:@"sha"]];
-                break;
-            }
-        }
-    } else {
-        headRef = [self dictionaryWithRefName:@"HEAD" sha:headRefTemp];
-    }
-
-    if (headRef) {
-        [refs addObject:headRef];
-    }
-    
-	NSArray *refsCopy = [[refs copy] autorelease];
-	[refs release];
-	
-	return refsCopy;
 }
 
 - (BOOL) updateRef:(NSString *)refName toSha:(NSString *)toSha
@@ -392,17 +321,13 @@
 
 - (BOOL) updateRef:(NSString *)refName toSha:(NSString *)toSha error:(NSError **)error
 {
-	NSString *refPath = [[self root] stringByAppendingPathComponent:refName];
-	return [toSha writeToFile:refPath atomically:YES encoding:NSUTF8StringEncoding error:error];
+    GITRef *ref = [GITRef refWithName:refName sha1:toSha];
+    return [[self refStore] writeRef:ref error:error];
 }
 
 + (BOOL) isShaValid:(NSString *) shaString
 {
-    if ( [shaString length] != 40 )
-        return NO;
-
-    NSCharacterSet *cs = [NSCharacterSet characterSetWithCharactersInString:@"0123456789abcdef"];
-    return [cs stringIsComposedOfCharactersInSet:shaString];
+    return isSha1StringValid(shaString);
 }
 
 - (BOOL) writeObject:(NSData *)objectData withType:(NSString *)type
