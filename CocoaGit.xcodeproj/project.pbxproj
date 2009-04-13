@@ -245,6 +245,7 @@
 		D0C70CF50F8332DA0087EBAF /* GITBranch.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EA0E48C5650004CD44 /* GITBranch.m */; };
 		D0C70D060F8333130087EBAF /* GITBranch.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EA0E48C5650004CD44 /* GITBranch.m */; };
 		D0C70D080F8333260087EBAF /* GITPackReverseIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E65C600F4A07AA00EB5DB8 /* GITPackReverseIndex.m */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1484,6 +1485,7 @@
 				573B49CB0EF5A1F90020159D /* assertions.m in Sources */,
 				573B49D40EF5A2090020159D /* NSError-OBExtensions.m in Sources */,
 				57E65C650F4A07AA00EB5DB8 /* GITPackReverseIndex.m in Sources */,
+				FEAF24D40F8A9362006C2495 /* GITBranch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -69,7 +69,7 @@
 
     if ([fm isReadableFileAtPath:path])
     {
-        NSData * zlibData = [NSData dataWithContentsOfFile:path];
+        NSData * zlibData = [NSData dataWithContentsOfMappedFile:path];
         return [zlibData zlibInflate];
     }
 
@@ -87,7 +87,7 @@
 		return NO;
 	}
 
-	NSData * zlibData = [NSData dataWithContentsOfFile:path options:NSUncachedRead error:error];
+	NSData * zlibData = [NSData dataWithContentsOfMappedFile:path];
 	NSData * raw = [zlibData zlibInflate];
 	
 	NSRange range = [raw rangeOfNullTerminatedBytesFrom:0];
