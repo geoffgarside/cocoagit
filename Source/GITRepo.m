@@ -91,7 +91,7 @@
     if (!packStore)
         return nil;
     
-    GITRefStore *rStore = [[[GITRefStore alloc] initWithRoot:repoRoot error:error] autorelease];
+    GITRefStore *rStore = [[[GITRefStore alloc] initWithRoot:rootPath error:error] autorelease];
     if ( !rStore )
         return nil;
     
