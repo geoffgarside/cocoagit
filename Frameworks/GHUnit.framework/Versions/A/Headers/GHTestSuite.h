@@ -31,18 +31,21 @@
 
 /*!
  Test suite is an alias for test group.
- A test group is a collection of id<GHTest> (GHTest or GHTestGroup).
+ 
+ A test case is an instance of a test case class with test methods.
+ A test is a id<GHTest> which represents a target and a selector.
+ A test group is a collection of tests; A collection of id<GHTest> (GHTest or GHTestGroup).
  
  For example, if you have 2 test cases, GHTestCase1 (with some test methods) and GHTestCase2 (with some test methods), 
  your test suite might look like:
  
 "Tests" (GHTestSuite)
-	"GHTestCase1" (GHTestGroup)
-		- (void)testA1 (GHTest with target (GHTestCase) + selector)
-		- (void)testA2 (GHTest with target (GHTestCase) + selector)
-	"GHTestCase2" (GHTestGroup)
-		- (void)testB1; (GHTest with target (GHTestCase) + selector)
-		- (void)testB2; (GHTest with target (GHTestCase) + selector) 
+	GHTestGroup (collection of tests from GHTestCase1)
+		- (void)testA1 (GHTest with target GHTestCase1 + testA1)
+		- (void)testA2 (GHTest with target GHTestCase1 + testA2)
+	GHTestGroup (collection of tests from GHTestCase2)
+		- (void)testB1; (GHTest with target GHTestCase2 + testB1)
+		- (void)testB2; (GHTest with target GHTestCase2 + testB2)  
  
  */
 @interface GHTestSuite : GHTestGroup {
@@ -51,11 +54,19 @@
 
 /*! 
  Create test suite with test cases.
- @param name
- @param testCases
+ @param name Label to give the suite
+ @param testCases Array of init'ed test case classes
  @param delegate
  */
 - (id)initWithName:(NSString *)name testCases:(NSArray *)testCases delegate:(id<GHTestDelegate>)delegate;
+
+/*! 
+ Create test suite with tests.
+ @param name Label to give the suite
+ @param tests Array of id<GHTest> 
+ @param delegate
+ */
+- (id)initWithName:(NSString *)name tests:(NSArray/*of id<GHTest>*/ *)tests delegate:(id<GHTestDelegate>)delegate;
 
 /*!
  Creates a suite of all tests.
@@ -68,5 +79,18 @@
  @param flatten If flatten is YES, returns a test suite with all tests grouped in a single suite.
  */
 + (GHTestSuite *)allTests:(BOOL)flatten;
+
+/*!
+ Create suite of tests with filter.
+ This is useful for running a single test or all tests in a single test case.
+ 
+ For example,
+ 'GHSlowTest' -- Runs all test method in GHSlowTest
+ 'GHSlowTest/testSlowA -- Only runs the test method testSlowA in GHSlowTest
+ 
+ @param testFilter Test filter
+ @result Runner
+ */
++ (GHTestSuite *)suiteWithTestFilter:(NSString *)testFilter;
 
 @end

@@ -59,6 +59,7 @@
 - (void)testRunnerDidFinish:(GHTestRunner *)runner;
 
 - (void)testRunner:(GHTestRunner *)runner didLog:(NSString *)message;
+- (void)testRunner:(GHTestRunner *)runner test:(id<GHTest>)test didLog:(NSString *)message;
 @end
 
 /*!
@@ -95,15 +96,30 @@
 
 /*!
  Create runner for all tests.
- @see GHTesting#loadTestCases.
+ @see GHTesting#loadAllTestCases.
+ @result Runner
  */
 + (GHTestRunner *)runnerForAllTests;
 
 /*!
  Create runner for test suite.
  @param suite
+ @result Runner
  */
 + (GHTestRunner *)runnerForSuite:(GHTestSuite *)suite;
+
+/*!
+ Get the runner from the environment.
+ If the TEST env is set, then we will only run that test case or test method.
+ */
++ (GHTestRunner *)runnerFromEnv;
+
+/*!
+ Run the test runner. Usually called from the test main.
+ Reads the TEST environment variable and filters on that; or all tests are run.
+ @result Return value, 0 is success, otherwise the failure count
+ */
++ (int)run;
 
 /*!
  Start the test runner.
@@ -111,4 +127,5 @@
 - (void)run;
 
 @end
+
 

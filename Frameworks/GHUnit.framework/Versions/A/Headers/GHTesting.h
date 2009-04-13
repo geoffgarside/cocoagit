@@ -50,13 +50,13 @@
 BOOL isTestFixtureOfClass(Class aClass, Class testCaseClass);
 // GTM_END
 
-/*!
- Test utils class that loads and runs tests.
- Much of this is borrowed from GTM UnitTesting.
+/*!	
+ Utility test for loading and running tests.
+ @note Much of this is borrowed from GTM/UnitTesting.
  */
 @interface GHTesting : NSObject { 
 
-	NSMutableArray *testCaseClassNames_; // of NSString (class names)
+	NSMutableArray/* of NSString*/ *testCaseClassNames_;
 	
 }
 
@@ -69,7 +69,7 @@ BOOL isTestFixtureOfClass(Class aClass, Class testCaseClass);
  Load all test classes that we can "see".
  @return Array of initialized (and autoreleased) test case classes in an autoreleased array.
  */
-- (NSArray *)loadTestCases;
+- (NSArray *)loadAllTestCases;
 
 /*!
  Load tests from target.
