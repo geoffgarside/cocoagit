@@ -11,6 +11,12 @@
 #import "GITUtilityBelt.h"
 #import "NSFileManager+DirHelper.h"
 
+@interface GITRef()
+- (BOOL) isResolved;
+- (BOOL) resolveWithStore:(GITRefStore *)store error:(NSError **)error;
+@end
+
+
 @implementation GITRef
 @synthesize name;
 @synthesize linkName;
@@ -84,7 +90,7 @@
 
 - (BOOL) resolveWithStore:(GITRefStore *)store error:(NSError **)error
 {
-    if ( ![self isLink] )
+    if ( [self isLink] && [self isResolved] )
         return YES;
     NSString *refSha1 = [store sha1WithSymbolicRef:self];
     if ( !isSha1StringValid(refSha1) )
@@ -96,6 +102,15 @@
 - (BOOL) isResolved
 {
     return isSha1StringValid([self sha1]);
+}
+
+- (NSString *) shortName
+{
+    if ( ![[self name] hasPrefix:@"refs/"] )
+        return [self name];
+    NSArray *chunks = [[self name] componentsSeparatedByString:@"/"];
+    return [[chunks subarrayWithRange:NSMakeRange(2, [chunks count] - 2)]
+            componentsJoinedByString:@"/"];
 }
 
 // convenience initializers - return autoreleased objects

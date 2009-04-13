@@ -36,5 +36,6 @@
 - (id) initWithName:(NSString *)refName sha1:(NSString *)refSha1 
            linkName:(NSString *)refLink packed:(BOOL)refIsPacked;
 
+- (NSString *) shortName;
 - (GITCommit *) commitWithRepo:(GITRepo *)repo;
 @end
