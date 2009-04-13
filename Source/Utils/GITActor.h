@@ -29,6 +29,9 @@
 @property(readonly,copy) NSString * name;
 @property(readonly,copy) NSString * email;
 
++ (id) actorWithName:(NSString *)theName;
++ (id) actorWithName:(NSString *)theName email:(NSString *)theEmail;
+
 /*! Creates and returns an actor object with the provided name.
  * The created actor object will have an email address of <tt>nil</tt>.
  * \param theName The name of the actor to create.
@@ -40,6 +43,6 @@
  * \param theEmail The email address of the actor.
  * \return An actor object with the provided name and email.
  */
-- (id)initWithName:(NSString*)theName andEmail:(NSString*)theEmail;
+- (id)initWithName:(NSString*)theName email:(NSString*)theEmail;
 
 @end

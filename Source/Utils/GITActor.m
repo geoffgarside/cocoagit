@@ -23,11 +23,21 @@
 @synthesize name;
 @synthesize email;
 
++ (id) actorWithName:(NSString *)theName;
+{
+    return [[[self alloc] initWithName:theName] autorelease];
+}
+
++ (id) actorWithName:(NSString *)theName email:(NSString *)theEmail;
+{
+    return [[[self alloc] initWithName:theName email:theEmail] autorelease];
+}
+
 - (id)initWithName:(NSString*)theName
 {
-    return [self initWithName:theName andEmail:nil];
+    return [self initWithName:theName email:nil];
 }
-- (id)initWithName:(NSString*)theName andEmail:(NSString*)theEmail
+- (id)initWithName:(NSString*)theName email:(NSString*)theEmail
 {
     if (self = [super init])
     {
@@ -44,7 +54,7 @@
 }
 - (id)copyWithZone:(NSZone*)zone
 {
-    return [[GITActor allocWithZone:zone] initWithName:self.name andEmail:self.email];
+    return [[GITActor allocWithZone:zone] initWithName:self.name email:self.email];
 }
 - (NSString*)description
 {
