@@ -12,6 +12,10 @@
 #import "GITRepo.h"
 #import "GITUtilityBelt.h"
 
+NSString * const GITRefsDirectoryName = @"refs";
+NSString * const GITPackedRefsFileName = @"packed-refs";
+NSString * const GITHeadRefName = @"HEAD";
+
 @interface GITRefStore ()
 - (NSString *) sha1ByRecursivelyResolvingSymbolicRef:(GITRef *)symRef;
 - (void) resolveSymbolicRefs;
@@ -21,36 +25,53 @@
 - (void) fetchPackedRefs;
 @end
 
+// declare private GITRef method so we can use it to resolve symbolic refs
+@interface GITRef ()
+- (BOOL) resolveWithStore:(GITRefStore *)store error:(NSError **)error;
+@end
 
 @implementation GITRefStore
+@synthesize rootDir;
 @synthesize refsDir;
 @synthesize packFile;
+@synthesize headFile;
 
 - (id) initWithRepo:(GITRepo *)repo error:(NSError **)error;
 {
-    NSString *packedRefsFile = [[repo root] stringByAppendingPathComponent:@"packed-refs"];
-    return [self initWithPath:[repo refsPath] packFile:packedRefsFile error:error];
+    return [self initWithRoot:[repo root] error:error];
 }
 
-- (id) initWithPath:(NSString *)aPath packFile:(NSString *)packedRefsFile error:(NSError **)error;
+- (id) initWithRoot:(NSString *)rootPath error:(NSError **)error;
 {
     if ( ! [super init] )
         return nil;
     
+    if ( [[rootPath lastPathComponent] isEqual:GITRefsDirectoryName] )
+        rootPath = [rootPath stringByDeletingLastPathComponent];
+
+    NSString *refsPath = [rootPath stringByAppendingPathComponent:GITRefsDirectoryName];    
     BOOL isDir;
     NSFileManager * fm = [NSFileManager defaultManager];
-    if ( !([fm fileExistsAtPath:aPath isDirectory:&isDir] && isDir) ) {
+    if ( !([fm fileExistsAtPath:refsPath isDirectory:&isDir] && isDir) ) {
         NSString * errFmt = NSLocalizedString(@"Ref store not accessible %@ does not exist or is not a directory", @"GITErrorRefStoreNotAccessible (GITRefStore)");
-        NSString * errDesc = [NSString stringWithFormat:errFmt, aPath];
+        NSString * errDesc = [NSString stringWithFormat:errFmt, refsPath];
         GITError(error, GITErrorRefStoreNotAccessible, errDesc);
         [self release];
         return nil;
     }
-    [self setRefsDir:aPath];
+    [self setRootDir:rootPath];
+    [self setRefsDir:refsPath];
     
+    NSString *packedRefsFile = [rootPath stringByAppendingPathComponent:GITPackedRefsFileName];
     if ( [fm fileExistsAtPath:packedRefsFile] ) {
         [self setPackFile:packedRefsFile];
     }
+    
+    NSString *headRefFile = [rootPath stringByAppendingPathComponent:GITHeadRefName];
+    if ( [fm fileExistsAtPath:headRefFile] ) {
+        [self setHeadFile:headRefFile];
+    }
+    
     cachedRefs = [NSMutableDictionary new];
     symbolicRefs = [NSMutableArray new];
     
@@ -70,10 +91,7 @@
 - (NSArray *) refsWithPrefix:(NSString *)refPrefix
 {
     [self fetchRefs];
-    
-    if ( refPrefix == nil )
-        refPrefix = @"";
-    
+        
     if ( ![refPrefix hasPrefix:@"refs/"] )
         refPrefix = [NSString stringWithFormat:@"refs/%@", refPrefix];
     
@@ -90,7 +108,8 @@
 
 - (NSArray *) allRefs
 {
-    return [self refsWithPrefix:@""];
+    return [[[NSArray alloc] initWithArray:
+             [[self cachedRefs] allValues] copyItems:YES] autorelease];
 }
 
 - (NSArray *) branches
@@ -100,7 +119,7 @@
 
 - (NSArray *) heads
 {
-    return [self refsWithPrefix:@"refs/heads"];
+    return [[self refsWithPrefix:@"refs/heads"] arrayByAddingObject:[self head]];
 }
 
 - (NSArray *) tags
@@ -113,14 +132,9 @@
     return [self refsWithPrefix:@"refs/remotes"];
 }
 
-- (void) invalidateCachedRefs
+- (GITRef *) head
 {
-    [cachedRefs release];
-    cachedRefs = [NSMutableDictionary new];
-    fetchedLoose = NO;
-    fetchedPacked = NO;
-    [symbolicRefs release];
-    symbolicRefs = [NSMutableArray new];
+    return [self refWithName:GITHeadRefName];
 }
 
 - (GITRef *) refWithName:(NSString *)refName
@@ -198,6 +212,11 @@
                     [symbolicRefs addObject:theRef];
             }
         }
+    }
+    if ( ![cachedRefs objectForKey:GITHeadRefName] ) {
+        id headRef = [GITRef refWithContentsOfFile:[self headFile] name:GITHeadRefName];
+        [cachedRefs setObject:headRef forKey:GITHeadRefName];
+        [symbolicRefs addObject:headRef];
     }
     fetchedLoose = YES;
 }

@@ -82,6 +82,19 @@ static NSDictionary *fixtures;
     GHAssertNotEqualObjects([firstHead sha1], [firstHeadFromStore sha1], nil);
 }
 
+- (void) testHead
+{
+    GITRef *head = [store head];
+    NSString *headSha1 = [[self heads] valueForKey:@"HEAD"];
+    GHAssertEqualObjects([head sha1], headSha1, nil);
+}
+
+- (void) testShortRefName
+{
+    GHAssertEqualObjects([[store head] shortName], @"HEAD", nil);
+    GHAssertEqualObjects([[store refWithName:@"refs/heads/master"] shortName], @"master", nil);
+}
+
 - (void) testHeads
 {
     NSMutableDictionary *heads = [NSMutableDictionary dictionary];
