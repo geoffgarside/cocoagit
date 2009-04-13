@@ -52,7 +52,9 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
         return nil;
 
     self.path = thePath;
-    self.data = [NSData dataWithContentsOfMappedFile:thePath];
+    self.data = [NSData dataWithContentsOfFile:thePath
+                                       options:NSMappedRead
+                                         error:outError];
     if (! [self verifyChecksum]) {
         NSString * errDesc = NSLocalizedString(@"PACK Index file checksum failed", @"GITErrorPackIndexChecksumMismatch");
         GITErrorWithInfo(outError, GITErrorPackIndexChecksumMismatch, errDesc, NSLocalizedDescriptionKey, thePath, NSFilePathErrorKey, nil);

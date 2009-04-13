@@ -27,7 +27,9 @@ static const char const kGITPackIndexMagicNumber[] = { '\377', 't', 'O', 'c' };
 		return nil;
 	}
 			
-	NSData * data = [NSData dataWithContentsOfMappedFile:thePath];
+	NSData * data = [NSData dataWithContentsOfFile:thePath
+                                           options:NSMappedRead
+                                             error:outError];
 	if (!data) // Another type of error occurred
 		return nil;
 	

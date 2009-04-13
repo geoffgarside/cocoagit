@@ -88,7 +88,9 @@
 		return NO;
 	}
 
-	NSData * zlibData = [NSData dataWithContentsOfMappedFile:path];
+	NSData * zlibData = [NSData dataWithContentsOfFile:path
+                                               options:NSMappedRead
+                                                 error:error];    
 	NSData * raw = [zlibData zlibInflate];
 	
 	NSRange range = [raw rangeOfNullTerminatedBytesFrom:0];

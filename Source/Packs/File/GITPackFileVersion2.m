@@ -72,8 +72,9 @@ static const NSRange kGITPackFileObjectCountRange = { 8, 4 };
 
 - (id)initWithPath:(NSString*)thePath indexPath:(NSString *)idxPath error:(NSError **)error;
 {
-    NSData *packData = [NSData dataWithContentsOfMappedFile:thePath];
-    
+    NSData *packData = [NSData dataWithContentsOfFile:thePath
+                                              options:NSMappedRead
+                                                error:error];    
     if (! packData)
         return nil;
     

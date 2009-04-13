@@ -57,7 +57,9 @@ const NSRange kGITPackFileVersionRange   = {     4,      4 };
     NSUInteger ver;
     NSString * errorDescription;
     NSZone * z = [self zone]; [self release];
-    NSData * data = [NSData dataWithContentsOfMappedFile:thePath];
+    NSData * data = [NSData dataWithContentsOfFile:thePath
+                                           options:NSMappedRead
+                                             error:error];
     if (!data)
 		return nil;
     
