@@ -47,8 +47,8 @@
     NSArray *branches = [repo branches];
     GHAssertTrue([branches count] == 2, @"Repo should have two branches");
     NSArray *names = [branches valueForKey:@"name"];
-    GHAssertTrue([names containsObject:@"ruby"], @"There should be a 'ruby' branch");
-    GHAssertTrue([names containsObject:@"master"], @"There should be a 'master' branch");
+    GHAssertTrue([names containsObject:@"refs/heads/ruby"], @"There should be a 'ruby' branch");
+    GHAssertTrue([names containsObject:@"refs/heads/master"], @"There should be a 'master' branch");
 }
 
 - (void)testObjectNotFoundError
