@@ -4,6 +4,8 @@
 <dict>
 	<key>heads</key>
 	<dict>
+		<key>HEAD</key>
+		<string>b4783699e4fc54d98053f41404a0649ef17b4de2</string>
 		<key>refs/heads/facepalm</key>
 		<string>fdb9468ea860f43bf1808b3f1e950ac3b53bc3c4</string>
 		<key>refs/heads/geoffgarside/master</key>

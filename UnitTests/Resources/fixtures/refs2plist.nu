@@ -13,11 +13,15 @@
          (set sha1 (info 0))
          (set refName (info 1))
          
-         (set chunks (/\// splitString:refName))
-         (unless (> (chunks count) 2) (continue))
-         (unless ((chunks 0) isEqual:"refs") (continue))
-
-         (set group (chunks 1))
+         (if (refName isEqual:"HEAD")
+             (then
+                  (set group "heads"))
+             (else
+                  (set chunks (/\// splitString:refName))
+                  (unless (> (chunks count) 2) (continue))
+                  (unless ((chunks 0) isEqual:"refs") (continue))
+                  (set group (chunks 1))))
+         
          ; (set nameLength (- (chunks count) 2))
          ;  (set nameList (chunks subarrayWithRange:(list 2 nameLength)))
          ;  (set shortName (nameList componentsJoinedByString:"/"))
