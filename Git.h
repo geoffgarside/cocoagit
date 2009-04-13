@@ -20,6 +20,7 @@
 #import "GITTree.h"
 #import "GITTag.h"
 #pragma mark GIT Helper objects
+#import "GITRef.h"
 #import "GITTreeEntry.h"
 #import "GITDateTime.h"
 #import "GITActor.h"
