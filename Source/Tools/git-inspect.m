@@ -57,7 +57,9 @@ void printObject(GITObject * object)
         GITCommit * commit = (GITCommit*)object;
         pp(@"Commit (%lu)", commit.size);
         pp(@"Tree\t\t%@", commit.treeSha1);
-        pp(@"Parent\t\t%@", commit.parentSha1);
+        for (GITCommit *parent in [commit parents]) {
+            pp(@"Parent\t\t%@", parent.sha1);
+        }
         pp(@"Author\t\t%@\t%@", commit.author, commit.authored);
         pp(@"Committer\t%@\t%@", commit.committer, commit.committed);
         pp(@"Message\n%@", commit.message);
