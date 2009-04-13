@@ -157,6 +157,41 @@ NSString * const GITHeadRefName = @"HEAD";
     return [[[targetRef sha1] copy] autorelease];
 }
 
+- (void) invalidateCachedRefs
+{
+    [cachedRefs release];
+    cachedRefs = [NSMutableDictionary new];
+    fetchedLoose = NO;
+    fetchedPacked = NO;
+    [symbolicRefs release];
+    symbolicRefs = [NSMutableArray new];
+}
+
+#pragma mark Write/Update refs
+
+// only write/update loose refs
+- (BOOL) writeRef:(GITRef *)aRef error:(NSError **)error;
+{
+    NSParameterAssert(aRef != nil);
+    
+    NSString *contents;
+    if ( [aRef isLink] ) {
+        contents = [NSString stringWithFormat:@"ref: %@", [aRef linkName]];
+        if ( ![aRef resolveWithStore:self error:error] )
+            return NO;
+    } else {
+        contents = [aRef sha1];
+    }
+    
+    NSString *targetPath = [[self rootDir] stringByAppendingPathComponent:[aRef name]];
+    BOOL success = [contents writeToFile:targetPath atomically:YES encoding:NSUTF8StringEncoding error:error];
+    if ( !success )
+        return NO;
+    
+    [cachedRefs setObject:aRef forKey:[aRef name]];
+    return YES;
+}
+
 #pragma mark Internal Ref Parsing and Caching
 
 - (NSString *) sha1ByRecursivelyResolvingSymbolicRef:(GITRef *)symRef

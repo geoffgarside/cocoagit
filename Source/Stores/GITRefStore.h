@@ -45,5 +45,6 @@
 - (NSArray *) tags;
 - (NSArray *) remotes;
 
+- (BOOL) writeRef:(GITRef *)aRef error:(NSError **)error;
 - (void) invalidateCachedRefs;
 @end
