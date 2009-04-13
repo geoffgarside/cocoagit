@@ -91,6 +91,7 @@ NSString * const kGITObjectTagName = @"tag";
     NSString  * dataStr = [[NSString alloc] initWithData:raw
                                                 encoding:NSASCIIStringEncoding];
     NSScanner * scanner = [NSScanner scannerWithString:dataStr];
+    [dataStr release];
     
     static NSString * NewLine = @"\n";
     NSString * taggedCommit,
@@ -138,9 +139,9 @@ NSString * const kGITObjectTagName = @"tag";
         [scanner scanDouble:&taggerTimestamp] &&
         [scanner scanUpToString:NewLine intoString:&taggerTimezone])
     {
-        self.tagger = [[GITActor alloc] initWithName:taggerName andEmail:taggerEmail];
-        self.tagged = [[GITDateTime alloc] initWithTimestamp:taggerTimestamp
-                                              timeZoneOffset:taggerTimezone];
+        self.tagger = [GITActor actorWithName:taggerName email:taggerEmail];
+        self.tagged = [[[GITDateTime alloc] initWithTimestamp:taggerTimestamp
+                                               timeZoneOffset:taggerTimezone] autorelease];
     }
     else
     {

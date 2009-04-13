@@ -83,11 +83,13 @@ NSString * const kGITObjectTreeName = @"tree";
         }
 
         [treeEntries addObject:entry];
+        [entry release];
         entryStart = entryRange.location + entryRange.length;
     } while(entryStart < [dataStr length]);
-
+    
     self.entries = treeEntries;
-
+    [dataStr release];
+    
     return YES;
 }
 

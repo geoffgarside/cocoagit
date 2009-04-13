@@ -126,6 +126,7 @@ NSString * const kGITObjectCommitName = @"commit";
     NSString  * dataStr = [[NSString alloc] initWithData:raw
                                                 encoding:NSASCIIStringEncoding];
     NSScanner * scanner = [NSScanner scannerWithString:dataStr];
+    [dataStr release];
     
     static NSString * NewLine = @"\n";
     NSString * commitTree,
@@ -180,9 +181,9 @@ NSString * const kGITObjectCommitName = @"commit";
         [scanner scanDouble:&authorTimestamp] &&
         [scanner scanUpToString:NewLine intoString:&authorTimezone])
     {
-        self.author = [[GITActor alloc] initWithName:authorName andEmail:authorEmail];
-        self.authored = [[GITDateTime alloc] initWithTimestamp:authorTimestamp
-                                                timeZoneOffset:authorTimezone];
+        self.author = [GITActor actorWithName:authorName email:authorEmail];
+        self.authored = [[[GITDateTime alloc] initWithTimestamp:authorTimestamp
+                                                 timeZoneOffset:authorTimezone] autorelease];
     }
     else
     {
@@ -199,9 +200,9 @@ NSString * const kGITObjectCommitName = @"commit";
         [scanner scanDouble:&committerTimestamp] &&
         [scanner scanUpToString:NewLine intoString:&committerTimezone])
     {
-        self.committer = [[GITActor alloc] initWithName:committerName andEmail:committerEmail];
-        self.committed = [[GITDateTime alloc] initWithTimestamp:committerTimestamp
-                                                 timeZoneOffset:committerTimezone];
+        self.committer = [GITActor actorWithName:committerName email:committerEmail];
+        self.committed = [[[GITDateTime alloc] initWithTimestamp:committerTimestamp
+                                                  timeZoneOffset:committerTimezone] autorelease];
     }
     else
     {
