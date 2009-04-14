@@ -7,6 +7,7 @@
 //
 
 #import "GITPackIndexVersion1.h"
+#import "GITPackReverseIndex.h"
 #import "GITUtilityBelt.h"
 #import "NSData+Hashing.h"
 #import "GITErrors.h"
@@ -16,11 +17,17 @@ static const NSUInteger kGITPackIndexFanOutCount = 256;
 static const NSUInteger kGITPackIndexFanOutEnd   = 4 * 256;    //!< Update when either of the two above change
 static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
 
+typedef struct packIndexEntry {
+    uint32_t offset;
+    uint8_t sha1[20];
+} packIndexEntry;
+
 /*! \cond */
 @interface GITPackIndexVersion1 ()
 - (NSArray*)loadOffsetsWithError:(NSError**)error;
 - (NSRange)rangeOfPackChecksum;
 - (NSRange)rangeOfChecksum;
+- (packIndexEntry *) packEntryWithIndex:(NSUInteger)i;
 @end
 /*! \endcond */
 
@@ -44,13 +51,24 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
     }
     return self;
 }
+
 - (void)dealloc
 {
     self.path = nil;
     self.data = nil;
     [offsets release], offsets = nil;
+    [revIndex release], revIndex = nil;
     [super dealloc];
 }
+
+- (GITPackReverseIndex *)revIndex;
+{
+    if (! revIndex) {
+        revIndex = [[GITPackReverseIndex alloc] initWithPackIndex:self];
+    }
+    return revIndex;
+}
+
 - (id)copyWithZone:(NSZone *)zone
 {
     if (NSShouldRetainWithZone(self, zone))
@@ -91,13 +109,13 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
         [_offsets addObject:[NSNumber numberWithUnsignedInteger:thisCount]];
         lastCount = thisCount;
     }
-    return [[_offsets copy] autorelease];
+    return _offsets;
 }
-- (NSUInteger)packOffsetForSha1:(NSString*)sha1
+- (off_t) packOffsetForSha1:(NSString*)sha1
 {
     return [self packOffsetForSha1:sha1 error:NULL];
 }
-- (NSUInteger)packOffsetForSha1:(NSString*)sha1 error:(NSError**)error
+- (off_t) packOffsetForSha1:(NSString*)sha1 error:(NSError**)error
 {
     uint8_t byte;
     NSData * packedSha1 = packSHA1(sha1);
@@ -111,15 +129,13 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
         NSUInteger finish   = location +
         (kGITPackIndexEntrySize * rangeOfShas.length);
 
+        packIndexEntry entry;
         for (location; location < finish; location += kGITPackIndexEntrySize)
         {
-            uint32_t value = 0;
-            [self.data getBytes:&value range:NSMakeRange(location, 4)];
-            NSUInteger offset = CFSwapInt32BigToHost(value);
-
-            NSData * foundSha1 = [self.data subdataWithRange:NSMakeRange(location + 4, 20)];
-
-            if ([foundSha1 isEqualToData:packedSha1])
+            [self.data getBytes:&entry range:NSMakeRange(location, kGITPackIndexEntrySize)];
+            NSData *entrySha1 = [NSData dataWithBytes:entry.sha1 length:20];            
+            off_t offset = CFSwapInt32BigToHost(entry.offset);
+            if ( [entrySha1 isEqual:packedSha1] )
                 return offset;
         }
     }
@@ -132,6 +148,57 @@ static const NSUInteger kGITPackIndexEntrySize   = 24;         //!< bytes
     GITError(error, GITErrorObjectNotFound, errorDesc);
     return NSNotFound;
 }
+
+- (off_t)baseOffsetWithOffset:(off_t)offset;
+{
+    return (off_t)[[self revIndex] baseOffsetWithOffset:offset];
+}
+
+- (off_t)nextOffsetWithOffset:(off_t)offset;
+{
+    return (off_t)[[self revIndex] nextOffsetWithOffset:offset];
+}
+
+- (NSData *)packedSha1WithIndex:(NSUInteger)i;
+{
+    packIndexEntry *entry = [self packEntryWithIndex:i];
+    if ( entry->offset == NSNotFound )
+        return nil;
+    NSData *packedSha1 = [NSData dataWithBytes:(const uint8_t *)entry->sha1 length:20];
+    return packedSha1;
+}
+
+- (NSString *)sha1WithOffset:(off_t)offset;
+{
+    NSUInteger index = [[self revIndex] indexWithOffset:offset];
+    return unpackSHA1FromData([self packedSha1WithIndex:index]);
+}
+
+- (off_t) packOffsetWithIndex:(NSUInteger)i;
+{
+    packIndexEntry *entry = [self packEntryWithIndex:i];
+    if ( entry->offset == NSNotFound )
+        return NSNotFound;
+    off_t offset = CFSwapInt32BigToHost(entry->offset);
+    return offset;
+}
+
+- (packIndexEntry *) packEntryWithIndex:(NSUInteger)i;
+{
+    NSRange offsetsRange = NSMakeRange(kGITPackIndexFanOutEnd,
+                                       [self rangeOfPackChecksum].location - kGITPackIndexFanOutEnd);    
+    NSUInteger positionFromStart = i * kGITPackIndexEntrySize;
+    
+    packIndexEntry entry, *e = &entry;
+    if (positionFromStart < offsetsRange.length) {
+        [self.data getBytes:e
+         range:NSMakeRange(offsetsRange.location + positionFromStart, kGITPackIndexEntrySize)];
+        return e;
+    }
+    entry.offset = NSNotFound;
+    return e;
+}
+
 - (NSData*)packChecksum
 {
     return [self.data subdataWithRange:[self rangeOfPackChecksum]];
