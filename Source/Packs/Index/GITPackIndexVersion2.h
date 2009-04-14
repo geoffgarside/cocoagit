@@ -7,7 +7,6 @@
 //
 
 #import "GITPackIndex.h"
-#import "GITPackReverseIndex.h"
 
 #define EXTENDED_OFFSET_FLAG (1 << 31)
 

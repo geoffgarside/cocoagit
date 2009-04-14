@@ -7,6 +7,7 @@
 //
 
 #import "GITPackIndexVersion2.h"
+#import "GITPackReverseIndex.h"
 #import "GITUtilityBelt.h"
 #import "NSData+Hashing.h"
 #import "GITErrors.h"
