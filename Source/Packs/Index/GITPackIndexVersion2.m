@@ -186,6 +186,33 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 //  - the fanout table tells you where in the main entry table you can find SHA's with a specific first byte
 //  - the main sha1 list table gives you a sorted list of SHA1's in the Index and Pack file. The array index
 //    of the SHA1 in this table equates to the array index of the pack offset in the offsets table.
+
+- (NSUInteger) indexOfSha1:(NSString *)sha1
+{
+    const uint8_t *packedSha1 = [(NSData *)packSHA1(sha1) bytes];
+    const uint8_t *sha1Data = [[self data] bytes]; 
+    
+    NSRange rangeOfShas = [self rangeOfObjectsWithFirstByte:packedSha1[0]];
+    if (rangeOfShas.length > 0) {
+        NSUInteger lo = rangeOfShas.location;
+        NSUInteger hi = lo + rangeOfShas.length;
+        NSUInteger location = [self rangeOfSHATable].location;
+        do {
+            NSUInteger mid = (lo + hi) >> 1; // divide by 2 ;)
+            NSUInteger position = (mid * kGITPackIndexSHASize) + location;
+            int cmp = memcmp(packedSha1, sha1Data + position, kGITPackIndexSHASize);
+            if ( cmp < 0 ) {
+                hi = mid;
+            } else if ( cmp == 0 ) {
+                return mid;
+            } else {
+                lo = mid + 1;
+            }
+        } while (lo < hi);
+    }
+    return NSNotFound;
+}
+
 - (off_t)packOffsetForSha1:(NSString*)sha1
 {
     return [self packOffsetForSha1:sha1 error:NULL];
@@ -193,26 +220,9 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 
 - (off_t)packOffsetForSha1:(NSString*)sha1 error:(NSError**)error;
 {
-    uint8_t byte;
-    NSData * packedSha1 = packSHA1(sha1);
-    [packedSha1 getBytes:&byte length:1];
-    
-    NSRange rangeOfShas = [self rangeOfObjectsWithFirstByte:byte];
-    if (rangeOfShas.length > 0)
-    {
-        NSUInteger i;
-        NSUInteger location = [self rangeOfSHATable].location + (kGITPackIndexSHASize * rangeOfShas.location);
-        NSUInteger finish   = location + (kGITPackIndexSHASize * rangeOfShas.length);
-        
-        for (i = 0; location < finish; i++, location += kGITPackIndexSHASize)
-        {
-            NSData *foundSha1 = [self.data subdataWithRange:NSMakeRange(location, 20)];
-            if ([foundSha1 isEqualToData:packedSha1]) {
-                return [self packOffsetWithIndex:(i + rangeOfShas.location)];
-            }            
-        }
-    }
-    
+    NSUInteger i = [self indexOfSha1:sha1];
+    if ( i != NSNotFound )
+        return [self packOffsetWithIndex:i];
     // If its found the SHA1 then it will have returned by now.
     // Otherwise the SHA1 is not in this PACK file, so we should
     // raise an error.
@@ -308,25 +318,26 @@ static const NSUInteger kGITPackIndexExtendedOffsetSize = 8;
 {
     NSRange offsetsRange = [self rangeOfOffsetTable];
     NSUInteger positionFromStart = i * kGITPackIndexOffsetSize;
-
-    if (positionFromStart < offsetsRange.length)
-    {
-        uint32_t value;
-        [self.data getBytes:&value range:NSMakeRange(offsetsRange.location + positionFromStart, kGITPackIndexOffsetSize)];
-
-        value = CFSwapInt32BigToHost(value);
-        if ((value & EXTENDED_OFFSET_FLAG) == 0) {
-            return (off_t)value;
-        } else {
-            uint32_t off64 = (value & ~EXTENDED_OFFSET_FLAG) * kGITPackIndexExtendedOffsetSize;
-
-            uint64_t v64;
-            NSRange extendedOffsetRange = [self rangeOfExtendedOffsetTable];
-            [self.data getBytes:&v64 range:NSMakeRange(extendedOffsetRange.location+off64, kGITPackIndexExtendedOffsetSize)];
-            return (off_t)CFSwapInt64BigToHost(v64);
-        }
+    
+    if (positionFromStart >= offsetsRange.length) {
+        // Raise index out of bounds exception
+        [NSException raise:NSRangeException
+                    format:@"pack entry index %u (offset:%lu) out of bounds (%@)",
+         i, positionFromStart, NSStringFromRange(offsetsRange)];
     }
-    return 0;
+
+    uint32_t value;
+    [self.data getBytes:&value range:NSMakeRange(offsetsRange.location + positionFromStart, kGITPackIndexOffsetSize)];
+
+    value = CFSwapInt32BigToHost(value);
+    if ((value & EXTENDED_OFFSET_FLAG) == 0)
+        return (off_t)value;
+
+    uint32_t off64 = (value & ~EXTENDED_OFFSET_FLAG) * kGITPackIndexExtendedOffsetSize;
+    uint64_t v64;
+    NSRange extendedOffsetRange = [self rangeOfExtendedOffsetTable];
+    [self.data getBytes:&v64 range:NSMakeRange(extendedOffsetRange.location+off64, kGITPackIndexExtendedOffsetSize)];
+    return (off_t)CFSwapInt64BigToHost(v64);
 }
 
 @end
