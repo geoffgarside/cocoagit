@@ -150,10 +150,7 @@
 
 - (NSUInteger) hash
 {
-    unsigned hash;
-    // Based, of course, only the first 32 bits of sha1, which is probably just fine.
-    [[NSScanner scannerWithString:self.sha1] scanHexInt:&hash];
-    return (NSUInteger)hash;
+    return [[self sha1] hash];
 }
 
 #pragma mark -
