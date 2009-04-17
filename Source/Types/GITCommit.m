@@ -22,7 +22,7 @@ NSString * const kGITObjectCommitName = @"commit";
 @interface GITCommit ()
 @property(readwrite,copy) NSString * treeSha1;
 @property(readwrite,copy) GITTree * tree;
-@property(readwrite,copy) NSSet * parents;
+@property(readwrite,copy) NSArray * parents;
 @property(readwrite,copy) GITActor * author;
 @property(readwrite,copy) GITActor * committer;
 @property(readwrite,copy) GITDateTime * authored;
@@ -99,13 +99,13 @@ NSString * const kGITObjectCommitName = @"commit";
 
 - (GITCommit*)parent
 {
-    return [self.parents anyObject];
+    return [self.parents lastObject];
 }
 
-- (NSSet *)parents
+- (NSArray *)parents
 {
     if (!parents && self.parentShas) {
-        NSMutableSet *newParents = [[NSMutableSet alloc] initWithCapacity:[self.parentShas count]];
+        NSMutableArray *newParents = [[NSMutableArray alloc] initWithCapacity:[self.parentShas count]];
         for (NSString *parentSha1 in self.parentShas) {
             GITCommit *parent = [self.repo commitWithSha1:parentSha1 error:NULL];
             [newParents addObject:parent];
