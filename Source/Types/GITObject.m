@@ -119,15 +119,18 @@
         return nil;
     }
     
-    // Should only need to override -parseRawData:error: in subclasses
-    if (! [self parseRawData:theData error:error])
-        return nil;
-
     self.sha1 = theSha1;
     // Remove when type is changed to a GITObjectType instead of a string
     self.type = [[self class] stringForObjectType:theType];
-    self.size = [theData length];
     self.repo = theRepo;
+    
+    // Should only need to override -parseRawData:error: in subclasses
+    if (! [self parseRawData:theData error:error]) {
+        [self release];
+        return nil;
+    }
+    
+    self.size = [theData length];
 
     return self;
 }
