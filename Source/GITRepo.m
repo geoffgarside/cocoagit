@@ -61,6 +61,7 @@
     [root release], root = nil;
     [desc release], desc = nil;
     [store release], store = nil;
+    [refStore release], refStore = nil;
     [super dealloc];
 }
 
