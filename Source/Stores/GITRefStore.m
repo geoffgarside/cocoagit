@@ -206,10 +206,11 @@ NSString * const GITHeadRefName = @"HEAD";
 {
     while ([symbolicRefs count] > 0) {
         GITRef *symRef = [[symbolicRefs lastObject] retain];
+        [symbolicRefs removeLastObject];
         NSString *sha1 = [self sha1ByRecursivelyResolvingSymbolicRef:symRef];
         NSAssert(isSha1StringValid(sha1), @"linked ref has invalid sha1");
         [symRef setSha1:sha1];
-        [symbolicRefs removeLastObject];
+        [symRef release];
     }
 }
 
