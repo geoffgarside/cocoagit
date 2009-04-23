@@ -7,14 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "GITPackIndex.h"
 
+@class GITPackIndex;
 @interface GITPackReverseIndex : NSObject {
     GITPackIndex *index;
-    NSArray *offsets;
-    NSArray *offsets64;
-    NSArray *indexMap;
-    NSArray *indexMap64;
+    CFMutableArrayRef offsets;
+    NSUInteger size;
 }
 @property (nonatomic, readonly, assign) GITPackIndex *index;
 
