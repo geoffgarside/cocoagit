@@ -57,6 +57,7 @@ NSString * const kGITObjectCommitName = @"commit";
 {
     self.tree = nil;
     self.parents = nil;
+    self.parentShas = nil;
     self.author = nil;
     self.committer = nil;
     self.authored = nil;
