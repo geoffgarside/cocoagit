@@ -32,9 +32,17 @@
 {
     GHAssertEquals([packedSHA1String length], (NSUInteger)20, nil);
 }
+
 - (void)testShouldPackSHA1FromString
 {
     NSData * packed = packSHA1(unpackedSHA1);
+    GHAssertEquals([packed length], (NSUInteger)20, nil);
+    GHAssertEqualObjects(packed, packedSHA1Data, nil);
+}
+
+- (void)testPackSHA1FromBytes
+{
+    NSData * packed = packSHA1FromBytes("bed4001738fa8dad666d669867afaf9f2c2b8c6a");
     GHAssertEquals([packed length], (NSUInteger)20, nil);
     GHAssertEqualObjects(packed, packedSHA1Data, nil);
 }
