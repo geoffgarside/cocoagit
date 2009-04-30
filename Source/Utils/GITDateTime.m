@@ -37,6 +37,17 @@
     return [self initWithDate:[NSDate dateWithTimeIntervalSince1970:seconds]
                      timeZone:[NSTimeZone timeZoneWithStringOffset:offset]];
 }
+
+- (id) initWithBSDTime:(unsigned long)timeInSec timeZoneOffset:(NSInteger)tz
+{   
+    NSDate *aDate = [NSDate dateWithTimeIntervalSince1970:(NSTimeInterval)timeInSec];
+    NSInteger min = abs(tz);
+    min = ((min/100)*60) + (min % 100);
+    min = (tz < 0) ? -min : min;
+    NSTimeZone *aTimeZone = [NSTimeZone timeZoneForSecondsFromGMT:(min*60)];
+    return [self initWithDate:aDate timeZone:aTimeZone];
+}
+
 - (void)dealloc
 {
     self.date = nil;
