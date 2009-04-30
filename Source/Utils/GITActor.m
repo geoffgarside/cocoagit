@@ -33,19 +33,38 @@
     return [[[self alloc] initWithName:theName email:theEmail] autorelease];
 }
 
++ (id) actorWithString:(NSString *)raw
+{
+    return [[[self alloc] initWithString:raw] autorelease];
+}
+
 - (id)initWithName:(NSString*)theName
 {
     return [self initWithName:theName email:nil];
 }
+
 - (id)initWithName:(NSString*)theName email:(NSString*)theEmail
 {
     if (self = [super init])
     {
-        self.name = [theName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        self.email = [theEmail stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        self.name = theName;
+        self.email = theEmail;
     }
     return self;
 }
+
+// This method parses a substring from the author/committer line of a commit object.
+// Example:
+// "E. L. Gato <elgato@catz.com"
+// The name/email are delimited by " <"
+- (id) initWithString:(NSString *)raw
+{    
+    NSRange delimRange = [raw rangeOfString:@" <"];
+    NSString *nameChunk = [raw substringToIndex:delimRange.location];
+    NSString *emailChunk = [raw substringFromIndex:delimRange.location + delimRange.length];
+    return [self initWithName:nameChunk email:emailChunk];
+}
+
 - (void)dealloc
 {
     self.name = nil;
