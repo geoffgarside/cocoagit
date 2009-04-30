@@ -12,8 +12,18 @@
 #import "GITActor.h"
 #import "GITDateTime.h"
 #import "GITErrors.h"
+#import "GITObject+Parsing.h"
 
 NSString * const kGITObjectCommitName = @"commit";
+
+static struct objectRecord recTree =  { "tree ", 5, 5, 40, '\n' };
+static struct objectRecord recParent = { "parent ", 7, 7, 40, '\n' };
+static struct objectRecord recRawDate = { "committer ", 10, -17, 10, '\n' };
+static struct objectRecord recAuthor = { "author ", 7, 7, 0, '\n' };
+static struct objectRecord recAuthorInfo = { "author ", 7, 7, 0, '>' };
+static struct objectRecord recCommitterInfo = { "committer ", 10, 10, 0, '>' };
+static struct objectRecord recDate = { " ", 1, 1, 10, ' ' };
+static struct objectRecord recTz = { "", 0, 0, 5, '\n' };
 
 /*! \cond
  Make properties readwrite so we can use
@@ -28,6 +38,8 @@ NSString * const kGITObjectCommitName = @"commit";
 @property(readwrite,copy) GITDateTime * authored;
 @property(readwrite,copy) GITDateTime * committed;
 @property(readwrite,copy) NSString * message;
+@property(readwrite,retain) NSData *cachedRawData;
+- (void) parseCachedRawData;
 @end
 /*! \endcond */
 
@@ -40,7 +52,9 @@ NSString * const kGITObjectCommitName = @"commit";
 @synthesize committer;
 @synthesize authored;
 @synthesize committed;
+@synthesize sortDate;
 @synthesize message;
+@synthesize cachedRawData;
 
 + (NSString*)typeName
 {
@@ -56,13 +70,14 @@ NSString * const kGITObjectCommitName = @"commit";
 - (void)dealloc
 {
     self.tree = nil;
+    self.treeSha1 = nil;
     self.parents = nil;
     self.parentShas = nil;
     self.author = nil;
     self.committer = nil;
     self.authored = nil;
     self.committed = nil;
-    
+    self.cachedRawData = nil;
     [super dealloc];
 }
 
@@ -70,11 +85,14 @@ NSString * const kGITObjectCommitName = @"commit";
 {
     GITCommit * commit  = (GITCommit*)[super copyWithZone:zone];
     commit.tree         = self.tree;
+    commit.treeSha1     = self.treeSha1;
     commit.parents      = self.parents;
+    commit.parentShas   = self.parentShas;
     commit.author       = self.author;
     commit.committer    = self.committer;
     commit.authored     = self.authored;
     commit.committed    = self.committed;
+    commit.cachedRawData = self.cachedRawData;
     
     return commit;
 }
@@ -117,354 +135,149 @@ NSString * const kGITObjectCommitName = @"commit";
     return parents;
 }
 
+#pragma mark Lazy Loaders
+
+- (GITActor *) author
+{
+    if ( !author ) {
+        [self parseCachedRawData];
+    }
+    return author;
+}
+
+- (GITDateTime *) authored
+{
+    if ( !authored ) {
+        [self parseCachedRawData];
+    }
+    return authored;
+}
+
+- (GITActor *) committer
+{
+    if ( !committer ) {
+        [self parseCachedRawData];
+    }
+    return committer;
+}
+
+- (GITDateTime *) committed
+{
+    if ( !committed ) {
+        [self parseCachedRawData];
+    }
+    return committed;
+}
+
+- (NSString *) message
+{
+    if ( !message ) {
+        [self parseCachedRawData];
+    }
+    return message;
+}
+
 #pragma mark -
 #pragma mark Data Parser
 
-typedef struct parseInfo {
-    char *startPattern;
-    NSUInteger startLen;
-    NSInteger matchLen;
-    char endChar;
-    
-} parseInfo;
-
-static parseInfo p_tree =  { "tree ", 5, 40, '\n' };
-static parseInfo p_parent = { "parent ", 7, 40, '\n' };
-static parseInfo p_cName = { "committer ", 10, 0, '<' };
-static parseInfo p_aName = { "author ", 7, 0, '<' };
-static parseInfo p_email = { "", 0, 0, '>' };
-static parseInfo p_dateString = { " ", 1, 0, '\n' };
-//static parseInfo p_date = { " ", 1, 0, ' ' };
-//static parseInfo p_tz = { " ", 1, 0, '\n' };
-
-//NSString *parseTree(const char **buffer)
-//{
-//    const char *buf = *buffer;
-//    // "tree <40-cahr sha1>\n"
-//    if ( memcmp(buf, p_tree.startPattern, p_tree.startLen) ||
-//        buf[p_tree.startLen + p_tree.matchLen] != p_tree.endChar ) {
-//        return nil;
-//    }
-//    NSString *commitTree = [[NSString alloc] initWithBytes:(buf+p_tree.startLen)
-//                                                    length:p_tree.matchLen
-//                                                  encoding:NSASCIIStringEncoding];
-//    if ( !commitTree )
-//        return nil;
-//    *buffer += p_tree.startLen + p_tree.matchLen + 1;
-//    return [commitTree autorelease];
-//}
-
-NSString *parseBuffer(const char **buffer, parseInfo *delim)
-{
-    const char *buf = *buffer;
-    if ( delim->startLen > 0 && memcmp(buf, delim->startPattern, delim->startLen) ) {
-        //NSLog(@"start pattern does not match: %s\nbuf:%s", delim->startPattern, buf);
-        return nil;
-    }
-    
-    NSUInteger matchLen;
-    if ( delim->matchLen > 0 ) {
-        matchLen = delim->matchLen;
-    } else {
-        //char *end = memchr(buf+delim->startLen, delim->endChar, strlen(buf));
-        char *end = (char *)buf+delim->startLen;
-        while ( *end++ != delim->endChar )
-            ;
-        end--;
-//        if ( end == NULL ) {
-//            NSLog(@"could not determine matchLen");
-//            return nil;
-//        }
-        matchLen = end - (buf+delim->startLen);
-    }
-    
-    if ( buf[delim->startLen+matchLen] != delim->endChar ) {
-        NSLog(@"end delimiter (%c) does not match end char:%c\n matchLen = %d", delim->endChar, buf[delim->startLen+matchLen], matchLen);
-        return nil;
-    }
-    NSString *s = [[NSString alloc] initWithBytes:buf+delim->startLen
-                                           length:matchLen
-                                         encoding:NSASCIIStringEncoding];
-    if ( !s )
-        return nil;
-    *buffer += delim->startLen + matchLen + 1;    
-    return [s autorelease];
-}
-
-
-- (BOOL)parseRawDataWithC:(NSData*)raw error:(NSError**)error
-{
-    NSMutableArray *commitParents = [NSMutableArray new];
-    
-    const char *rawString = [raw bytes];
-    
-    NSString *commitTree = parseBuffer(&rawString, &p_tree);
-    if ( !commitTree )
-        return NO;
-    [self setTreeSha1:commitTree];
-    
-    // parents
-    NSString *commitParent;
-    while ( commitParent = parseBuffer(&rawString, &p_parent) ) {
-        [commitParents addObject:commitParent];
-    }
-    
-    NSString *authorName = parseBuffer(&rawString, &p_aName);
-    NSString *authorEmail = parseBuffer(&rawString, &p_email);
-    NSString *authorDateString = parseBuffer(&rawString, &p_dateString);
-    [self setAuthor:[GITActor actorWithName:authorName email:authorEmail]];
-    //NSLog(@"name: %@, email: %@, date: %@", authorName, authorEmail, authorDateString);
-    
-    NSString *committerName = parseBuffer(&rawString, &p_cName);
-    NSString *committerEmail = parseBuffer(&rawString, &p_email);
-    NSString *committerDateString = parseBuffer(&rawString, &p_dateString);
-    [self setCommitter:[GITActor actorWithName:committerName email:committerEmail]];
-    
-    [self setParentShas:commitParents];
-    [commitParents release];
-    
-    return YES;
-}
-
-typedef struct CFParseInfo {
-    CFStringRef startPattern;
-    CFIndex startLen;
-    CFIndex matchLen;
-    UniChar endChar;
-    
-} CFParseInfo;
-
-static CFParseInfo cf_tree =  { CFSTR("tree "), 5, 40, '\n' };
-static CFParseInfo cf_parent = { CFSTR("parent "), 7, 40, '\n' };
-//static CFParseInfo cf_cName = { CFSTR("committer "), 10, 0, '<' };
-//static CFParseInfo cf_aName = { CFSTR("author "), 7, 0, '<' };
-//static CFParseInfo cf_email = { CFSTR(""), 0, 0, '>' };
-//static CFParseInfo cf_dateString = { CFSTR(" "), 1, 0, '\n' };
-
-CFRange parseString(CFStringRef *sPtr, CFRange r, CFParseInfo delim, CFRange *rest)
-{
-    CFStringRef s = *sPtr;
-    if ( CFStringCompareWithOptions(s, delim.startPattern, CFRangeMake(r.location, delim.startLen), 0) != 0 ) {
-        //NSLog(@"r.location = %u, bad line for prefix %@\n", r.location, delim.startPattern);
-        return CFRangeMake(-1, 0);
-    }
-    
-    NSUInteger matchLen;
-    if ( delim.matchLen > 0 ) {
-        matchLen = delim.matchLen;
-    } else {
-        CFRange searchRange = CFRangeMake(r.location + delim.startLen, r.length - delim.startLen);
-        CFStringInlineBuffer buf;
-        CFStringInitInlineBuffer(s, &buf, searchRange);
-        CFIndex i = 0;
-        while ( CFStringGetCharacterFromInlineBuffer(&buf, i++) != (UniChar)delim.endChar )
-            ;
-        matchLen = (i - 1) - (r.location + delim.startLen);
-    }
-    
-    CFIndex end = r.location + delim.startLen + matchLen;
-    //printf("r.location = %u, end = %u\n", r.location, end);
-    if ( CFStringGetCharacterAtIndex(s, end) != delim.endChar ) {
-        //NSLog(@"delim = %@ - end delimiter (%d) does not match end char:%d\n matchLen = %d", delim.startPattern, delim.endChar, CFStringGetCharacterAtIndex(s, end), matchLen);
-        return CFRangeMake(-1, 0);
-    }
-    
-    *rest = CFRangeMake(end + 1, r.length - end + 1);
-    return CFRangeMake(r.location + delim.startLen, matchLen);
-}
-
 - (BOOL)parseRawData:(NSData*)raw error:(NSError**)error
 {
+    const char *rawString = [raw bytes];
+    const char *start = rawString;
+    NSString *errorDescription;
     NSMutableArray *commitParents = [NSMutableArray new];
     
-    CFStringRef rawString = CFStringCreateWithBytesNoCopy(kCFAllocatorDefault, [raw bytes], [raw length], kCFStringEncodingASCII, false, kCFAllocatorNull);
-    CFIndex length = CFStringGetLength(rawString);
-    CFRange rawRange = CFRangeMake(0, length);
-    
-    CFRange treeRange = parseString(&rawString, rawRange, cf_tree, &rawRange);
-    //printf("** rawRange = %u, %u", rawRange.location, rawRange.length);
-    CFStringRef commitTree = CFStringCreateWithSubstring(NULL, rawString, treeRange);
-    //NSLog(@"tree = %@", commitTree);
-    [self setTreeSha1:(NSString *)commitTree];
-    CFRelease(commitTree);
-    
-    CFRange parentRange;
-    while ( (parentRange = parseString(&rawString, rawRange, cf_parent, &rawRange)).location != -1 ) {
-        CFStringRef p = CFStringCreateWithSubstring(NULL, rawString, parentRange);
-        //NSLog(@"parent = %@",p);
-        [commitParents addObject:(NSString *)p];
-        CFRelease(p);
-    }
-    [self setParentShas:commitParents];
-    [commitParents release];
-    CFRelease(rawString);
-    
-    return YES;
-}
-    
-
-- (BOOL)BCparseRawData:(NSData*)raw error:(NSError**)error
-{
-    // TODO: Update this method to support errors
-    NSString * errorDescription;
-    
-    NSString  *dataStr = [[NSString alloc] initWithBytesNoCopy:(char *)[raw bytes]
-                                                        length:strlen([raw bytes])
-                                                      encoding:[NSString defaultCStringEncoding]
-                                                  freeWhenDone:NO];
-    NSMutableArray *commitParents = [NSMutableArray new];
-
-//    const char *rawString = [raw bytes];
-//    
-//    // "tree <40-cahr sha1>\n", len = 5 + 40 + 1, pos[45] = '\n'
-//    rawString += 5; // "tree "
-//    NSString *commitTree = [[NSString alloc] initWithBytes:rawString
-//                                                    length:40
-//                                                  encoding:NSASCIIStringEncoding];
-//    [self setTreeSha1:commitTree];
-//    [commitTree release];
-//    
-//
-//    rawString += 41;
-//    //printf("%s",rawString);
-//    while (!memcmp(rawString, "parent ", 7)) {
-//        rawString += 7;
-//        NSString *commitParent = [[NSString alloc] initWithBytes:rawString
-//                                                          length:40
-//                                                        encoding:NSASCIIStringEncoding];
-//        if ( commitParent ) {
-//            //NSLog(@"bad parent: %@, (%d)", commitParent, [commitParent length]);
-//            [commitParents addObject:commitParent];
-//        }
-//        rawString += 41;
-//        [commitParent release];
-//    }
-
-    NSRange treeRange = NSMakeRange(5, 40);
-    NSRange parentsRange;
-    parentsRange = NSMakeRange(46, 47);
-    
-    //NSLog(@"parentsRange string = %@", [dataStr substringWithRange:parentsRange]);
-    
-    NSString *p;
-    while ( [(p = [dataStr substringWithRange:parentsRange]) hasPrefix:@"parent "] ) {
-        NSString *commitParent = [p substringFromIndex:7];
-        [commitParents addObject:commitParent];
-        parentsRange = NSMakeRange(parentsRange.location+parentsRange.length+1, parentsRange.length);
-    }
-    
-
-    [self setParentShas:commitParents];
-    //NSLog(@"parsed raw data for tree: %@", self.treeSha1);
-
-    [commitParents release];
-    [dataStr release];
-    return YES;
-}    
-
-
-- (BOOL)parseRawDataWithScanner:(NSData*)raw error:(NSError**)error
-{
-    // TODO: Update this method to support errors
-    NSString * errorDescription;
-
-    NSString  *dataStr = [[NSString alloc] initWithData:raw
-                                               encoding:NSASCIIStringEncoding];    
-    NSScanner * scanner = [NSScanner scannerWithString:dataStr];
-    [dataStr release];
-    
-    static NSString * NewLine = @"\n";
-    NSString * commitTree,
-             * commitParent,
-             * authorName,
-             * authorEmail,
-             * authorTimezone,
-             * committerName,
-             * committerEmail,
-             * committerTimezone;
-
-	NSMutableArray *newParentShas = [[NSMutableArray alloc] init];
-
-    NSTimeInterval authorTimestamp,
-                   committerTimestamp;
-     
-    if ([scanner scanString:@"tree" intoString:NULL] &&
-        [scanner scanUpToString:NewLine intoString:&commitTree])
-    {
-        self.treeSha1 = commitTree;
-        if (!self.treeSha1) return NO;
-    }
-    else
-    {
+    NSString *treeString = [self createStringWithObjectRecord:recTree bytes:&rawString];
+    if ( !treeString ) {
         errorDescription = NSLocalizedString(@"Failed to parse tree reference for commit", @"GITErrorObjectParsingFailed (GITCommit:tree)");
         GITError(error, GITErrorObjectParsingFailed, errorDescription);
         return NO;
     }
+    [self setTreeSha1:treeString];
+    [treeString release];
     
-    while ([scanner scanString:@"parent" intoString:NULL])
-    {
-        // If we've got a parent at all then we'll parse the name
-        if ([scanner scanUpToString:NewLine intoString:&commitParent])
-        {
-			[newParentShas addObject:commitParent];
-        }
-        else
-        {
+    // parents
+    NSString *parentString;
+    while ( nil != (parentString = [self createStringWithObjectRecord:recParent bytes:&rawString]) ) {
+        if ( !parentString ) {
             errorDescription = NSLocalizedString(@"Failed to parse parent reference for commit", @"GITErrorObjectParsingFailed (GITCommit:parent)");
             GITError(error, GITErrorObjectParsingFailed, errorDescription);
+            [commitParents release];
             return NO;
         }
-    }
-	
-	[self setParentShas:newParentShas];
-    
-    if ([scanner scanString:@"author" intoString:NULL] &&
-        [scanner scanUpToString:@"<" intoString:&authorName] &&
-        [scanner scanString:@"<" intoString:NULL] &&
-        [scanner scanUpToString:@">" intoString:&authorEmail] &&
-        [scanner scanString:@">" intoString:NULL] &&
-        [scanner scanDouble:&authorTimestamp] &&
-        [scanner scanUpToString:NewLine intoString:&authorTimezone])
-    {
-        self.author = [GITActor actorWithName:authorName email:authorEmail];
-        self.authored = [[[GITDateTime alloc] initWithTimestamp:authorTimestamp
-                                                 timeZoneOffset:authorTimezone] autorelease];
-    }
-    else
-    {
-        errorDescription = NSLocalizedString(@"Failed to parse author details for commit", @"GITErrorObjectParsingFailed (GITCommit:author)");
-        GITError(error, GITErrorObjectParsingFailed, errorDescription);
-        return NO;
+        [commitParents addObject:parentString];
+        [parentString release];
     }
     
-    if ([scanner scanString:@"committer" intoString:NULL] &&
-        [scanner scanUpToString:@"<" intoString:&committerName] &&
-        [scanner scanString:@"<" intoString:NULL] &&
-        [scanner scanUpToString:@">" intoString:&committerEmail] &&
-        [scanner scanString:@">" intoString:NULL] &&
-        [scanner scanDouble:&committerTimestamp] &&
-        [scanner scanUpToString:NewLine intoString:&committerTimezone])
-    {
-        self.committer = [GITActor actorWithName:committerName email:committerEmail];
-        self.committed = [[[GITDateTime alloc] initWithTimestamp:committerTimestamp
-                                                  timeZoneOffset:committerTimezone] autorelease];
-    }
-    else
-    {
-        errorDescription = NSLocalizedString(@"Failed to parse committer details for commit", @"GITErrorObjectParsingFailed (GITCommit:committer)");
-        GITError(error, GITErrorObjectParsingFailed, errorDescription);
-        return NO;
-    }
-        
-    self.message = [[[scanner string] substringFromIndex:[scanner scanLocation]] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if (!self.message)
-    {
-        errorDescription = NSLocalizedString(@"Failed to parse message for commit", @"GITErrorObjectParsingFailed (GITCommit:message)");
-        GITError(error, GITErrorObjectParsingFailed, errorDescription);
-        return NO;
-    }
+    [self setParentShas:commitParents];
+    [commitParents release];
+    
+    // use this pointer to save the raw data for lazy parsing later
+    const char *buf = rawString;
+    NSUInteger bufLen = [raw length] - (buf-start);
+    NSData *cachedData = [[NSData alloc] initWithBytes:buf length:bufLen];
+    [self setCachedRawData:cachedData];
+    [cachedData release];
 
+    parseObjectRecord(&rawString, recAuthor, NULL, NULL);
+    const char *rawDate;
+    if ( !parseObjectRecord(&rawString, recRawDate, &rawDate, NULL) ) {
+        errorDescription = NSLocalizedString(@"Failed to parse committer date", @"GITErrorObjectParsingFailed (GITCommit:committer)");
+        GITError(error, GITErrorObjectParsingFailed, errorDescription);
+        return NO;
+    }
+    sortDate = (unsigned long)strtoul(rawDate, NULL, recRawDate.matchLen);
+    
     return YES;
+}
+
+- (GITDateTime *) dateWithBytes:(const char **)bytes
+{
+    const char *date;
+    parseObjectRecord(bytes, recDate, &date, NULL);
+    unsigned long timeInSec = (unsigned long)strtoul(date, NULL, recDate.matchLen);
+    
+    const char *tzData;
+    parseObjectRecord(bytes, recTz, &tzData, NULL);
+    NSInteger tz = (NSInteger)atoi(tzData);
+
+    return [[GITDateTime alloc] initWithBSDTime:timeInSec timeZoneOffset:tz];
+}
+
+- (void) parseCachedRawData
+{
+    if ( cachedRawData == nil )
+        return;
+    const char *rawString = [cachedRawData bytes];
+    const char *start = rawString;
+    NSString *authorInfo = [self createStringWithObjectRecord:recAuthorInfo bytes:&rawString];
+    GITActor *authorActor = [[GITActor alloc] initWithString:authorInfo];
+    [authorInfo release];
+    [self setAuthor:authorActor];
+    [authorActor release];
+    
+    GITDateTime *authorDate = [self dateWithBytes:&rawString];
+    [self setAuthored:authorDate];
+    [authorDate release];
+    
+    NSString *committerInfo = [self createStringWithObjectRecord:recCommitterInfo bytes:&rawString];
+    GITActor *committerActor = [[GITActor alloc] initWithString:committerInfo];
+    [committerInfo release];
+    [self setCommitter:committerActor];
+    [committerActor release];
+        
+    GITDateTime *commitDate = [self dateWithBytes:&rawString];
+    [self setCommitted:commitDate];
+    [commitDate release];
+    
+    rawString++; // skip '\n'
+    NSUInteger messageLength = [cachedRawData length] - (rawString - start) - 1;
+    NSString *messageString = [[NSString alloc] initWithBytes:rawString
+                                                       length:messageLength
+                                                     encoding:NSASCIIStringEncoding];
+    [self setMessage:messageString];
+    [messageString release];
+    [self setCachedRawData:nil];
 }
 
 - (NSString*)description
@@ -480,10 +293,10 @@ CFRange parseString(CFStringRef *sPtr, CFRange r, CFParseInfo delim, CFRange *re
     for (GITCommit *parent in [self parents]) {
         [treeString appendFormat:@"parent %@\n", [parent sha1]];
     }
-    return [[NSString stringWithFormat:@"%@author %@ %@\ncommitter %@ %@\n\n%@\n",
-                        treeString, self.author, self.authored,
-                        self.committer, self.committed, self.message]
-                            dataUsingEncoding:NSASCIIStringEncoding];
+    NSString *contentString = [NSString stringWithFormat:@"%@author %@ %@\ncommitter %@ %@\n\n%@\n",
+                               treeString, self.author, self.authored,
+                               self.committer, self.committed, self.message];
+    return [contentString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 @end

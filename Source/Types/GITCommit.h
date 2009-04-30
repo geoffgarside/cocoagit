@@ -25,13 +25,15 @@ extern NSString * const kGITObjectCommitName;
 
     GITDateTime * authored;
     GITDateTime * committed;
+    unsigned long sortDate;
     
     NSString * message;
+    NSData *cachedRawData;
 }
 
 @property(readonly,copy) NSString * treeSha1;
 @property(readonly,copy) NSString * parentSha1;
-@property(readwrite,copy) NSArray  * parentShas;
+@property(readwrite,retain) NSArray  * parentShas;
 @property(readonly,copy) GITTree * tree;
 @property(readonly,copy) GITCommit * parent;
 @property(readonly,copy) NSArray *parents;
@@ -39,6 +41,7 @@ extern NSString * const kGITObjectCommitName;
 @property(readonly,copy) GITActor * committer;
 @property(readonly,copy) GITDateTime * authored;
 @property(readonly,copy) GITDateTime * committed;
+@property(readonly) unsigned long sortDate;
 @property(readonly,copy) NSString * message;
 
 - (BOOL)isFirstCommit;
