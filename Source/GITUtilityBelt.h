@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+NSData * packSHA1FromBytes(const char *hexBytes);
 NSData   * packSHA1(NSString * unpackedSHA1);
 NSString * unpackSHA1FromString(NSString * packedSHA1);
 NSString * unpackSHA1FromData(NSData * packedSHA1);

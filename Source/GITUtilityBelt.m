@@ -14,25 +14,47 @@ const NSUInteger kGITUnpackedSha1Length = 40;
 
 static const char hexchars[] = "0123456789abcdef";
 
+// pre-calculated hex value (v) -> strchr(hexchars, v) - hexchars
+// to save searching the string on each iteration
+static signed char from_hex[256] = {
+-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, /* 00 */
+-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, /* 10 */
+-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, /* 20 */
+ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, -1, -1, -1, -1, -1, -1, /* 30 */
+-1, 10, 11, 12, 13, 14, 15, -1, -1, -1, -1, -1, -1, -1, -1, -1, /* 40 */
+-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, /* 50 */
+-1, 10, 11, 12, 13, 14, 15, -1, -1, -1, -1, -1, -1, -1, -1, -1, /* 60 */
+-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, /* 70 */
+-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, /* 80 */
+-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, /* 90 */
+-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, /* a0 */
+-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, /* b0 */
+-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, /* c0 */
+-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, /* d0 */
+-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, /* e0 */
+-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, /* f0 */
+};
+
+NSData *
+packSHA1FromBytes(const char *hexBytes)
+{
+    NSMutableData *packedSHA1 = [NSMutableData dataWithLength:kGITPackedSha1Length];
+    uint8_t *packedBytes = [packedSHA1 mutableBytes];
+    int i;
+    for ( i = 0; i < kGITPackedSha1Length; i++, hexBytes += 2) {
+        NSUInteger bits = (from_hex[hexBytes[0]] << 4) | (from_hex[hexBytes[1]]);
+        if ( bits < 0 ) {
+            return nil;
+        }
+        packedBytes[i] = (unsigned char)bits;
+    }
+    return packedSHA1;
+}
+
 NSData *
 packSHA1(NSString * unpackedSHA1)
 {
-    NSData *unpackedSHA1Data = [unpackedSHA1 dataUsingEncoding:NSASCIIStringEncoding];
-    const uint8_t *unpackedSHA1CString = (const uint8_t *)[unpackedSHA1Data bytes];
-    uint8_t highBits, lowBits, bits;
-    NSMutableData *packedSHA1 = [NSMutableData dataWithCapacity:kGITPackedSha1Length];
-    int i;
-    for (i = 0; i < [unpackedSHA1 length]; i++)
-    {
-        if (i % 2 == 0) {
-            highBits = (strchr(hexchars, unpackedSHA1CString[i]) - hexchars) << 4;
-        } else {
-            lowBits = strchr(hexchars, unpackedSHA1CString[i]) - hexchars;
-            bits = (highBits | lowBits);
-            [packedSHA1 appendBytes:&bits length:1];
-        }
-    }
-    return [NSData dataWithData:packedSHA1];
+    return packSHA1FromBytes([unpackedSHA1 cStringUsingEncoding:NSASCIIStringEncoding]);
 }
 
 NSString *
