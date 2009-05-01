@@ -6,3 +6,58 @@ f7e7e7d240ccdae143b064aa7467eb2fa91aa8a5 5543323c6b02f4fb30940f780c4431d32829e76
 3ca188481c60fe3f0a1a60f500a26710a5961593 d8094720229e2975cc639b028f56602baa6f8715 Brian Chapados <chapados@sciencegeeks.org> 1224735915 -0700	commit: added docs directory for fake HTML docs
 d8094720229e2975cc639b028f56602baa6f8715 f7e7e7d240ccdae143b064aa7467eb2fa91aa8a5 Geoff Garside <geoff@geoffgarside.co.uk> 1227725532 +0000	checkout: moving from ruby to master
 f7e7e7d240ccdae143b064aa7467eb2fa91aa8a5 d8094720229e2975cc639b028f56602baa6f8715 Geoff Garside <geoff@geoffgarside.co.uk> 1227725542 +0000	checkout: moving from master to ruby
+d8094720229e2975cc639b028f56602baa6f8715 f7e7e7d240ccdae143b064aa7467eb2fa91aa8a5 Brian Chapados <chapados@sciencegeeks.org> 1241125472 -0700	checkout: moving from ruby to master
+f7e7e7d240ccdae143b064aa7467eb2fa91aa8a5 f7e7e7d240ccdae143b064aa7467eb2fa91aa8a5 Brian Chapados <chapados@sciencegeeks.org> 1241125515 -0700	checkout: moving from master to revwalk
+f7e7e7d240ccdae143b064aa7467eb2fa91aa8a5 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241125583 -0700	commit: Add revwalk.txt
+8c2a16604844b7762fd6545339693cfe822cc75b 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241125596 -0700	checkout: moving from revwalk to branch1
+8c2a16604844b7762fd6545339693cfe822cc75b a7959d4a69d6771b26c9c2090ccadd35b81d5387 Brian Chapados <chapados@sciencegeeks.org> 1241125650 -0700	commit: Added a line
+a7959d4a69d6771b26c9c2090ccadd35b81d5387 34d90f9fea9734ebea38a3349713de9c7ddc9102 Brian Chapados <chapados@sciencegeeks.org> 1241125728 -0700	commit: reformat and add a second line
+34d90f9fea9734ebea38a3349713de9c7ddc9102 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241125746 -0700	checkout: moving from branch1 to revwalk
+8c2a16604844b7762fd6545339693cfe822cc75b 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241125811 -0700	checkout: moving from revwalk to branch2
+8c2a16604844b7762fd6545339693cfe822cc75b c4316dabeac43115f00be867fd22426f54d5040f Brian Chapados <chapados@sciencegeeks.org> 1241125835 -0700	commit: content is meaningless
+c4316dabeac43115f00be867fd22426f54d5040f 06a42c6a5c76120e9adc7d5efd79d9c9eaef936f Brian Chapados <chapados@sciencegeeks.org> 1241125881 -0700	commit: not worth reading
+06a42c6a5c76120e9adc7d5efd79d9c9eaef936f b9237bcb41c35873521545f3e0bbc825ea847d84 Brian Chapados <chapados@sciencegeeks.org> 1241125927 -0700	commit: move along
+b9237bcb41c35873521545f3e0bbc825ea847d84 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241125964 -0700	checkout: moving from branch2 to revwalk
+8c2a16604844b7762fd6545339693cfe822cc75b 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241125980 -0700	checkout: moving from revwalk to revwalk-merge
+8c2a16604844b7762fd6545339693cfe822cc75b f8474afb42704352dcd37751c15ae68d7d21fbc2 Brian Chapados <chapados@sciencegeeks.org> 1241126071 -0700	commit (merge): Merge branches 'branch1' and 'branch2' into revwalk-merge
+f8474afb42704352dcd37751c15ae68d7d21fbc2 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241126281 -0700	checkout: moving from revwalk-merge to revwalk
+8c2a16604844b7762fd6545339693cfe822cc75b 34d90f9fea9734ebea38a3349713de9c7ddc9102 Brian Chapados <chapados@sciencegeeks.org> 1241126335 -0700	checkout: moving from revwalk to branch1
+34d90f9fea9734ebea38a3349713de9c7ddc9102 12e183104e82db8cc7fd3b17a69aec46fb1d9487 Brian Chapados <chapados@sciencegeeks.org> 1241126364 -0700	commit: add line3
+12e183104e82db8cc7fd3b17a69aec46fb1d9487 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241126401 -0700	checkout: moving from branch1 to revwalk
+8c2a16604844b7762fd6545339693cfe822cc75b 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241126413 -0700	checkout: moving from revwalk to revwalk-merge
+8c2a16604844b7762fd6545339693cfe822cc75b 12e183104e82db8cc7fd3b17a69aec46fb1d9487 Brian Chapados <chapados@sciencegeeks.org> 1241126433 -0700	merge branch1: Fast forward
+12e183104e82db8cc7fd3b17a69aec46fb1d9487 9c3e26256583d93113e272024e6711fd477429df Brian Chapados <chapados@sciencegeeks.org> 1241126461 -0700	commit (merge): Merge branch 'branch2' into revwalk-merge
+9c3e26256583d93113e272024e6711fd477429df 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241127282 -0700	checkout: moving from revwalk-merge to revwalk
+8c2a16604844b7762fd6545339693cfe822cc75b 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241127306 -0700	checkout: moving from revwalk to revwalk-merge
+8c2a16604844b7762fd6545339693cfe822cc75b b9237bcb41c35873521545f3e0bbc825ea847d84 Brian Chapados <chapados@sciencegeeks.org> 1241127325 -0700	merge branch2: Fast forward
+b9237bcb41c35873521545f3e0bbc825ea847d84 10e19ae4b43d07b757beee214eeadcaad2502562 Brian Chapados <chapados@sciencegeeks.org> 1241127348 -0700	commit (merge): Merge branch 'branch1' into revwalk-merge
+10e19ae4b43d07b757beee214eeadcaad2502562 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241128276 -0700	checkout: moving from revwalk-merge to revwalk
+8c2a16604844b7762fd6545339693cfe822cc75b 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241128323 -0700	checkout: moving from revwalk to revwalk
+8c2a16604844b7762fd6545339693cfe822cc75b 12e183104e82db8cc7fd3b17a69aec46fb1d9487 Brian Chapados <chapados@sciencegeeks.org> 1241131982 -0700	checkout: moving from revwalk to branch1
+12e183104e82db8cc7fd3b17a69aec46fb1d9487 6cbe32dc1cfd3ca776760c8c862006319460e271 Brian Chapados <chapados@sciencegeeks.org> 1241132002 -0700	commit: remove line 3
+6cbe32dc1cfd3ca776760c8c862006319460e271 1dba503f40006d1d89552b4dc8a25dc1a6a4e013 Brian Chapados <chapados@sciencegeeks.org> 1241128628 -0700	commit: add line 3 again
+1dba503f40006d1d89552b4dc8a25dc1a6a4e013 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241128638 -0700	checkout: moving from branch1 to revwalk
+8c2a16604844b7762fd6545339693cfe822cc75b 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241128643 -0700	checkout: moving from revwalk to revwalk-merge
+8c2a16604844b7762fd6545339693cfe822cc75b b9237bcb41c35873521545f3e0bbc825ea847d84 Brian Chapados <chapados@sciencegeeks.org> 1241128660 -0700	merge branch2: Fast forward
+b9237bcb41c35873521545f3e0bbc825ea847d84 a4c0e695258d0ac4cbcbd33177d42dada3185623 Brian Chapados <chapados@sciencegeeks.org> 1241128712 -0700	commit (merge): Merge branch 'branch1' into revwalk-merge
+a4c0e695258d0ac4cbcbd33177d42dada3185623 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241128824 -0700	checkout: moving from revwalk-merge to revwalk
+8c2a16604844b7762fd6545339693cfe822cc75b 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241128859 -0700	checkout: moving from revwalk to branch3
+8c2a16604844b7762fd6545339693cfe822cc75b 3135253e5dd7ab4fc53e72bb1192887c3e437574 Brian Chapados <chapados@sciencegeeks.org> 1241128887 -0700	commit: added blank lines...
+3135253e5dd7ab4fc53e72bb1192887c3e437574 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241128900 -0700	checkout: moving from branch3 to revwalk
+8c2a16604844b7762fd6545339693cfe822cc75b 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241128911 -0700	checkout: moving from revwalk to revwalk-merge
+8c2a16604844b7762fd6545339693cfe822cc75b b9237bcb41c35873521545f3e0bbc825ea847d84 Brian Chapados <chapados@sciencegeeks.org> 1241128930 -0700	merge branch2: Fast forward
+b9237bcb41c35873521545f3e0bbc825ea847d84 08714c9842200451c582ab035ec16c16fffaf908 Brian Chapados <chapados@sciencegeeks.org> 1241128951 -0700	commit (merge): Merge branch 'branch3' into revwalk-merge
+08714c9842200451c582ab035ec16c16fffaf908 1efdc251e26c6d408d7df8ebbc953a228c79afa1 Brian Chapados <chapados@sciencegeeks.org> 1241128984 -0700	commit (merge): Merge branch 'branch1' into revwalk-merge
+1efdc251e26c6d408d7df8ebbc953a228c79afa1 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241129362 -0700	checkout: moving from revwalk-merge to revwalk
+8c2a16604844b7762fd6545339693cfe822cc75b 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241129386 -0700	checkout: moving from revwalk to revwalk-merge
+8c2a16604844b7762fd6545339693cfe822cc75b 24e8a3b08ebe2162aa90bbb7702a3c5189335dc6 Brian Chapados <chapados@sciencegeeks.org> 1241129476 -0700	commit: merged branches: branch1, branch2, branch3
+24e8a3b08ebe2162aa90bbb7702a3c5189335dc6 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241129506 -0700	checkout: moving from revwalk-merge to revwalk
+8c2a16604844b7762fd6545339693cfe822cc75b 3135253e5dd7ab4fc53e72bb1192887c3e437574 Brian Chapados <chapados@sciencegeeks.org> 1241129579 -0700	checkout: moving from revwalk to branch3
+3135253e5dd7ab4fc53e72bb1192887c3e437574 7d68b1f916cfc73c2771bd3282a4f913f767bae2 Brian Chapados <chapados@sciencegeeks.org> 1241122443 -0700	commit: add ellipsis
+7d68b1f916cfc73c2771bd3282a4f913f767bae2 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241122453 -0700	checkout: moving from branch3 to revwalk
+8c2a16604844b7762fd6545339693cfe822cc75b 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241129686 -0700	checkout: moving from revwalk to revwalk-merge
+8c2a16604844b7762fd6545339693cfe822cc75b b9237bcb41c35873521545f3e0bbc825ea847d84 Brian Chapados <chapados@sciencegeeks.org> 1241129701 -0700	merge branch2: Fast forward
+b9237bcb41c35873521545f3e0bbc825ea847d84 f85a47c40f8de414905e93e907920e8c16f6e572 Brian Chapados <chapados@sciencegeeks.org> 1241129727 -0700	commit (merge): Merge branch 'branch1' into revwalk-merge
+f85a47c40f8de414905e93e907920e8c16f6e572 1b06b417010400c92a4d9b840f136315fd83430e Brian Chapados <chapados@sciencegeeks.org> 1241129758 -0700	commit (merge): Merge branch 'branch3' into revwalk-merge
+1b06b417010400c92a4d9b840f136315fd83430e 1b06b417010400c92a4d9b840f136315fd83430e Brian Chapados <chapados@sciencegeeks.org> 1241129891 -0700	checkout: moving from revwalk-merge to revwalk-test
+1b06b417010400c92a4d9b840f136315fd83430e d8094720229e2975cc639b028f56602baa6f8715 Brian Chapados <chapados@sciencegeeks.org> 1241129971 -0700	checkout: moving from revwalk-test to ruby

@@ -1,1 +1,20 @@
-added docs directory for fake HTML docs
+Merge branch 'branch3' into revwalk-merge
+
+Conflicts:
+
+	revwalk.txt
+#
+# It looks like you may be committing a MERGE.
+# If this is not correct, please remove the file
+#	/Users/chapbr/repos/cocoagit/UnitTests/Resources/tr/.git/MERGE_HEAD
+# and try again.
+#
+
+# Please enter the commit message for your changes.
+# (Comment lines starting with '#' will not be included)
+# On branch revwalk-merge
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	modified:   revwalk.txt
+#

@@ -1,0 +1,6 @@
+0000000000000000000000000000000000000000 8c2a16604844b7762fd6545339693cfe822cc75b Brian Chapados <chapados@sciencegeeks.org> 1241125596 -0700	branch: Created from HEAD
+8c2a16604844b7762fd6545339693cfe822cc75b a7959d4a69d6771b26c9c2090ccadd35b81d5387 Brian Chapados <chapados@sciencegeeks.org> 1241125650 -0700	commit: Added a line
+a7959d4a69d6771b26c9c2090ccadd35b81d5387 34d90f9fea9734ebea38a3349713de9c7ddc9102 Brian Chapados <chapados@sciencegeeks.org> 1241125728 -0700	commit: reformat and add a second line
+34d90f9fea9734ebea38a3349713de9c7ddc9102 12e183104e82db8cc7fd3b17a69aec46fb1d9487 Brian Chapados <chapados@sciencegeeks.org> 1241126364 -0700	commit: add line3
+12e183104e82db8cc7fd3b17a69aec46fb1d9487 6cbe32dc1cfd3ca776760c8c862006319460e271 Brian Chapados <chapados@sciencegeeks.org> 1241132002 -0700	commit: remove line 3
+6cbe32dc1cfd3ca776760c8c862006319460e271 1dba503f40006d1d89552b4dc8a25dc1a6a4e013 Brian Chapados <chapados@sciencegeeks.org> 1241128628 -0700	commit: add line 3 again
