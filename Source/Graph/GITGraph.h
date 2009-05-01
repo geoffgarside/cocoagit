@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class GITObjectNode;
+@class GITNode;
 @class GITCommit;
 @interface GITGraph : NSObject {
     NSMutableDictionary *nodes;
@@ -16,18 +16,19 @@
 - (NSUInteger) countOfNodes;
 //- (NSUInteger) countOfEdges;
 
-- (BOOL) hasNode:(GITObjectNode *)aNode;
-- (GITObjectNode *) nodeWithKey:(NSString *)aKey;
+- (BOOL) hasNode:(GITNode *)aNode;
+- (GITNode *) nodeWithKey:(NSString *)aKey;
 
-- (void) addNode:(GITObjectNode *)newNode;
-- (void) removeNode:(GITObjectNode *)aNode;
-- (void) addEdgeFromNode:(GITObjectNode *)sourceNode toNode:(GITObjectNode *)targetNode;
-//- (void) removeEdgeFromNode:(GITObjectNode *)sourceNode toNode:(GITObjectNode *)targetNode;
+- (void) addNode:(GITNode *)newNode;
+- (void) removeNode:(GITNode *)aNode;
+- (void) addEdgeFromNode:(GITNode *)sourceNode toNode:(GITNode *)targetNode;
+//- (void) removeEdgeFromNode:(GITNode *)sourceNode toNode:(GITNode *)targetNode;
 
 - (void) buildGraphWithStartingCommit:(GITCommit *)commit;
 - (NSArray *) nodesSortedByDate;
 - (NSArray *) nodesSortedByTopology:(BOOL)useLifo;
 
+- (void) removeObjectsFromNodes;
 //- (void) addCommit:(GITCommit *)gitCommit;
 //- (void) removeCommit:(GITCommit *)gitCommit;
 //- (void) addCommit:(GITCommit *)gitCommit includeTree:(BOOL)includeTree;

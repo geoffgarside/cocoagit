@@ -29,7 +29,7 @@
     [super dealloc];
 }
 
-- (GITObjectNode *) nodeWithKey:(NSString *)aKey;
+- (GITNode *) nodeWithKey:(NSString *)aKey;
 {
     return [nodes objectForKey:aKey];
 }
@@ -55,26 +55,31 @@
     return ([nodes objectForKey:[aNode key]] != nil);
 }
 
-- (void) addNode:(GITObjectNode *)newNode;
+- (void) addNode:(GITNode *)newNode;
 {
     [nodes setObject:newNode forKey:[newNode key]];
 }
 
-- (void) removeNode:(GITObjectNode *)aNode;
+- (void) removeNode:(GITNode *)aNode;
 {
     [nodes removeObjectForKey:[aNode key]];
 }
 
-- (void) addEdgeFromNode:(GITObjectNode *)sourceNode toNode:(GITObjectNode *)targetNode;
+- (void) addEdgeFromNode:(GITNode *)sourceNode toNode:(GITNode *)targetNode;
 {
     [sourceNode addOutNode:targetNode];
     [targetNode addInNode:sourceNode];
 }
 
-- (void) removeEdgeFromNode:(GITObjectNode *)sourceNode toNode:(GITObjectNode *)targetNode;
+- (void) removeEdgeFromNode:(GITNode *)sourceNode toNode:(GITNode *)targetNode;
 {
     [sourceNode removeOutNode:targetNode];
     [targetNode removeInNode:sourceNode];
+}
+
+- (void) removeObjectsFromNodes
+{
+    [[nodes allValues] makeObjectsPerformSelector:@selector(removeObject)];
 }
 
 // dfs iteration
@@ -98,10 +103,10 @@
         
         NSArray *parentShas = [[node object] parentShas];
         for (NSString *key in parentShas) {
-            GITObjectNode *parentNode = [nodes objectForKey:key];
+            GITNode *parentNode = [nodes objectForKey:key];
             if ( !parentNode ) {
                 id commit = [repo commitWithSha1:key];
-                parentNode = [GITObjectNode nodeWithObject:commit];
+                parentNode = [GITNode nodeWithObject:commit];
                 [nodes setObject:parentNode forKey:key];
             }
             parentNode->indegree++;
@@ -122,21 +127,21 @@
 
 - (void) buildGraphWithStartingCommit:(GITCommit *)commit;
 {
-    [self buildGraphWithStartingNode:[GITObjectNode nodeWithObject:commit]];
+    [self buildGraphWithStartingNode:[GITNode nodeWithObject:commit]];
 }
 
 
 static CFComparisonResult compareDateDescending(const void *a_, const void *b_, void *context)
 {
-    const GITObjectNode *a = a_;
-    const GITObjectNode *b = b_;
+    const GITNode *a = a_;
+    const GITNode *b = b_;
     return (CFComparisonResult) (a->date < b->date) ? 1 : (a->date > b->date) ? -1 : 0;
 }
 
 static CFComparisonResult compareDateAscending(const void *a_, const void *b_, void *context)
 {
-    const GITObjectNode *a = a_;
-    const GITObjectNode *b = b_;
+    const GITNode *a = a_;
+    const GITNode *b = b_;
     return (CFComparisonResult) (a->date < b->date) ? -1 : (a->date > b->date) ? 1 : 0;
 }
 
@@ -149,7 +154,7 @@ static CFComparisonResult compareDateAscending(const void *a_, const void *b_, v
     NSMutableArray *roots = [NSMutableArray new];
     NSMutableArray *sorted = [[NSMutableArray alloc] initWithCapacity:[self countOfNodes]];
     
-    GITObjectNode *node;
+    GITNode *node;
     for ( node in [self nodes] ) {
         node->visited = NO;
         node->processed = NO;
@@ -159,14 +164,14 @@ static CFComparisonResult compareDateAscending(const void *a_, const void *b_, v
     }
         
     while ( [roots count] > 0) {
-        GITObjectNode *v = [[roots lastObject] retain];
+        GITNode *v = [[roots lastObject] retain];
         if ( !v->processed ) {
             [sorted addObject:v];
             v->processed = YES;
         }
         [roots removeLastObject];
         
-        for (GITObjectNode *w in [v outNodes]) {
+        for (GITNode *w in [v outNodes]) {
             if ( ![w wasVisited] ) {
                 [w visit];
                 NSUInteger i = CFArrayBSearchValues((CFMutableArrayRef)roots,
@@ -186,7 +191,7 @@ static CFComparisonResult compareDateAscending(const void *a_, const void *b_, v
     NSMutableArray *roots = [NSMutableArray new];
     NSMutableArray *sorted = [[NSMutableArray alloc] initWithCapacity:[self countOfNodes]];
     
-    GITObjectNode *node;
+    GITNode *node;
     for ( node in [self nodes] ) {
         [node resetIndegree];
         if ( node->indegree == 0 ) {
@@ -201,11 +206,11 @@ static CFComparisonResult compareDateAscending(const void *a_, const void *b_, v
                           NULL);
     
     while ( [roots count] > 0) {
-        GITObjectNode *v = [roots lastObject];
+        GITNode *v = [roots lastObject];
         [sorted addObject:v];
         [roots removeLastObject];
         
-        for (GITObjectNode *w in [v outNodes]) {
+        for (GITNode *w in [v outNodes]) {
             if ( --(w->indegree) == 0 ) {
                 if ( useLifo ) {
                     [roots addObject:w];
