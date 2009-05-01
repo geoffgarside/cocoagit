@@ -307,6 +307,16 @@
     return [self commitWithSha1:[[[self refStore] head] sha1]];
 }
 
+- (GITCommit *) commitWithRef:(GITRef *)ref
+{
+    return [self commitWithSha1:[ref sha1]];
+}
+
+- (GITCommit *) commitWithBranchName:(NSString *)name
+{
+    return [self commitWithRef:[self branchWithName:name]];
+}
+
 // Deprecated
 - (NSDictionary *) dictionaryWithRefName:(NSString *) aName sha:(NSString *) shaString
 {

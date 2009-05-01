@@ -87,11 +87,14 @@
 - (NSArray *) remotes;
 - (NSArray *) tags;
 
-- (GITCommit *) head;
 - (GITRef *) master;
 - (GITRef *) branchWithName:(NSString*)name;
 - (GITRef *) tagWithName:(NSString*)name;
 - (GITRef *) remoteWithName:(NSString*)name;
+
+- (GITCommit *) head;
+- (GITCommit *) commitWithRef:(GITRef *)ref;
+- (GITCommit *) commitWithBranchName:(NSString *)name;
 
 #pragma mark -
 #pragma mark Internal Methods (Deprecated)
