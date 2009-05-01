@@ -55,6 +55,8 @@
 		38A504610F5E4DFA0072D8B1 /* NSData+Patching.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F57B96C0F35397500101EAC /* NSData+Patching.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		38D2628D0F3A23E500683479 /* GITBranch.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F33C9E90E48C5650004CD44 /* GITBranch.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		38D262B00F3A243B00683479 /* GITBranch.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EA0E48C5650004CD44 /* GITBranch.m */; };
+		5728AC190FAAAC3700653471 /* GITRepo+Enumerators.h in Headers */ = {isa = PBXBuildFile; fileRef = 5728AC170FAAAC3700653471 /* GITRepo+Enumerators.h */; };
+		5728AC1A0FAAAC3700653471 /* GITRepo+Enumerators.m in Sources */ = {isa = PBXBuildFile; fileRef = 5728AC180FAAAC3700653471 /* GITRepo+Enumerators.m */; };
 		5734D7290F4148BA0092523C /* BufferedSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 5734D7250F4148BA0092523C /* BufferedSocket.h */; };
 		5734D72A0F4148BA0092523C /* BufferedSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5734D7260F4148BA0092523C /* BufferedSocket.m */; };
 		5734D72B0F4148BA0092523C /* MutableDataBufferExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 5734D7270F4148BA0092523C /* MutableDataBufferExtension.h */; };
@@ -69,6 +71,8 @@
 		57374EA00F93AC4E0049342E /* Git.framework in Copy private frameworks */ = {isa = PBXBuildFile; fileRef = 9F3694170EACF05500E6777B /* Git.framework */; };
 		573750FC0F941D7C0049342E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 319B42E00F10526A00336E0A /* Foundation.framework */; };
 		573751000F941D910049342E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 319B42E00F10526A00336E0A /* Foundation.framework */; };
+		573755510F9860280049342E /* Git.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3694170EACF05500E6777B /* Git.framework */; };
+		573755520F9860350049342E /* git-rev-list.m in Sources */ = {isa = PBXBuildFile; fileRef = 5737552B0F985F6D0049342E /* git-rev-list.m */; };
 		573B49C90EF5A1F90020159D /* assertions.h in Headers */ = {isa = PBXBuildFile; fileRef = 573B49C70EF5A1F90020159D /* assertions.h */; };
 		573B49CA0EF5A1F90020159D /* assertions.m in Sources */ = {isa = PBXBuildFile; fileRef = 573B49C80EF5A1F90020159D /* assertions.m */; };
 		573B49D20EF5A2090020159D /* NSError-OBExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 573B49D00EF5A2090020159D /* NSError-OBExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -121,6 +125,15 @@
 		57A4312B0F62051600E6B701 /* GITUtilityBeltTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F01049A0E9997C700A47227 /* GITUtilityBeltTests.m */; };
 		57A4312C0F62053500E6B701 /* GITActorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCF28D70E991EB800665A41 /* GITActorTests.m */; };
 		57A4312D0F62053500E6B701 /* GITDateTimeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE328CA0E9B6F2B001E37D5 /* GITDateTimeTests.m */; };
+		57C64ACB0FA9054800788255 /* GITObject+Parsing.h in Headers */ = {isa = PBXBuildFile; fileRef = 57C64AC90FA9054800788255 /* GITObject+Parsing.h */; };
+		57C64ACC0FA9054800788255 /* GITObject+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 57C64ACA0FA9054800788255 /* GITObject+Parsing.m */; };
+		57C8471B0FA134520015DD42 /* GITGraph.h in Headers */ = {isa = PBXBuildFile; fileRef = 57C847190FA134520015DD42 /* GITGraph.h */; };
+		57C8471C0FA134520015DD42 /* GITGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 57C8471A0FA134520015DD42 /* GITGraph.m */; };
+		57C847210FA1357D0015DD42 /* GITNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 57C8471F0FA1357D0015DD42 /* GITNode.h */; };
+		57C847220FA1357D0015DD42 /* GITNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 57C847200FA1357D0015DD42 /* GITNode.m */; };
+		57C847500FA1812F0015DD42 /* GITGraphTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 57C8474F0FA1812F0015DD42 /* GITGraphTests.m */; };
+		57C848540FA28D670015DD42 /* GITCommitEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 57C848520FA28D670015DD42 /* GITCommitEnumerator.h */; };
+		57C848550FA28D670015DD42 /* GITCommitEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 57C848530FA28D670015DD42 /* GITCommitEnumerator.m */; };
 		57D81B2A0F419199002A571C /* NSData+HexDump.h in Headers */ = {isa = PBXBuildFile; fileRef = 57D81B280F419199002A571C /* NSData+HexDump.h */; };
 		57D81B2B0F419199002A571C /* NSData+HexDump.m in Sources */ = {isa = PBXBuildFile; fileRef = 57D81B290F419199002A571C /* NSData+HexDump.m */; };
 		57D81B500F41960D002A571C /* libSSH.dylib in Copy libSSH */ = {isa = PBXBuildFile; fileRef = 31AF01AF0F142F7B00F43D38 /* libSSH.dylib */; };
@@ -220,6 +233,13 @@
 			remoteGlobalIDString = 9F3694160EACF05500E6777B;
 			remoteInfo = Git;
 		};
+		5737557F0F9862770049342E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9F3694160EACF05500E6777B;
+			remoteInfo = Git;
+		};
 		57A4311D0F6204E400E6B701 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -301,6 +321,8 @@
 		31AF04C40F15710C00F43D38 /* Socket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Socket.m; path = Source/Vendor/SmallSockets/Socket.m; sourceTree = "<group>"; };
 		31AF05410F157C7500F43D38 /* git-remote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "git-remote.m"; path = "Source/Tools/git-remote.m"; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Git_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Git_Prefix.pch; sourceTree = "<group>"; };
+		5728AC170FAAAC3700653471 /* GITRepo+Enumerators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GITRepo+Enumerators.h"; path = "Source/Graph/GITRepo+Enumerators.h"; sourceTree = "<group>"; };
+		5728AC180FAAAC3700653471 /* GITRepo+Enumerators.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "GITRepo+Enumerators.m"; path = "Source/Graph/GITRepo+Enumerators.m"; sourceTree = "<group>"; };
 		5734D7050F4119690092523C /* GITTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITTransport.h; sourceTree = "<group>"; };
 		5734D7060F4119690092523C /* GITTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GITTransport.m; sourceTree = "<group>"; };
 		5734D7250F4148BA0092523C /* BufferedSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BufferedSocket.h; path = Source/Vendor/SmallSockets/BufferedSocket.h; sourceTree = "<group>"; };
@@ -311,6 +333,8 @@
 		573746B70F8C07C00049342E /* GITRefStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITRefStore.m; path = Source/Stores/GITRefStore.m; sourceTree = "<group>"; };
 		57374B440F8E9B0E0049342E /* GITRefStoreTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITRefStoreTests.h; path = UnitTests/Source/GITRefStoreTests.h; sourceTree = "<group>"; };
 		57374B450F8E9B0E0049342E /* GITRefStoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITRefStoreTests.m; path = UnitTests/Source/GITRefStoreTests.m; sourceTree = "<group>"; };
+		5737552B0F985F6D0049342E /* git-rev-list.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "git-rev-list.m"; path = "Source/Tools/git-rev-list.m"; sourceTree = "<group>"; };
+		573755330F9860190049342E /* git-rev-list */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "git-rev-list"; sourceTree = BUILT_PRODUCTS_DIR; };
 		573B49C70EF5A1F90020159D /* assertions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = assertions.h; path = Source/assertions.h; sourceTree = "<group>"; };
 		573B49C80EF5A1F90020159D /* assertions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = assertions.m; path = Source/assertions.m; sourceTree = "<group>"; };
 		573B49D00EF5A2090020159D /* NSError-OBExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError-OBExtensions.h"; path = "Source/Categories/NSError-OBExtensions.h"; sourceTree = "<group>"; };
@@ -351,6 +375,16 @@
 		57A431100F6204BD00E6B701 /* UnitTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnitTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57A431140F6204BE00E6B701 /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
 		57C17FF50EB01E1C00B7AE7E /* GITTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITTestHelper.h; path = UnitTests/Source/GITTestHelper.h; sourceTree = "<group>"; };
+		57C64AC90FA9054800788255 /* GITObject+Parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GITObject+Parsing.h"; path = "Source/Types/GITObject+Parsing.h"; sourceTree = "<group>"; };
+		57C64ACA0FA9054800788255 /* GITObject+Parsing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "GITObject+Parsing.m"; path = "Source/Types/GITObject+Parsing.m"; sourceTree = "<group>"; };
+		57C847190FA134520015DD42 /* GITGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITGraph.h; path = Source/Graph/GITGraph.h; sourceTree = "<group>"; };
+		57C8471A0FA134520015DD42 /* GITGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITGraph.m; path = Source/Graph/GITGraph.m; sourceTree = "<group>"; };
+		57C8471F0FA1357D0015DD42 /* GITNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITNode.h; path = Source/Graph/GITNode.h; sourceTree = "<group>"; };
+		57C847200FA1357D0015DD42 /* GITNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITNode.m; path = Source/Graph/GITNode.m; sourceTree = "<group>"; };
+		57C8474E0FA1812F0015DD42 /* GITGraphTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITGraphTests.h; path = UnitTests/Source/GITGraphTests.h; sourceTree = "<group>"; };
+		57C8474F0FA1812F0015DD42 /* GITGraphTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITGraphTests.m; path = UnitTests/Source/GITGraphTests.m; sourceTree = "<group>"; };
+		57C848520FA28D670015DD42 /* GITCommitEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GITCommitEnumerator.h; path = Source/Graph/GITCommitEnumerator.h; sourceTree = "<group>"; };
+		57C848530FA28D670015DD42 /* GITCommitEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GITCommitEnumerator.m; path = Source/Graph/GITCommitEnumerator.m; sourceTree = "<group>"; };
 		57D81B280F419199002A571C /* NSData+HexDump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+HexDump.h"; path = "Source/Categories/NSData+HexDump.h"; sourceTree = "<group>"; };
 		57D81B290F419199002A571C /* NSData+HexDump.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+HexDump.m"; path = "Source/Categories/NSData+HexDump.m"; sourceTree = "<group>"; };
 		57D81BA60F4216BE002A571C /* GITFetchProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GITFetchProcess.h; sourceTree = "<group>"; };
@@ -492,6 +526,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		573755310F9860190049342E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				573755510F9860280049342E /* Git.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		57A4310E0F6204BD00E6B701 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -535,6 +577,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				573753750F9688A70049342E /* Graph */,
 				573746AB0F8C06360049342E /* Refs */,
 				319B46640F11AF3600336E0A /* Network */,
 				9FE329A90E9BA2C0001E37D5 /* Stores */,
@@ -677,6 +720,21 @@
 			name = Refs;
 			sourceTree = "<group>";
 		};
+		573753750F9688A70049342E /* Graph */ = {
+			isa = PBXGroup;
+			children = (
+				57C848520FA28D670015DD42 /* GITCommitEnumerator.h */,
+				57C848530FA28D670015DD42 /* GITCommitEnumerator.m */,
+				57C847190FA134520015DD42 /* GITGraph.h */,
+				57C8471A0FA134520015DD42 /* GITGraph.m */,
+				57C8471F0FA1357D0015DD42 /* GITNode.h */,
+				57C847200FA1357D0015DD42 /* GITNode.m */,
+				5728AC170FAAAC3700653471 /* GITRepo+Enumerators.h */,
+				5728AC180FAAAC3700653471 /* GITRepo+Enumerators.m */,
+			);
+			name = Graph;
+			sourceTree = "<group>";
+		};
 		578097810F44ABEB0027B945 /* SSHSession */ = {
 			isa = PBXGroup;
 			children = (
@@ -736,6 +794,15 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		57C847530FA1814D0015DD42 /* Graph */ = {
+			isa = PBXGroup;
+			children = (
+				57C8474E0FA1812F0015DD42 /* GITGraphTests.h */,
+				57C8474F0FA1812F0015DD42 /* GITGraphTests.m */,
+			);
+			name = Graph;
+			sourceTree = "<group>";
+		};
 		9F2150F90EA3D4DE004C6188 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
@@ -788,6 +855,7 @@
 		9FCAA3910F166A860024BEC8 /* Tools & Examples */ = {
 			isa = PBXGroup;
 			children = (
+				573755330F9860190049342E /* git-rev-list */,
 				9FA4E06F0E19A57600724E6B /* git-inspect */,
 				9F2152FD0EA68DA7004C6188 /* git-pack-inspect */,
 				319B42D10F10518C00336E0A /* git-server */,
@@ -860,6 +928,7 @@
 				319B46740F11AF9000336E0A /* git-server.m */,
 				9FA4E0810E19A62500724E6B /* git-inspect.m */,
 				9F2153020EA68E3D004C6188 /* git-pack-inspect.m */,
+				5737552B0F985F6D0049342E /* git-rev-list.m */,
 			);
 			name = "Tools & Examples";
 			sourceTree = "<group>";
@@ -897,6 +966,7 @@
 		9FCF27950E98F67D00665A41 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				57C847530FA1814D0015DD42 /* Graph */,
 				578345B50F83220300ADC1E3 /* GHUnitTestMain.m */,
 				577AA5A50EF7794E00A0B12B /* GITTestHelper.m */,
 				57C17FF50EB01E1C00B7AE7E /* GITTestHelper.h */,
@@ -953,6 +1023,8 @@
 				9F7EC9060E1A709D001668EB /* GITTag.m */,
 				9F0862050E20F02E00FD6CF6 /* GITTreeEntry.h */,
 				9F0862060E20F02E00FD6CF6 /* GITTreeEntry.m */,
+				57C64AC90FA9054800788255 /* GITObject+Parsing.h */,
+				57C64ACA0FA9054800788255 /* GITObject+Parsing.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1084,6 +1156,11 @@
 				57E65C610F4A07AA00EB5DB8 /* GITPackReverseIndex.h in Headers */,
 				9F7171670F7A4D8E00A7DFF9 /* NSCharacterSet+StringComparison.h in Headers */,
 				573746B80F8C07C00049342E /* GITRefStore.h in Headers */,
+				57C8471B0FA134520015DD42 /* GITGraph.h in Headers */,
+				57C847210FA1357D0015DD42 /* GITNode.h in Headers */,
+				57C848540FA28D670015DD42 /* GITCommitEnumerator.h in Headers */,
+				57C64ACB0FA9054800788255 /* GITObject+Parsing.h in Headers */,
+				5728AC190FAAAC3700653471 /* GITRepo+Enumerators.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1140,6 +1217,23 @@
 			name = "git-remote";
 			productName = "git-remote";
 			productReference = 31AF03C50F14770400F43D38 /* git-remote */;
+			productType = "com.apple.product-type.tool";
+		};
+		573755320F9860190049342E /* git-rev-list */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 573755560F9860590049342E /* Build configuration list for PBXNativeTarget "git-rev-list" */;
+			buildPhases = (
+				573755300F9860190049342E /* Sources */,
+				573755310F9860190049342E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				573755800F9862770049342E /* PBXTargetDependency */,
+			);
+			name = "git-rev-list";
+			productName = "git-rev-list";
+			productReference = 573755330F9860190049342E /* git-rev-list */;
 			productType = "com.apple.product-type.tool";
 		};
 		57A4310F0F6204BD00E6B701 /* UnitTests */ = {
@@ -1235,6 +1329,7 @@
 				9F2152FC0EA68DA7004C6188 /* git-pack-inspect */,
 				319B42D00F10518C00336E0A /* git-server */,
 				31AF03C40F14770400F43D38 /* git-remote */,
+				573755320F9860190049342E /* git-rev-list */,
 			);
 		};
 /* End PBXProject section */
@@ -1318,6 +1413,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		573755300F9860190049342E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				573755520F9860350049342E /* git-rev-list.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		57A4310D0F6204BD00E6B701 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1339,6 +1442,7 @@
 				9F7171660F7A4D8E00A7DFF9 /* NSCharacterSet+StringComparison.m in Sources */,
 				578345B60F83220300ADC1E3 /* GHUnitTestMain.m in Sources */,
 				57374B460F8E9B0E0049342E /* GITRefStoreTests.m in Sources */,
+				57C847500FA1812F0015DD42 /* GITGraphTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1404,6 +1508,11 @@
 				57E65C620F4A07AA00EB5DB8 /* GITPackReverseIndex.m in Sources */,
 				9F7171680F7A4D8E00A7DFF9 /* NSCharacterSet+StringComparison.m in Sources */,
 				573746B90F8C07C00049342E /* GITRefStore.m in Sources */,
+				57C8471C0FA134520015DD42 /* GITGraph.m in Sources */,
+				57C847220FA1357D0015DD42 /* GITNode.m in Sources */,
+				57C848550FA28D670015DD42 /* GITCommitEnumerator.m in Sources */,
+				57C64ACC0FA9054800788255 /* GITObject+Parsing.m in Sources */,
+				5728AC1A0FAAAC3700653471 /* GITRepo+Enumerators.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1437,6 +1546,11 @@
 			isa = PBXTargetDependency;
 			target = 9F3694160EACF05500E6777B /* Git */;
 			targetProxy = 5737450A0F8AF7260049342E /* PBXContainerItemProxy */;
+		};
+		573755800F9862770049342E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9F3694160EACF05500E6777B /* Git */;
+			targetProxy = 5737557F0F9862770049342E /* PBXContainerItemProxy */;
 		};
 		57A4311E0F6204E400E6B701 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1657,6 +1771,93 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)";
 				PREBINDING = NO;
 				PRODUCT_NAME = "git-remote";
+			};
+			name = "Release-GC";
+		};
+		573755350F98601C0049342E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				LD_RUNPATH_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "git-rev-list";
+			};
+			name = Debug;
+		};
+		573755360F98601C0049342E /* Debug-GC */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				LD_RUNPATH_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "git-rev-list";
+			};
+			name = "Debug-GC";
+		};
+		573755370F98601C0049342E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				LD_RUNPATH_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "git-rev-list";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		573755380F98601C0049342E /* Release-GC */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				LD_RUNPATH_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "git-rev-list";
 			};
 			name = "Release-GC";
 		};
@@ -2189,6 +2390,17 @@
 				31AF03C80F14770D00F43D38 /* Debug-GC */,
 				31AF03C90F14770D00F43D38 /* Release */,
 				31AF03CA0F14770D00F43D38 /* Release-GC */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		573755560F9860590049342E /* Build configuration list for PBXNativeTarget "git-rev-list" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				573755350F98601C0049342E /* Debug */,
+				573755360F98601C0049342E /* Debug-GC */,
+				573755370F98601C0049342E /* Release */,
+				573755380F98601C0049342E /* Release-GC */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
