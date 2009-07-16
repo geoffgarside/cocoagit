@@ -63,4 +63,23 @@
     return [NSString stringWithFormat:@"%.0f %@",
             [self.date timeIntervalSince1970], [self.timezone offsetString]];
 }
+- (NSComparisonResult)compare:(GITDateTime*)anotherGITDateTime
+{
+    NSParameterAssert(anotherGITDateTime);
+    
+    NSCalendar *selfDateCalendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+    [selfDateCalendar setTimeZone:timezone];
+    NSCalendar *anotherDateCalendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+    [anotherDateCalendar setTimeZone:anotherGITDateTime.timezone];
+    
+    NSCalendarUnit unitFlags = NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|kCFCalendarUnitHour|kCFCalendarUnitMinute|kCFCalendarUnitSecond;
+    
+    NSDateComponents *selfDateComponents = [selfDateCalendar components:unitFlags fromDate:date];
+    NSDateComponents *anotherDateComponents = [anotherDateCalendar components:unitFlags fromDate:anotherGITDateTime.date];
+    
+    NSDate *selfDate = [selfDateCalendar dateFromComponents:selfDateComponents];
+    NSDate *anotherDate = [anotherDateCalendar dateFromComponents:anotherDateComponents];
+    
+    return [selfDate compare:anotherDate];
+}
 @end

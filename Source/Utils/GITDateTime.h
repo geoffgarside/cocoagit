@@ -29,5 +29,6 @@
  * \return An actor object with the extracted name and email.
  */
 - (id) initWithBSDTime:(unsigned long)seconds timeZoneOffset:(NSInteger)tz;
+- (NSComparisonResult)compare:(GITDateTime*)object;
 
 @end
