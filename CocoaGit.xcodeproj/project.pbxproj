@@ -55,7 +55,7 @@
 		38A504610F5E4DFA0072D8B1 /* NSData+Patching.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F57B96C0F35397500101EAC /* NSData+Patching.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		38D2628D0F3A23E500683479 /* GITBranch.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F33C9E90E48C5650004CD44 /* GITBranch.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		38D262B00F3A243B00683479 /* GITBranch.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F33C9EA0E48C5650004CD44 /* GITBranch.m */; };
-		5728AC190FAAAC3700653471 /* GITRepo+Enumerators.h in Headers */ = {isa = PBXBuildFile; fileRef = 5728AC170FAAAC3700653471 /* GITRepo+Enumerators.h */; };
+		5728AC190FAAAC3700653471 /* GITRepo+Enumerators.h in Headers */ = {isa = PBXBuildFile; fileRef = 5728AC170FAAAC3700653471 /* GITRepo+Enumerators.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5728AC1A0FAAAC3700653471 /* GITRepo+Enumerators.m in Sources */ = {isa = PBXBuildFile; fileRef = 5728AC180FAAAC3700653471 /* GITRepo+Enumerators.m */; };
 		5734D7290F4148BA0092523C /* BufferedSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 5734D7250F4148BA0092523C /* BufferedSocket.h */; };
 		5734D72A0F4148BA0092523C /* BufferedSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5734D7260F4148BA0092523C /* BufferedSocket.m */; };
